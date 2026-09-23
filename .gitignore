@@ -1,1 +1,10 @@
 node_modules/
+.DS_Store
+*.log
+__pycache__/
+*.pyc
+
+# Raw scans stay on disk only (large binaries). Originals are also in the uploaded zips.
+incoming-models/**
+!incoming-models/
+!incoming-models/NOTES.md
