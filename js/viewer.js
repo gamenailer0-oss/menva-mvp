@@ -71,10 +71,82 @@
     return path ? new URL(path, location.origin).href : '';
   }
 
+  const isIOS = () => /iPad|iPhone|iPod/.test(navigator.userAgent) || (navigator.platform === 'MacIntel' && navigator.maxTouchPoints > 1);
+
+  // ─── AR (CLAUDE.md §7) ─────────────────────────────────────────
+  // Offered only after the model has loaded and the phone can do AR. True scale, locked (no pinch
+  // in AR — model-viewer passes allowsContentScaling=0 to Quick Look and resizable=false to Scene
+  // Viewer). Placed on the table with a contact shadow. Timings go to analytics.
+  function setupAR(viewer, { usdz, dishId, status }) {
+    const track = (event, props) => window.MenvaTrack?.(event, { dish: dishId, ...props });
+    const say = (text) => { if (status) status.textContent = text; };
+    const prompt = viewer.querySelector('.ar-prompt p');
+    let launchedAt = 0, surfaceTimer = 0;
+
+    viewer.setAttribute('ar', '');
+    viewer.setAttribute('ar-modes', 'webxr scene-viewer quick-look');
+    viewer.setAttribute('ar-scale', 'fixed');
+    viewer.setAttribute('ar-placement', 'floor');
+    viewer.setAttribute('xr-environment', '');
+    if (usdz) viewer.setAttribute('ios-src', usdz); // otherwise model-viewer builds one on the fly
+
+    viewer.addEventListener('load', () => {
+      if (!viewer.canActivateAR) return;
+      viewer.classList.add('ar-ready');
+      say('Ready — see it on your table.');
+      // iOS: warm the cache so Quick Look opens without a second download.
+      if (isIOS() && usdz) fetch(usdz, { priority: 'low' }).catch(() => {});
+    });
+
+    viewer.querySelector('[slot="ar-button"]')?.addEventListener('click', () => {
+      launchedAt = performance.now();
+      track('ar_launch');
+    }, true);
+
+    const since = () => Math.round(performance.now() - launchedAt);
+    let inPageSession = false; // WebXR stays in the page; Quick Look / Scene Viewer leave it
+    viewer.addEventListener('ar-status', (e) => {
+      const s = e.detail.status;
+      if (s === 'session-started') {
+        inPageSession = true;
+        track('ar_session_started', { ms: since() });
+        clearTimeout(surfaceTimer);
+        surfaceTimer = setTimeout(() => {
+          if (prompt) prompt.textContent = 'Try over the tablecloth or a napkin — patterned surfaces work best.';
+        }, 5000);
+      } else if (s === 'object-placed') {
+        clearTimeout(surfaceTimer);
+        navigator.vibrate?.(12);
+        track('ar_object_placed', { ms: since() });
+      } else if (s === 'failed') {
+        clearTimeout(surfaceTimer);
+        say("AR couldn't start on this phone — you can still turn the dish here.");
+        track('ar_failed');
+      } else if (s === 'not-presenting' && launchedAt) {
+        clearTimeout(surfaceTimer);
+        if (prompt) prompt.textContent = 'Move your phone slowly over the table.';
+        track('ar_exit', { duration_ms: since() });
+        launchedAt = 0;
+        inPageSession = false;
+      }
+    });
+
+    // Quick Look and Scene Viewer leave the page; note when the diner comes back.
+    const onVisible = () => {
+      if (!viewer.isConnected) return document.removeEventListener('visibilitychange', onVisible);
+      if (document.visibilityState === 'visible' && launchedAt && !inPageSession) {
+        track('ar_exit', { duration_ms: since() });
+        launchedAt = 0;
+      }
+    };
+    document.addEventListener('visibilitychange', onVisible);
+  }
+
   window.MenvaViewer = {
     load,
     download,
     absolute,
+    setupAR,
     get isLoaded() { return defined; },
     MODEL_VIEWER_BYTES,
   };

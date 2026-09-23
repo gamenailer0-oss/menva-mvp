@@ -231,7 +231,7 @@
   background: var(--accent);
   color: var(--paper);
 }
-.dish-photo svg { width: 14px; height: 14px; }
+.dish-photo svg { width: 14px; height: 14px; flex: none; }
 /* Poster thumbnails: the tiny inline blur paints instantly, the real poster fades over it */
 .dish-card .dish-photo {
   height: auto;
@@ -470,10 +470,12 @@ dialog[open] {
   margin-top: auto;
 }
 
-/* AR button in model-viewer */
+/* AR button in model-viewer — model-viewer only shows it when the phone can do AR,
+   and The Pass keeps it hidden until the model is fully loaded (CLAUDE.md §7.1) */
 .ar-btn {
   position: absolute;
-  bottom: 60px;
+  bottom: 16px;
+  min-height: 48px;
   left: 50%;
   transform: translateX(-50%);
   z-index: 10;
@@ -494,7 +496,31 @@ dialog[open] {
   background: var(--accent);
   transform: translateX(-50%) translateY(-2px);
 }
-.ar-btn svg { width: 18px; height: 18px; }
+.ar-btn svg { width: 18px; height: 18px; flex: none; }
+
+/* AR placement prompt (WebXR, slot="ar-prompt"): a phone sweeping over a plate outline */
+.ar-prompt {
+  position: absolute;
+  left: 50%;
+  bottom: 12%;
+  transform: translateX(-50%);
+  width: min(280px, 80vw);
+  text-align: center;
+  color: #fff;
+  text-shadow: 0 1px 6px rgba(0, 0, 0, 0.7);
+  pointer-events: none;
+}
+.ar-prompt svg { width: 120px; height: 80px; margin: 0 auto 8px; overflow: visible; }
+.ar-prompt ellipse, .ar-prompt rect, .ar-prompt line {
+  fill: none;
+  stroke: #fff;
+  stroke-width: 2;
+  stroke-linecap: round;
+  filter: drop-shadow(0 1px 3px rgba(0, 0, 0, 0.6));
+}
+.ar-prompt-phone { transform-origin: 60px 120px; animation: ar-sweep 3s ease-in-out infinite alternate; }
+@keyframes ar-sweep { from { transform: rotate(-18deg); } to { transform: rotate(18deg); } }
+.ar-prompt p { font-size: var(--text-sm); line-height: 1.4; }
 
 /* ═══ Dish Detail (right side of modal) ═══ */
 .dish-detail {
@@ -779,22 +805,6 @@ p.fact-unconfirmed { color: var(--muted); font-style: italic; }
   padding: 12px 0;
 }
 
-/* ═══ AR Fallback ═══ */
-.ar-fallback {
-  display: none;
-  text-align: center;
-  padding: 16px;
-  background: var(--surface-2);
-  border-radius: var(--radius-sm);
-  margin: 0 24px 24px;
-}
-.ar-fallback.visible { display: block; }
-.ar-fallback p {
-  font-size: var(--text-xs);
-  color: var(--muted);
-  line-height: 1.6;
-}
-.ar-fallback strong { color: var(--ink); }
 
 /* ═══ Footer ═══ */
 footer {

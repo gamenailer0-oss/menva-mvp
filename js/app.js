@@ -190,6 +190,10 @@
     // The Pass: blur-up poster paints instantly (inline base64, zero network), then focuses as the GLB loads.
     const modelViewer = dish.has3d ? `<model-viewer id="dish-viewer" camera-controls touch-action="pan-y" camera-orbit="-25deg 55deg 85%" shadow-intensity="1" shadow-softness="0.6" environment-image="neutral" interaction-prompt="auto" alt="${esc(dish.name)} — 3D scan">
             <button slot="ar-button" class="ar-btn">${arIcon} See it on your table</button>
+            <div slot="ar-prompt" class="ar-prompt">
+              <svg viewBox="0 0 120 80" aria-hidden="true"><ellipse cx="60" cy="62" rx="44" ry="12"/><g class="ar-prompt-phone"><rect x="50" y="8" width="20" height="34" rx="4"/><line x1="57" y1="13" x2="63" y2="13"/></g></svg>
+              <p>Move your phone slowly over the table.</p>
+            </div>
           </model-viewer>` : '';
 
     content.innerHTML = `
@@ -200,9 +204,6 @@
             <button id="reset-view">${resetIcon} Reset</button>
           </div>
           <p class="stage-note">Drag to turn the dish · Pinch to zoom</p>
-          <div class="ar-fallback" id="ar-fallback">
-            <p><strong>AR isn't available on this phone.</strong><br>You can still turn the dish here.</p>
-          </div>
         </div>` : ''}
       <section class="dish-detail">
         <p class="overline">${esc(activeRestaurant.name)} / ${esc(dish.category)}</p>
@@ -223,7 +224,6 @@
     const viewer = document.getElementById('dish-viewer');
     const status = document.getElementById('viewer-status');
     const resetBtn = document.getElementById('reset-view');
-    const fallback = document.getElementById('ar-fallback');
     const spin = { url: a.spin, layout: a.spinLayout };
 
     // Start The Pass before model-viewer's script arrives so the diner sees progress copy at once.
@@ -254,10 +254,9 @@
     await glbReady;
     if (!viewer.isConnected) return; // sheet closed while downloading
 
+    // AR listeners go on before src so the load event can't be missed.
+    MenvaViewer.setupAR(viewer, { usdz: MenvaViewer.absolute(a.usdz), dishId: dish.id, status });
     viewer.src = glbUrl;
-    viewer.iosSrc = MenvaViewer.absolute(a.usdz); // empty → model-viewer builds a USDZ on the fly
-    viewer.ar = true;
-    viewer.arModes = 'webxr scene-viewer quick-look';
 
     viewer.addEventListener('error', () => {
       if (status) status.textContent = 'The 3D view could not load — here it is in 360°.';
@@ -268,12 +267,6 @@
       viewer.cameraOrbit = '-25deg 55deg 85%'; // matches the poster framing so the crossfade doesn't jump
       viewer.fieldOfView = 'auto';
       viewer.jumpCameraToGoal?.();
-    });
-
-    // AR availability (replaced by the capability ladder in Phase 6)
-    viewer.addEventListener('load', () => { if (viewer.canActivateAR === false) fallback?.classList.add('visible'); });
-    viewer.addEventListener('ar-status', (e) => {
-      if (e.detail.status === 'failed') fallback?.classList.add('visible');
     });
   }
 

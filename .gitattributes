@@ -1,0 +1,4 @@
+# Keep third-party and generated files byte-for-byte (the loader checks model-viewer's exact size).
+vendor/** -text
+assets/** -text
+data/build/** -text
