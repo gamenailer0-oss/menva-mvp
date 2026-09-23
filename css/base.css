@@ -95,8 +95,15 @@ p, li, figcaption {
 }
 
 ::selection {
-  background: rgba(233, 168, 37, 0.25);
+  background: color-mix(in srgb, var(--accent) 22%, transparent);
   color: var(--ink);
+}
+
+/* Tabular numerals for prices wherever they appear */
+.dish-line > span,
+.detail-price,
+.published-item span {
+  font-variant-numeric: tabular-nums;
 }
 
 :focus-visible {

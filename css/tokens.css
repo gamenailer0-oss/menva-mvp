@@ -1,97 +1,80 @@
 /* ─────────────────────────────────────────────────────────────
-   MENVA — Brand Design Tokens v2
-   Elite dark theme: near-black with cool undertones, champagne gold.
-   Gauchos: oxblood/ember accent, distinct from MENVA default.
-   Refined corner radius (10-16px, not bubbly).
+   MENVA — Design Tokens
+   Light, elite, quiet confidence. A printed steakhouse menu:
+   ivory paper, fine hairlines, one accent used sparingly.
    ───────────────────────────────────────────────────────────── */
 
-/* ═══ DEFAULT THEME (Directory / Landing) — Editorial luxury ═══ */
 :root,
-[data-theme="default"] {
-  --paper: #FAF5EA;
-  --surface: #FFFDF8;
-  --surface-2: #F5EFE0;
-  --surface-offset: #F0E9D8;
-  --ink: #2A2520;
-  --muted: #6B5D50;
-  --faint: #A89B8A;
-  --line: #E5DCC8;
-  --accent: #8B6914;
-  --gold: #C8A45D;
-  --stage: #F2EBDB;
+[data-theme="default"],
+[data-theme="gauchos"] {
+  /* Paper & surfaces */
+  --paper: #FAF7F2;
+  --surface: #FFFFFF;
+  --surface-2: #F3EEE6;
+  --surface-offset: #ECE4D6;
+  --line: #E7DFD3;
+
+  /* Ink */
+  --ink: #1E1A16;
+  --muted: #6B6056;
+  --faint: #A89A88;
+
+  /* Accent — Gauchos oxblood: prices and primary actions only */
+  --accent: #7C2A1C;
+  --accent-ink: #FFFFFF;
+  /* Brass — fine rules and small ornaments only, never body text */
+  --gold: #9C7C45;
+
+  /* Dish stage: soft warm light, not a dark block */
+  --stage: #F2EDE5;
+  /* Fixed cream card for the restaurant cover — reads like a printed insert in both modes */
+  --cover-paper: #F5EFE4;
+  --cover-ink: #241A15;
+
   --radius: 14px;
   --radius-sm: 10px;
-  --radius-lg: 18px;
+  --radius-lg: 20px;
   --ease: cubic-bezier(0.16, 1, 0.3, 1);
-  --ease-fast: 180ms cubic-bezier(0.16, 1, 0.3, 1);
+  --ease-fast: 160ms cubic-bezier(0.16, 1, 0.3, 1);
   --ease-slow: 400ms cubic-bezier(0.16, 1, 0.3, 1);
-  --shadow: 0 2px 12px rgba(42, 37, 32, 0.06);
-  --shadow-lg: 0 12px 40px rgba(42, 37, 32, 0.10);
+  --shadow: 0 1px 2px rgba(30, 26, 22, 0.04), 0 6px 20px rgba(30, 26, 22, 0.05);
+  --shadow-lg: 0 8px 30px rgba(30, 26, 22, 0.12);
   --font-display: 'Instrument Serif', Georgia, 'Times New Roman', serif;
   --font-body: 'DM Sans', system-ui, -apple-system, 'Segoe UI', Roboto, 'Helvetica Neue', Arial, sans-serif;
 }
 
-/* ═══ GAUCHOS THEME — Steakhouse identity: oxblood + ember ═══ */
-[data-theme="gauchos"] {
-  --paper: #F8F3EC;
-  --surface: #FFFDFA;
-  --surface-2: #F0E8DC;
-  --surface-offset: #E8DDD0;
-  --ink: #2A1810;
-  --muted: #6B4A35;
-  --faint: #A88A6E;
-  --line: #D8C9B5;
-  --accent: #8B2F1F;
-  --gold: #B8862E;
-  --stage: #EDE2D0;
-  --shadow: 0 2px 12px rgba(42, 24, 16, 0.06);
-  --shadow-lg: 0 12px 40px rgba(42, 24, 16, 0.10);
-}
-
-/* ═══ DARK MODE — Elite night dining ═══ */
-/* Near-black with cool blue undertones. Not desert, not muddy. */
+/* ═══ DARK MODE — same quiet confidence, warm near-black ═══ */
 html[data-mode="dark"],
 html[data-mode="dark"] body {
-  --paper: #0A0B0E;
-  --surface: #11141A;
-  --surface-2: #161A22;
-  --surface-offset: #1C212B;
-  --ink: #F4EFE6;
-  --muted: #9A9388;
-  --faint: #5C5650;
-  --line: #232833;
-  --accent: #C8A45D;
-  --gold: #C8A45D;
-  --stage: #11141A;
-  --shadow: 0 2px 12px rgba(0, 0, 0, 0.4);
-  --shadow-lg: 0 12px 40px rgba(0, 0, 0, 0.5);
-}
+  --paper: #17140F;
+  --surface: #1D1A14;
+  --surface-2: #241F18;
+  --surface-offset: #2A241C;
+  --line: #352E24;
 
-/* Gauchos dark: oxblood accent on near-black */
-html[data-mode="dark"] body[data-theme="gauchos"] {
-  --paper: #0A0B0E;
-  --surface: #11141A;
-  --surface-2: #161A22;
-  --surface-offset: #1C212B;
-  --ink: #F4EFE6;
-  --muted: #9A8A7A;
-  --faint: #5C5048;
-  --line: #232833;
-  --accent: #C25E3E;
-  --gold: #C8A45D;
-  --stage: #11141A;
+  --ink: #F1EAE0;
+  --muted: #B4A896;
+  --faint: #6E6455;
+
+  --accent: #D68A6C;
+  --accent-ink: #201310;
+  --gold: #C7A567;
+
+  --stage: #1D1A14;
+  --shadow: 0 1px 2px rgba(0, 0, 0, 0.3), 0 8px 24px rgba(0, 0, 0, 0.35);
+  --shadow-lg: 0 12px 36px rgba(0, 0, 0, 0.45);
 }
 
 /* ═══ Type Scale ═══ */
 :root {
-  --text-xs: clamp(0.75rem, 0.7rem + 0.25vw, 0.875rem);
-  --text-sm: clamp(0.875rem, 0.8rem + 0.35vw, 1rem);
-  --text-base: clamp(1rem, 0.95rem + 0.25vw, 1.125rem);
-  --text-lg: clamp(1.125rem, 1rem + 0.75vw, 1.5rem);
-  --text-xl: clamp(1.5rem, 1.2rem + 1.25vw, 2.25rem);
-  --text-2xl: clamp(2rem, 1.4rem + 2.5vw, 3.5rem);
-  --text-hero: clamp(2.5rem, 1rem + 5vw, 5rem);
-  --text-display: clamp(3rem, 0.5rem + 7vw, 7rem);
+  --text-xs: clamp(0.75rem, 0.71rem + 0.2vw, 0.8125rem);
+  --text-sm: clamp(0.875rem, 0.83rem + 0.25vw, 0.9375rem);
+  --text-base: clamp(0.9375rem, 0.9rem + 0.2vw, 1rem);
+  --text-lg: clamp(1.125rem, 1.03rem + 0.5vw, 1.375rem);
+  --text-xl: clamp(1.375rem, 1.15rem + 1vw, 1.875rem);
+  --text-2xl: clamp(1.75rem, 1.3rem + 2vw, 2.75rem);
+  --text-hero: clamp(2.25rem, 1.3rem + 4vw, 3.75rem);
+  --text-display: clamp(2.75rem, 1rem + 6vw, 5.5rem);
 
   --space-1: 0.25rem;
   --space-2: 0.5rem;
@@ -107,90 +90,18 @@ html[data-mode="dark"] body[data-theme="gauchos"] {
   --space-24: 6rem;
 }
 
-/* ═══ Scroll Reveal Animation Classes ═══ */
-.reveal {
-  opacity: 0;
-  transform: translateY(24px);
-  transition: opacity 500ms var(--ease), transform 500ms var(--ease);
-}
-.reveal.visible {
-  opacity: 1;
-  transform: translateY(0);
-}
-
-/* Staggered children */
-.reveal-stagger > * {
-  opacity: 0;
-  transform: translateY(20px);
-  transition: opacity 400ms var(--ease), transform 400ms var(--ease);
-}
-.reveal-stagger.visible > *:nth-child(1) { transition-delay: 0ms; }
-.reveal-stagger.visible > *:nth-child(2) { transition-delay: 60ms; }
-.reveal-stagger.visible > *:nth-child(3) { transition-delay: 120ms; }
-.reveal-stagger.visible > *:nth-child(4) { transition-delay: 180ms; }
-.reveal-stagger.visible > *:nth-child(5) { transition-delay: 240ms; }
-.reveal-stagger.visible > *:nth-child(6) { transition-delay: 300ms; }
-.reveal-stagger.visible > *:nth-child(7) { transition-delay: 360ms; }
-.reveal-stagger.visible > *:nth-child(8) { transition-delay: 420ms; }
-.reveal-stagger.visible > * {
-  opacity: 1;
-  transform: translateY(0);
+/* Small-caps style overline used throughout: section labels, table chip, category tag */
+.overline {
+  font-family: var(--font-body);
+  font-size: 11px;
+  letter-spacing: 0.14em;
+  font-weight: 500;
+  text-transform: uppercase;
+  color: var(--muted);
 }
 
-/* Hero entrance */
-@keyframes hero-fade-up {
-  from { opacity: 0; transform: translateY(32px); }
-  to { opacity: 1; transform: translateY(0); }
-}
-.hero-enter {
-  animation: hero-fade-up 600ms var(--ease) both;
-}
-.hero-enter-delay-1 { animation-delay: 100ms; }
-.hero-enter-delay-2 { animation-delay: 200ms; }
-.hero-enter-delay-3 { animation-delay: 300ms; }
-.hero-enter-delay-4 { animation-delay: 400ms; }
-
-/* Model card float */
-@keyframes model-float {
-  0%, 100% { transform: translateY(0); }
-  50% { transform: translateY(-6px); }
-}
-.model-card {
-  animation: model-float 6s ease-in-out infinite;
-}
-
-/* Dish card hover lift */
-.dish-card, .restaurant-card {
-  transition: transform 300ms var(--ease), box-shadow 300ms var(--ease);
-}
-.dish-card:hover, .restaurant-card:hover {
-  transform: translateY(-4px);
-}
-
-/* Button shine */
-@keyframes btn-shine {
-  from { transform: translateX(-100%); }
-  to { transform: translateX(200%); }
-}
-.product-action {
-  position: relative;
-  overflow: hidden;
-}
-.product-action::after {
-  content: '';
-  position: absolute;
-  top: 0; left: 0;
-  width: 60%; height: 100%;
-  background: linear-gradient(90deg, transparent, rgba(255,255,255,0.15), transparent);
-  transform: translateX(-100%);
-  pointer-events: none;
-}
-.product-action:hover::after {
-  animation: btn-shine 800ms var(--ease);
-}
-
-/* Dialog settle (refined) */
+/* Dialog settle — a short, subtle rise, nothing bouncy */
 @keyframes settle {
-  from { opacity: 0; transform: translateY(16px) scale(0.98); }
-  to { opacity: 1; transform: translateY(0) scale(1); }
+  from { opacity: 0; transform: translateY(14px); }
+  to { opacity: 1; transform: translateY(0); }
 }

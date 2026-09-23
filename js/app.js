@@ -64,8 +64,9 @@
     document.body.dataset.theme = 'default';
     const pilot = data?.restaurants.find(r => r.pilot);
     app.innerHTML = header(false) + `<main class="brand-page">
-      <h1>See it.<br>Then <span>order it.</span></h1>
-      <p>Scan the code on your table to see real dishes — then place them on your table in AR.</p>
+      <p class="overline">MENVA</p>
+      <h1>See it. Then <em>order it.</em></h1>
+      <p>Scan the code on your table to see a real dish, then place it on your table in AR.</p>
       ${pilot ? `<a class="product-action" href="/${esc(pilot.slug)}" data-link>See the ${esc(pilot.name)} menu ${arrow}</a>
       <p class="brand-note">Now piloting at ${esc(pilot.name)}, ${esc(pilot.area)}, ${esc(pilot.location)}.</p>` : ''}
     </main>` + footer;
@@ -78,7 +79,8 @@
     document.body.dataset.theme = r.theme || 'default';
 
     // Categories in CSV order. Dishes with 3D get a poster card; others a clean text row.
-    const menuHTML = r.categories.map(cat => {
+    const catId = (cat, i) => `cat-${i}-${cat.toLowerCase().replace(/[^a-z0-9]+/g, '-').replace(/^-|-$/g, '') || 'x'}`;
+    const menuHTML = r.categories.map((cat, i) => {
       const dishes = r.dishes.filter(d => d.category === cat).map(d => {
         const line = `<div class="dish-line"><h4>${esc(d.name)}</h4><span>${esc(formatPrice(d.price_pkr))}</span></div>`;
         const desc = d.description ? `<p>${esc(d.description)}</p>` : '';
@@ -93,39 +95,61 @@
         }
         return `<button class="dish-row" data-preview="false" data-dish="${esc(d.id)}" aria-label="${esc(d.name)}">${line}${desc}</button>`;
       }).join('');
-      return `<section class="menu-category"><h3>${esc(cat)}</h3><div class="dish-grid">${dishes}</div></section>`;
+      return `<section class="menu-category" id="${catId(cat, i)}"><h3>${esc(cat)}</h3><div class="dish-grid">${dishes}</div></section>`;
     }).join('');
+    const catNav = r.categories.length > 1 ? `<nav class="cat-nav" aria-label="Menu categories"><div class="cat-nav-scroll">${r.categories.map((cat, i) => `<a href="#${catId(cat, i)}" class="cat-link">${esc(cat)}</a>`).join('')}</div></nav>` : '';
 
     // One identity block: the restaurant's own logo is the page heading (no name repeated four times),
     // the table number sits with it, and the first dish is in view sooner.
     const isGauchos = r.id === 'gauchos';
     const name = esc(r.displayName || r.name);
     const heading = r.logo ? `<img src="${esc(r.logo)}" alt="${name}" class="restaurant-logo-svg" width="200" height="80">` : name;
-    const coverBg = isGauchos ? 'background:linear-gradient(135deg,#1a1410,#2a1810)' : 'background:linear-gradient(135deg,var(--surface-offset),var(--stage))';
     const subtitle = r.showCheffy ? cheffy('wave', esc(r.menuSubtitle)) : `<span>${esc(r.menuSubtitle || '')}</span>`;
 
     app.innerHTML = header(false) + `<main class="restaurant-page${isGauchos ? ' gauchos-page' : ''}">
-      <section class="restaurant-cover${isGauchos ? ' gauchos-cover' : ''}" style="${coverBg}">
-        <h1 class="cover-heading">${heading}</h1>
-        <div class="cover-copy">
-          <div class="cover-meta">
-            <span class="overline">${esc(r.area)} · ${esc(r.location)}</span>
-            ${table ? `<span class="table-chip">Table ${esc(table)}</span>` : ''}
+      <section class="restaurant-cover${isGauchos ? ' gauchos-cover' : ''}">
+        <div class="cover-card">
+          <h1 class="cover-heading">${heading}</h1>
+          <div class="cover-copy">
+            <div class="cover-meta">
+              <span class="overline">${esc(r.area)} · ${esc(r.location)}</span>
+              ${table ? `<span class="table-chip">Table ${esc(table)}</span>` : ''}
+            </div>
+            <p>${esc(r.tagline)}</p>
           </div>
-          <p>${esc(r.tagline)}</p>
         </div>
       </section>
+      ${catNav}
       <p class="menu-intro">${esc(r.description)}</p>
       <section class="menu-section">
         <div class="menu-heading"><h2>${esc(r.menuTitle || 'Menu')}</h2>${subtitle}</div>
         ${menuHTML}
       </section>
       <p class="menu-disclaimer">3D views are scans of the actual dishes served at ${esc(r.name)}. Allergen, halal and nutrition details come from the restaurant — where it says "${CONFIRM}", please ask before ordering.</p>
-    </main>` + footer + `<dialog id="dish-dialog" aria-labelledby="dish-title"><button class="close-dialog" aria-label="Close">${closeIcon}</button><div id="dish-content"></div></dialog>`;
+    </main>` + footer + `<dialog id="dish-dialog" aria-labelledby="dish-title"><div class="sheet-handle" aria-hidden="true"></div><button class="close-dialog" aria-label="Close">${closeIcon}</button><div id="dish-content"></div></dialog>`;
 
     app.querySelectorAll('[data-dish]').forEach(btn => {
       btn.addEventListener('click', () => openDish(r.dishes.find(d => d.id === btn.dataset.dish), btn));
     });
+
+    // Highlight the category currently in view in the sticky nav.
+    const navLinks = app.querySelectorAll('.cat-link');
+    if (navLinks.length) {
+      const byId = new Map();
+      navLinks.forEach(a => byId.set(a.getAttribute('href').slice(1), a));
+      const io = new IntersectionObserver((entries) => {
+        entries.forEach(entry => {
+          const link = byId.get(entry.target.id);
+          if (!link) return;
+          if (entry.isIntersecting) {
+            navLinks.forEach(a => a.classList.remove('active'));
+            link.classList.add('active');
+            link.scrollIntoView({ block: 'nearest', inline: 'center', behavior: 'instant' });
+          }
+        });
+      }, { rootMargin: '-40% 0px -55% 0px' });
+      app.querySelectorAll('.menu-category').forEach(sec => io.observe(sec));
+    }
 
     const dialog = app.querySelector('dialog');
     dialog.querySelector('.close-dialog').addEventListener('click', () => dialog.close());
