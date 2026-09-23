@@ -1,0 +1,257 @@
+/* ═══ Home hero — the AR story in a phone (design/MENVA.DESIGN.md › Motion) ═══
+   One 9 s loop: camera on a table → plane dots → reticle → the dish lands → true-size measure → reset.
+   Only transform/opacity animate. Reduced motion shows the final frame. */
+.home-hero {
+  display: grid;
+  max-width: none; /* overrides the earlier single-column hero in style.css */
+  gap: 36px;
+  align-items: center;
+  padding: 36px 0 48px;
+}
+.hero-copy { display: flex; flex-direction: column; gap: 14px; max-width: 34rem; }
+.hero-copy h1 {
+  font-size: var(--text-hero);
+  line-height: 1.02;
+  letter-spacing: -0.02em;
+}
+.hero-copy h1 em { color: var(--accent); font-style: italic; }
+.hero-copy > p:not(.overline):not(.hero-trust) {
+  font-size: var(--text-lg);
+  line-height: 1.5;
+  color: var(--muted);
+  max-width: 36ch;
+}
+.hero-copy .product-action { align-self: flex-start; margin-top: 8px; }
+.hero-trust { font-size: var(--text-xs); color: var(--muted); }
+
+/* The phone */
+.ar-demo {
+  --loop: 9s;
+  position: relative;
+  justify-self: center;
+  width: min(270px, 72vw);
+  aspect-ratio: 9 / 18.5;
+  margin: 0;
+}
+.ar-phone {
+  position: absolute;
+  inset: 0;
+  border-radius: 40px;
+  padding: 10px;
+  background: #1A1714;
+  box-shadow: 0 30px 60px -20px rgba(26, 23, 20, 0.45), 0 0 0 1px rgba(255, 255, 255, 0.06) inset;
+  animation: ar-hand var(--loop) var(--ease-in-out, ease-in-out) infinite;
+}
+.ar-screen {
+  position: relative;
+  height: 100%;
+  border-radius: 31px;
+  overflow: hidden;
+  /* the dim restaurant behind the table — photographic content, not UI colour */
+  background: linear-gradient(180deg, #3A2E25 0%, #6B5645 38%, #8F7A63 52%);
+  isolation: isolate;
+}
+/* Camera view: a linen tablecloth seen at an angle */
+.ar-table {
+  position: absolute;
+  inset: -170% -90% -10%; /* tall enough that, tilted away, it still fills the whole camera view */
+  background:
+    repeating-linear-gradient(90deg, rgba(255, 255, 255, 0.07) 0 2px, transparent 2px 6px),
+    repeating-linear-gradient(0deg, rgba(90, 70, 50, 0.06) 0 2px, transparent 2px 5px),
+    #DCD2C1;
+  transform: perspective(520px) rotateX(36deg);
+  transform-origin: 50% 100%;
+  /* the far edge melts into the room, like a camera's depth of field */
+  -webkit-mask-image: linear-gradient(to bottom, transparent 0, #000 6%);
+  mask-image: linear-gradient(to bottom, transparent 0, #000 6%);
+}
+.ar-screen::after { /* soft vignette like a phone camera */
+  content: '';
+  position: absolute;
+  inset: 0;
+  background: radial-gradient(120% 80% at 50% 60%, transparent 55%, rgba(40, 30, 20, 0.28));
+  pointer-events: none;
+}
+/* Plane detection dots — on the same plane as the table, spreading out from the reticle */
+.ar-dots {
+  position: absolute;
+  inset: -170% -90% -10%;
+  background: radial-gradient(circle, rgba(255, 255, 255, 0.95) 2px, transparent 2.6px) 0 0 / 26px 26px;
+  transform: perspective(520px) rotateX(36deg);
+  transform-origin: 50% 100%;
+  -webkit-mask-image: radial-gradient(30% 12% at 50% 66%, #000 40%, transparent);
+  mask-image: radial-gradient(30% 12% at 50% 66%, #000 40%, transparent);
+  opacity: 0;
+  animation: ar-dots var(--loop) linear infinite;
+}
+.ar-reticle {
+  position: absolute;
+  left: 50%;
+  top: 58%;
+  width: 50%;
+  aspect-ratio: 2.2;
+  border: 2px solid #fff;
+  border-radius: 50%;
+  translate: -50% -50%;
+  opacity: 0;
+  animation: ar-reticle var(--loop) var(--ease-out, ease-out) infinite;
+}
+.ar-shadow {
+  position: absolute;
+  left: 50%;
+  top: 62%;
+  width: 84%;
+  aspect-ratio: 3.4;
+  translate: -50% -50%;
+  border-radius: 50%;
+  background: radial-gradient(closest-side, rgba(40, 28, 18, 0.55), rgba(40, 28, 18, 0.2) 60%, transparent);
+  opacity: 0;
+  transform: scale(0.4);
+  animation: ar-shadow var(--loop) var(--ease-out, ease-out) infinite;
+}
+.ar-dish {
+  position: absolute;
+  left: 50%;
+  top: 52%;
+  width: 108%;
+  max-width: none;
+  translate: -50% -50%;
+  opacity: 0;
+  animation: ar-dish var(--loop) var(--ease-out, ease-out) infinite;
+}
+/* True-size measure: a line drawn across the dish and a label */
+.ar-measure {
+  position: absolute;
+  left: 12%;
+  right: 12%;
+  top: 72%;
+  height: 20px;
+}
+/* A bar that grows (scaleX) with an end tick at each side — no SVG dash maths */
+.ar-rule {
+  position: absolute;
+  left: 0;
+  right: 0;
+  top: 50%;
+  height: 2px;
+  border-radius: 2px;
+  background: #fff;
+  transform: scaleX(0);
+  transform-origin: 0 50%;
+  animation: ar-rule var(--loop) var(--ease-out, ease-out) infinite;
+}
+.ar-tick {
+  position: absolute;
+  top: 2px;
+  width: 2px;
+  height: 16px;
+  border-radius: 2px;
+  background: #fff;
+  opacity: 0;
+  animation: ar-fade-mid var(--loop) linear infinite;
+}
+.ar-tick:first-child { left: 0; }
+.ar-tick:nth-child(2) { right: 0; }
+.ar-label {
+  position: absolute;
+  left: 50%;
+  top: 80%;
+  translate: -50% 0;
+  padding: 6px 12px;
+  border-radius: 999px;
+  background: #fff;
+  color: #1A1714;
+  font-size: 12px;
+  font-weight: 600;
+  white-space: nowrap;
+  opacity: 0;
+  animation: ar-label var(--loop) var(--ease-out, ease-out) infinite;
+}
+/* On-screen hints, like the real AR prompt */
+.ar-hint {
+  position: absolute;
+  left: 50%;
+  top: 9%;
+  translate: -50% 0;
+  padding: 7px 12px;
+  border-radius: 999px;
+  background: rgba(26, 23, 20, 0.72);
+  color: #fff;
+  font-size: 11px;
+  white-space: nowrap;
+}
+.ar-hint-scan { animation: ar-hint-scan var(--loop) linear infinite; }
+.ar-hint-placed { opacity: 0; animation: ar-hint-placed var(--loop) linear infinite; }
+
+/* Timeline (percent of the 9 s loop) */
+@keyframes ar-hand {
+  0%, 30%, 100% { transform: rotate(0deg) translateY(0); }
+  10% { transform: rotate(-2.5deg) translateY(-4px); }
+  20% { transform: rotate(2deg) translateY(2px); }
+}
+@keyframes ar-dots {
+  0%, 4% { opacity: 0; }
+  14%, 30% { opacity: 0.85; }
+  40%, 100% { opacity: 0; }
+}
+@keyframes ar-reticle {
+  0%, 14% { opacity: 0; transform: scale(1.25); }
+  20% { opacity: 1; transform: scale(1); }
+  25% { opacity: 1; transform: scale(1.06); }
+  30% { opacity: 1; transform: scale(1); }
+  35%, 100% { opacity: 0; transform: scale(0.9); }
+}
+@keyframes ar-dish {
+  0%, 30% { opacity: 0; transform: translateY(-34%) scale(0.92); }
+  38% { opacity: 1; transform: translateY(1.5%) scale(1); }
+  41% { transform: translateY(0) scale(1); }
+  88% { opacity: 1; transform: translateY(0) scale(1); }
+  95%, 100% { opacity: 0; transform: translateY(0) scale(1); }
+}
+@keyframes ar-shadow {
+  0%, 33% { opacity: 0; transform: scale(0.4); }
+  41% { opacity: 1; transform: scale(1); }
+  88% { opacity: 1; transform: scale(1); }
+  95%, 100% { opacity: 0; transform: scale(1); }
+}
+@keyframes ar-rule {
+  0%, 45% { transform: scaleX(0); opacity: 1; }
+  55%, 88% { transform: scaleX(1); opacity: 1; }
+  95%, 100% { transform: scaleX(1); opacity: 0; }
+}
+@keyframes ar-fade-mid {
+  0%, 45% { opacity: 0; }
+  50%, 88% { opacity: 1; }
+  95%, 100% { opacity: 0; }
+}
+@keyframes ar-label {
+  0%, 53% { opacity: 0; transform: translateY(6px) scale(0.96); }
+  58%, 88% { opacity: 1; transform: none; }
+  95%, 100% { opacity: 0; transform: none; }
+}
+@keyframes ar-hint-scan {
+  0%, 2% { opacity: 0; }
+  6%, 28% { opacity: 1; }
+  32%, 100% { opacity: 0; }
+}
+@keyframes ar-hint-placed {
+  0%, 42% { opacity: 0; }
+  46%, 86% { opacity: 1; }
+  90%, 100% { opacity: 0; }
+}
+
+/* Pause the loop while the hero is off screen (js adds .is-offscreen) */
+.ar-demo.is-offscreen * { animation-play-state: paused !important; }
+
+@media (min-width: 860px) {
+  .home-hero { grid-template-columns: 1.1fr 0.9fr; padding: 56px 0 72px; }
+  .ar-demo { width: min(300px, 100%); }
+}
+
+/* Reduced motion: the final frame — dish placed, measured — and nothing moves */
+@media (prefers-reduced-motion: reduce) {
+  .ar-demo * { animation: none !important; }
+  .ar-dish, .ar-shadow, .ar-label, .ar-tick, .ar-hint-placed { opacity: 1; transform: none; }
+  .ar-rule { transform: none; }
+  .ar-dots, .ar-reticle, .ar-hint-scan { opacity: 0; }
+}

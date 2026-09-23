@@ -58,6 +58,36 @@
     return `<div class="cheffy-cameo"><img src="/assets/cheffy/${pose}.webp" alt="Cheffy" width="42" height="52"><p><span>Cheffy</span>${text}</p></div>`;
   }
 
+  // ─── Home hero: the AR story in a phone (css/hero.css) ────────
+  // The pilot's first 3D dish drops onto a table and is measured at its real size. Pure CSS
+  // animation; the loop pauses when the hero is scrolled out of view.
+  function arDemo(dish) {
+    const src = dish?.assets?.poster || '/assets/dishes/steak-main/poster.webp';
+    const d = dish?.dimensions_cm;
+    const size = d ? `True size · ${Math.round(Math.max(d.width, d.depth))} cm` : 'True size';
+    return `<figure class="ar-demo" role="img" aria-label="A phone camera pointed at a table: the ${esc(dish?.name || 'dish')} appears on it at its true size.">
+      <div class="ar-phone" aria-hidden="true">
+        <div class="ar-screen">
+          <div class="ar-table"></div>
+          <div class="ar-dots"></div>
+          <div class="ar-reticle"></div>
+          <div class="ar-shadow"></div>
+          <img class="ar-dish" src="${esc(src)}" alt="" width="1200" height="900" decoding="async">
+          <div class="ar-measure"><span class="ar-tick"></span><span class="ar-tick"></span><span class="ar-rule"></span></div>
+          <span class="ar-label">${esc(size)}</span>
+          <span class="ar-hint ar-hint-scan">Move your phone slowly over the table</span>
+          <span class="ar-hint ar-hint-placed">Placed on your table</span>
+        </div>
+      </div>
+    </figure>`;
+  }
+
+  function pauseDemoOffscreen() {
+    const demo = app.querySelector('.ar-demo');
+    if (!demo || !('IntersectionObserver' in window)) return;
+    new IntersectionObserver(([e]) => demo.classList.toggle('is-offscreen', !e.isIntersecting)).observe(demo);
+  }
+
   // ─── Brand page (/) — no 3D ───────────────────────────────────
   function brandPage() {
     document.title = 'MENVA — See it before you order it';
@@ -67,13 +97,18 @@
     const slug = esc(pilot?.slug || 'g');
     const name = esc(pilot?.name || 'Gauchos');
     const dishes = (pilot?.dishes || []).filter(d => d.has3d).slice(0, 3);
+    const hero = dishes[0];
 
     app.innerHTML = header(false) + `<main class="home">
       <section class="home-hero">
-        <p class="overline">MENVA</p>
-        <h1>See it. Then <em>order it.</em></h1>
-        <p>Real dishes, scanned at the restaurant. Look before you order — then place the dish on your own table, true to size.</p>
-        <a class="product-action" href="/${slug}" data-link>Open the ${name} menu ${arrow}</a>
+        <div class="hero-copy">
+          <p class="overline">AR menus · Lahore</p>
+          <h1>See it on your table. Then <em>order it.</em></h1>
+          <p>Scan the code at your table and the real dish appears in front of you — true to size, before you decide.</p>
+          <a class="product-action" href="/${slug}" data-link>Open the ${name} menu ${arrow}</a>
+          <p class="hero-trust">Works in Safari and Chrome · No app to install</p>
+        </div>
+        ${arDemo(hero)}
       </section>
 
       <section class="home-pilot" aria-labelledby="pilot-heading">
@@ -100,6 +135,7 @@
         </ol>
       </section>
     </main>` + footer;
+    pauseDemoOffscreen();
   }
 
   // ─── Restaurant Page ──────────────────────────────────────────
