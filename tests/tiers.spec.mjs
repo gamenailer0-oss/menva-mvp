@@ -18,6 +18,19 @@ for (const t of [1, 2]) {
   });
 }
 
+test('tier 1 (iPhone): the AR file is fetched first, then Quick Look gets it from memory', async ({ page }) => {
+  await page.goto('/g/12?tier=1&slow=1');
+  await page.locator('[data-dish="steak-main"]').click();
+  // While the USDZ downloads the button shows real progress and can't be tapped.
+  await expect(page.locator('.ar-btn.is-preparing')).toBeVisible({ timeout: 90_000 });
+  await expect(page.locator('.ar-btn')).toBeDisabled();
+  await expect(page.locator('.ar-btn-label')).toHaveText(/Preparing your table view… \d+%/);
+  // Then it turns live, and model-viewer has an in-memory copy for Quick Look.
+  await expect(page.locator('.ar-btn')).toBeEnabled({ timeout: 90_000 });
+  await expect(page.locator('.ar-btn-label')).toHaveText('See it on your table');
+  expect(await page.locator('model-viewer').evaluate((el) => el.iosSrc)).toMatch(/^blob:/);
+});
+
 test('tier 3: 3D you can turn, no AR button', async ({ page }) => {
   await page.goto('/g/12?tier=3');
   await openDish(page, 'steak-main');

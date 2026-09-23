@@ -115,6 +115,7 @@ function dish(row, restaurantId) {
         glb: url('model.glb'),
         glbBytes: meta.files['model.glb'].bytes, // for honest loader progress when the host compresses
         usdz: meta.usdz ? url('model.usdz') : null,
+        usdzBytes: meta.usdz ? meta.files['model.usdz'].bytes : null, // iPhone "preparing AR" progress
         poster: url('poster.webp'),
         blur: `data:image/webp;base64,${fs.readFileSync(blurFile).toString('base64')}`,
         spin: url('spin.webp'),

@@ -478,6 +478,26 @@ dialog[open] {
   transition: background var(--ease-fast), transform var(--dur-fast) var(--ease-out);
 }
 .ar-btn[hidden] { display: none; }
+/* iPhone: while the AR file comes down, the button fills with real progress, then turns live */
+.ar-btn.is-preparing {
+  position: relative;
+  overflow: hidden;
+  isolation: isolate;
+  background: var(--surface-2);
+  color: var(--ink);
+  cursor: progress;
+}
+.ar-btn.is-preparing::before {
+  content: '';
+  position: absolute;
+  inset: 0;
+  z-index: -1;
+  background: color-mix(in srgb, var(--accent) 22%, transparent);
+  transform: scaleX(var(--prep, 0));
+  transform-origin: 0 50%;
+  transition: transform 200ms linear;
+}
+.ar-btn-label { font-variant-numeric: tabular-nums; }
 .ar-btn:hover { background: color-mix(in srgb, var(--accent) 88%, black); }
 .ar-btn:active { transform: scale(0.97); }
 .ar-btn svg { width: 18px; height: 18px; flex: none; }

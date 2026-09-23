@@ -20,22 +20,31 @@
   // Fetch a file to warm the cache, reporting (loadedBytes, totalBytes). `size` is the known
   // uncompressed size — Content-Length is the compressed size when the host gzips.
   // signal: an AbortSignal — the dish sheet cancels its model download when the diner closes it.
-  async function download(url, size, onBytes, signal) {
+  // keep: also return the bytes as a Blob (used to hand Quick Look a file it doesn't have to download).
+  async function download(url, size, onBytes, signal, keep = false) {
     const res = await fetch(url, { signal });
     if (!res.ok) throw new Error(`${url}: ${res.status}`);
+    const type = res.headers.get('content-type') || '';
     const total = size || (!res.headers.get('content-encoding') && +res.headers.get('content-length')) || 0;
-    if (!res.body) { await res.arrayBuffer(); onBytes?.(total, total); return; }
+    if (!res.body) {
+      const buf = await res.arrayBuffer();
+      onBytes?.(total, total);
+      return keep ? new Blob([buf], { type }) : undefined;
+    }
     const reader = res.body.getReader();
     const throttle = window.MenvaCaps?.slow; // ?slow=1: ~1 Mbps, for demos and testing
+    const chunks = [];
     let loaded = 0;
     for (;;) {
       const { done, value } = await reader.read();
       if (done) break;
       if (throttle) await new Promise((r) => setTimeout(r, value.length / 128));
+      if (keep) chunks.push(value);
       loaded += value.length;
       onBytes?.(Math.min(loaded, total || loaded), total || loaded);
     }
     onBytes?.(total || loaded, total || loaded);
+    return keep ? new Blob(chunks, { type }) : undefined;
   }
 
   function inject() {
@@ -138,9 +147,21 @@
     document.addEventListener('visibilitychange', onVisible);
   }
 
-  // iOS: after the model loads, warm the cache so Quick Look opens without a second download.
-  function prewarmQuickLook(usdz) {
-    if (usdz) fetch(usdz, { priority: 'low' }).catch(() => {});
+  // iOS: after the GLB has loaded, download the USDZ into memory and hand Quick Look a blob: URL
+  // (the same hand-off model-viewer uses for USDZ files it generates). Quick Look then opens from
+  // memory on the very first tap instead of starting its own download and sitting on a spinner.
+  // Prepared files are kept for the session, so reopening a dish is instant.
+  const quickLookFiles = new Map();
+  async function prepareQuickLook(viewer, usdz, size, onBytes, signal) {
+    if (!usdz) return false;
+    if (!quickLookFiles.has(usdz)) {
+      const blob = await download(usdz, size, onBytes, signal, true);
+      quickLookFiles.set(usdz, URL.createObjectURL(new Blob([blob], { type: 'model/vnd.usdz+zip' })));
+    } else {
+      onBytes?.(1, 1);
+    }
+    viewer.iosSrc = quickLookFiles.get(usdz);
+    return true;
   }
 
   window.MenvaViewer = {
@@ -148,7 +169,7 @@
     download,
     absolute,
     setupAR,
-    prewarmQuickLook,
+    prepareQuickLook,
     get isLoaded() { return defined; },
     MODEL_VIEWER_BYTES,
   };

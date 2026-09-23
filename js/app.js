@@ -372,7 +372,7 @@
           ${MenvaLoader.markup(dish, modelViewer)}
           <button id="reset-view" class="reset-view" hidden aria-label="Reset the view">${resetIcon}</button>
           <div class="stage-actions">
-            <button type="button" class="ar-btn" hidden>${arIcon} See it on your table</button>
+            <button type="button" class="ar-btn" hidden>${arIcon} <span class="ar-btn-label">See it on your table</span></button>
             <p id="viewer-status" class="stage-status" role="status"></p>
             ${MenvaCaps.inApp ? `<p class="inapp-note">For the table view, open this page in Chrome or Safari. <button type="button" class="copy-link">Copy link</button></p>` : ''}
           </div>
@@ -481,10 +481,11 @@
       const t = MenvaCaps.assign(viewer);
       setTier(t);
       resetBtn.hidden = false;
-      if (t <= 2) {
+      if (t === 1 && a.usdz) {
+        prepareIPhoneAR();
+      } else if (t <= 2) {
         arButton.hidden = false;
         say('Ready — see it on your table.');
-        if (t === 1) MenvaViewer.prewarmQuickLook(MenvaViewer.absolute(a.usdz));
       } else {
         say(MenvaCaps.isMobile || MenvaCaps.inApp
           ? 'Drag to turn the dish · Pinch to zoom'
@@ -492,6 +493,34 @@
       }
     }, { once: true });
     viewer.src = glbUrl;
+
+    // iPhone: Quick Look downloads the USDZ itself at the moment of the tap, which on a first visit
+    // means a spinner. So the file comes down right after the 3D, with real progress on the button,
+    // and Quick Look is handed the copy in memory — the first tap opens straight onto the table.
+    function prepareIPhoneAR() {
+      const label = arButton.querySelector('.ar-btn-label');
+      const ready = () => {
+        if (!stage.isConnected) return;
+        arButton.disabled = false;
+        arButton.classList.remove('is-preparing');
+        label.textContent = 'See it on your table';
+        say('Ready — see it on your table.');
+      };
+      arButton.hidden = false;
+      arButton.disabled = true;
+      arButton.classList.add('is-preparing');
+      label.textContent = 'Preparing your table view… 0%';
+      say(''); // the button itself says what's happening
+      MenvaViewer.prepareQuickLook(viewer, MenvaViewer.absolute(a.usdz), a.usdzBytes, (l, total) => {
+        const pct = total ? Math.min(99, Math.round((l / total) * 100)) : 0;
+        arButton.style.setProperty('--prep', pct / 100);
+        label.textContent = `Preparing your table view… ${pct}%`;
+      }, abort.signal).then(ready, () => {
+        if (!stage.isConnected) return;
+        viewer.iosSrc = MenvaViewer.absolute(a.usdz); // fall back: Quick Look fetches it itself
+        ready();
+      });
+    }
 
     resetBtn.addEventListener('click', () => {
       viewer.cameraOrbit = '-25deg 55deg 85%'; // matches the poster framing

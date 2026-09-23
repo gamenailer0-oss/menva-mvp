@@ -1,5 +1,5 @@
 {
-  "generated": "2026-09-23T20:08:43.116Z",
+  "generated": "2026-09-23T20:39:09.768Z",
   "restaurants": [
     {
       "id": "gauchos",
@@ -65,6 +65,7 @@
             "glb": "/assets/dishes/steak-main/model.glb?v=3add196f698d",
             "glbBytes": 1029820,
             "usdz": "/assets/dishes/steak-main/model.usdz?v=1e758865f2bb",
+            "usdzBytes": 1677050,
             "poster": "/assets/dishes/steak-main/poster.webp?v=6b0df732652f",
             "blur": "data:image/webp;base64,UklGRqYCAABXRUJQVlA4WAoAAAAQAAAAHwAAFwAAQUxQSA8BAAABkKNt27FH9/O8sVGlzpFKlbWElFZlayfpRpVt1LZdZQ1jvLpH3/ulmjoiJgD/j/oPNWaPxIiqMQJAZS8U2mwAFDSNLJdD8ina9+1uNy8cePEl8lihSC50v2H8YUnSW14ohqYpmj7Thhid95F0PFUITRIUPWRgjPxndLxQDE2BYpaBqZYni0RTBFWvGFLoeKEYJgGKlRx0PF8JTRDUPGNIouduL0wWDEbz0PF9FSRLUHKXIY2ORxSSAcUEY1L03vIQNEtQfo8hK/rAyCczkCwoJhn/5QMZ3+4M1UOQKKi6zUBGH8kPV6cbAAiSFWP0PpA/bqy3FQKigryVN+n5+fBAOQAV5BcMvr4+12gAEUE2AFZQOCBwAQAAEAgAnQEqIAAYAD7RVKNLqCSjIbAYDAEAGglsALUXkDgYxbn1fP/vnciFvQA/ifT4/Y72AA55vKAqyOPsRyKJXVK9XlMOeFeL+AD+7UP+A7ffmJZV6mbOpUMI54CqQ/SvBd7Hic5rduut0KSg4h4P9G1aR7x/vvMhA+VvIMkxZG5alJImrwfsNKnN084CZptT8lJQnL/bWqCc0ImuH9V77+Z4DbYZ/0Pg90Adbbtd+Wp0uUuoyyg8x2n9f84bN54FqiCszjnY+kYOUBfZN85vMOhCKhWjrfYBMfeOMSmxvu9f5+OhOjnM/p1+W+6fcnhL/9jX57mPJ9aOanPmwP5zDw9v+vOp2v/N7HCuNyDeVtQ92RCl8aE+AbTbJzbii23F9auNKaBsswotkUYA1SqTT7vnOhlqqc4s9fIbLrzK2ANw7MPm8uYmWMke7/wk44Idwrr/sWa99HH36imYEVxo/Q0Rhg9TnocUK/AQQ+kAAAA=",
             "spin": "/assets/dishes/steak-main/spin.webp?v=0500f08d9a52",
@@ -103,6 +104,7 @@
             "glb": "/assets/dishes/steak-sandwich/model.glb?v=77d580b30f7f",
             "glbBytes": 242928,
             "usdz": "/assets/dishes/steak-sandwich/model.usdz?v=4ca022615ca3",
+            "usdzBytes": 1560507,
             "poster": "/assets/dishes/steak-sandwich/poster.webp?v=63e32b651802",
             "blur": "data:image/webp;base64,UklGRkQCAABXRUJQVlA4WAoAAAAQAAAAHwAAFwAAQUxQSPoAAAABkKJt27JF9/u+uEd3aKzB3R2Su7sugU6DRuIguqzAE40Mo9H/V+6xT9LkiJgA/E8KqWR4QikJAEqJcASA+LS8ihIAUoWBzNrR89fP/LBRlw4IGUSh7YslSevIzyd9MVCB+hmJGGvptKXjUxmkP4GEcxr+22pDMwvpCxIV1pl/kTSWvVC+IHBE47xo+JIC4QtIn7uj86JlG1QAgdhjGi/NZUQFkTj3YzgRSKGRznk5dkAFqnE+HN/nQwQAovboZbgDicAicZ/2L6d5k44QBUojdM4Yy6sSJUKQKKexdPyxl6MEQozCKg0jzwf1yVIgTIm228PdgdJUKeAXVlA4ICQBAADQBgCdASogABgAPslSoUunpKMht/VYAPAZCWwAxwkAGyAL9zTge2kg3/M7gxmGTrcCrHpDnrfXBxMWFrJJ9+gA+wxkml0EcGuXgkiJsdYBrbrSjN4Nib6e8rLSzX4WJeDcKggAmv5c7PmQo/Oy+jebSBw7cn28zYT6SKUm2TSuxrZORqKX41fVlv/x4ezBaedUBbwRke7ivvjVKviX1GIDUEUV+/1ZA+nK3lNnXjfv4Py7WkOlmraF+mi/hYPQaq6/y2XS/+vd3/Om+hy2ox/esv9XOv2cIRTg1aA05tpcgyfiR19eBC2EvNM0dVn7Q3HosjG9fDAI7STMqO/qoFfxH3TO7qKx9utYAM7pf8mt92H8ZdUGxovggO6Lfd6yGQT5sYAA",
             "spin": "/assets/dishes/steak-sandwich/spin.webp?v=a50bd6b8601e",
@@ -141,6 +143,7 @@
             "glb": "/assets/dishes/garlic-prawn-skewers/model.glb?v=68aca1278ac2",
             "glbBytes": 964620,
             "usdz": "/assets/dishes/garlic-prawn-skewers/model.usdz?v=c0bf94c77045",
+            "usdzBytes": 1693114,
             "poster": "/assets/dishes/garlic-prawn-skewers/poster.webp?v=ba68b5996b16",
             "blur": "data:image/webp;base64,UklGRoQCAABXRUJQVlA4WAoAAAAQAAAAHwAAFwAAQUxQSAMBAAABkGNb27E91/X8tq3eVmf7/2cQjMDJDOzKbp3O6NXZtv089x28CuuImAD8h9OQv4A0AGAYkTEAkoYyikhGEROD2LS87TceX3q5MQ0MRYIle5/fU3Xq9HgK6GcMTGws46vXvBNV68S6z7ocxg8gACx6rWKd059FH2SDHkRzBTrnLT/03llRX9GPNTAesVh6Y987FRXRgKIvikCPGHSquK9frWhQp5cSfYiks/pFQ8oXXQYDb4Pel2pdEHFOj+eAPiDGr6mItdY5a61TdXvyQQQkK9c8UlFP0SdHZpJABCbiG2ZtOnXx1q1zR9fM7UhHpEzMKquuKclKNgAjIImARLT0xW8OAFZQOCBaAQAAcAgAnQEqIAAYAD7RXKZOKCUjIigKqQAaCWwAtvCBzNaANsBdgG8RvJYvAwwTK/oAbpL+wBbssTbrv9ClU0aNNtfmsF24zeV8QDdEAAD++2zGkqPOISsyFveUZdv0BPFL1Z388t8dKszi6zAk4aj6S/8DwM9OvTACexTjPT1X4XfkXL8ExFaTbf50zm7a7DihjBHH4+WgKODl068e6Kirq4q06L8coWJNJEZjrhymcgYlNiOv/e1/wJ1G9MMqOMuYZsSQ5kQeWRU/fg1DeD5NRjnbfShU2/yC0Ze3pk374QTx64hyL24wlSb4jk/Npmoxz9WR4b9Cnllgu06klEG3I9gNTqGs2Dm+Vo//fZxX7L33pd4C3ju2vzfjldz19j2ePYH3mj6GnN4ynyZt8Pn7PqsMboI6FpX/fmuilvR3jgvJwNAhDy2ncMRz/KH+3PiLPNHKqH9VCLSAAA==",
             "spin": "/assets/dishes/garlic-prawn-skewers/spin.webp?v=6f1eae720aff",
@@ -179,6 +182,7 @@
             "glb": "/assets/dishes/chicken-fajita-wrap/model.glb?v=dd6a775b6612",
             "glbBytes": 872100,
             "usdz": "/assets/dishes/chicken-fajita-wrap/model.usdz?v=279238204906",
+            "usdzBytes": 1776446,
             "poster": "/assets/dishes/chicken-fajita-wrap/poster.webp?v=60c8da0a0fd9",
             "blur": "data:image/webp;base64,UklGRn4CAABXRUJQVlA4WAoAAAAQAAAAHwAAFwAAQUxQSAsBAAABkLNtmwE77zezx7Z9Kvuc1jH+ATv+BZWq2CVdKttu7aS1k5Iz873Rzm5YR8QE4L/Tyq8Qaw3EpElsQiCo3lIMmwaxAghKxlce+vJwEonUANRMrTr7TKmen5fDSpxB464r70kyOE8fuBpWUuj4QFXng5Jk8NwAIzEw2MwvyuTquAnWxAgqHzJEUB23J8REwGJRHNXxYDZMBGCO0cdQHY+UwEQYjH+ixpBfeCoLkgyC3fRxdLxcDYkZfE9NomTw3nEVbDIYrKf/WdAQqHyxswcSISi/wS9KDZ4u8NXVbb0JxAvG3lPJwIsL1ywbLRSkLGbmnkd0d3e0wwAQkVQgJr93zmSL/BzpFAEAQTwAVlA4IEwBAABQCACdASogABgAPs1UpEunpKOhsBgMAPAZiWwArDM0NVkILsA3jorwPbR9FewBulf6Zh2af6+8tP3gud9n/eY+UN7pbB9ug+22qgAA/sNNlDA2PvWpalas5jONp7WhhbTc2oPNvr7m8JguoFHFUReHaG27KMUzdb0IJoWXpmiYbCQ1ozulsLDlV+LeuSqb29ODS9qYjg9xo8fGEKN+5OoC2PvnehoNB4ZthsuEloKsBaatEjwKyFVRaFVLo6JA89Je0pOc56mpgZ7AXd064Zf/O384S6ZtH/RJ4Y4vvCVUhNPvEvk9/V/MtIa+FVjro+Iy/4mITN2Mt0OPo62tN/bnXIJm6UC8QL6lBoZBGEJCZbeD/KSumwC6w+JdeFNCvz9QVjJVLR9oojDvkkgCUbHTWm4KMobaU05lWj7wyel6DrGNSeZkfr2pdgAAAA==",
             "spin": "/assets/dishes/chicken-fajita-wrap/spin.webp?v=160d2bfd9b4b",
