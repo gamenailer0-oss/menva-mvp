@@ -46,16 +46,79 @@
 
   // ─── Header ──────────────────────────────────────────────────
   // No directory to go back to: on a restaurant page the diner stays on that menu.
-  function header(homeLink) {
-    const wordmark = homeLink
-      ? `<a class="wordmark" href="/" data-link aria-label="MENVA home">menva<span class="wordmark-dot">.</span></a>`
-      : `<span class="wordmark">menva<span class="wordmark-dot">.</span></span>`;
+  function header() {
+    const wordmark = `<a class="wordmark" href="/" data-link aria-label="MENVA home">menva<span class="wordmark-dot">.</span></a>`;
     return `<header class="topbar">${wordmark}<nav><div class="theme-toggle-wrap"><button data-mode-toggle aria-label="Switch theme"><span class="toggle-icon"><svg class="icon-sun" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round"><circle cx="12" cy="12" r="4"/><path d="M12 2v2m0 16v2M2 12h2m16 0h2M5 5l1.5 1.5m11 11L19 19M5 19l1.5-1.5m11-11L19 5"/></svg><svg class="icon-moon" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round"><path d="M20.5 14A8.5 8.5 0 0 1 10 3.5 8.5 8.5 0 1 0 20.5 14Z"/></svg></span></button></div></nav></header>`;
   }
 
   // ─── Cheffy cameo (only when the restaurant config enables it) ─
   function cheffy(pose, text) {
     return `<div class="cheffy-cameo"><img src="/assets/cheffy/${pose}.webp" alt="Cheffy" width="42" height="52"><p><span>Cheffy</span>${text}</p></div>`;
+  }
+
+  // ─── Motion: scroll reveal ──────────────────────────────────────
+  // Section/card arrival: fade + rise, staggered, once per element. Content is visible even if this
+  // never runs (the opacity:0 start only applies under html.js-motion). Reduced motion: skip entirely.
+  const REVEAL_SELECTOR = '.dish-card, .dish-row, .home-pilot, .home-how, .menu-heading';
+  function initMotion(root) {
+    const reduced = matchMedia('(prefers-reduced-motion: reduce)').matches;
+    document.documentElement.classList.toggle('js-motion', !reduced);
+    if (reduced) return;
+
+    const targets = [...root.querySelectorAll(REVEAL_SELECTOR)];
+    if (!targets.length) return;
+
+    // Stagger within each parent group, capped at 6 steps.
+    const counts = new Map();
+    targets.forEach(el => {
+      const n = counts.get(el.parentElement) || 0;
+      el.style.setProperty('--i', Math.min(n, 6));
+      counts.set(el.parentElement, n + 1);
+    });
+
+    const io = new IntersectionObserver((entries) => {
+      entries.forEach(entry => {
+        if (!entry.isIntersecting) return;
+        entry.target.classList.add('is-in');
+        io.unobserve(entry.target);
+      });
+    }, { threshold: 0.15 });
+
+    const vh = window.innerHeight || document.documentElement.clientHeight;
+    targets.forEach(el => {
+      const rect = el.getBoundingClientRect();
+      // Already on screen at render time: reveal at once, no need to wait on a scroll trip.
+      if (rect.top < vh && rect.bottom > 0) el.classList.add('is-in');
+      else io.observe(el);
+    });
+
+    // "See it on your table" shimmer runs only while its card is actually in view.
+    const marks = root.querySelectorAll('.see-mark');
+    if (marks.length) {
+      const io2 = new IntersectionObserver((entries) => {
+        entries.forEach(entry => entry.target.classList.toggle('in-view', entry.isIntersecting));
+      }, { threshold: 0.4 });
+      marks.forEach(el => io2.observe(el));
+    }
+  }
+
+  // ─── Motion: card tilt toward the cursor (fine pointer + hover only) ───
+  function initTilt(root) {
+    const reduced = matchMedia('(prefers-reduced-motion: reduce)').matches;
+    if (reduced || !matchMedia('(hover: hover) and (pointer: fine)').matches) return;
+    root.querySelectorAll('.dish-card .dish-photo, .pilot-dishes .pilot-dish-photo').forEach(el => {
+      el.addEventListener('pointermove', (e) => {
+        const r = el.getBoundingClientRect();
+        const px = (e.clientX - r.left) / r.width - 0.5;
+        const py = (e.clientY - r.top) / r.height - 0.5;
+        el.style.setProperty('--tilt-y', `${(px * 8).toFixed(2)}deg`);
+        el.style.setProperty('--tilt-x', `${(py * -8).toFixed(2)}deg`);
+      });
+      el.addEventListener('pointerleave', () => {
+        el.style.setProperty('--tilt-x', '0deg');
+        el.style.setProperty('--tilt-y', '0deg');
+      });
+    });
   }
 
   // ─── Brand page (/) — no 3D ───────────────────────────────────
@@ -68,7 +131,7 @@
     const name = esc(pilot?.name || 'Gauchos');
     const dishes = (pilot?.dishes || []).filter(d => d.has3d).slice(0, 3);
 
-    app.innerHTML = header(false) + `<main class="home">
+    app.innerHTML = header() + `<main class="home">
       <section class="home-hero">
         <p class="overline">MENVA</p>
         <h1>See it. Then <em>order it.</em></h1>
@@ -100,6 +163,9 @@
         </ol>
       </section>
     </main>` + footer;
+
+    initMotion(app);
+    initTilt(app);
   }
 
   // ─── Restaurant Page ──────────────────────────────────────────
@@ -127,7 +193,7 @@
       }).join('');
       return `<section class="menu-category" id="${catId(cat, i)}"><h3>${esc(cat)}</h3><div class="dish-grid">${dishes}</div></section>`;
     }).join('');
-    const catNav = r.categories.length > 1 ? `<nav class="cat-nav" aria-label="Menu categories"><div class="cat-nav-scroll">${r.categories.map((cat, i) => `<a href="#${catId(cat, i)}" class="cat-link">${esc(cat)}</a>`).join('')}</div></nav>` : '';
+    const catNav = r.categories.length > 1 ? `<nav class="cat-nav" aria-label="Menu categories"><div class="cat-nav-scroll"><div class="cat-nav-indicator" aria-hidden="true"></div>${r.categories.map((cat, i) => `<a href="#${catId(cat, i)}" class="cat-link">${esc(cat)}</a>`).join('')}</div></nav>` : '';
 
     // One identity block: the restaurant's own logo is the page heading (no name repeated four times),
     // the table number sits with it, and the first dish is in view sooner.
@@ -136,7 +202,7 @@
     const heading = r.logo ? `<img src="${esc(r.logo)}" alt="${name}" class="restaurant-logo-svg" width="200" height="80">` : name;
     const subtitle = r.showCheffy ? cheffy('wave', esc(r.menuSubtitle)) : `<span>${esc(r.menuSubtitle || '')}</span>`;
 
-    app.innerHTML = header(false) + `<main class="restaurant-page${isGauchos ? ' gauchos-page' : ''}">
+    app.innerHTML = header() + `<main class="restaurant-page${isGauchos ? ' gauchos-page' : ''}">
       <section class="restaurant-cover${isGauchos ? ' gauchos-cover' : ''}">
         <div class="cover-card">
           <h1 class="cover-heading">${heading}</h1>
@@ -162,9 +228,23 @@
       btn.addEventListener('click', () => openDish(r.dishes.find(d => d.id === btn.dataset.dish), btn));
     });
 
-    // Highlight the category currently in view in the sticky nav.
+    // Highlight the category currently in view in the sticky nav; the active fill slides to it.
     const navLinks = app.querySelectorAll('.cat-link');
     if (navLinks.length) {
+      const indicator = app.querySelector('.cat-nav-indicator');
+      const moveIndicator = (link) => {
+        if (!indicator || !link) return;
+        indicator.style.setProperty('--indicator-x', `${link.offsetLeft}px`);
+        indicator.style.setProperty('--indicator-w', `${link.offsetWidth}px`);
+      };
+      const setActive = (link) => {
+        navLinks.forEach(a => a.classList.remove('active'));
+        link.classList.add('active');
+        moveIndicator(link);
+      };
+      setActive(navLinks[0]);
+      window.addEventListener('resize', () => moveIndicator(app.querySelector('.cat-link.active')));
+
       const byId = new Map();
       navLinks.forEach(a => byId.set(a.getAttribute('href').slice(1), a));
       const io = new IntersectionObserver((entries) => {
@@ -172,14 +252,16 @@
           const link = byId.get(entry.target.id);
           if (!link) return;
           if (entry.isIntersecting) {
-            navLinks.forEach(a => a.classList.remove('active'));
-            link.classList.add('active');
+            setActive(link);
             link.scrollIntoView({ block: 'nearest', inline: 'center', behavior: 'instant' });
           }
         });
       }, { rootMargin: '-40% 0px -55% 0px' });
       app.querySelectorAll('.menu-category').forEach(sec => io.observe(sec));
     }
+
+    initMotion(app);
+    initTilt(app);
 
     const dialog = app.querySelector('dialog');
     dialog.querySelector('.close-dialog').addEventListener('click', () => dialog.close());
@@ -471,7 +553,7 @@
   function notFound(msg) {
     document.title = 'Not found — MENVA';
     document.body.dataset.theme = 'default';
-    app.innerHTML = header(true) + `<main class="brand-page">
+    app.innerHTML = header() + `<main class="brand-page">
       <h1>${esc(msg)}</h1>
       <p>Scan the code on your table again, or ask your server for the menu link.</p>
       <a href="/" data-link class="product-action">Go to MENVA ${arrow}</a>
@@ -482,7 +564,7 @@
   function dataUnavailable() {
     document.title = 'MENVA';
     document.body.dataset.theme = 'default';
-    app.innerHTML = header(false) + `<main class="brand-page">
+    app.innerHTML = header() + `<main class="brand-page">
       <h1>The menu didn't load.</h1>
       <p>This usually means the connection dropped. Check the wifi or mobile data, then try again.</p>
       <button type="button" class="product-action" id="retry">Try again ${arrow}</button>
