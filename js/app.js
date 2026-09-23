@@ -119,8 +119,8 @@
           </div>
         </div>
       </section>
-      ${catNav}
       <p class="menu-intro">${esc(r.description)}</p>
+      ${catNav}
       <section class="menu-section">
         <div class="menu-heading"><h2>${esc(r.menuTitle || 'Menu')}</h2>${subtitle}</div>
         ${menuHTML}

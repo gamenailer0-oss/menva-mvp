@@ -468,7 +468,7 @@ dialog[open] {
   margin: 0 0 8px;
   color: var(--ink);
 }
-.detail-price {
+.dish-detail > .detail-price {
   font-size: var(--text-base);
   color: var(--accent);
   padding-bottom: 16px;
@@ -501,7 +501,7 @@ dialog[open] {
 .fact dd { color: var(--ink); }
 .fact-unconfirmed dd,
 p.fact-unconfirmed { color: var(--muted); font-style: italic; }
-.detail-price.fact-unconfirmed { color: var(--muted); font-style: italic; }
+.dish-detail > .detail-price.fact-unconfirmed { color: var(--muted); font-style: italic; }
 .spice { color: var(--accent); letter-spacing: 2px; }
 
 details.nutrition {
