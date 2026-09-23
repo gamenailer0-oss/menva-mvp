@@ -3,6 +3,8 @@
 // Run: npm run build && npm test
 import { defineConfig } from '@playwright/test';
 
+const PORT = Number(process.env.PORT || 8080); // PORT=8090 npm test — to run beside another server
+
 export default defineConfig({
   testDir: 'tests',
   testMatch: '*.spec.mjs',
@@ -10,7 +12,7 @@ export default defineConfig({
   workers: 2,
   reporter: [['list']],
   use: {
-    baseURL: 'http://localhost:8080',
+    baseURL: `http://localhost:${PORT}`,
     channel: 'chrome',
     viewport: { width: 390, height: 844 },
     serviceWorkers: 'block', // each test starts clean; the offline test opts back in
@@ -18,7 +20,7 @@ export default defineConfig({
   },
   webServer: {
     command: 'node scripts/serve.mjs',
-    port: 8080,
+    port: PORT,
     reuseExistingServer: true,
   },
 });
