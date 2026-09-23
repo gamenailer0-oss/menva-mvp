@@ -1,0 +1,15 @@
+{
+  "name": "menva-mvp",
+  "private": true,
+  "type": "module",
+  "description": "MENVA tooling only (asset pipeline, QR, tests). The app itself has no bundler.",
+  "scripts": {
+    "audit": "node scripts/audit.mjs"
+  },
+  "devDependencies": {
+    "@gltf-transform/core": "4.5.0",
+    "@gltf-transform/extensions": "4.5.0",
+    "@gltf-transform/functions": "4.5.0",
+    "three": "0.186.0"
+  }
+}
