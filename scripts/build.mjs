@@ -13,13 +13,16 @@ const ROOT = path.resolve(path.dirname(fileURLToPath(import.meta.url)), '..');
 const DIST = path.join(ROOT, 'dist');
 
 // Everything public. Anything not listed here (CLAUDE.md, scripts/, incoming-models/, data/dishes.csv, …) stays private.
-const PUBLIC = ['index.html', 'sw.js', 'robots.txt', 'css', 'js', 'assets', 'vendor', 'data/build', 'stats'];
+const PUBLIC = ['index.html', 'sw.js', 'robots.txt', 'css', 'js', 'assets', 'vendor', 'stats'];
+// Published under a different path than the source: Netlify's drag-and-drop upload skipped the
+// data/build/ folder, which left the live site without its menu.
+const RENAMED = { 'data/build/dishes.json': 'data/menu.json' };
 
 fs.rmSync(DIST, { recursive: true, force: true });
 const hash = crypto.createHash('sha256');
 let count = 0;
 
-function copy(rel) {
+function copy(rel, dest = rel) {
   const from = path.join(ROOT, rel);
   if (!fs.existsSync(from)) return;
   if (fs.statSync(from).isDirectory()) {
@@ -27,7 +30,7 @@ function copy(rel) {
     return;
   }
   if (path.basename(rel) === 'meta.json') return; // pipeline internals, read by build-data only
-  const to = path.join(DIST, rel);
+  const to = path.join(DIST, dest);
   fs.mkdirSync(path.dirname(to), { recursive: true });
   fs.copyFileSync(from, to);
   hash.update(rel).update(fs.readFileSync(from));
@@ -38,7 +41,11 @@ if (!fs.existsSync(path.join(ROOT, 'vendor', 'model-viewer.min.js'))) {
   console.error('vendor/ is missing — run `npm run vendor` first.');
   process.exit(1);
 }
-PUBLIC.forEach(copy);
+PUBLIC.forEach((rel) => copy(rel));
+for (const [from, to] of Object.entries(RENAMED)) {
+  if (!fs.existsSync(path.join(ROOT, from))) { console.error(`${from} is missing — run npm run build-data.`); process.exit(1); }
+  copy(from, to);
+}
 
 // Drag-and-drop deploys ignore netlify.toml, so mirror its headers/redirects as _headers/_redirects.
 const headers = [], redirects = [];

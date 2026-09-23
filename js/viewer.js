@@ -19,8 +19,9 @@
 
   // Fetch a file to warm the cache, reporting (loadedBytes, totalBytes). `size` is the known
   // uncompressed size — Content-Length is the compressed size when the host gzips.
-  async function download(url, size, onBytes) {
-    const res = await fetch(url);
+  // signal: an AbortSignal — the dish sheet cancels its model download when the diner closes it.
+  async function download(url, size, onBytes, signal) {
+    const res = await fetch(url, { signal });
     if (!res.ok) throw new Error(`${url}: ${res.status}`);
     const total = size || (!res.headers.get('content-encoding') && +res.headers.get('content-length')) || 0;
     if (!res.body) { await res.arrayBuffer(); onBytes?.(total, total); return; }

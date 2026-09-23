@@ -663,6 +663,132 @@ footer small {
   color: var(--muted);
 }
 
+/* ═══ Home (/) — hero, the pilot restaurant with real dishes, how it works ═══ */
+.home {
+  max-width: 1040px;
+  margin: 0 auto;
+  padding: 0 20px 56px;
+}
+.home-hero {
+  display: flex;
+  flex-direction: column;
+  gap: 14px;
+  padding: 48px 0 40px;
+  max-width: 620px;
+}
+.home-hero h1 {
+  font-size: var(--text-hero);
+  line-height: 1.05;
+  letter-spacing: -0.02em;
+}
+.home-hero h1 em { color: var(--accent); font-style: italic; }
+.home-hero > p:not(.overline) {
+  font-size: var(--text-lg);
+  line-height: 1.5;
+  color: var(--muted);
+  max-width: 38ch;
+}
+.home-hero .product-action { align-self: flex-start; margin-top: 10px; }
+
+.home-pilot {
+  padding: 32px 0 36px;
+  border-top: 1px solid var(--line);
+}
+.home-pilot > .overline { margin-bottom: 14px; }
+.pilot-card {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  gap: 16px;
+  padding: 18px 20px;
+  background: var(--cover-paper);
+  border: 1px solid var(--gold);
+  outline: 1px solid var(--gold);
+  outline-offset: 3px;
+  border-radius: var(--radius);
+  color: var(--cover-ink);
+  min-height: 44px;
+}
+.pilot-logo { width: min(160px, 45%); height: auto; }
+.pilot-name { font-family: var(--font-display); font-size: var(--text-xl); }
+.pilot-where {
+  font-size: var(--text-xs);
+  letter-spacing: 0.12em;
+  text-transform: uppercase;
+  color: #5E5247;
+  text-align: right;
+}
+.pilot-dishes {
+  display: grid;
+  grid-template-columns: repeat(3, minmax(0, 1fr));
+  gap: 14px;
+  margin-top: 20px;
+}
+.pilot-dishes a { display: block; min-height: 44px; }
+.pilot-dish-photo {
+  display: block;
+  aspect-ratio: 4 / 3;
+  border-radius: var(--radius-sm);
+  overflow: hidden;
+  background: var(--stage) center / cover no-repeat;
+}
+.pilot-dish-photo img { width: 100%; height: 100%; object-fit: cover; transition: transform 400ms var(--ease); }
+.pilot-dishes a:hover img { transform: scale(1.03); }
+.pilot-dish-name {
+  display: block;
+  margin-top: 8px;
+  font-family: var(--font-display);
+  font-size: var(--text-base);
+  line-height: 1.25;
+  color: var(--ink);
+}
+.pilot-more {
+  display: inline-flex;
+  align-items: center;
+  gap: 8px;
+  min-height: 44px;
+  margin-top: 16px;
+  color: var(--accent);
+  font-weight: 500;
+  font-size: var(--text-sm);
+}
+.pilot-more svg { width: 18px; height: 18px; flex: none; }
+
+.home-how {
+  padding: 32px 0 8px;
+  border-top: 1px solid var(--line);
+}
+.home-how h2 { font-size: var(--text-xl); margin-bottom: 16px; }
+.home-how ol {
+  display: grid;
+  grid-template-columns: repeat(3, minmax(0, 1fr));
+  gap: 24px;
+  counter-reset: step;
+  list-style: none;
+}
+.home-how li {
+  counter-increment: step;
+  font-size: var(--text-sm);
+  line-height: 1.6;
+  color: var(--muted);
+}
+.home-how li::before {
+  content: counter(step);
+  display: block;
+  font-family: var(--font-display);
+  font-size: var(--text-xl);
+  color: var(--gold);
+  margin-bottom: 6px;
+}
+.home-how strong { display: block; color: var(--ink); font-weight: 500; margin-bottom: 2px; }
+
+@media (max-width: 640px) {
+  .home-hero { padding: 32px 0 32px; }
+  .pilot-dishes { grid-template-columns: repeat(3, minmax(0, 1fr)); gap: 10px; }
+  .pilot-dish-name { font-size: var(--text-sm); }
+  .home-how ol { grid-template-columns: 1fr; gap: 18px; }
+}
+
 /* ═══ Responsive ═══ */
 @media (max-width: 1000px) {
   .listing-details { gap: 28px; }

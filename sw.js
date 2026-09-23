@@ -2,7 +2,7 @@
  * MENVA — service worker.
  *  - /vendor, /assets: cache-first (immutable — URLs change when content changes)
  *  - /css, /js: stale-while-revalidate (instant from cache, refreshed in the background)
- *  - /data/build/*: network-first (menu data must be current; cache only as offline fallback)
+ *  - /data/*: network-first (menu data must be current; cache only as offline fallback)
  *  - page navigations: network-first, falling back to the cached app shell when offline
  * .usdz and Range requests are left to the browser: Quick Look and media fetches need the raw network path.
  */
@@ -13,7 +13,7 @@ const SHELL = '/index.html';
 
 const IMMUTABLE = /^\/(vendor|assets)\//;
 const STATIC = /^\/(css|js)\//;
-const DATA = /^\/data\/build\//;
+const DATA = /^\/data\//;
 
 self.addEventListener('install', (event) => {
   event.waitUntil(caches.open(STATIC_CACHE).then((c) => c.add(SHELL)).then(() => self.skipWaiting()));

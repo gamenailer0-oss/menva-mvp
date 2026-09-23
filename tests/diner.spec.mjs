@@ -88,15 +88,15 @@ test('bad and old links still land somewhere useful', async ({ page }) => {
   await expect(page.locator('h1')).toHaveText('Page not found');
 
   await page.goto('/');
-  await page.getByRole('link', { name: /See the Gauchos menu/ }).click();
+  await page.getByRole('link', { name: /Open the Gauchos menu/ }).click();
   await expect(page).toHaveURL(/\/g$/);
 });
 
 test('menu data down: a calm message and a retry that works', async ({ page }) => {
-  await page.route('**/data/build/dishes.json', (r) => r.fulfill({ status: 500, body: 'oops' }));
+  await page.route('**/data/menu.json', (r) => r.fulfill({ status: 500, body: 'oops' }));
   await page.goto('/g/12');
   await expect(page.locator('h1')).toHaveText("The menu didn't load.");
-  await page.unroute('**/data/build/dishes.json');
+  await page.unroute('**/data/menu.json');
   await page.getByRole('button', { name: /Try again/ }).click();
   await expect(page.locator('.dish-card')).toHaveCount(4);
   await expect(page.locator('.table-chip')).toHaveText('Table 12');

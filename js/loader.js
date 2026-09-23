@@ -105,7 +105,7 @@
     // Stalled > 6 s below 40%: show the 360° sprite until the model arrives.
     let reported = false;
     const timer = setInterval(() => {
-      if (done || !root.isConnected || stage.dataset.state === 'still') return clearInterval(timer);
+      if (done || !stage.isConnected || stage.dataset.state === 'still') return clearInterval(timer);
       const idle = Date.now() - last;
       const downloading = p < 0.95; // after that it's parsing, not a network stall
       if (!reported && downloading && idle > 4000) { reported = true; opts.onStall?.(); }

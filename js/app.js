@@ -1,7 +1,7 @@
 /**
  * MENVA — Main Application
  * Path-routed SPA (History API): /  ·  /g  ·  /g/:table  ·  /:restaurant/:table
- * Menu data comes only from /data/build/dishes.json (built from data/dishes.csv).
+ * Menu data comes only from /data/menu.json (built from data/dishes.csv).
  * Native <dialog> for the dish sheet. model-viewer is loaded lazily from /vendor (js/viewer.js).
  * touch-action: pan-y on all model-viewer elements.
  */
@@ -15,7 +15,7 @@
   const arIcon = '<svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round"><path d="M3 7V5a2 2 0 0 1 2-2h2M17 3h2a2 2 0 0 1 2 2v2M21 17v2a2 2 0 0 1-2 2h-2M7 21H5a2 2 0 0 1-2-2v-2"/><path d="M7 12h10M7 8h10M7 16h6"/></svg>';
 
   const TABLE_KEY = 'menva.table';
-  const DATA_URL = '/data/build/dishes.json';
+  const DATA_URL = '/data/menu.json';
 
   let data = null;
   let activeRestaurant = null;
@@ -62,13 +62,43 @@
   function brandPage() {
     document.title = 'MENVA — See it before you order it';
     document.body.dataset.theme = 'default';
+    // The pilot's link never depends on the menu data loading: /g is the Gauchos menu.
     const pilot = data?.restaurants.find(r => r.pilot);
-    app.innerHTML = header(false) + `<main class="brand-page">
-      <p class="overline">MENVA</p>
-      <h1>See it. Then <em>order it.</em></h1>
-      <p>Scan the code on your table to see a real dish, then place it on your table in AR.</p>
-      ${pilot ? `<a class="product-action" href="/${esc(pilot.slug)}" data-link>See the ${esc(pilot.name)} menu ${arrow}</a>
-      <p class="brand-note">Now piloting at ${esc(pilot.name)}, ${esc(pilot.area)}, ${esc(pilot.location)}.</p>` : ''}
+    const slug = esc(pilot?.slug || 'g');
+    const name = esc(pilot?.name || 'Gauchos');
+    const dishes = (pilot?.dishes || []).filter(d => d.has3d).slice(0, 3);
+
+    app.innerHTML = header(false) + `<main class="home">
+      <section class="home-hero">
+        <p class="overline">MENVA</p>
+        <h1>See it. Then <em>order it.</em></h1>
+        <p>Real dishes, scanned at the restaurant. Look before you order — then place the dish on your own table, true to size.</p>
+        <a class="product-action" href="/${slug}" data-link>Open the ${name} menu ${arrow}</a>
+      </section>
+
+      <section class="home-pilot" aria-labelledby="pilot-heading">
+        <p class="overline" id="pilot-heading">Now at</p>
+        <a class="pilot-card" href="/${slug}" data-link>
+          ${pilot?.logo ? `<img src="${esc(pilot.logo)}" alt="${name}" width="200" height="80" class="pilot-logo">` : `<span class="pilot-name">${name}</span>`}
+          <span class="pilot-where">${esc(pilot?.area || 'Gulberg III')} · ${esc(pilot?.location || 'Lahore')}</span>
+        </a>
+        ${dishes.length ? `<ul class="pilot-dishes">${dishes.map(d => `
+          <li><a href="/${slug}?dish=${esc(d.id)}" data-link>
+            <span class="pilot-dish-photo" style="background-image:url('${d.assets.blur}')"><img src="${esc(d.assets.poster)}" alt="" width="1200" height="900" loading="lazy" decoding="async"></span>
+            <span class="pilot-dish-name">${esc(d.name)}</span>
+          </a></li>`).join('')}
+        </ul>` : ''}
+        <a class="pilot-more" href="/${slug}" data-link>See the full menu ${arrow}</a>
+      </section>
+
+      <section class="home-how" aria-labelledby="how-heading">
+        <h2 id="how-heading">How it works</h2>
+        <ol>
+          <li><strong>Scan the code on your table.</strong> The menu opens on your phone — no app to install.</li>
+          <li><strong>Tap a dish.</strong> The real dish comes into focus; turn it around with a finger.</li>
+          <li><strong>See it on your table.</strong> Place it in front of you at its true size, then decide.</li>
+        </ol>
+      </section>
     </main>` + footer;
   }
 
@@ -254,11 +284,14 @@
     const say = (text) => { status.textContent = text; };
     const spin = a.spin ? { url: a.spin, layout: a.spinLayout } : null;
     const openedAt = performance.now();
+    // This sheet's own stage: timers and events from a sheet the diner already closed must not
+    // touch the next dish's sheet (#dish-content is reused).
+    const stage = content.querySelector('.dish-stage');
     let tier = null;
     const setTier = (t, reason) => {
-      if (t === tier) return;
+      if (t === tier || !stage.isConnected) return;
       tier = t;
-      content.querySelector('.dish-stage').dataset.tier = t;
+      stage.dataset.tier = t;
       MenvaTrack('tier_assigned', { dish: dish.id, tier: t, ...(reason && { reason }) });
     };
 
@@ -308,7 +341,11 @@
       setTier(spin ? 4 : 5, 'failed');
     };
 
-    const glbReady = MenvaViewer.download(glbUrl, a.glbBytes, bytes('glb')).then(() => true, () => false);
+    // Closing the sheet cancels this model's download, so flicking through dishes on slow wifi
+    // doesn't pile up downloads ahead of the one the diner actually wants.
+    const abort = new AbortController();
+    dialog.addEventListener('close', () => abort.abort(), { once: true });
+    const glbReady = MenvaViewer.download(glbUrl, a.glbBytes, bytes('glb'), abort.signal).then(() => true, () => false);
     try {
       await MenvaViewer.load(bytes('viewer')); // self-hosted, lazy: only when the first dish sheet opens
     } catch {
@@ -404,11 +441,25 @@
         if (firstRoute && tablePart) MenvaTrack('scan'); // arrived from a table QR code
         MenvaTrack('menu_view');
         restaurantPage(r, table);
+        openLinkedDish(r);
       }
     }
 
     firstRoute = false;
     window.scrollTo({ top: 0, behavior: 'instant' });
+  }
+
+  // /g?dish=<id> (e.g. from the home page) opens that dish's sheet over the menu. The parameter is
+  // dropped afterwards so a reload shows the menu; ?tier= and ?slow= are kept.
+  function openLinkedDish(r) {
+    const params = new URLSearchParams(location.search);
+    const id = params.get('dish');
+    if (!id) return;
+    params.delete('dish');
+    history.replaceState(null, '', location.pathname + (params.size ? `?${params}` : ''));
+    const dish = r.dishes.find(d => d.id === id);
+    const card = app.querySelector(`[data-dish="${CSS.escape(id)}"]`);
+    if (dish && card) openDish(dish, card);
   }
 
   function navigate(path) {

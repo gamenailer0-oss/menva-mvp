@@ -67,7 +67,7 @@
     Cache-Control = "public, max-age=0, must-revalidate"
 
 [[headers]]
-  for = "/data/build/*"
+  for = "/data/*"
   [headers.values]
     Cache-Control = "public, max-age=0, must-revalidate"
 
