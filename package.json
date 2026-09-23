@@ -6,10 +6,11 @@
   "scripts": {
     "audit": "node scripts/audit.mjs",
     "vendor": "node scripts/vendor.mjs",
-    "build": "node scripts/build.mjs",
+    "build": "node scripts/build-data.mjs && node scripts/build.mjs",
     "serve": "node scripts/serve.mjs",
     "pipeline": "node scripts/pipeline.mjs",
-    "usdz-validate": "node scripts/usdz-validate.mjs"
+    "usdz-validate": "node scripts/usdz-validate.mjs",
+    "build-data": "node scripts/build-data.mjs"
   },
   "devDependencies": {
     "@fontsource/dm-sans": "5.3.0",

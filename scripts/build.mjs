@@ -13,7 +13,7 @@ const ROOT = path.resolve(path.dirname(fileURLToPath(import.meta.url)), '..');
 const DIST = path.join(ROOT, 'dist');
 
 // Everything public. Anything not listed here (CLAUDE.md, scripts/, incoming-models/, data/dishes.csv, …) stays private.
-const PUBLIC = ['index.html', 'sw.js', 'robots.txt', 'css', 'js', 'assets', 'vendor', 'models', 'data/build', 'stats'];
+const PUBLIC = ['index.html', 'sw.js', 'robots.txt', 'css', 'js', 'assets', 'vendor', 'data/build', 'stats'];
 
 fs.rmSync(DIST, { recursive: true, force: true });
 const hash = crypto.createHash('sha256');
@@ -26,6 +26,7 @@ function copy(rel) {
     for (const name of fs.readdirSync(from).sort()) copy(path.join(rel, name));
     return;
   }
+  if (path.basename(rel) === 'meta.json') return; // pipeline internals, read by build-data only
   const to = path.join(DIST, rel);
   fs.mkdirSync(path.dirname(to), { recursive: true });
   fs.copyFileSync(from, to);

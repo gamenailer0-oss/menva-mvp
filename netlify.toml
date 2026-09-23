@@ -34,11 +34,6 @@
   [headers.values]
     Cache-Control = "public, max-age=31536000, immutable"
 
-[[headers]]
-  for = "/models/*"
-  [headers.values]
-    Cache-Control = "public, max-age=31536000, immutable"
-
 # Always revalidate: the app shell, menu data and the service worker itself.
 [[headers]]
   for = "/index.html"

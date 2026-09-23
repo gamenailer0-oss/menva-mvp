@@ -1,6 +1,6 @@
 /**
  * MENVA — service worker.
- *  - /vendor, /assets, /models: cache-first (immutable — URLs change when content changes)
+ *  - /vendor, /assets: cache-first (immutable — URLs change when content changes)
  *  - /css, /js: stale-while-revalidate (instant from cache, refreshed in the background)
  *  - /data/build/*: network-first (menu data must be current; cache only as offline fallback)
  *  - page navigations: network-first, falling back to the cached app shell when offline
@@ -11,7 +11,7 @@ const IMMUTABLE_CACHE = 'menva-immutable-v1';
 const STATIC_CACHE = `menva-static-${BUILD}`;
 const SHELL = '/index.html';
 
-const IMMUTABLE = /^\/(vendor|assets|models)\//;
+const IMMUTABLE = /^\/(vendor|assets)\//;
 const STATIC = /^\/(css|js)\//;
 const DATA = /^\/data\/build\//;
 

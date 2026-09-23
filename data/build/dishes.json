@@ -1,0 +1,201 @@
+{
+  "generated": "2026-09-23T13:38:27.314Z",
+  "restaurants": [
+    {
+      "id": "gauchos",
+      "slug": "g",
+      "name": "Gauchos",
+      "displayName": "Gauchos",
+      "logo": "/assets/restaurant/gauchos-logo.svg",
+      "theme": "gauchos",
+      "pilot": true,
+      "cuisine": "Steakhouse",
+      "tagline": "Argentine-inspired · Oakwood-smoked · Lahore",
+      "area": "Gulberg III",
+      "location": "Lahore",
+      "address": "56-B3 Mian Mehmood Ali Kasuri Rd, Block B3, Gulberg III, Lahore",
+      "website": "https://gauchos.com.pk/",
+      "description": "Argentine-inspired steakhouse in the heart of Gulberg. Supreme cuts, oakwood-smoked brisket, and signature sauces — crafted with intention.",
+      "menuTitle": "The Cuts",
+      "menuSubtitle": "Asado · Parrilla · See it on your table",
+      "showCheffy": false,
+      "loaderLines": [
+        {
+          "until": 25,
+          "text": "Firing up the grill"
+        },
+        {
+          "until": 60,
+          "text": "Searing your cut"
+        },
+        {
+          "until": 90,
+          "text": "Letting it rest"
+        },
+        {
+          "until": 100,
+          "text": "Plating it for you"
+        },
+        {
+          "loaded": true,
+          "text": "Served."
+        }
+      ],
+      "categories": [
+        "Signature Cuts",
+        "Sandwiches",
+        "Starters"
+      ],
+      "dishes": [
+        {
+          "id": "steak-main",
+          "restaurant": "gauchos",
+          "name": "Premium Ribeye Steak",
+          "category": "Signature Cuts",
+          "price_pkr": 3495,
+          "description": "Oakwood-grilled ribeye with supreme marbling. Served with sautéed vegetables and steak fries.",
+          "ingredients": null,
+          "allergens": null,
+          "halal": "unconfirmed",
+          "spice_level": null,
+          "dietary": null,
+          "nutrition": null,
+          "has3d": true,
+          "assets": {
+            "glb": "/assets/dishes/steak-main/model.glb?v=3add196f698d",
+            "usdz": "/assets/dishes/steak-main/model.usdz?v=1e758865f2bb",
+            "poster": "/assets/dishes/steak-main/poster.webp?v=b9a624a54e3c",
+            "blur": "data:image/webp;base64,UklGRuICAABXRUJQVlA4WAoAAAAQAAAAHwAAFwAAQUxQSEcBAAABkGvbtmIp+9yqet24Rxa5O7G7fIFD5g6ZE9ERg4zUXWOXyN1Td7c652ykqu77hIiYAACQIAhpAgBZKwTESkDLhR0hqPWYvfP68ylIYgK2nfp0ZPCaXTdz0vl5DJJqkmw1qvN/y035bRLSSh1uueXunufqJGl8OxJJlRYPqaxufDESSVnAOloEjS8HICkRdL5Pi6DyaU8kRQhYHEfl0+5IiwSdrtJimPNuNyQFEMykRzHnw7EIBUCzQ7QoquskJAUBwz7So/ibV1pB/kPADmoclUczyH+CXs/oUaY/uasIAeup1VyVzhfbE5R2uUkrc1Wnv7y8ZVAmJYIFdC9QJfnr/IpBLQFBuXQ4TSVNzfn1atPYtgAEVQUzfltupN1qGtUegCA2NN9P5etz8zsJIII6yrDDhxf3boSICOoqtYYASBDUX0IQxAMAVlA4IHQBAABwBwCdASogABgAPtFSoUuoJKMhsAgBABoJbAC7MzQ1xf/2SQjQNm/qDfqRuoA4qO+ImC/o2cSsSwzzmUniQ10GW8hJQAD+yHQ4v4JqbU8/8ph4ZxuUxvScqEPkTOdhnxsxTamENQufvz2sjUIFz3XsO69nGsvIFYzYCEx+Cv9n4vW8R55Ooytr+igfH6GVZaD9gw6rFjHqMI94g+YAH4hgoWYBQE41UUpPSvwaJanHVmrtpn93nREbh0aIK/aWl38PsWypwUJZIcc5OCYiBQyUA5JnGy+qpO4Y2PiKNg+/jcnq5sHbTa0jnXw35RR/dTJrz/S3bSkhkAvg/Ee+8JwWu43vPH/28bX98/G22bwyTWbgVxy48bpt7p8Am+xJS2zFxrhEXHf7CEPOafjZIJt7X8D/F1Rxspv4I0fCPPFdYko9vYjp77uGE//dLB8v78l+/5H1/5pl73/PqPEVysTP5M//ubZ30/3VP2v/NdNwxR4AAAA=",
+            "spin": "/assets/dishes/steak-main/spin.webp?v=0500f08d9a52",
+            "spinLayout": {
+              "frames": 36,
+              "frameWidth": 480,
+              "frameHeight": 360,
+              "columns": 6,
+              "rows": 6,
+              "quality": 40
+            },
+            "posterIsPhoto": false
+          },
+          "dimensions_cm": {
+            "width": 29.5,
+            "height": 9.4,
+            "depth": 42.5
+          },
+          "confirmed_by": null
+        },
+        {
+          "id": "steak-sandwich",
+          "restaurant": "gauchos",
+          "name": "Signature Steak Sandwich",
+          "category": "Sandwiches",
+          "price_pkr": 1295,
+          "description": "Tender sliced steak layered with fresh greens, house aioli, and artisan bread.",
+          "ingredients": null,
+          "allergens": null,
+          "halal": "unconfirmed",
+          "spice_level": null,
+          "dietary": null,
+          "nutrition": null,
+          "has3d": true,
+          "assets": {
+            "glb": "/assets/dishes/steak-sandwich/model.glb?v=77d580b30f7f",
+            "usdz": "/assets/dishes/steak-sandwich/model.usdz?v=33430d189dd9",
+            "poster": "/assets/dishes/steak-sandwich/poster.webp?v=f1dbf883b6bf",
+            "blur": "data:image/webp;base64,UklGRqYCAABXRUJQVlA4WAoAAAAQAAAAHwAAFwAAQUxQSDABAAABkHLbtrKtK9r33tc+d8NdIs2SJXe35DSqZ+ju7lAdEkR3ors7z7lnf3qedxARE4COIYOOmeoKwGWCQxGzFaMObb3+9tXMfABcxqWZsvvGm8iO8uzypuE5+GDxGJpQqUkiGiNJvbuqFMHU/T2TyE41SqLKO6MRuoLDWlXtrFMRymr4ruDCNSYmUoRLEbrymJBQ1MTID4PguwDCHqqqiQk3IxhczcS9X6mmyJswO4Sx76i2Z6VwBnjUvGS0Pc3aAlYz0iq8DLvDeUqKU3AmjzUUNaj+mgBvgms8QIMKN2Y9UmbrtzN2psILfbNI69zg11SSUSLPDS1FOvT5Somiyu9b+haQPmA8laS+Oj61JoeizOPvlw8PLhvdnA8obvOS+eOG9awpZByKnKuoKstn8J8DVlA4IFABAAAwBwCdASogABgAPtFUoUuoJKMhsAgBABoJbAC298JAi7ql2CyBMuaQ6OjcMKvfeyUwCSK8Xolv7UIXq/KpphI7uIAA/sWQ1j323nGliX+ZtiSJLpKNFkPf6xdH3w6gU7U8dNH90IyMLqGtQ/5gpqzqGi9visNNs7hGjRulZRL9iGc9O6Am5dZLZhSBtOns44Kzz0l90ScFsUOJueYOM5QVoii9e3kRs5fLEK09Ypq7POtPXynvsbzeeDrQ5fp6o14aCJgTFMMSlsrNs0Bn88m7Q4Sc7CWEmbi0Fy7LEvLSWJUdYosaoiH8/7iqZ+pOx+z/3r7xjOxc1F92XZvwhEqtaUPiw/7QQf7WaazowQaxJpHs589PzyL/zEjRXPn/n6zz+OrZQDxUHRf19Mhdzv9ae6WB1sYLcNPyUXSdUypbivNwJNwWzbNx93xxA5nfoAA=",
+            "spin": "/assets/dishes/steak-sandwich/spin.webp?v=a50bd6b8601e",
+            "spinLayout": {
+              "frames": 36,
+              "frameWidth": 480,
+              "frameHeight": 360,
+              "columns": 6,
+              "rows": 6,
+              "quality": 50
+            },
+            "posterIsPhoto": false
+          },
+          "dimensions_cm": {
+            "width": 18.4,
+            "height": 6.5,
+            "depth": 27.6
+          },
+          "confirmed_by": null
+        },
+        {
+          "id": "garlic-prawn-skewers",
+          "restaurant": "gauchos",
+          "name": "Smoked Garlic Prawn Skewers",
+          "category": "Starters",
+          "price_pkr": null,
+          "description": null,
+          "ingredients": null,
+          "allergens": null,
+          "halal": "unconfirmed",
+          "spice_level": null,
+          "dietary": null,
+          "nutrition": null,
+          "has3d": true,
+          "assets": {
+            "glb": "/assets/dishes/garlic-prawn-skewers/model.glb?v=68aca1278ac2",
+            "usdz": "/assets/dishes/garlic-prawn-skewers/model.usdz?v=c0bf94c77045",
+            "poster": "/assets/dishes/garlic-prawn-skewers/poster.webp?v=6f42da4a82bf",
+            "blur": "data:image/webp;base64,UklGRtACAABXRUJQVlA4WAoAAAAQAAAAHwAAFwAAQUxQSEYBAAABkLpt2/m/8u/nfX62ZttG9JLNtDUrudte3bHmyGRXI9nW5/s+zz1/FRETgPwUgYQsBBUtAkLIjKoi6Ny21f1LEDKgCqDf4UuPr9/k2U4IaYgqdN6etU/pRhqfDkb4LxHIsAN0eip6jEz4oAnkbyKqaDT8kDPG6Px7wq1QQIIEIKDT4e+0yP813i0HCooB1DQfNeX8pyQ6/9v5pQsw9ESrZpvfPY/uznSdL1sBXVNfPzlpFtMz3i4HCi8zRnN3ph95DhKwhIkzo55wOQKk6VkmnglL8XQ1BKJ9rtOip+EWnUfbQABIcY+D3+lm5k7S3czc+W5dPQR/SnHz2Sd/0EmaGf/8+mDfkLKAfxeUtZ6x/uSj9ymS317fOrpjTt86Ffy3amXrQeNnL1qxeMboQe2blBcJ0teCgqLi0pKS4qICQd6KSJYyCVZQOCBkAQAAUAcAnQEqIAAYAD7RXqZOqCUjIigKqQAaCWwAux2Ab0aaZivA9r72byQC2Z1ZXfFYYDZxsiHQrjSU5ilhQL6whOTsAAD++qjrMh/pN/tsjHNVAkyQYGaaDR26lobQvrcw3eaMnR3qpzkXivw+rjoqgifE9M/y7Lz9FcxYUUeCLDP1NmZpR/n/dDDDrTpRE4H+COZEHNZLHeu08itO+waz25LgoSwWXTHqSxZcM4GT95pTLbJKD+iHfuM/qomks3L5z1blAL+QRF49X3d1xAmUg6a9GqMvyER1ceg3mNIuW8B7K3gAeu9mW2Xew+l6hscLlzLWN7Fdq6sKw1De7s+0dUr1mvW93nLVACru8TEh5Jv4mfvqJwJNO2vydriH/LTtjJWgnErq5mKKtVwvcV4RNb+Z5A5a5/V1+Pnv+7PYZEHAj0iXS3Ds8Lmly6RsVkB+5FvRcxOOhJ0lAdPaov7v+w1mAAA=",
+            "spin": "/assets/dishes/garlic-prawn-skewers/spin.webp?v=6f1eae720aff",
+            "spinLayout": {
+              "frames": 36,
+              "frameWidth": 480,
+              "frameHeight": 360,
+              "columns": 6,
+              "rows": 6,
+              "quality": 50
+            },
+            "posterIsPhoto": false
+          },
+          "dimensions_cm": {
+            "width": 27.6,
+            "height": 9.2,
+            "depth": 17.9
+          },
+          "confirmed_by": null
+        },
+        {
+          "id": "chicken-fajita-wrap",
+          "restaurant": "gauchos",
+          "name": "Grilled Chicken Fajita Wrap",
+          "category": "Sandwiches",
+          "price_pkr": null,
+          "description": null,
+          "ingredients": null,
+          "allergens": null,
+          "halal": "unconfirmed",
+          "spice_level": null,
+          "dietary": null,
+          "nutrition": null,
+          "has3d": true,
+          "assets": {
+            "glb": "/assets/dishes/chicken-fajita-wrap/model.glb?v=dd6a775b6612",
+            "usdz": "/assets/dishes/chicken-fajita-wrap/model.usdz?v=279238204906",
+            "poster": "/assets/dishes/chicken-fajita-wrap/poster.webp?v=b6f8460172d4",
+            "blur": "data:image/webp;base64,UklGRswCAABXRUJQVlA4WAoAAAAQAAAAHwAAFwAAQUxQSD8BAAABkGRtm2k73191bfvGatlOWm7ZbmYAGYC7tjkBG03btu2k/vqCOrvOyggiYgKQXARWkG4xGRmo7Akx6RBrLQDB+B+zCmBirDUApKDDnA1XvzmeaQIbAaCs86itd7+TpHd81AsZiTKHzt11jyS9++U86fi8PTKS1L6np7pf6hl2fNYfGakEG/ldmVz5eTgyUhi0eMAYOr7phYwQDMbT+wgqXw6CDcFgJ10M1X8bh4yQoMVNagyV30YgIwCD2Wmgqk5FRgAo2E8XReWnQTABweDv9FFU/2MCzD8Qu5guyrtfPAoJofEyNZUGyR8XZmYibDDSqYaUJH/q18NjmmRLCpisRfTq1Dnlxa33j66dNqhCBElN+Yrv9KTnwTZVXSpzAEFkRtWIBScun1w3vpmIACKItllFje0aC40g/WLECP53AFZQOCBmAQAA0AcAnQEqIAAYAD7RVKJLqCSjIbAIAQAaCWwAsR8Z4Grsz3kUr1PZ3mif67rzegB+lY7AxEBKgcYucONnp5bSR5k9/xE0QAAA/q7M3hn9+sgT4JFxH0SB0JtNwuEJSPa9O6rf3sjqM1XWN/d8ydkjBGJ1lA930CRgXAK4/mBBlXGkCv2ByDHV8DNO8eVy4wWvDP87rrrh6Nfg7NYniZlUeIt7X2PplCVCJxGReUefMPnTaxE4RbPyUzNahoLJ7sNUHOZ2JTw93N6Q84+EHYgHTEC6+i7uWmdqZb+fhvIEb5OQJT+iA3K2qKCFFfmXlYuCkYzWRLL/NC+cTFE4q9aig3O38bjXin6oSC/WSjZ04FJhvz/cgpBKvF40k4XSmhwufWVa4+by2NaSIF05+FRve5XYmztxt3ftsUjH0fSb+yLdVuiZblx2Gtws1qWGbewVaIo2r+V6BVVgHHbPYbM32tcHn1oAAA==",
+            "spin": "/assets/dishes/chicken-fajita-wrap/spin.webp?v=160d2bfd9b4b",
+            "spinLayout": {
+              "frames": 36,
+              "frameWidth": 480,
+              "frameHeight": 360,
+              "columns": 6,
+              "rows": 6,
+              "quality": 50
+            },
+            "posterIsPhoto": false
+          },
+          "dimensions_cm": {
+            "width": 29.1,
+            "height": 8.9,
+            "depth": 42.1
+          },
+          "confirmed_by": null
+        }
+      ]
+    }
+  ]
+}

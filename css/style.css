@@ -232,6 +232,20 @@
   color: var(--paper);
 }
 .dish-photo svg { width: 14px; height: 14px; }
+/* Poster thumbnails: the tiny inline blur paints instantly, the real poster fades over it */
+.dish-card .dish-photo {
+  height: auto;
+  aspect-ratio: 4 / 3;
+  background-size: cover;
+  background-position: center;
+}
+.dish-card .dish-photo > span.see-mark {
+  left: 12px;
+  right: auto;
+  font-size: var(--text-xs);
+  padding: 8px 12px;
+  min-height: 32px;
+}
 .dish-line {
   display: flex;
   align-items: baseline;
@@ -266,24 +280,30 @@
 .gauchos-page .restaurant-identity span {
   color: var(--accent);
 }
+/* Logo on top, copy below — stacked so they never overlap on narrow screens */
 .gauchos-cover {
-  height: 420px;
+  height: auto;
+  min-height: 320px;
   display: flex;
-  align-items: center;
-  justify-content: center;
+  flex-direction: column;
+  align-items: flex-start;
+  justify-content: space-between;
+  gap: 28px;
+  padding: 40px 44px;
   position: relative;
 }
 .gauchos-cover .restaurant-logo-svg {
-  width: 200px;
+  align-self: center;
+  width: min(200px, 55%);
   height: auto;
   position: relative;
   z-index: 2;
   filter: drop-shadow(0 4px 20px rgba(0, 0, 0, 0.3));
 }
 .gauchos-cover .cover-copy {
-  position: absolute;
-  bottom: 40px;
-  left: 44px;
+  position: relative;
+  bottom: auto;
+  left: auto;
 }
 .gauchos-cover .cover-copy h1 {
   color: #F4EFE6;
@@ -404,6 +424,8 @@ dialog[open] {
 .dish-stage model-viewer {
   width: 100%;
   height: 460px;
+  background-size: cover;
+  background-position: center;
   --poster-color: transparent;
   --progress-bar-color: var(--gold);
   touch-action: pan-y;
@@ -531,6 +553,39 @@ dialog[open] {
   color: var(--muted);
   margin-top: 4px;
 }
+/* Dish facts: halal → allergens → spice → dietary → ingredients, then nutrition (collapsed) */
+.facts {
+  display: grid;
+  gap: 0;
+  margin: 8px 0 20px;
+  border-top: 1px solid var(--line);
+}
+.fact {
+  display: grid;
+  grid-template-columns: 110px 1fr;
+  gap: 12px;
+  padding: 12px 0;
+  border-bottom: 1px solid var(--line);
+  font-size: var(--text-sm);
+}
+.fact dt { color: var(--muted); }
+.fact dd { color: var(--ink); }
+.fact-unconfirmed dd,
+p.fact-unconfirmed { color: var(--muted); font-style: italic; }
+.detail-price.fact-unconfirmed { color: var(--muted); font-style: italic; }
+.spice { color: var(--accent); letter-spacing: 2px; }
+.nutrition { margin-bottom: 20px; font-size: var(--text-sm); }
+.nutrition summary {
+  cursor: pointer;
+  min-height: 44px;
+  display: flex;
+  align-items: center;
+  color: var(--ink);
+  font-weight: 500;
+}
+.nutrition .nutrition-grid { margin-top: 8px; }
+.fact-note { font-size: var(--text-xs); color: var(--muted); margin: 8px 0 20px; }
+
 .nutrition-meta {
   display: flex;
   gap: 16px;
@@ -835,6 +890,7 @@ footer small {
   .nutrition-grid { grid-template-columns: repeat(4, 1fr); gap: 8px; }
   .restaurant-cover { height: 280px; }
   .cover-copy { left: 24px; bottom: 28px; }
+  .gauchos-cover { min-height: 260px; padding: 28px 24px; }
   footer { flex-wrap: wrap; gap: 12px; }
   footer small { width: 100%; max-width: none; margin: 0; text-align: left; }
 }

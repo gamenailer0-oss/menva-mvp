@@ -17,6 +17,9 @@
   <!-- Fonts are self-hosted (see css/base.css); preload the body weight -->
   <link rel="preload" href="/vendor/fonts/dm-sans-400.woff2" as="font" type="font/woff2" crossorigin>
 
+  <!-- Menu data: fetched by js/app.js; preload so it downloads alongside the CSS -->
+  <link rel="preload" href="/data/build/dishes.json" as="fetch" crossorigin>
+
   <!-- Styles -->
   <link rel="stylesheet" href="/css/tokens.css">
   <link rel="stylesheet" href="/css/base.css">
@@ -25,7 +28,6 @@
 </head>
 <body>
   <div id="app"></div>
-  <script src="/js/data.js" defer></script>
   <script src="/js/viewer.js" defer></script>
   <script src="/js/app.js" defer></script>
 </body>
