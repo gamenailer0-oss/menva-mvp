@@ -5,7 +5,7 @@
     "model": "chicken-fajita-wrap/chicken-fajita-wrap.usdz",
     "photo": null
   },
-  "sourceHash": "de324c8f6545",
+  "sourceHash": "99f6ad1d30ab",
   "audit": "amber",
   "dimensions_cm": {
     "width": 29.1,
@@ -42,12 +42,12 @@
       "hash": "dd6a775b6612"
     },
     "poster.webp": {
-      "bytes": 68128,
-      "hash": "b6f8460172d4"
+      "bytes": 48528,
+      "hash": "60c8da0a0fd9"
     },
     "poster-blur.webp": {
-      "bytes": 724,
-      "hash": "da16f5f594be"
+      "bytes": 646,
+      "hash": "2608752dd7d1"
     },
     "spin.webp": {
       "bytes": 292068,

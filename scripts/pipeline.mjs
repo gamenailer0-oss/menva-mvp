@@ -33,7 +33,7 @@ const TRI_LIMIT = 40_000;
 const FLAT_ROUGHNESS = 0.85;
 const FIXED_ROUGHNESS = 0.6;
 const AO_STRENGTH = 0.6; // how strongly AO darkens the albedo when baked in (1 = plain multiply)
-const POSTER_ORBIT = '-25deg 55deg auto'; // three-quarter, looking down
+const POSTER_ORBIT = '-25deg 55deg 85%'; // three-quarter, looking down — must match the dish sheet camera in js/app.js
 const SPIN_PHI = '60deg';
 
 const kb = (n) => `${(n / 1024).toFixed(0)} KB`;

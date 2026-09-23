@@ -1,0 +1,137 @@
+/* ═══ The Pass — dish comes into focus as the 3D downloads (js/loader.js) ═══
+   --p: focus 0→1 (stepped under reduced motion) · --r: rim progress 0→1 (always continuous) */
+.pass {
+  position: relative;
+  height: 460px;
+  overflow: hidden;
+  background: var(--stage);
+  cursor: progress;
+}
+.pass[data-state="live"] { cursor: auto; }
+
+/* 1 · Focus pull — the main effect */
+.pass-focus {
+  position: absolute;
+  inset: 0;
+  filter: blur(calc((1 - var(--p)) * 18px)) saturate(calc(0.7 + var(--p) * 0.3));
+  transform: scale(calc(1.04 - var(--p) * 0.04));
+  transition: filter 450ms var(--ease), transform 450ms var(--ease), opacity 400ms ease;
+}
+.pass-focus img {
+  position: absolute;
+  inset: 0;
+  width: 100%;
+  height: 100%;
+  object-fit: contain;
+}
+.pass-blur { object-fit: cover; }
+.pass-poster { opacity: 0; transition: opacity 350ms ease; }
+.pass-poster.ready { opacity: 1; }
+
+/* 2 · Plate rim — traces clockwise with real bytes */
+.pass-rim {
+  position: absolute;
+  inset: 0;
+  margin: auto;
+  height: 86%;
+  width: auto;
+  aspect-ratio: 1;
+  max-width: 96%;
+  transform: rotate(-90deg);
+  transition: opacity 400ms ease;
+  pointer-events: none;
+}
+/* Stroke in viewBox units (≈1.5 px on a phone). Don't use vector-effect: non-scaling-stroke —
+   it moves dash maths into screen pixels and breaks pathLength, so the rim draws the wrong length. */
+.pass-rim circle {
+  fill: none;
+  stroke: var(--accent);
+  stroke-width: 0.6;
+  stroke-dasharray: 1;
+  stroke-dashoffset: calc(1 - var(--r));
+  transition: stroke-dashoffset 300ms linear;
+}
+
+/* 3 · Steam — three slow wisps, gone at 100% */
+.pass-steam {
+  position: absolute;
+  left: 50%;
+  top: 14%;
+  width: 90px;
+  transform: translateX(-50%);
+  color: var(--ink);
+  opacity: 0.35;
+  transition: opacity 400ms ease;
+  pointer-events: none;
+}
+.pass-steam path {
+  fill: none;
+  stroke: currentColor;
+  stroke-width: 1.5;
+  stroke-linecap: round;
+  stroke-dasharray: 0.45 1;
+  animation: pass-steam 2.8s ease-in-out infinite;
+}
+.pass-steam path:nth-child(1) { animation-duration: 2.4s; }
+.pass-steam path:nth-child(2) { animation-duration: 3.2s; animation-delay: -1.1s; }
+.pass-steam path:nth-child(3) { animation-delay: -2s; }
+@keyframes pass-steam {
+  from { stroke-dashoffset: 1; transform: translateY(6px); opacity: 0; }
+  50% { opacity: 1; }
+  to { stroke-dashoffset: -0.45; transform: translateY(-8px); opacity: 0; }
+}
+.pass:not([data-state="loading"]) .pass-steam { opacity: 0; }
+
+/* Served → live 3D */
+.pass model-viewer {
+  position: absolute;
+  inset: 0;
+  width: 100%;
+  height: 100%;
+  opacity: 0;
+  pointer-events: none;
+  transition: opacity 450ms ease;
+}
+.pass[data-state="live"] model-viewer { opacity: 1; pointer-events: auto; }
+.pass[data-state="live"] .pass-focus,
+.pass[data-state="live"] .pass-rim { opacity: 0; }
+
+/* 4 · Kitchen line */
+.pass-line {
+  min-height: 1.6em;
+  margin: 14px auto 0;
+  text-align: center;
+  font-family: var(--font-display);
+  font-size: var(--text-lg);
+  color: var(--ink);
+  transition: opacity 180ms ease;
+}
+.pass-line.swap { opacity: 0; }
+.pass.nudge + .pass-line { animation: pass-nudge 600ms var(--ease); }
+@keyframes pass-nudge { 50% { transform: scale(1.04); } }
+.pass-slow { text-align: center; font-size: var(--text-xs); color: var(--muted); margin: 4px auto 0; }
+
+/* 360° sprite (js/spin.js) — replaces the stage while shown */
+.pass[data-spin] .pass-focus,
+.pass[data-spin] .pass-rim,
+.pass[data-spin] .pass-steam { opacity: 0; }
+.spin {
+  position: absolute;
+  inset: 0;
+  margin: auto;
+  aspect-ratio: 4 / 3;
+  max-width: 100%;
+  max-height: 100%;
+  background-repeat: no-repeat;
+  cursor: grab;
+  touch-action: pan-y;
+  z-index: 3;
+}
+
+@media (max-width: 768px) {
+  .pass { height: 300px; }
+}
+@media (prefers-reduced-motion: reduce) {
+  .pass-steam { display: none; }
+  .pass-focus { transform: none; }
+}

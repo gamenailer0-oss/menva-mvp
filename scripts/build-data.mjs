@@ -113,6 +113,7 @@ function dish(row, restaurantId) {
       const blurFile = path.join(ROOT, 'assets', 'dishes', row.id, 'poster-blur.webp');
       assets = {
         glb: url('model.glb'),
+        glbBytes: meta.files['model.glb'].bytes, // for honest loader progress when the host compresses
         usdz: meta.usdz ? url('model.usdz') : null,
         poster: url('poster.webp'),
         blur: `data:image/webp;base64,${fs.readFileSync(blurFile).toString('base64')}`,

@@ -187,13 +187,16 @@
     const content = app.querySelector('#dish-content');
     const a = dish.assets;
 
+    // The Pass: blur-up poster paints instantly (inline base64, zero network), then focuses as the GLB loads.
+    const modelViewer = dish.has3d ? `<model-viewer id="dish-viewer" camera-controls touch-action="pan-y" camera-orbit="-25deg 55deg 85%" shadow-intensity="1" shadow-softness="0.6" environment-image="neutral" interaction-prompt="auto" alt="${esc(dish.name)} — 3D scan">
+            <button slot="ar-button" class="ar-btn">${arIcon} See it on your table</button>
+          </model-viewer>` : '';
+
     content.innerHTML = `
       ${dish.has3d ? `<div class="dish-stage">
-          <model-viewer id="dish-viewer" camera-controls touch-action="pan-y" camera-orbit="-25deg 55deg auto" shadow-intensity="1" shadow-softness="0.6" environment-image="neutral" interaction-prompt="auto" poster="${esc(a.poster)}" alt="${esc(dish.name)} — 3D scan" style="background-image:url('${a.blur}')">
-            <button slot="ar-button" class="ar-btn">${arIcon} See it on your table</button>
-          </model-viewer>
+          ${MenvaLoader.markup(dish, modelViewer)}
           <div class="viewer-tools">
-            <span id="viewer-status" role="status">Loading the 3D view…</span>
+            <span id="viewer-status" role="status"></span>
             <button id="reset-view">${resetIcon} Reset</button>
           </div>
           <p class="stage-note">Drag to turn the dish · Pinch to zoom</p>
@@ -221,28 +224,48 @@
     const status = document.getElementById('viewer-status');
     const resetBtn = document.getElementById('reset-view');
     const fallback = document.getElementById('ar-fallback');
+    const spin = { url: a.spin, layout: a.spinLayout };
 
-    // Lazy-load model-viewer (self-hosted) on the first dish sheet
+    // Start The Pass before model-viewer's script arrives so the diner sees progress copy at once.
+    const pass = MenvaLoader.start(content, viewer, {
+      lines: activeRestaurant.loaderLines,
+      spin,
+    });
+
+    // Download the model (and, on the first dish, model-viewer itself) in parallel, counting real
+    // bytes for The Pass. model-viewer then reads both from cache.
+    const glbUrl = MenvaViewer.absolute(a.glb);
+    const parts = { glb: [0, a.glbBytes] };
+    if (!MenvaViewer.isLoaded) parts.viewer = [0, MenvaViewer.MODEL_VIEWER_BYTES];
+    const bytes = (key) => (loaded, total) => {
+      parts[key] = [loaded, total];
+      const [l, t] = Object.values(parts).reduce(([l, t], [a, b]) => [l + a, t + b], [0, 0]);
+      if (t) pass.progress((l / t) * 0.95, parts.glb[0] / parts.glb[1]); // the last 5% is parsing and first render
+    };
+    const glbReady = MenvaViewer.download(glbUrl, a.glbBytes, bytes('glb')).catch(() => {}); // model-viewer retries on its own
+
     try {
-      await MenvaViewer.load();
+      await MenvaViewer.load(bytes('viewer')); // self-hosted, lazy: only when the first dish sheet opens
     } catch {
-      if (status) status.textContent = 'The 3D view could not load — check your connection and open the dish again.';
+      if (status) status.textContent = 'The 3D view needs a better connection — here it is in 360°.';
+      pass.showSpinner();
       return;
     }
+    await glbReady;
+    if (!viewer.isConnected) return; // sheet closed while downloading
 
-    viewer.src = MenvaViewer.absolute(a.glb);
+    viewer.src = glbUrl;
     viewer.iosSrc = MenvaViewer.absolute(a.usdz); // empty → model-viewer builds a USDZ on the fly
     viewer.ar = true;
     viewer.arModes = 'webxr scene-viewer quick-look';
 
-    viewer.addEventListener('load', () => {
-      viewer.style.backgroundImage = 'none'; // the blur placeholder would show around the transparent 3D view
-      if (status) status.textContent = 'Ready — drag to turn the dish';
+    viewer.addEventListener('error', () => {
+      if (status) status.textContent = 'The 3D view could not load — here it is in 360°.';
+      pass.showSpinner();
     });
-    viewer.addEventListener('error', () => { if (status) status.textContent = 'The 3D view could not load — the picture above is the real dish.'; });
 
     resetBtn?.addEventListener('click', () => {
-      viewer.cameraOrbit = '-25deg 55deg auto';
+      viewer.cameraOrbit = '-25deg 55deg 85%'; // matches the poster framing so the crossfade doesn't jump
       viewer.fieldOfView = 'auto';
       viewer.jumpCameraToGoal?.();
     });

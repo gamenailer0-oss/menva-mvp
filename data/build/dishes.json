@@ -1,5 +1,5 @@
 {
-  "generated": "2026-09-23T13:38:27.314Z",
+  "generated": "2026-09-23T13:57:22.722Z",
   "restaurants": [
     {
       "id": "gauchos",
@@ -63,9 +63,10 @@
           "has3d": true,
           "assets": {
             "glb": "/assets/dishes/steak-main/model.glb?v=3add196f698d",
+            "glbBytes": 1029820,
             "usdz": "/assets/dishes/steak-main/model.usdz?v=1e758865f2bb",
-            "poster": "/assets/dishes/steak-main/poster.webp?v=b9a624a54e3c",
-            "blur": "data:image/webp;base64,UklGRuICAABXRUJQVlA4WAoAAAAQAAAAHwAAFwAAQUxQSEcBAAABkGvbtmIp+9yqet24Rxa5O7G7fIFD5g6ZE9ERg4zUXWOXyN1Td7c652ykqu77hIiYAACQIAhpAgBZKwTESkDLhR0hqPWYvfP68ylIYgK2nfp0ZPCaXTdz0vl5DJJqkmw1qvN/y035bRLSSh1uueXunufqJGl8OxJJlRYPqaxufDESSVnAOloEjS8HICkRdL5Pi6DyaU8kRQhYHEfl0+5IiwSdrtJimPNuNyQFEMykRzHnw7EIBUCzQ7QoquskJAUBwz7So/ibV1pB/kPADmoclUczyH+CXs/oUaY/uasIAeup1VyVzhfbE5R2uUkrc1Wnv7y8ZVAmJYIFdC9QJfnr/IpBLQFBuXQ4TSVNzfn1atPYtgAEVQUzfltupN1qGtUegCA2NN9P5etz8zsJIII6yrDDhxf3boSICOoqtYYASBDUX0IQxAMAVlA4IHQBAABwBwCdASogABgAPtFSoUuoJKMhsAgBABoJbAC7MzQ1xf/2SQjQNm/qDfqRuoA4qO+ImC/o2cSsSwzzmUniQ10GW8hJQAD+yHQ4v4JqbU8/8ph4ZxuUxvScqEPkTOdhnxsxTamENQufvz2sjUIFz3XsO69nGsvIFYzYCEx+Cv9n4vW8R55Ooytr+igfH6GVZaD9gw6rFjHqMI94g+YAH4hgoWYBQE41UUpPSvwaJanHVmrtpn93nREbh0aIK/aWl38PsWypwUJZIcc5OCYiBQyUA5JnGy+qpO4Y2PiKNg+/jcnq5sHbTa0jnXw35RR/dTJrz/S3bSkhkAvg/Ee+8JwWu43vPH/28bX98/G22bwyTWbgVxy48bpt7p8Am+xJS2zFxrhEXHf7CEPOafjZIJt7X8D/F1Rxspv4I0fCPPFdYko9vYjp77uGE//dLB8v78l+/5H1/5pl73/PqPEVysTP5M//ubZ30/3VP2v/NdNwxR4AAAA=",
+            "poster": "/assets/dishes/steak-main/poster.webp?v=6b0df732652f",
+            "blur": "data:image/webp;base64,UklGRqYCAABXRUJQVlA4WAoAAAAQAAAAHwAAFwAAQUxQSA8BAAABkKNt27FH9/O8sVGlzpFKlbWElFZlayfpRpVt1LZdZQ1jvLpH3/ulmjoiJgD/j/oPNWaPxIiqMQJAZS8U2mwAFDSNLJdD8ina9+1uNy8cePEl8lihSC50v2H8YUnSW14ohqYpmj7Thhid95F0PFUITRIUPWRgjPxndLxQDE2BYpaBqZYni0RTBFWvGFLoeKEYJgGKlRx0PF8JTRDUPGNIouduL0wWDEbz0PF9FSRLUHKXIY2ORxSSAcUEY1L03vIQNEtQfo8hK/rAyCczkCwoJhn/5QMZ3+4M1UOQKKi6zUBGH8kPV6cbAAiSFWP0PpA/bqy3FQKigryVN+n5+fBAOQAV5BcMvr4+12gAEUE2AFZQOCBwAQAAEAgAnQEqIAAYAD7RVKNLqCSjIbAYDAEAGglsALUXkDgYxbn1fP/vnciFvQA/ifT4/Y72AA55vKAqyOPsRyKJXVK9XlMOeFeL+AD+7UP+A7ffmJZV6mbOpUMI54CqQ/SvBd7Hic5rduut0KSg4h4P9G1aR7x/vvMhA+VvIMkxZG5alJImrwfsNKnN084CZptT8lJQnL/bWqCc0ImuH9V77+Z4DbYZ/0Pg90Adbbtd+Wp0uUuoyyg8x2n9f84bN54FqiCszjnY+kYOUBfZN85vMOhCKhWjrfYBMfeOMSmxvu9f5+OhOjnM/p1+W+6fcnhL/9jX57mPJ9aOanPmwP5zDw9v+vOp2v/N7HCuNyDeVtQ92RCl8aE+AbTbJzbii23F9auNKaBsswotkUYA1SqTT7vnOhlqqc4s9fIbLrzK2ANw7MPm8uYmWMke7/wk44Idwrr/sWa99HH36imYEVxo/Q0Rhg9TnocUK/AQQ+kAAAA=",
             "spin": "/assets/dishes/steak-main/spin.webp?v=0500f08d9a52",
             "spinLayout": {
               "frames": 36,
@@ -100,9 +101,10 @@
           "has3d": true,
           "assets": {
             "glb": "/assets/dishes/steak-sandwich/model.glb?v=77d580b30f7f",
-            "usdz": "/assets/dishes/steak-sandwich/model.usdz?v=33430d189dd9",
-            "poster": "/assets/dishes/steak-sandwich/poster.webp?v=f1dbf883b6bf",
-            "blur": "data:image/webp;base64,UklGRqYCAABXRUJQVlA4WAoAAAAQAAAAHwAAFwAAQUxQSDABAAABkHLbtrKtK9r33tc+d8NdIs2SJXe35DSqZ+ju7lAdEkR3ors7z7lnf3qedxARE4COIYOOmeoKwGWCQxGzFaMObb3+9tXMfABcxqWZsvvGm8iO8uzypuE5+GDxGJpQqUkiGiNJvbuqFMHU/T2TyE41SqLKO6MRuoLDWlXtrFMRymr4ruDCNSYmUoRLEbrymJBQ1MTID4PguwDCHqqqiQk3IxhczcS9X6mmyJswO4Sx76i2Z6VwBnjUvGS0Pc3aAlYz0iq8DLvDeUqKU3AmjzUUNaj+mgBvgms8QIMKN2Y9UmbrtzN2psILfbNI69zg11SSUSLPDS1FOvT5Somiyu9b+haQPmA8laS+Oj61JoeizOPvlw8PLhvdnA8obvOS+eOG9awpZByKnKuoKstn8J8DVlA4IFABAAAwBwCdASogABgAPtFUoUuoJKMhsAgBABoJbAC298JAi7ql2CyBMuaQ6OjcMKvfeyUwCSK8Xolv7UIXq/KpphI7uIAA/sWQ1j323nGliX+ZtiSJLpKNFkPf6xdH3w6gU7U8dNH90IyMLqGtQ/5gpqzqGi9visNNs7hGjRulZRL9iGc9O6Am5dZLZhSBtOns44Kzz0l90ScFsUOJueYOM5QVoii9e3kRs5fLEK09Ypq7POtPXynvsbzeeDrQ5fp6o14aCJgTFMMSlsrNs0Bn88m7Q4Sc7CWEmbi0Fy7LEvLSWJUdYosaoiH8/7iqZ+pOx+z/3r7xjOxc1F92XZvwhEqtaUPiw/7QQf7WaazowQaxJpHs589PzyL/zEjRXPn/n6zz+OrZQDxUHRf19Mhdzv9ae6WB1sYLcNPyUXSdUypbivNwJNwWzbNx93xxA5nfoAA=",
+            "glbBytes": 242928,
+            "usdz": "/assets/dishes/steak-sandwich/model.usdz?v=4ca022615ca3",
+            "poster": "/assets/dishes/steak-sandwich/poster.webp?v=63e32b651802",
+            "blur": "data:image/webp;base64,UklGRkQCAABXRUJQVlA4WAoAAAAQAAAAHwAAFwAAQUxQSPoAAAABkKJt27JF9/u+uEd3aKzB3R2Su7sugU6DRuIguqzAE40Mo9H/V+6xT9LkiJgA/E8KqWR4QikJAEqJcASA+LS8ihIAUoWBzNrR89fP/LBRlw4IGUSh7YslSevIzyd9MVCB+hmJGGvptKXjUxmkP4GEcxr+22pDMwvpCxIV1pl/kTSWvVC+IHBE47xo+JIC4QtIn7uj86JlG1QAgdhjGi/NZUQFkTj3YzgRSKGRznk5dkAFqnE+HN/nQwQAovboZbgDicAicZ/2L6d5k44QBUojdM4Yy6sSJUKQKKexdPyxl6MEQozCKg0jzwf1yVIgTIm228PdgdJUKeAXVlA4ICQBAADQBgCdASogABgAPslSoUunpKMht/VYAPAZCWwAxwkAGyAL9zTge2kg3/M7gxmGTrcCrHpDnrfXBxMWFrJJ9+gA+wxkml0EcGuXgkiJsdYBrbrSjN4Nib6e8rLSzX4WJeDcKggAmv5c7PmQo/Oy+jebSBw7cn28zYT6SKUm2TSuxrZORqKX41fVlv/x4ezBaedUBbwRke7ivvjVKviX1GIDUEUV+/1ZA+nK3lNnXjfv4Py7WkOlmraF+mi/hYPQaq6/y2XS/+vd3/Om+hy2ox/esv9XOv2cIRTg1aA05tpcgyfiR19eBC2EvNM0dVn7Q3HosjG9fDAI7STMqO/qoFfxH3TO7qKx9utYAM7pf8mt92H8ZdUGxovggO6Lfd6yGQT5sYAA",
             "spin": "/assets/dishes/steak-sandwich/spin.webp?v=a50bd6b8601e",
             "spinLayout": {
               "frames": 36,
@@ -137,9 +139,10 @@
           "has3d": true,
           "assets": {
             "glb": "/assets/dishes/garlic-prawn-skewers/model.glb?v=68aca1278ac2",
+            "glbBytes": 964620,
             "usdz": "/assets/dishes/garlic-prawn-skewers/model.usdz?v=c0bf94c77045",
-            "poster": "/assets/dishes/garlic-prawn-skewers/poster.webp?v=6f42da4a82bf",
-            "blur": "data:image/webp;base64,UklGRtACAABXRUJQVlA4WAoAAAAQAAAAHwAAFwAAQUxQSEYBAAABkLpt2/m/8u/nfX62ZttG9JLNtDUrudte3bHmyGRXI9nW5/s+zz1/FRETgPwUgYQsBBUtAkLIjKoi6Ny21f1LEDKgCqDf4UuPr9/k2U4IaYgqdN6etU/pRhqfDkb4LxHIsAN0eip6jEz4oAnkbyKqaDT8kDPG6Px7wq1QQIIEIKDT4e+0yP813i0HCooB1DQfNeX8pyQ6/9v5pQsw9ESrZpvfPY/uznSdL1sBXVNfPzlpFtMz3i4HCi8zRnN3ph95DhKwhIkzo55wOQKk6VkmnglL8XQ1BKJ9rtOip+EWnUfbQABIcY+D3+lm5k7S3czc+W5dPQR/SnHz2Sd/0EmaGf/8+mDfkLKAfxeUtZ6x/uSj9ymS317fOrpjTt86Ffy3amXrQeNnL1qxeMboQe2blBcJ0teCgqLi0pKS4qICQd6KSJYyCVZQOCBkAQAAUAcAnQEqIAAYAD7RXqZOqCUjIigKqQAaCWwAux2Ab0aaZivA9r72byQC2Z1ZXfFYYDZxsiHQrjSU5ilhQL6whOTsAAD++qjrMh/pN/tsjHNVAkyQYGaaDR26lobQvrcw3eaMnR3qpzkXivw+rjoqgifE9M/y7Lz9FcxYUUeCLDP1NmZpR/n/dDDDrTpRE4H+COZEHNZLHeu08itO+waz25LgoSwWXTHqSxZcM4GT95pTLbJKD+iHfuM/qomks3L5z1blAL+QRF49X3d1xAmUg6a9GqMvyER1ceg3mNIuW8B7K3gAeu9mW2Xew+l6hscLlzLWN7Fdq6sKw1De7s+0dUr1mvW93nLVACru8TEh5Jv4mfvqJwJNO2vydriH/LTtjJWgnErq5mKKtVwvcV4RNb+Z5A5a5/V1+Pnv+7PYZEHAj0iXS3Ds8Lmly6RsVkB+5FvRcxOOhJ0lAdPaov7v+w1mAAA=",
+            "poster": "/assets/dishes/garlic-prawn-skewers/poster.webp?v=ba68b5996b16",
+            "blur": "data:image/webp;base64,UklGRoQCAABXRUJQVlA4WAoAAAAQAAAAHwAAFwAAQUxQSAMBAAABkGNb27E91/X8tq3eVmf7/2cQjMDJDOzKbp3O6NXZtv089x28CuuImAD8h9OQv4A0AGAYkTEAkoYyikhGEROD2LS87TceX3q5MQ0MRYIle5/fU3Xq9HgK6GcMTGws46vXvBNV68S6z7ocxg8gACx6rWKd059FH2SDHkRzBTrnLT/03llRX9GPNTAesVh6Y987FRXRgKIvikCPGHSquK9frWhQp5cSfYiks/pFQ8oXXQYDb4Pel2pdEHFOj+eAPiDGr6mItdY5a61TdXvyQQQkK9c8UlFP0SdHZpJABCbiG2ZtOnXx1q1zR9fM7UhHpEzMKquuKclKNgAjIImARLT0xW8OAFZQOCBaAQAAcAgAnQEqIAAYAD7RXKZOKCUjIigKqQAaCWwAtvCBzNaANsBdgG8RvJYvAwwTK/oAbpL+wBbssTbrv9ClU0aNNtfmsF24zeV8QDdEAAD++2zGkqPOISsyFveUZdv0BPFL1Z388t8dKszi6zAk4aj6S/8DwM9OvTACexTjPT1X4XfkXL8ExFaTbf50zm7a7DihjBHH4+WgKODl068e6Kirq4q06L8coWJNJEZjrhymcgYlNiOv/e1/wJ1G9MMqOMuYZsSQ5kQeWRU/fg1DeD5NRjnbfShU2/yC0Ze3pk374QTx64hyL24wlSb4jk/Npmoxz9WR4b9Cnllgu06klEG3I9gNTqGs2Dm+Vo//fZxX7L33pd4C3ju2vzfjldz19j2ePYH3mj6GnN4ynyZt8Pn7PqsMboI6FpX/fmuilvR3jgvJwNAhDy2ncMRz/KH+3PiLPNHKqH9VCLSAAA==",
             "spin": "/assets/dishes/garlic-prawn-skewers/spin.webp?v=6f1eae720aff",
             "spinLayout": {
               "frames": 36,
@@ -174,9 +177,10 @@
           "has3d": true,
           "assets": {
             "glb": "/assets/dishes/chicken-fajita-wrap/model.glb?v=dd6a775b6612",
+            "glbBytes": 872100,
             "usdz": "/assets/dishes/chicken-fajita-wrap/model.usdz?v=279238204906",
-            "poster": "/assets/dishes/chicken-fajita-wrap/poster.webp?v=b6f8460172d4",
-            "blur": "data:image/webp;base64,UklGRswCAABXRUJQVlA4WAoAAAAQAAAAHwAAFwAAQUxQSD8BAAABkGRtm2k73191bfvGatlOWm7ZbmYAGYC7tjkBG03btu2k/vqCOrvOyggiYgKQXARWkG4xGRmo7Akx6RBrLQDB+B+zCmBirDUApKDDnA1XvzmeaQIbAaCs86itd7+TpHd81AsZiTKHzt11jyS9++U86fi8PTKS1L6np7pf6hl2fNYfGakEG/ldmVz5eTgyUhi0eMAYOr7phYwQDMbT+wgqXw6CDcFgJ10M1X8bh4yQoMVNagyV30YgIwCD2Wmgqk5FRgAo2E8XReWnQTABweDv9FFU/2MCzD8Qu5guyrtfPAoJofEyNZUGyR8XZmYibDDSqYaUJH/q18NjmmRLCpisRfTq1Dnlxa33j66dNqhCBElN+Yrv9KTnwTZVXSpzAEFkRtWIBScun1w3vpmIACKItllFje0aC40g/WLECP53AFZQOCBmAQAA0AcAnQEqIAAYAD7RVKJLqCSjIbAIAQAaCWwAsR8Z4Grsz3kUr1PZ3mif67rzegB+lY7AxEBKgcYucONnp5bSR5k9/xE0QAAA/q7M3hn9+sgT4JFxH0SB0JtNwuEJSPa9O6rf3sjqM1XWN/d8ydkjBGJ1lA930CRgXAK4/mBBlXGkCv2ByDHV8DNO8eVy4wWvDP87rrrh6Nfg7NYniZlUeIt7X2PplCVCJxGReUefMPnTaxE4RbPyUzNahoLJ7sNUHOZ2JTw93N6Q84+EHYgHTEC6+i7uWmdqZb+fhvIEb5OQJT+iA3K2qKCFFfmXlYuCkYzWRLL/NC+cTFE4q9aig3O38bjXin6oSC/WSjZ04FJhvz/cgpBKvF40k4XSmhwufWVa4+by2NaSIF05+FRve5XYmztxt3ftsUjH0fSb+yLdVuiZblx2Gtws1qWGbewVaIo2r+V6BVVgHHbPYbM32tcHn1oAAA==",
+            "poster": "/assets/dishes/chicken-fajita-wrap/poster.webp?v=60c8da0a0fd9",
+            "blur": "data:image/webp;base64,UklGRn4CAABXRUJQVlA4WAoAAAAQAAAAHwAAFwAAQUxQSAsBAAABkLNtmwE77zezx7Z9Kvuc1jH+ATv+BZWq2CVdKttu7aS1k5Iz873Rzm5YR8QE4L/Tyq8Qaw3EpElsQiCo3lIMmwaxAghKxlce+vJwEonUANRMrTr7TKmen5fDSpxB464r70kyOE8fuBpWUuj4QFXng5Jk8NwAIzEw2MwvyuTquAnWxAgqHzJEUB23J8REwGJRHNXxYDZMBGCO0cdQHY+UwEQYjH+ixpBfeCoLkgyC3fRxdLxcDYkZfE9NomTw3nEVbDIYrKf/WdAQqHyxswcSISi/wS9KDZ4u8NXVbb0JxAvG3lPJwIsL1ywbLRSkLGbmnkd0d3e0wwAQkVQgJr93zmSL/BzpFAEAQTwAVlA4IEwBAABQCACdASogABgAPs1UpEunpKOhsBgMAPAZiWwArDM0NVkILsA3jorwPbR9FewBulf6Zh2af6+8tP3gud9n/eY+UN7pbB9ug+22qgAA/sNNlDA2PvWpalas5jONp7WhhbTc2oPNvr7m8JguoFHFUReHaG27KMUzdb0IJoWXpmiYbCQ1ozulsLDlV+LeuSqb29ODS9qYjg9xo8fGEKN+5OoC2PvnehoNB4ZthsuEloKsBaatEjwKyFVRaFVLo6JA89Je0pOc56mpgZ7AXd064Zf/O384S6ZtH/RJ4Y4vvCVUhNPvEvk9/V/MtIa+FVjro+Iy/4mITN2Mt0OPo62tN/bnXIJm6UC8QL6lBoZBGEJCZbeD/KSumwC6w+JdeFNCvz9QVjJVLR9oojDvkkgCUbHTWm4KMobaU05lWj7wyel6DrGNSeZkfr2pdgAAAA==",
             "spin": "/assets/dishes/chicken-fajita-wrap/spin.webp?v=160d2bfd9b4b",
             "spinLayout": {
               "frames": 36,

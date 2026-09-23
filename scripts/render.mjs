@@ -70,14 +70,11 @@ export async function createRenderer() {
   return {
     logs,
 
-    // Poster: 1200×900 (4:3), three-quarter top-down view. Rendered large, then the empty
-    // transparent border is trimmed so the dish fills the frame with a small margin.
+    // Poster: 1200×900 (4:3), shot with exactly the dish sheet's camera (see js/app.js) so the
+    // poster → live 3D crossfade lines up instead of ghosting.
     async poster(glbFile, orbit) {
-      await page.evaluate((s) => window.loadModel(s, 1600, 1200), rel(glbFile));
-      const png = dataUrlToBuffer(await page.evaluate((o) => window.shoot(o), orbit));
-      const trimmed = await sharp(png).trim({ background: { r: 0, g: 0, b: 0, alpha: 0 }, threshold: 1 }).toBuffer();
-      const clear = { r: 0, g: 0, b: 0, alpha: 0 };
-      return sharp(trimmed).resize(1104, 828, { fit: 'contain', background: clear }).extend({ top: 36, bottom: 36, left: 48, right: 48, background: clear }).png().toBuffer();
+      await page.evaluate((s) => window.loadModel(s, 1200, 900), rel(glbFile));
+      return dataUrlToBuffer(await page.evaluate((o) => window.shoot(o), orbit));
     },
 
     // 36 frames every 10°, 480×360 each, as a 6×6 grid (a single row would exceed WebP's 16383px limit).

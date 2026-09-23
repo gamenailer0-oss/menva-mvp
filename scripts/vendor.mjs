@@ -58,6 +58,12 @@ if (!viewerJs.includes(expected)) {
   console.error(`js/viewer.js must load '${expected}' — update MODEL_VIEWER_SRC.`);
   process.exit(1);
 }
+// The loader shows honest byte progress for the first dish, so the script size must match.
+const bytes = fs.statSync(path.join(VENDOR, 'model-viewer.min.js')).size;
+if (!viewerJs.includes(`MODEL_VIEWER_BYTES = ${bytes};`)) {
+  console.error(`js/viewer.js: set MODEL_VIEWER_BYTES = ${bytes};`);
+  process.exit(1);
+}
 
 console.log(`vendor/: ${Object.keys(files).length} files, ${(total / 1024).toFixed(0)} KB`);
 for (const [name, v] of Object.entries(versions)) console.log(`  ${name}@${v}`);

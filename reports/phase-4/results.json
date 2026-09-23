@@ -1,0 +1,98 @@
+[
+  {
+    "tag": "stall (model request hangs)",
+    "at4s": {
+      "spinner": false,
+      "slowLine": false,
+      "r": 0.48384558133684147
+    },
+    "at8s": {
+      "spinner": true,
+      "slowLine": true,
+      "r": 0.48384558133684147
+    }
+  },
+  {
+    "tag": "motion",
+    "progressEvents": 976,
+    "rimUpdates": 976,
+    "rim": "96ms:0.003 252ms:0.082 380ms:0.148 555ms:0.228 700ms:0.303 858ms:0.38 1034ms:0.466 1179ms:0.539 1353ms:0.619 1513ms:0.696 1702ms:0.797 1878ms:0.881 2884ms:1",
+    "tapToImage": 8,
+    "first": {
+      "r": 0.3905305035490629,
+      "state": "loading",
+      "line": "Searing your cut"
+    },
+    "fifty": {
+      "r": 0.4971310411140488,
+      "state": "loading",
+      "line": "Searing your cut"
+    },
+    "liveAfterMs": 2553,
+    "monotonic": true,
+    "distinctProgressValues": 11,
+    "lines": [
+      "Searing your cut",
+      "Letting it rest",
+      "Plating it for you",
+      "Served."
+    ],
+    "steamHidden": false
+  },
+  {
+    "tag": "motion-slow",
+    "progressEvents": 1343,
+    "rimUpdates": 1343,
+    "rim": "207ms:0.001 1473ms:0.077 2760ms:0.153 4033ms:0.229 5325ms:0.305 6597ms:0.381 7888ms:0.457 9162ms:0.533 10460ms:0.609 11761ms:0.685 13110ms:0.763 15207ms:0.875 19666ms:1",
+    "tapToImage": 13,
+    "first": {
+      "r": 0.04492748685748429,
+      "state": "loading",
+      "line": "Firing up the grill"
+    },
+    "fifty": {
+      "r": 0.45163909196211216,
+      "state": "loading",
+      "line": "Searing your cut"
+    },
+    "liveAfterMs": 19365,
+    "monotonic": true,
+    "distinctProgressValues": 139,
+    "lines": [
+      "Firing up the grill",
+      "Searing your cut",
+      "Letting it rest",
+      "Plating it for you",
+      "Served."
+    ],
+    "steamHidden": false
+  },
+  {
+    "tag": "reduced-slow",
+    "progressEvents": 1401,
+    "rimUpdates": 1401,
+    "rim": "191ms:0.001 1519ms:0.08 2862ms:0.16 4190ms:0.239 5529ms:0.319 6875ms:0.398 8205ms:0.477 9545ms:0.557 10889ms:0.636 12231ms:0.716 13576ms:0.795 14913ms:0.875 19020ms:1",
+    "tapToImage": 7,
+    "first": {
+      "r": 0.0293108475963717,
+      "state": "loading",
+      "line": "Firing up the grill"
+    },
+    "fifty": {
+      "r": 0.45639198217201604,
+      "state": "loading",
+      "line": "Searing your cut"
+    },
+    "liveAfterMs": 19106,
+    "monotonic": true,
+    "distinctProgressValues": 144,
+    "lines": [
+      "Firing up the grill",
+      "Searing your cut",
+      "Letting it rest",
+      "Plating it for you",
+      "Served."
+    ],
+    "steamHidden": true
+  }
+]

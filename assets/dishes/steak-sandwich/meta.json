@@ -5,7 +5,7 @@
     "model": "steak-sandwich/steak-sandwich.glb",
     "photo": null
   },
-  "sourceHash": "7c4fd52eee7d",
+  "sourceHash": "32f14c352783",
   "audit": "amber",
   "dimensions_cm": {
     "width": 18.4,
@@ -42,12 +42,12 @@
       "hash": "77d580b30f7f"
     },
     "poster.webp": {
-      "bytes": 59682,
-      "hash": "f1dbf883b6bf"
+      "bytes": 41696,
+      "hash": "63e32b651802"
     },
     "poster-blur.webp": {
-      "bytes": 686,
-      "hash": "a2ae1f6a5d52"
+      "bytes": 588,
+      "hash": "ac58e662b2f6"
     },
     "spin.webp": {
       "bytes": 294992,
@@ -55,7 +55,7 @@
     },
     "model.usdz": {
       "bytes": 1560507,
-      "hash": "33430d189dd9"
+      "hash": "4ca022615ca3"
     }
   },
   "before": {
