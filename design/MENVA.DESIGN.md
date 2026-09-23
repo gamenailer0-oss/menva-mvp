@@ -18,7 +18,7 @@
 | `--line` | `#DCD3C4` | Hairlines |
 | `--ink` | `#1A1714` | Text, icons |
 | `--muted` | `#5C5349` | Secondary text (≥ 4.5:1 on paper) |
-| `--accent` | `#C43D23` Ember (MENVA) · `#7C2A1C` oxblood (`[data-theme="gauchos"]`) | Primary buttons, prices, active states — never large fills |
+| `--accent` | `#B5371F` Ember (MENVA; 5.0:1 on paper, 5.95:1 under white text) · `#7C2A1C` oxblood (`[data-theme="gauchos"]`) | Primary buttons, prices, active states — never large fills |
 | `--accent-ink` | `#FFFFFF` | Text on accent |
 | `--stage` | `#E9E3D7` | Behind dish renders (a tablecloth, not a void) |
 | `--gold` | `#9C7C45` | Only the Gauchos cover card frame |

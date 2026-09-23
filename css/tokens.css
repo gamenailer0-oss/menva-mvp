@@ -8,32 +8,33 @@
 [data-theme="default"],
 [data-theme="gauchos"] {
   /* Paper & surfaces */
-  --paper: #FAF7F2;
+  --paper: #EFEBE2;
   --surface: #FFFFFF;
-  --surface-2: #F3EEE6;
+  --surface-2: #E3DCCF;
   --surface-offset: #ECE4D6;
-  --line: #E7DFD3;
+  --line: #DCD3C4;
 
   /* Ink */
-  --ink: #1E1A16;
-  --muted: #6B6056;
+  --ink: #1A1714;
+  --muted: #5C5349;
   --faint: #A89A88;
 
-  /* Accent — Gauchos oxblood: prices and primary actions only */
-  --accent: #7C2A1C;
+  /* Accent — MENVA ember; Gauchos oxblood overrides below */
+  --accent: #B5371F;
   --accent-ink: #FFFFFF;
   /* Brass — fine rules and small ornaments only, never body text */
   --gold: #9C7C45;
 
-  /* Dish stage: soft warm light, not a dark block */
-  --stage: #F2EDE5;
+  /* Dish stage: a tablecloth, not a void */
+  --stage: #E9E3D7;
   /* Fixed cream card for the restaurant cover — reads like a printed insert in both modes */
   --cover-paper: #F5EFE4;
   --cover-ink: #241A15;
 
-  --radius: 14px;
+  --radius: 16px;
   --radius-sm: 10px;
-  --radius-lg: 20px;
+  --radius-lg: 24px;
+  --radius-pill: 999px;
   --ease: cubic-bezier(0.16, 1, 0.3, 1);
   --ease-fast: 160ms cubic-bezier(0.16, 1, 0.3, 1);
   --ease-slow: 400ms cubic-bezier(0.16, 1, 0.3, 1);
@@ -41,6 +42,18 @@
   --shadow-lg: 0 8px 30px rgba(30, 26, 22, 0.12);
   --font-display: 'Instrument Serif', Georgia, 'Times New Roman', serif;
   --font-body: 'DM Sans', system-ui, -apple-system, 'Segoe UI', Roboto, 'Helvetica Neue', Arial, sans-serif;
+
+  /* Motion */
+  --ease-out: cubic-bezier(.2, .8, .2, 1);
+  --ease-in-out: cubic-bezier(.65, 0, .35, 1);
+  --dur-fast: 140ms;
+  --dur: 280ms;
+  --dur-slow: 560ms;
+}
+
+/* Restaurant pages keep their own accent — never MENVA's on a restaurant screen */
+[data-theme="gauchos"] {
+  --accent: #7C2A1C;
 }
 
 /* ═══ DARK MODE — same quiet confidence, warm near-black ═══ */
@@ -56,13 +69,16 @@ html[data-mode="dark"] body {
   --muted: #B4A896;
   --faint: #6E6455;
 
-  --accent: #D68A6C;
-  --accent-ink: #201310;
+  --accent: #E2896D;
+  --accent-ink: #1B120D;
   --gold: #C7A567;
 
   --stage: #1D1A14;
   --shadow: 0 1px 2px rgba(0, 0, 0, 0.3), 0 8px 24px rgba(0, 0, 0, 0.35);
   --shadow-lg: 0 12px 36px rgba(0, 0, 0, 0.45);
+}
+html[data-mode="dark"] [data-theme="gauchos"] {
+  --accent: #E2896D;
 }
 
 /* ═══ Type Scale ═══ */
