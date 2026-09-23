@@ -57,3 +57,10 @@ incoming-models/                raw scans — kept on disk, never published, nev
 ```
 
 No third-party requests at runtime: model-viewer, its decoders and the fonts are all served from `/vendor`.
+
+## Analytics (Phase 8)
+The pilot results page needs two things the drag-and-drop upload can't do:
+1. **Deploy from Git or the Netlify CLI** — Netlify Functions (`netlify/functions/`) only deploy that way.
+2. **Set `STATS_KEY`** in Netlify → Site configuration → Environment variables (32+ random characters).
+
+Then open `https://<your-site>/stats?key=<STATS_KEY>`. Locally, `npm run serve` runs the same functions in memory; the local key is `local-dev-stats-key`.

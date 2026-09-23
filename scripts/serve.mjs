@@ -38,7 +38,37 @@ function headerRules() {
 
 const rules = headerRules();
 
+// Netlify Functions, locally: same handlers, in-memory blob store, a dev-only stats key.
+const memory = new Map();
+const store = {
+  async setJSON(key, value) { memory.set(key, JSON.stringify(value)); },
+  async get(key) { return memory.has(key) ? JSON.parse(memory.get(key)) : null; },
+  async list({ prefix = '' } = {}) { return { blobs: [...memory.keys()].filter((k) => k.startsWith(prefix)).map((key) => ({ key })) }; },
+};
+const LOCAL_ENV = { STATS_KEY: process.env.STATS_KEY || 'local-dev-stats-key' };
+const functions = {
+  '/api/e': (req) => import('../netlify/functions/e.mjs').then((m) => m.handle(req, store)),
+  '/api/stats': (req) => import('../netlify/functions/stats.mjs').then((m) => m.handle(req, store, LOCAL_ENV)),
+};
+
+async function runFunction(fn, req, res) {
+  const chunks = [];
+  for await (const c of req) chunks.push(c);
+  const request = new Request(`http://${req.headers.host}${req.url}`, {
+    method: req.method,
+    headers: req.headers,
+    body: ['GET', 'HEAD'].includes(req.method) ? undefined : Buffer.concat(chunks),
+  });
+  const response = await fn(request);
+  const headers = Object.fromEntries(response.headers);
+  for (const r of rules) if (r.pattern?.test(new URL(request.url).pathname)) Object.assign(headers, r.values);
+  res.writeHead(response.status, headers);
+  res.end(Buffer.from(await response.arrayBuffer()));
+}
+
 http.createServer((req, res) => {
+  const fn = functions[new URL(req.url, 'http://x').pathname];
+  if (fn) return void runFunction(fn, req, res).catch((err) => { res.writeHead(500).end(String(err)); });
   const urlPath = decodeURIComponent(new URL(req.url, 'http://x').pathname);
   let file = path.join(DIST, urlPath);
   if (!file.startsWith(DIST)) { res.writeHead(403).end(); return; }

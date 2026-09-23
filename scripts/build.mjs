@@ -57,6 +57,15 @@ fs.writeFileSync(path.join(DIST, '_headers'), headers.map((h) => `${h.for}\n${h.
 fs.writeFileSync(path.join(DIST, '_redirects'), redirects.map((r) => `${r.from}  ${r.to}  ${r.status}`).join('\n') + '\n');
 
 const build = hash.digest('hex').slice(0, 12);
+
+// Stamp local CSS/JS links with the build id. HTML is always revalidated, so after a deploy the
+// page asks for new URLs and the service worker can never pair old JavaScript with new data.
+for (const page of ['index.html', 'stats/index.html']) {
+  const file = path.join(DIST, page);
+  if (!fs.existsSync(file)) continue;
+  const html = fs.readFileSync(file, 'utf8').replace(/((?:href|src)="\/(?:css|js|stats)\/[^"?]+\.(?:css|js))"/g, `$1?v=${build}"`);
+  fs.writeFileSync(file, html);
+}
 const swPath = path.join(DIST, 'sw.js');
 fs.writeFileSync(swPath, fs.readFileSync(swPath, 'utf8').replace('__BUILD__', build));
 

@@ -380,6 +380,7 @@
     return '/';
   }
 
+  let firstRoute = true;
   function route() {
     const parts = location.pathname.split('/').filter(Boolean).map(decodeURIComponent);
 
@@ -398,10 +399,15 @@
         return route();
       } else {
         if (tablePart) rememberTable(r.id, tablePart);
-        restaurantPage(r, tablePart || storedTable(r.id));
+        const table = tablePart || storedTable(r.id);
+        MenvaTrack.setContext(r.id, table);
+        if (firstRoute && tablePart) MenvaTrack('scan'); // arrived from a table QR code
+        MenvaTrack('menu_view');
+        restaurantPage(r, table);
       }
     }
 
+    firstRoute = false;
     window.scrollTo({ top: 0, behavior: 'instant' });
   }
 
