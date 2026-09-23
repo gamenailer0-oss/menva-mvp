@@ -25,10 +25,12 @@
     const total = size || (!res.headers.get('content-encoding') && +res.headers.get('content-length')) || 0;
     if (!res.body) { await res.arrayBuffer(); onBytes?.(total, total); return; }
     const reader = res.body.getReader();
+    const throttle = window.MenvaCaps?.slow; // ?slow=1: ~1 Mbps, for demos and testing
     let loaded = 0;
     for (;;) {
       const { done, value } = await reader.read();
       if (done) break;
+      if (throttle) await new Promise((r) => setTimeout(r, value.length / 128));
       loaded += value.length;
       onBytes?.(Math.min(loaded, total || loaded), total || loaded);
     }
@@ -45,7 +47,8 @@
           const ModelViewer = customElements.get('model-viewer');
           ModelViewer.dracoDecoderLocation = '/vendor/draco/';
           ModelViewer.ktx2TranscoderLocation = '/vendor/basis/';
-          ModelViewer.meshoptDecoderLocation = '/vendor/meshopt_decoder.module.js';
+          // meshoptDecoderLocation is left unset on purpose: our models use Draco, and setting it makes
+          // model-viewer load the decoder at once (as a classic script, which breaks on three's module build).
           ModelViewer.lottieLoaderLocation = '/vendor/lottie_canvas.module.js';
           defined = true;
           resolve(ModelViewer);
@@ -71,13 +74,12 @@
     return path ? new URL(path, location.origin).href : '';
   }
 
-  const isIOS = () => /iPad|iPhone|iPod/.test(navigator.userAgent) || (navigator.platform === 'MacIntel' && navigator.maxTouchPoints > 1);
-
   // ─── AR (CLAUDE.md §7) ─────────────────────────────────────────
-  // Offered only after the model has loaded and the phone can do AR. True scale, locked (no pinch
-  // in AR — model-viewer passes allowsContentScaling=0 to Quick Look and resizable=false to Scene
-  // Viewer). Placed on the table with a contact shadow. Timings go to analytics.
-  function setupAR(viewer, { usdz, dishId, status }) {
+  // True scale, locked (no pinch in AR — model-viewer passes allowsContentScaling=0 to Quick Look
+  // and resizable=false to Scene Viewer), placed on the table with a contact shadow. `button` is our
+  // own "See it on your table" button, outside model-viewer, so the capability tier alone decides
+  // whether it shows (js/app.js). Timings go to analytics.
+  function setupAR(viewer, { usdz, dishId, status, button }) {
     const track = (event, props) => window.MenvaTrack?.(event, { dish: dishId, ...props });
     const say = (text) => { if (status) status.textContent = text; };
     const prompt = viewer.querySelector('.ar-prompt p');
@@ -90,18 +92,11 @@
     viewer.setAttribute('xr-environment', '');
     if (usdz) viewer.setAttribute('ios-src', usdz); // otherwise model-viewer builds one on the fly
 
-    viewer.addEventListener('load', () => {
-      if (!viewer.canActivateAR) return;
-      viewer.classList.add('ar-ready');
-      say('Ready — see it on your table.');
-      // iOS: warm the cache so Quick Look opens without a second download.
-      if (isIOS() && usdz) fetch(usdz, { priority: 'low' }).catch(() => {});
-    });
-
-    viewer.querySelector('[slot="ar-button"]')?.addEventListener('click', () => {
+    button?.addEventListener('click', () => {
       launchedAt = performance.now();
       track('ar_launch');
-    }, true);
+      viewer.activateAR(); // synchronous in the tap, so Quick Look / Scene Viewer keep the user gesture
+    });
 
     const since = () => Math.round(performance.now() - launchedAt);
     let inPageSession = false; // WebXR stays in the page; Quick Look / Scene Viewer leave it
@@ -142,11 +137,17 @@
     document.addEventListener('visibilitychange', onVisible);
   }
 
+  // iOS: after the model loads, warm the cache so Quick Look opens without a second download.
+  function prewarmQuickLook(usdz) {
+    if (usdz) fetch(usdz, { priority: 'low' }).catch(() => {});
+  }
+
   window.MenvaViewer = {
     load,
     download,
     absolute,
     setupAR,
+    prewarmQuickLook,
     get isLoaded() { return defined; },
     MODEL_VIEWER_BYTES,
   };

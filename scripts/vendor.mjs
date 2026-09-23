@@ -16,13 +16,13 @@ const THREE_LIBS = 'three/examples/jsm/libs';
 const files = {
   // model-viewer bundle (includes three.js)
   'model-viewer.min.js': '@google/model-viewer/dist/model-viewer.min.js',
-  // Decoders model-viewer would otherwise fetch from gstatic / jsDelivr
+  // Decoders model-viewer would otherwise fetch from gstatic / jsDelivr. (No meshopt: model-viewer
+  // only loads it when a location is set, and our models use Draco.)
   'draco/draco_decoder.js': `${THREE_LIBS}/draco/gltf/draco_decoder.js`,
   'draco/draco_decoder.wasm': `${THREE_LIBS}/draco/gltf/draco_decoder.wasm`,
   'draco/draco_wasm_wrapper.js': `${THREE_LIBS}/draco/gltf/draco_wasm_wrapper.js`,
   'basis/basis_transcoder.js': `${THREE_LIBS}/basis/basis_transcoder.js`,
   'basis/basis_transcoder.wasm': `${THREE_LIBS}/basis/basis_transcoder.wasm`,
-  'meshopt_decoder.module.js': `${THREE_LIBS}/meshopt_decoder.module.js`,
   'lottie_canvas.module.js': `${THREE_LIBS}/lottie_canvas.module.js`,
   // Fonts: Latin subsets, woff2
   'fonts/dm-sans-400.woff2': '@fontsource/dm-sans/files/dm-sans-latin-400-normal.woff2',

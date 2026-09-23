@@ -96,30 +96,26 @@
       return `<section class="menu-category"><h3>${esc(cat)}</h3><div class="dish-grid">${dishes}</div></section>`;
     }).join('');
 
+    // One identity block: the restaurant's own logo is the page heading (no name repeated four times),
+    // the table number sits with it, and the first dish is in view sooner.
     const isGauchos = r.id === 'gauchos';
-    const logoHTML = r.logo ? `<img src="${esc(r.logo)}" alt="${esc(r.name)}" class="restaurant-logo-svg" width="200" height="80">` : '';
+    const name = esc(r.displayName || r.name);
+    const heading = r.logo ? `<img src="${esc(r.logo)}" alt="${name}" class="restaurant-logo-svg" width="200" height="80">` : name;
     const coverBg = isGauchos ? 'background:linear-gradient(135deg,#1a1410,#2a1810)' : 'background:linear-gradient(135deg,var(--surface-offset),var(--stage))';
     const subtitle = r.showCheffy ? cheffy('wave', esc(r.menuSubtitle)) : `<span>${esc(r.menuSubtitle || '')}</span>`;
-    const tableChip = table ? `<br><span class="table-chip">Table ${esc(table)}</span>` : '';
 
     app.innerHTML = header(false) + `<main class="restaurant-page${isGauchos ? ' gauchos-page' : ''}">
-      <div class="restaurant-identity">
-        <span>${esc(r.displayName || r.name)}</span>
-        <p>${esc(r.area)}, ${esc(r.location)}${tableChip}</p>
-      </div>
       <section class="restaurant-cover${isGauchos ? ' gauchos-cover' : ''}" style="${coverBg}">
-        ${logoHTML}
+        <h1 class="cover-heading">${heading}</h1>
         <div class="cover-copy">
-          <span class="overline">${esc(r.area)} · ${esc(r.location.toUpperCase())}</span>
-          <h1>${esc(r.displayName || r.name)}</h1>
+          <div class="cover-meta">
+            <span class="overline">${esc(r.area)} · ${esc(r.location)}</span>
+            ${table ? `<span class="table-chip">Table ${esc(table)}</span>` : ''}
+          </div>
           <p>${esc(r.tagline)}</p>
         </div>
       </section>
-      <section class="menu-intro">
-        <span class="restaurant-seal">${esc((r.displayName || r.name).charAt(0))}</span>
-        <p>${esc(r.description)}</p>
-        <div><p>${esc(r.cuisine)}<br>Menu · PKR</p></div>
-      </section>
+      <p class="menu-intro">${esc(r.description)}</p>
       <section class="menu-section">
         <div class="menu-heading"><h2>${esc(r.menuTitle || 'Menu')}</h2>${subtitle}</div>
         ${menuHTML}
@@ -181,15 +177,19 @@
 
   // ─── Dish Sheet ──────────────────────────────────────────────
   // Order: price → description → halal → allergens → spice → dietary → ingredients → nutrition.
+  const LOAD_LIMIT_MS = 12000; // past this, show the 360° view while the full view keeps loading
+
   async function openDish(dish, trigger) {
     lastTrigger = trigger;
     const dialog = app.querySelector('dialog');
     const content = app.querySelector('#dish-content');
     const a = dish.assets;
+    MenvaTrack('dish_open', { dish: dish.id });
 
     // The Pass: blur-up poster paints instantly (inline base64, zero network), then focuses as the GLB loads.
+    // model-viewer's own AR button is replaced by an empty slot; ours sits below the stage (thumb reach).
     const modelViewer = dish.has3d ? `<model-viewer id="dish-viewer" camera-controls touch-action="pan-y" camera-orbit="-25deg 55deg 85%" shadow-intensity="1" shadow-softness="0.6" environment-image="neutral" interaction-prompt="auto" alt="${esc(dish.name)} — 3D scan">
-            <button slot="ar-button" class="ar-btn">${arIcon} See it on your table</button>
+            <span slot="ar-button" hidden></span>
             <div slot="ar-prompt" class="ar-prompt">
               <svg viewBox="0 0 120 80" aria-hidden="true"><ellipse cx="60" cy="62" rx="44" ry="12"/><g class="ar-prompt-phone"><rect x="50" y="8" width="20" height="34" rx="4"/><line x1="57" y1="13" x2="63" y2="13"/></g></svg>
               <p>Move your phone slowly over the table.</p>
@@ -199,11 +199,12 @@
     content.innerHTML = `
       ${dish.has3d ? `<div class="dish-stage">
           ${MenvaLoader.markup(dish, modelViewer)}
-          <div class="viewer-tools">
-            <span id="viewer-status" role="status"></span>
-            <button id="reset-view">${resetIcon} Reset</button>
+          <button id="reset-view" class="reset-view" hidden aria-label="Reset the view">${resetIcon}</button>
+          <div class="stage-actions">
+            <button type="button" class="ar-btn" hidden>${arIcon} See it on your table</button>
+            <p id="viewer-status" class="stage-status" role="status"></p>
+            ${MenvaCaps.inApp ? `<p class="inapp-note">For the table view, open this page in Chrome or Safari. <button type="button" class="copy-link">Copy link</button></p>` : ''}
           </div>
-          <p class="stage-note">Drag to turn the dish · Pinch to zoom</p>
         </div>` : ''}
       <section class="dish-detail">
         <p class="overline">${esc(activeRestaurant.name)} / ${esc(dish.category)}</p>
@@ -216,6 +217,7 @@
     `;
 
     content.querySelector('.back-menu').addEventListener('click', () => dialog.close());
+    content.querySelector('.copy-link')?.addEventListener('click', copyLink);
     document.body.classList.add('modal-open');
     dialog.showModal();
 
@@ -223,14 +225,38 @@
 
     const viewer = document.getElementById('dish-viewer');
     const status = document.getElementById('viewer-status');
+    const arButton = content.querySelector('.ar-btn');
     const resetBtn = document.getElementById('reset-view');
-    const spin = { url: a.spin, layout: a.spinLayout };
+    const say = (text) => { status.textContent = text; };
+    const spin = a.spin ? { url: a.spin, layout: a.spinLayout } : null;
+    const openedAt = performance.now();
+    let tier = null;
+    const setTier = (t, reason) => {
+      if (t === tier) return;
+      tier = t;
+      content.querySelector('.dish-stage').dataset.tier = t;
+      MenvaTrack('tier_assigned', { dish: dish.id, tier: t, ...(reason && { reason }) });
+    };
 
     // Start The Pass before model-viewer's script arrives so the diner sees progress copy at once.
     const pass = MenvaLoader.start(content, viewer, {
       lines: activeRestaurant.loaderLines,
       spin,
+      onStall: () => MenvaTrack('model_progress_stalled', { dish: dish.id }),
+      onFallback: (t, reason) => setTier(t, reason),
     });
+
+    // Let the sheet paint the dish first; the WebGL probe below is not free.
+    await new Promise((r) => requestAnimationFrame(() => setTimeout(r)));
+    if (!viewer.isConnected) return;
+
+    // Tiers 4–5 up front: no WebGL, a low-memory phone, or a forced tier. Nothing 3D is downloaded.
+    const pre = MenvaCaps.preflight(!!spin);
+    if (pre) {
+      pass.fallback(pre, 'Swipe to turn the dish');
+      setTier(pre, MenvaCaps.forced ? 'forced' : 'device');
+      return;
+    }
 
     // Download the model (and, on the first dish, model-viewer itself) in parallel, counting real
     // bytes for The Pass. model-viewer then reads both from cache.
@@ -242,32 +268,69 @@
       const [l, t] = Object.values(parts).reduce(([l, t], [a, b]) => [l + a, t + b], [0, 0]);
       if (t) pass.progress((l / t) * 0.95, parts.glb[0] / parts.glb[1]); // the last 5% is parsing and first render
     };
-    const glbReady = MenvaViewer.download(glbUrl, a.glbBytes, bytes('glb')).catch(() => {}); // model-viewer retries on its own
 
+    // Too slow: show the 360° view now and keep loading; the full view takes over when it arrives.
+    const slowTimer = setTimeout(() => {
+      if (viewer.loaded || !viewer.isConnected) return;
+      pass.fallback(4, 'Here it is in 360° while the full view loads');
+      setTier(4, 'slow');
+    }, LOAD_LIMIT_MS);
+
+    const failed = (reason) => {
+      clearTimeout(slowTimer);
+      if (!viewer.isConnected) return;
+      MenvaTrack('model_failed', { dish: dish.id, reason });
+      pass.fallback(4, 'The 3D view couldn’t load here — this is the dish in 360°');
+      setTier(spin ? 4 : 5, 'failed');
+    };
+
+    const glbReady = MenvaViewer.download(glbUrl, a.glbBytes, bytes('glb')).then(() => true, () => false);
     try {
       await MenvaViewer.load(bytes('viewer')); // self-hosted, lazy: only when the first dish sheet opens
     } catch {
-      if (status) status.textContent = 'The 3D view needs a better connection — here it is in 360°.';
-      pass.showSpinner();
-      return;
+      return failed('viewer');
     }
-    await glbReady;
-    if (!viewer.isConnected) return; // sheet closed while downloading
+    if (!(await glbReady)) return failed('download');
+    if (!viewer.isConnected) return clearTimeout(slowTimer); // sheet closed while downloading
 
-    // AR listeners go on before src so the load event can't be missed.
-    MenvaViewer.setupAR(viewer, { usdz: MenvaViewer.absolute(a.usdz), dishId: dish.id, status });
+    // AR wiring goes on before src so no event is missed.
+    MenvaViewer.setupAR(viewer, { usdz: MenvaViewer.absolute(a.usdz), dishId: dish.id, status, button: arButton });
+    viewer.addEventListener('error', () => failed('model'), { once: true });
+    viewer.addEventListener('load', () => {
+      clearTimeout(slowTimer);
+      MenvaTrack('model_loaded', { dish: dish.id, ms: Math.round(performance.now() - openedAt), bytes: a.glbBytes });
+      // The tier is decided now — after model-viewer and the model have loaded, never on a timer.
+      const t = MenvaCaps.assign(viewer);
+      setTier(t);
+      resetBtn.hidden = false;
+      if (t <= 2) {
+        arButton.hidden = false;
+        say('Ready — see it on your table.');
+        if (t === 1) MenvaViewer.prewarmQuickLook(MenvaViewer.absolute(a.usdz));
+      } else {
+        say(MenvaCaps.isMobile || MenvaCaps.inApp
+          ? 'Drag to turn the dish · Pinch to zoom'
+          : 'Drag to turn the dish. To see it on your table, open this menu on your phone.');
+      }
+    }, { once: true });
     viewer.src = glbUrl;
 
-    viewer.addEventListener('error', () => {
-      if (status) status.textContent = 'The 3D view could not load — here it is in 360°.';
-      pass.showSpinner();
-    });
-
-    resetBtn?.addEventListener('click', () => {
-      viewer.cameraOrbit = '-25deg 55deg 85%'; // matches the poster framing so the crossfade doesn't jump
+    resetBtn.addEventListener('click', () => {
+      viewer.cameraOrbit = '-25deg 55deg 85%'; // matches the poster framing
       viewer.fieldOfView = 'auto';
       viewer.jumpCameraToGoal?.();
     });
+  }
+
+  // In-app browsers (Instagram, Facebook, TikTok…) can't open AR; help the diner move to a real browser.
+  async function copyLink(e) {
+    const btn = e.currentTarget;
+    try {
+      await navigator.clipboard.writeText(location.href);
+      btn.textContent = 'Link copied';
+    } catch {
+      window.prompt('Copy this link, then open it in Chrome or Safari:', location.href);
+    }
   }
 
   // ─── Table number ─────────────────────────────────────────────
@@ -360,6 +423,8 @@
     const legacy = legacyHashPath();
     if (legacy) history.replaceState(null, '', legacy);
     route();
+    // Probe WebGL while the diner reads the menu, so opening a dish never waits for it.
+    (window.requestIdleCallback || setTimeout)(() => MenvaCaps.webgl());
   }
   start();
 

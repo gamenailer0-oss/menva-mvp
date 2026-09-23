@@ -5,22 +5,28 @@
 (function () {
   'use strict';
 
-  function mount(container, { url, layout }) {
-    if (!url || !layout) return null;
-    const { frames, columns, rows } = layout;
+  // onError: called if the sprite image can't load (the element removes itself first).
+  function mount(container, spin, onError) {
+    if (!spin?.url || !spin.layout) return null;
+    const { frames, columns, rows } = spin.layout;
     const el = document.createElement('div');
     el.className = 'spin';
     el.tabIndex = 0;
     el.setAttribute('role', 'img');
     el.setAttribute('aria-label', '360° view of the dish — swipe or use the arrow keys to turn it');
-    el.style.backgroundImage = `url("${url}")`;
     el.style.backgroundSize = `${columns * 100}% ${rows * 100}%`;
+
+    const img = new Image();
+    img.onload = () => { el.style.backgroundImage = `url("${spin.url}")`; el.classList.add('ready'); };
+    img.onerror = () => { el.remove(); onError?.(); };
+    img.src = spin.url;
 
     let frame = 0;
     const show = (f) => {
       frame = ((f % frames) + frames) % frames;
       const col = frame % columns, row = Math.floor(frame / columns);
       el.style.backgroundPosition = `${(col / (columns - 1)) * 100}% ${(row / (rows - 1)) * 100}%`;
+      el.dataset.frame = frame;
     };
     show(0);
 

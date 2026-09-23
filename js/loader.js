@@ -35,9 +35,29 @@
     const slow = root.querySelector('.pass-slow');
     const poster = stage.querySelector('.pass-poster');
     const lines = opts.lines?.length ? opts.lines : GENERIC;
-    // The 360° sprite replaces the stage (tier 4) until the model arrives.
-    const spin = () => { spinner ??= window.MenvaSpin?.mount(stage, opts.spin); if (spinner) stage.dataset.spin = ''; return spinner; };
     let p = 0, model = 0, last = Date.now(), done = false, spinner = null, text = '', nudging = false;
+
+    // Tier 5: the poster alone, sharp and still — nothing that looks like it's still loading.
+    function still() {
+      spinner?.remove();
+      spinner = null;
+      delete stage.dataset.spin;
+      stage.dataset.state = 'still';
+      stage.style.setProperty('--p', 1);
+      line.hidden = true;
+      slow.hidden = true;
+    }
+
+    // Tier 4: the 360° sprite replaces the stage (until the model arrives, if it's still coming).
+    // If the sprite itself can't load, drop to the poster.
+    function spin(message) {
+      if (!spinner) spinner = window.MenvaSpin?.mount(stage, opts.spin, still);
+      if (!spinner) { still(); return null; }
+      stage.dataset.spin = '';
+      slow.textContent = message || 'Slow connection — here it is in 360° meanwhile';
+      slow.hidden = false;
+      return spinner;
+    }
 
     const showPoster = () => poster.classList.add('ready');
     poster.complete && poster.naturalWidth ? showPoster() : poster.addEventListener('load', showPoster, { once: true });
@@ -60,8 +80,9 @@
     }
 
     function served() {
-      if (done) return;
+      if (done || stage.dataset.state === 'still') return;
       done = true;
+      line.hidden = false;
       set(1);
       say(lineFor());
       stage.dataset.state = 'served';
@@ -80,12 +101,15 @@
       setTimeout(() => { nudging = false; stage.classList.remove('nudge'); say(lineFor()); }, 1200);
     });
 
+    // No progress for 4 s: keep the steam moving, never fake progress (reported once).
     // Stalled > 6 s below 40%: show the 360° sprite until the model arrives.
+    let reported = false;
     const timer = setInterval(() => {
-      if (done || !root.isConnected) return clearInterval(timer);
-      if (!spinner && opts.spin && model < 0.4 && Date.now() - last > 6000) {
-        slow.hidden = !spin();
-      }
+      if (done || !root.isConnected || stage.dataset.state === 'still') return clearInterval(timer);
+      const idle = Date.now() - last;
+      const downloading = p < 0.95; // after that it's parsing, not a network stall
+      if (!reported && downloading && idle > 4000) { reported = true; opts.onStall?.(); }
+      if (!spinner && opts.spin && model < 0.4 && idle > 6000 && spin()) opts.onFallback?.(4, 'stalled');
     }, 500);
 
     say(lineFor());
@@ -96,7 +120,12 @@
     return {
       stage,
       progress: (v, m) => { model = m ?? v; set(Math.min(v, 0.99)); },
-      showSpinner: spin,
+      // Tier 4 or 5 without (or instead of) the 3D. message is shown under the 360° view.
+      fallback(tier, message) {
+        if (tier === 4) { if (spin(message)) line.hidden = true; }
+        else still();
+      },
+      get state() { return stage.dataset.state; },
     };
   }
 

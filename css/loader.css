@@ -111,10 +111,20 @@
 @keyframes pass-nudge { 50% { transform: scale(1.04); } }
 .pass-slow { text-align: center; font-size: var(--text-xs); color: var(--muted); margin: 4px auto 0; }
 
-/* 360° sprite (js/spin.js) — replaces the stage while shown */
-.pass[data-spin] .pass-focus,
+/* Tier 5: sharp, still poster */
+.pass[data-state="still"] { cursor: auto; }
+.pass[data-state="still"] .pass-focus { filter: none; transform: none; }
+.pass[data-state="still"] .pass-rim,
+.pass[data-state="still"] .pass-steam,
+.pass[data-state="still"] model-viewer { display: none; }
+
+/* 360° sprite (js/spin.js) — replaces the stage while shown; the poster stays until the sprite arrives */
 .pass[data-spin] .pass-rim,
 .pass[data-spin] .pass-steam { opacity: 0; }
+.pass[data-spin] .pass-focus { transition-delay: 150ms; }
+.pass[data-spin]:has(.spin.ready) .pass-focus { opacity: 0; }
+.spin { opacity: 0; transition: opacity 300ms ease; }
+.spin.ready { opacity: 1; }
 .spin {
   position: absolute;
   inset: 0;

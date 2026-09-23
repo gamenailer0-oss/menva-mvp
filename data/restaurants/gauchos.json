@@ -7,20 +7,35 @@
   "theme": "gauchos",
   "pilot": true,
   "cuisine": "Steakhouse",
-  "tagline": "Argentine-inspired · Oakwood-smoked · Lahore",
+  "tagline": "Argentine-inspired · Oakwood-smoked",
   "area": "Gulberg III",
   "location": "Lahore",
   "address": "56-B3 Mian Mehmood Ali Kasuri Rd, Block B3, Gulberg III, Lahore",
   "website": "https://gauchos.com.pk/",
-  "description": "Argentine-inspired steakhouse in the heart of Gulberg. Supreme cuts, oakwood-smoked brisket, and signature sauces — crafted with intention.",
+  "description": "Argentine-inspired steakhouse in the heart of Gulberg. Supreme cuts, oakwood-smoked brisket and signature sauces.",
   "menuTitle": "The Cuts",
-  "menuSubtitle": "Asado · Parrilla · See it on your table",
+  "menuSubtitle": "Prices in PKR",
   "showCheffy": false,
   "loaderLines": [
-    { "until": 25, "text": "Firing up the grill" },
-    { "until": 60, "text": "Searing your cut" },
-    { "until": 90, "text": "Letting it rest" },
-    { "until": 100, "text": "Plating it for you" },
-    { "loaded": true, "text": "Served." }
+    {
+      "until": 25,
+      "text": "Firing up the grill"
+    },
+    {
+      "until": 60,
+      "text": "Searing your cut"
+    },
+    {
+      "until": 90,
+      "text": "Letting it rest"
+    },
+    {
+      "until": 100,
+      "text": "Plating it for you"
+    },
+    {
+      "loaded": true,
+      "text": "Served."
+    }
   ]
 }
