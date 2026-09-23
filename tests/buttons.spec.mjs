@@ -8,7 +8,7 @@ test('home page: every button and link', async ({ page }) => {
   await page.goto('/');
 
   await test.step('shows the hero, the Gauchos section and "How it works"', async () => {
-    await expect(page.locator('h1')).toContainText('See it.');
+    await expect(page.locator('h1')).toContainText('See it on your table.');
     await expect(page.locator('.pilot-card')).toBeVisible();
     await expect(page.locator('.pilot-dishes li')).toHaveCount(3);
     await expect(page.locator('.home-how li')).toHaveCount(3);
@@ -101,16 +101,15 @@ test('menu page: every button and link', async ({ page }) => {
 
 test('dish sheet: every control', async ({ page }) => {
   const w = watch(page);
+  await test.step('tapping the dish while it loads answers "Almost ready"', async () => {
+    await page.goto('/g/12?slow=1'); // throttled, so the dish is genuinely still loading when tapped
+    await page.locator('[data-dish="steak-main"]').click();
+    await page.locator('.pass').click({ position: { x: 20, y: 20 } });
+    await expect(page.locator('.pass-line')).toHaveText('Almost ready');
+  });
+
   await page.goto('/g/12');
   await page.locator('[data-dish="steak-main"]').click();
-
-  await test.step('tapping the dish while it loads answers "Almost ready"', async () => {
-    const state = await page.locator('.pass').getAttribute('data-state');
-    if (state === 'loading') {
-      await page.locator('.pass').click({ position: { x: 20, y: 20 } });
-      await expect(page.locator('.pass-line')).toHaveText('Almost ready');
-    }
-  });
 
   await test.step('3D view arrives and "Reset" is shown', async () => {
     await expect(page.locator('.pass[data-state="live"]')).toBeVisible({ timeout: 60_000 });
