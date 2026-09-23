@@ -128,10 +128,12 @@ async function inspectGLB(file) {
   const root = doc.getRoot();
   let tris = 0, verts = 0;
   const indexTypes = new Set();
+  const positions = [];
   for (const mesh of root.listMeshes()) {
     for (const prim of mesh.listPrimitives()) {
       const pos = prim.getAttribute('POSITION');
       const idx = prim.getIndices();
+      for (const v of pos?.getArray() ?? []) positions.push(v);
       verts += pos?.getCount() ?? 0;
       tris += (idx ? idx.getCount() : pos?.getCount() ?? 0) / 3;
       indexTypes.add(idx ? idx.getArray().constructor.name.replace('Array', '') : 'none');
@@ -169,6 +171,7 @@ async function inspectGLB(file) {
     box: describeBox(min, max),
     materials, textures,
     extensions: root.listExtensionsUsed().map((e) => e.extensionName),
+    positions,
   };
 }
 
@@ -471,6 +474,49 @@ for (const m of results) {
   if (m.score.light === 'green') m.score.light = 'amber';
 }
 
+// Same scan filed under two dish ids? Compare every pair's geometry.
+const toSet = (pos) => { const s = new Set(); for (let i = 0; i < pos.length; i += 3) s.add(vertexKey(pos[i], pos[i + 1], pos[i + 2])); return s; };
+const readable = results.filter((m) => m.source?.positions);
+const duplicates = [];
+for (let i = 0; i < readable.length; i++) {
+  const set = toSet(readable[i].source.positions);
+  for (let j = i + 1; j < readable.length; j++) {
+    const ov = vertexOverlap(set, readable[j].source.positions);
+    if (ov >= 0.5) {
+      duplicates.push([readable[i].id, readable[j].id, ov]);
+      for (const m of [readable[i], readable[j]])
+        m.score.red.push(`Same geometry as \`${m === readable[i] ? readable[j].id : readable[i].id}\` (${(ov * 100).toFixed(0)}% vertex match) — one scan is filed under two dishes. Confirm which dish it really is.`);
+    }
+  }
+}
+for (const m of results) if (m.score.red.length) m.score.light = 'red';
+
+// ---------- existing app inventory ----------
+
+const APP_SKIP = new Set(['node_modules', 'incoming-models', '.git', 'scripts', 'audit-report.md', 'package-lock.json']);
+const appFiles = [];
+const walkApp = (dir) => {
+  for (const ent of fs.readdirSync(dir, { withFileTypes: true })) {
+    const p = path.join(dir, ent.name);
+    const rel = path.relative(ROOT, p).replaceAll('\\', '/');
+    if (APP_SKIP.has(rel)) continue;
+    if (ent.isDirectory()) walkApp(p);
+    else appFiles.push({ rel, bytes: fs.statSync(p).size });
+  }
+};
+walkApp(ROOT);
+const thirdParty = [], foodpanda = [];
+for (const f of appFiles.filter((f) => /\.(html|js|css|toml)$/.test(f.rel))) {
+  fs.readFileSync(path.join(ROOT, f.rel), 'utf8').split('\n').forEach((line, i) => {
+    for (const url of line.match(/https?:\/\/[^\s"'`)]+/g) ?? []) {
+      const host = new URL(url).host;
+      if (/foodpanda/i.test(host)) foodpanda.push(`${f.rel}:${i + 1}`);
+      else if (!/^(www\.w3\.org|gauchos\.com\.pk)$/.test(host)) thirdParty.push({ at: `${f.rel}:${i + 1}`, url });
+    }
+    if (/foodpanda/i.test(line) && !/https?:\/\/[^\s]*foodpanda/i.test(line)) foodpanda.push(`${f.rel}:${i + 1}`);
+  });
+}
+
 const modelIds = new Set(results.map((r) => r.id));
 const csvNoModel = csvRows.filter((r) => r.is_3d?.toLowerCase() === 'yes' && !modelIds.has(r.id));
 const modelNoCsv = results.filter((r) => !r.csv);
@@ -507,6 +553,23 @@ if (spiceSuspect.length)
   L.push(`- ⚠ \`spice_level\` is \`0\` on ${spiceSuspect.length} rows where every other food field is TO_CONFIRM (${spiceSuspect.map((r) => '`' + r.id + '`').join(', ')}). Likely a default, not a confirmed value — treat as unconfirmed until Abdullah says otherwise.`);
 L.push('');
 
+L.push(`- Duplicate scans across dishes: ${duplicates.length ? duplicates.map(([a, b, ov]) => `\`${a}\` = \`${b}\` (${(ov * 100).toFixed(0)}%)`).join(', ') : 'none'}.`, '');
+
+L.push('## Existing app inventory', '');
+const group = (re) => appFiles.filter((f) => re.test(f.rel));
+const listFiles = (fs_) => fs_.map((f) => `\`${f.rel}\` (${size(f.bytes)})`).join(', ');
+L.push(`- ${appFiles.length} files, ${size(appFiles.reduce((a, f) => a + f.bytes, 0))} total.`);
+L.push(`- Code: ${listFiles(group(/\.(html|js|css)$/))}.`);
+L.push(`- Models: ${listFiles(group(/^models\//)) || 'none'}.`);
+L.push(`- Images: ${listFiles(group(/\.(jpe?g|png|webp|svg)$/)) || 'none'}.`);
+L.push(`- Config/docs: ${listFiles(group(/\.(toml|md)$|^\.gitignore$/))}.`);
+L.push(`- Third-party URLs referenced (must go — non-negotiable #2): ${thirdParty.length ? '' : 'none'}`);
+for (const t of thirdParty) L.push(`  - \`${t.at}\` → ${t.url}`);
+L.push(`- Foodpanda references (must go — Phase 3): ${foodpanda.length ? foodpanda.map((x) => '`' + x + '`').join(', ') : 'none'}.`);
+const toml = fs.existsSync(path.join(ROOT, 'netlify.toml')) ? fs.readFileSync(path.join(ROOT, 'netlify.toml'), 'utf8') : '';
+L.push(`- \`netlify.toml\` Content-Type for .glb: ${/gltf-binary/.test(toml) ? 'yes' : '**missing**'}; for .usdz: ${/usdz/.test(toml) ? 'yes' : '**missing**'}.`);
+L.push('');
+
 L.push('## Per model', '');
 for (const m of results) {
   const s = m.source;
@@ -536,7 +599,7 @@ for (const m of results) {
     const ov = m.objOverlap != null ? `${(m.objOverlap * 100).toFixed(0)}%` : 'n/a';
     L.push(`- OBJ also present (${m.obj.verts.toLocaleString()} verts, ${o.x} × ${o.y} × ${o.z} cm); vertex overlap with USDZ: ${ov}${m.objOverlap < 0.5 ? ' → **mismatch, OBJ not used**' : ''}.`);
   }
-  L.push(`- Real photo:${m.photo ? path.basename(m.photo) : 'none'}.`);
+  L.push(`- Real photo: ${m.photo ? path.basename(m.photo) : 'none'}.`);
   L.push(`- Data gate: ${m.gate.length ? `open fields → ${m.gate.map((g) => '`' + g + '`').join(', ')}` : 'clear'}.`);
   L.push('');
   if (m.score.red.length) L.push('**Red — blocks the menu:**', ...m.score.red.map((x) => `- ${x}`), '');
