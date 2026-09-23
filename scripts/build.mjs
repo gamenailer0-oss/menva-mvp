@@ -39,6 +39,22 @@ if (!fs.existsSync(path.join(ROOT, 'vendor', 'model-viewer.min.js'))) {
 }
 PUBLIC.forEach(copy);
 
+// Drag-and-drop deploys ignore netlify.toml, so mirror its headers/redirects as _headers/_redirects.
+const headers = [], redirects = [];
+let block = null;
+for (const line of fs.readFileSync(path.join(ROOT, 'netlify.toml'), 'utf8').split('\n')) {
+  const t = line.trim();
+  if (t === '[[headers]]') { block = { kind: 'h', values: [] }; headers.push(block); continue; }
+  if (t === '[[redirects]]') { block = { kind: 'r' }; redirects.push(block); continue; }
+  if (t.startsWith('[') && t !== '[headers.values]') { block = null; continue; }
+  const m = t.match(/^([\w-]+)\s*=\s*"?(.*?)"?$/);
+  if (!block || !m) continue;
+  if (block.kind === 'h') m[1] === 'for' ? (block.for = m[2]) : block.values.push(`${m[1]}: ${m[2]}`);
+  else block[m[1]] = m[2];
+}
+fs.writeFileSync(path.join(DIST, '_headers'), headers.map((h) => `${h.for}\n${h.values.map((v) => `  ${v}`).join('\n')}`).join('\n\n') + '\n');
+fs.writeFileSync(path.join(DIST, '_redirects'), redirects.map((r) => `${r.from}  ${r.to}  ${r.status}`).join('\n') + '\n');
+
 const build = hash.digest('hex').slice(0, 12);
 const swPath = path.join(DIST, 'sw.js');
 fs.writeFileSync(swPath, fs.readFileSync(swPath, 'utf8').replace('__BUILD__', build));
