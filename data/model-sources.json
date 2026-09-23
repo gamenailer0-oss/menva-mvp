@@ -1,0 +1,8 @@
+{
+  "_readme": "Which folder in incoming-models/ is the 3D source for each dish id. Dishes not listed use the folder with the same name. Read by the Phase 2 pipeline.",
+  "steak-main": {
+    "source": "tomahawk-steak",
+    "decided": "2026-09-23",
+    "why": "The 'tomahawk-steak' scan is the same geometry as the old ribeye model (100% vertex match) with 2048px textures instead of 512px. Owner confirmed it is the Premium Ribeye Steak; tomahawk removed from dishes.csv until it has its own scan."
+  }
+}

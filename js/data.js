@@ -8,6 +8,7 @@ const MENVA_DATA = {
   restaurants: [
     {
       id: "gauchos",
+      slug: "g", // short path used in table QR codes: /g/<table>
       name: "Gauchos",
       displayName: "Gauchos",
       tagline: "Steakhouse & Grill",
@@ -192,6 +193,12 @@ function formatPrice(value) {
 // Find helpers
 function findRestaurant(id) {
   return MENVA_DATA.restaurants.find(r => r.id === id);
+}
+
+// Accepts the short slug (/g/12) or the full id (/gauchos/12)
+function findRestaurantBySlug(slug) {
+  const s = slug.toLowerCase();
+  return MENVA_DATA.restaurants.find(r => r.slug === s || r.id === s);
 }
 
 function findDish(restaurant, dishId) {

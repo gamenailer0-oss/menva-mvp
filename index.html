@@ -9,24 +9,24 @@
   <meta name="apple-mobile-web-app-status-bar-style" content="default">
   <meta name="apple-mobile-web-app-title" content="MENVA">
   <title>MENVA — See it before you order it</title>
+  <link rel="icon" href="/assets/logo.svg" type="image/svg+xml">
 
   <!-- Dark mode bootstrap (runs before paint, no flash) -->
-  <script src="js/appearance.js"></script>
+  <script src="/js/appearance.js"></script>
 
-  <!-- Fonts: DM Sans (body) + Instrument Serif (display) -->
-  <link rel="preconnect" href="https://fonts.googleapis.com">
-  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
-  <link href="https://fonts.googleapis.com/css2?family=DM+Sans:wght@400;500;600&family=Instrument+Serif:ital@0;1&display=swap" rel="stylesheet">
+  <!-- Fonts are self-hosted (see css/base.css); preload the body weight -->
+  <link rel="preload" href="/vendor/fonts/dm-sans-400.woff2" as="font" type="font/woff2" crossorigin>
 
   <!-- Styles -->
-  <link rel="stylesheet" href="css/tokens.css">
-  <link rel="stylesheet" href="css/base.css">
-  <link rel="stylesheet" href="css/style.css">
-  <link rel="stylesheet" href="css/toggle.css">
+  <link rel="stylesheet" href="/css/tokens.css">
+  <link rel="stylesheet" href="/css/base.css">
+  <link rel="stylesheet" href="/css/style.css">
+  <link rel="stylesheet" href="/css/toggle.css">
 </head>
 <body>
   <div id="app"></div>
-  <script src="js/data.js"></script>
-  <script src="js/app.js"></script>
+  <script src="/js/data.js" defer></script>
+  <script src="/js/viewer.js" defer></script>
+  <script src="/js/app.js" defer></script>
 </body>
 </html>

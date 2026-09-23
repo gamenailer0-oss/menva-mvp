@@ -8,3 +8,6 @@ __pycache__/
 incoming-models/**
 !incoming-models/
 !incoming-models/NOTES.md
+
+# Build output (Netlify runs npm run build)
+dist/

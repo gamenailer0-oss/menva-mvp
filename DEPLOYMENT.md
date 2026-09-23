@@ -1,62 +1,59 @@
 # MENVA — Deployment Guide
 
-## Quick Netlify Deploy
+## Deploy on Netlify
 
-1. **Upload the `menva/` folder** to Netlify (drag & drop or connect repo)
-2. **Deploy** — Netlify will serve it as a static site automatically
-3. **Open the link** — it just works
+**Option A — connect the Git repo (recommended).** Netlify reads `netlify.toml`, runs `npm run build`, and publishes the `dist/` folder. No settings to type in.
 
-## Build Settings
-- **No build command needed** — this is a static site
-- **Publish directory:** `.` (root of the menva folder)
-- **No environment variables required**
-
-## What's Inside
+**Option B — drag and drop.** On your computer:
 
 ```
-menva/
-├── index.html          # Entry point
-├── css/
-│   ├── tokens.css      # Brand colors, dark mode, per-restaurant themes
-│   ├── base.css        # Reset, typography
-│   └── style.css       # All component styles
-├── js/
-│   ├── appearance.js   # Dark mode bootstrap (runs before paint)
-│   ├── data.js         # Restaurant/dish data + nutrition + Gauchos menu
-│   └── app.js          # Router, views, dish modal, 3D viewer
-├── models/
-│   ├── gauchos-steak-sandwich.glb   # 1.1MB — 3D model (web)
-│   ├── gauchos-steak-sandwich.usdz  # 1.1MB — AR model (iOS)
-│   ├── gauchos-steak-main.glb       # 1.2MB — 3D model (web)
-│   └── gauchos-steak-main.usdz      # 1.5MB — AR model (iOS)
-├── assets/
-│   └── cheffy/
-│       ├── wave.webp       # Cheffy waving (hero)
-│       └── thinking.webp   # Cheffy thinking (dish modal)
-├── netlify.toml         # Netlify config
-└── .gitignore
+npm install
+npm run build
 ```
 
-## Features
-- 3D dish viewer with model-viewer (lazy loaded)
-- AR support: iOS Quick Look (USDZ), Android Scene Viewer (GLB)
-- Dark mode with system preference detection
-- Per-restaurant theming (Gauchos = warm terracotta)
-- Native dialog modal with focus trap
-- Nutrition info per dish (calories, protein, fat, carbs, cut, weight)
-- Full Gauchos menu (60+ items from Foodpanda) with search & filter
-- Cheffy mascot cameos (subtle, noble, artistic)
-- Mobile-first responsive design
-- touch-action: pan-y on all 3D viewers (no mobile scroll hijacking)
+Then drag the **`dist/`** folder (not the whole project) onto the Netlify dashboard.
 
-## Adding More Restaurants
-Add entries to `MENVA_DATA.restaurants` in `js/data.js`. Each restaurant can have:
-- Custom theme colors (via CSS tokens)
-- Dishes with optional 3D models (GLB + USDZ)
-- Nutrition data per dish
-- Full menu data for the published menu section
+Only `dist/` is ever published, so project files such as `CLAUDE.md`, `scripts/` and the raw scans stay private.
 
-## Adding More 3D Models
-1. Place `.glb` (web) and `.usdz` (AR) files in `models/`
-2. Reference them in dish data: `glb: "models/your-dish.glb"`, `usdz: "models/your-dish.usdz"`
-3. Keep GLB under 1.5MB for fast loading (512px textures recommended)
+## Links
+
+| URL | What it shows |
+|---|---|
+| `/` | MENVA brand page (no 3D) |
+| `/g` | Gauchos menu |
+| `/g/12` | Gauchos menu for table 12 — this is what table QR codes point to |
+| `/gauchos/12` | Same as `/g/12` (long form) |
+
+Old links like `/#/restaurant/gauchos` still work and redirect to `/g`.
+
+## Check a deploy
+
+The model files must be served with the right type, or iPhone AR (Quick Look) will not open:
+
+```
+curl -I https://<your-site>/models/gauchos-steak-main.glb    # content-type: model/gltf-binary
+curl -I https://<your-site>/models/gauchos-steak-main.usdz   # content-type: model/vnd.usdz+zip
+```
+
+## Working locally
+
+```
+npm install
+npm run vendor   # only after changing a pinned version in package.json
+npm run build
+npm run serve    # http://localhost:8080 — same headers and routing as netlify.toml
+```
+
+## What's where
+
+```
+index.html, sw.js, robots.txt   app shell, service worker
+css/  js/                       styles and app code (no framework, no bundler)
+assets/  models/                images and 3D models
+vendor/                         self-hosted model-viewer, decoders, fonts (from `npm run vendor`)
+scripts/                        tooling: audit, vendor, build, serve
+data/                           dishes.csv (source of truth) and model-sources.json
+incoming-models/                raw scans — kept on disk, never published, never edited
+```
+
+No third-party requests at runtime: model-viewer, its decoders and the fonts are all served from `/vendor`.

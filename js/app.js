@@ -1,6 +1,7 @@
 /**
  * MENVA — Main Application
- * Hash-based SPA. Native <dialog> for dish modal. Lazy model-viewer.
+ * Path-routed SPA (History API): /  ·  /g  ·  /g/:table  ·  /:restaurant/:table
+ * Native <dialog> for the dish sheet. model-viewer is loaded lazily from /vendor (js/viewer.js).
  * touch-action: pan-y on all model-viewer elements.
  */
 (function () {
@@ -12,114 +13,43 @@
   const resetIcon = '<svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round"><path d="M4 10a8 8 0 1 1 1 8M4 4v6h6"/></svg>';
   const arIcon = '<svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round"><path d="M3 7V5a2 2 0 0 1 2-2h2M17 3h2a2 2 0 0 1 2 2v2M21 17v2a2 2 0 0 1-2 2h-2M7 21H5a2 2 0 0 1-2-2v-2"/><path d="M7 12h10M7 8h10M7 16h6"/></svg>';
 
+  const TABLE_KEY = 'menva.table';
+
   let activeRestaurant = null;
   let lastTrigger = null;
-  let modelViewerLoaded = false;
 
   // ─── Footer ──────────────────────────────────────────────────
-  const footer = `<footer><span>menva<span class="wordmark-dot">.</span></span><p>See it before you order it.</p><small>Independent listings · 3D scans provided by restaurants</small></footer>`;
+  const footer = `<footer><span>menva<span class="wordmark-dot">.</span></span><p>See it before you order it.</p><small>3D scans provided by restaurants</small></footer>`;
 
   // ─── Header ──────────────────────────────────────────────────
-  function header(back) {
-    const nav = back
-      ? `<a href="#/">${arrow} All restaurants</a>`
-      : `<a href="#restaurants">Discover</a>`;
-    return `<header class="topbar"><a class="wordmark" href="#/" aria-label="MENVA home">menva<span class="wordmark-dot">.</span></a><nav>${nav}<div class="theme-toggle-wrap"><button data-mode-toggle aria-label="Switch theme"><span class="toggle-icon"><svg class="icon-sun" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round"><circle cx="12" cy="12" r="4"/><path d="M12 2v2m0 16v2M2 12h2m16 0h2M5 5l1.5 1.5m11 11L19 19M5 19l1.5-1.5m11-11L19 5"/></svg><svg class="icon-moon" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round"><path d="M20.5 14A8.5 8.5 0 0 1 10 3.5 8.5 8.5 0 1 0 20.5 14Z"/></svg></span></button></div></nav></header>`;
+  // No directory to go back to: on a restaurant page the diner stays on that menu.
+  function header(homeLink) {
+    const wordmark = homeLink
+      ? `<a class="wordmark" href="/" data-link aria-label="MENVA home">menva<span class="wordmark-dot">.</span></a>`
+      : `<span class="wordmark">menva<span class="wordmark-dot">.</span></span>`;
+    return `<header class="topbar">${wordmark}<nav><div class="theme-toggle-wrap"><button data-mode-toggle aria-label="Switch theme"><span class="toggle-icon"><svg class="icon-sun" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round"><circle cx="12" cy="12" r="4"/><path d="M12 2v2m0 16v2M2 12h2m16 0h2M5 5l1.5 1.5m11 11L19 19M5 19l1.5-1.5m11-11L19 5"/></svg><svg class="icon-moon" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round"><path d="M20.5 14A8.5 8.5 0 0 1 10 3.5 8.5 8.5 0 1 0 20.5 14Z"/></svg></span></button></div></nav></header>`;
   }
 
   // ─── Cheffy cameo ─────────────────────────────────────────────
   function cheffy(pose, text) {
-    return `<div class="cheffy-cameo"><img src="assets/cheffy/${pose}.webp" alt="Cheffy" width="42" height="52"><p><span>Cheffy</span>${text}</p></div>`;
+    return `<div class="cheffy-cameo"><img src="/assets/cheffy/${pose}.webp" alt="Cheffy" width="42" height="52"><p><span>Cheffy</span>${text}</p></div>`;
   }
 
-  // ─── Product Hero ─────────────────────────────────────────────
-  function productHero() {
-    return `<section class="product-hero" aria-label="MENVA product demo">
-      <div class="product-proposition">
-        <h1 class="hero-enter">See it.<br>Then <span>order it.</span></h1>
-        <p class="hero-enter hero-enter-delay-1">Good food shouldn't be a guessing game. Take a closer look before you make your choice.</p>
-        <a class="product-action hero-enter hero-enter-delay-2" href="#/restaurant/gauchos">Explore Gauchos ${arrow}</a>
-        <a class="product-action ar-hero-cta hero-enter hero-enter-delay-2" href="#/restaurant/gauchos">${arIcon} View dishes in AR</a>
-        <div class="hero-cheffy hero-enter hero-enter-delay-3"><img src="assets/cheffy/wave.webp" alt="Cheffy" width="42" height="52"><span>A little curiosity.<br>A better choice.</span></div>
-      </div>
-      <div class="food-experience hero-enter hero-enter-delay-1" id="food-preview" tabindex="-1">
-        <div class="food-canvas">
-          <model-viewer id="hero-viewer" camera-controls touch-action="pan-y" camera-orbit="0deg 65deg 0.55m" shadow-intensity="0.8" environment-image="neutral" interaction-prompt="auto" alt="Interactive 3D preview of a premium ribeye steak">
-            <span slot="poster" class="model-poster">Preparing your preview…</span>
-          </model-viewer>
-        </div>
-        <div class="preview-bottom">
-          <div><h2>Premium Ribeye Steak</h2><p id="hero-status" role="status">Loading interactive 3D…</p></div>
-          <button class="preview-reset" aria-label="Reset view">${resetIcon}</button>
-        </div>
-      </div>
-    </section>`;
-  }
-
-  async function setupHero() {
-    const viewer = document.getElementById('hero-viewer');
-    if (!viewer) return;
-    const status = document.getElementById('hero-status');
-    const reset = document.querySelector('.preview-reset');
-
-    // Lazy-load model-viewer
-    if (!modelViewerLoaded) {
-      await import('https://unpkg.com/@google/model-viewer/dist/model-viewer.min.js');
-      modelViewerLoaded = true;
-    }
-
-    viewer.src = 'models/gauchos-steak-main.glb';
-    viewer.addEventListener('load', () => { if (status) status.textContent = 'Drag to rotate. Scroll or pinch to zoom.'; });
-    viewer.addEventListener('error', () => { if (status) status.textContent = '3D preview unavailable on this device.'; });
-
-    if (reset) {
-      reset.addEventListener('click', () => {
-        viewer.cameraOrbit = '0deg 65deg 0.55m';
-        viewer.fieldOfView = '30deg';
-        viewer.jumpCameraToGoal?.();
-      });
-    }
-  }
-
-  // ─── Discovery View ───────────────────────────────────────────
-  function discovery() {
+  // ─── Brand page (/) — no 3D ───────────────────────────────────
+  function brandPage() {
     document.title = 'MENVA — See it before you order it';
     document.body.dataset.theme = 'default';
-
-    const restaurants = MENVA_DATA.restaurants;
-    const cards = restaurants.map((r, i) => {
-      const pilot = r.pilot ? '<span class="listing-badge">Pilot restaurant · 3D scans available</span>' : '';
-      const collage = r.pilot ? `assets/restaurant/lahore-collage.jpg` : '';
-      const photoStyle = collage ? `background-image:url('${collage}');background-size:cover;background-position:center` : 'background:linear-gradient(135deg,var(--surface-offset),var(--stage))';
-      return `<a class="restaurant-card" href="#/restaurant/${r.id}" aria-label="Explore ${r.name}">
-        <div class="restaurant-photo" style="${photoStyle};display:flex;align-items:flex-end">
-          <span class="photo-caption">${r.location}</span>
-          <span class="round-arrow">${arrow}</span>
-        </div>
-        <div class="restaurant-info">
-          ${pilot}
-          <h2>${r.name}</h2>
-          <p>${r.cuisine} · ${r.area}, ${r.location}</p>
-        </div>
-      </a>`;
-    }).join('');
-
-    app.innerHTML = header() + `<main class="discovery">
-      ${productHero()}
-      <section id="restaurants" aria-label="Restaurant discovery" class="reveal">
-        <div class="collection-heading">
-          <h2>At the table.</h2>
-          <span>Independent dining directory · Pilot restaurants feature real 3D dish scans</span>
-        </div>
-        <div class="restaurant-grid reveal-stagger">${cards}</div>
-      </section>
+    const pilot = MENVA_DATA.restaurants.find(r => r.pilot);
+    app.innerHTML = header(false) + `<main class="brand-page">
+      <h1>See it.<br>Then <span>order it.</span></h1>
+      <p>Scan the code on your table to see real dishes — then place them on your table in AR.</p>
+      ${pilot ? `<a class="product-action" href="/${pilot.slug}" data-link>See the ${pilot.name} menu ${arrow}</a>
+      <p class="brand-note">Now piloting at ${pilot.name}, ${pilot.area}, ${pilot.location}.</p>` : ''}
     </main>` + footer;
-
-    setupHero();
   }
 
   // ─── Restaurant Page ──────────────────────────────────────────
-  function restaurantPage(r) {
+  function restaurantPage(r, table) {
     activeRestaurant = r;
     document.title = `${r.name} — MENVA`;
     document.body.dataset.theme = r.theme || 'default';
@@ -135,7 +65,7 @@
           ? `<span>3D Scan ${arrow}</span>`
           : `<span>View ${arrow}</span>`;
         if (hasModel) {
-          const dishPhoto = d.id === 'steak-sandwich' ? 'assets/dishes/steak-sandwich.jpg' : d.id === 'steak-main' ? 'assets/dishes/ribeye-steak.jpg' : '';
+          const dishPhoto = d.id === 'steak-sandwich' ? '/assets/dishes/steak-sandwich.jpg' : d.id === 'steak-main' ? '/assets/dishes/ribeye-steak.jpg' : '';
           const photoBg = dishPhoto ? `style="background-image:url('${dishPhoto}');background-size:cover;background-position:center"` : 'style="background:linear-gradient(135deg,var(--surface-offset),var(--stage))"';
           return `<button class="dish-card" data-preview="true" data-dish="${d.id}" aria-label="Explore ${d.name}">
             <div class="dish-photo" ${photoBg}>${badge}</div>
@@ -162,16 +92,17 @@
     const publishedMenu = r.id === 'gauchos' ? renderPublishedMenu(GAUCHOS_FULL_MENU) : '';
 
     const isGauchos = r.id === 'gauchos';
-    const logoHTML = isGauchos ? '<img src="assets/restaurant/gauchos-logo.svg" alt="Gauchos Steak House" class="restaurant-logo-svg">' : '';
+    const logoHTML = isGauchos ? '<img src="/assets/restaurant/gauchos-logo.svg" alt="Gauchos Steak House" class="restaurant-logo-svg">' : '';
     const coverBg = isGauchos ? 'background:linear-gradient(135deg,#1a1410,#2a1810)' : 'background:linear-gradient(135deg,var(--surface-offset),var(--stage))';
     const taglineText = isGauchos ? 'Argentine-inspired · Oakwood-smoked · Lahore' : r.tagline;
     const menuTitle = isGauchos ? 'The Cuts' : 'At the table';
     const menuSubtitle = isGauchos ? 'Asado · Parrilla · Scan-ready dishes' : 'Choose a dish for a closer look';
 
-    app.innerHTML = header(true) + `<main class="restaurant-page${isGauchos ? ' gauchos-page' : ''}">
+    const tableChip = table ? `<br><span class="table-chip">Table ${table}</span>` : '';
+    app.innerHTML = header(false) + `<main class="restaurant-page${isGauchos ? ' gauchos-page' : ''}">
       <div class="restaurant-identity">
         <span>${r.displayName || r.name}</span>
-        <p>${r.pilot ? 'Pilot restaurant · 3D scans' : 'Independent listing'}<br>${r.area}, ${r.location}</p>
+        <p>${r.area}, ${r.location}${tableChip}</p>
       </div>
       <section class="restaurant-cover${isGauchos ? ' gauchos-cover' : ''}" style="${coverBg}">
         ${logoHTML}
@@ -318,14 +249,16 @@
     const resetBtn = document.getElementById('reset-view');
     const fallback = document.getElementById('ar-fallback');
 
-    // Lazy-load model-viewer
-    if (!modelViewerLoaded) {
-      await import('https://unpkg.com/@google/model-viewer/dist/model-viewer.min.js');
-      modelViewerLoaded = true;
+    // Lazy-load model-viewer (self-hosted) on the first dish sheet
+    try {
+      await MenvaViewer.load();
+    } catch {
+      if (status) status.textContent = '3D viewer could not load — check your connection and open the dish again.';
+      return;
     }
 
-    viewer.src = dish.glb;
-    viewer.iosSrc = dish.usdz || '';
+    viewer.src = MenvaViewer.absolute(dish.glb);
+    viewer.iosSrc = MenvaViewer.absolute(dish.usdz);
     viewer.ar = true;
     viewer.arModes = 'webxr scene-viewer quick-look';
 
@@ -355,36 +288,66 @@
     });
   }
 
+  // ─── Table number ─────────────────────────────────────────────
+  // Printed QR codes point at /g/<n>. Remember the table for this tab so /g keeps it.
+  function rememberTable(restaurantId, table) {
+    try { sessionStorage.setItem(TABLE_KEY, JSON.stringify({ restaurant: restaurantId, table })); } catch {}
+  }
+  function storedTable(restaurantId) {
+    try {
+      const saved = JSON.parse(sessionStorage.getItem(TABLE_KEY) || 'null');
+      return saved && saved.restaurant === restaurantId ? saved.table : null;
+    } catch { return null; }
+  }
+  const validTable = (t) => /^[1-9]\d{0,2}$/.test(t); // 1–999
+
   // ─── Router ───────────────────────────────────────────────────
+  // Old hash URLs (#/, #/restaurant/<id>) are rewritten to their path equivalents.
+  function legacyHashPath() {
+    const hash = location.hash.replace(/^#/, '');
+    if (!hash) return null;
+    const m = hash.match(/^\/restaurant\/([\w-]+)/);
+    if (m) { const r = findRestaurant(m[1]); return r ? `/${r.slug}` : '/'; }
+    return '/';
+  }
+
   function route() {
-    const hash = location.hash.replace(/^#/, '') || '/';
-    const parts = hash.split('/').filter(Boolean);
+    const parts = location.pathname.split('/').filter(Boolean).map(decodeURIComponent);
 
     if (parts.length === 0) {
-      discovery();
-    } else if (parts.length >= 2 && parts[0] === 'restaurant') {
-      const r = findRestaurant(parts[1]);
-      if (r) {
-        restaurantPage(r);
-        if (r.id === 'gauchos') {
-          setTimeout(() => setupPublishedMenu(GAUCHOS_FULL_MENU), 100);
-        }
-      } else {
-        notFound('Restaurant not found');
-      }
+      brandPage();
     } else {
-      notFound('Page not found');
+      const r = findRestaurantBySlug(parts[0]);
+      const tablePart = parts[1];
+      if (!r || parts.length > 2) {
+        notFound(r ? 'Page not found' : 'Restaurant not found');
+      } else if (tablePart !== undefined && !validTable(tablePart)) {
+        // Mistyped table: keep the diner on the menu rather than showing an error.
+        history.replaceState(null, '', `/${parts[0]}`);
+        return route();
+      } else {
+        if (tablePart) rememberTable(r.id, tablePart);
+        restaurantPage(r, tablePart || storedTable(r.id));
+        if (r.id === 'gauchos') setupPublishedMenu(GAUCHOS_FULL_MENU);
+      }
     }
 
     window.scrollTo({ top: 0, behavior: 'instant' });
   }
 
+  function navigate(path) {
+    if (path === location.pathname) return;
+    history.pushState(null, '', path);
+    route();
+  }
+
   function notFound(msg) {
+    document.title = 'Not found — MENVA';
     document.body.dataset.theme = 'default';
-    app.innerHTML = header() + `<main style="max-width:600px;margin:0 auto;padding:80px 6%;text-align:center">
+    app.innerHTML = header(true) + `<main style="max-width:600px;margin:0 auto;padding:80px 6%;text-align:center">
       <h1 style="font-size:var(--text-2xl)">${msg}</h1>
-      <p style="color:var(--muted);margin:16px 0 32px">Let's get you back on track.</p>
-      <a href="#/" class="product-action" style="display:inline-flex">Back to MENVA ${arrow}</a>
+      <p style="color:var(--muted);margin:16px 0 32px">Scan the code on your table again, or ask your server for the menu link.</p>
+      <a href="/" data-link class="product-action" style="display:inline-flex">Go to MENVA ${arrow}</a>
     </main>` + footer;
   }
 
@@ -408,12 +371,24 @@
   }
 
   // ─── Init ────────────────────────────────────────────────────
-  window.addEventListener('hashchange', () => {
-    if (['#restaurants', '#food-preview'].includes(location.hash)) return;
-    route();
-    setTimeout(setupScrollReveal, 100);
+  document.addEventListener('click', (e) => {
+    const link = e.target.closest('a[data-link]');
+    if (!link || e.defaultPrevented || e.button !== 0 || e.metaKey || e.ctrlKey || e.shiftKey || e.altKey) return;
+    e.preventDefault();
+    navigate(link.getAttribute('href'));
+    setupScrollReveal();
   });
+  window.addEventListener('popstate', () => { route(); setupScrollReveal(); });
 
+  const legacy = legacyHashPath();
+  if (legacy) history.replaceState(null, '', legacy);
   route();
-  setTimeout(setupScrollReveal, 200);
+  setupScrollReveal();
+
+  // Service worker: caches vendor/CSS/JS/dish assets after first fetch (see /sw.js).
+  if ('serviceWorker' in navigator) {
+    window.addEventListener('load', () => {
+      navigator.serviceWorker.register('/sw.js').catch(() => {});
+    });
+  }
 })();

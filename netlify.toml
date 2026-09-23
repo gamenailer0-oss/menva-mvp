@@ -1,16 +1,62 @@
+# Only dist/ is published (see scripts/build.mjs) so repo files like CLAUDE.md,
+# scripts/ and node_modules/ never become public. vendor/ is committed, so the
+# build is a plain copy and needs no network.
 [build]
-  publish = "."
+  command = "npm run build"
+  publish = "dist"
+
+# ── Content types ─────────────────────────────────────────────
+# iOS Quick Look refuses a .usdz served with the wrong type.
+[[headers]]
+  for = "/*.glb"
+  [headers.values]
+    Content-Type = "model/gltf-binary"
+
+[[headers]]
+  for = "/*.usdz"
+  [headers.values]
+    Content-Type = "model/vnd.usdz+zip"
+
+[[headers]]
+  for = "/*.wasm"
+  [headers.values]
+    Content-Type = "application/wasm"
+
+# ── Caching ───────────────────────────────────────────────────
+# Immutable: these URLs must change whenever their content changes.
+[[headers]]
+  for = "/assets/*"
+  [headers.values]
+    Cache-Control = "public, max-age=31536000, immutable"
+
+[[headers]]
+  for = "/vendor/*"
+  [headers.values]
+    Cache-Control = "public, max-age=31536000, immutable"
 
 [[headers]]
   for = "/models/*"
   [headers.values]
     Cache-Control = "public, max-age=31536000, immutable"
 
+# Always revalidate: the app shell, menu data and the service worker itself.
 [[headers]]
-  for = "/assets/*"
+  for = "/index.html"
   [headers.values]
-    Cache-Control = "public, max-age=31536000, immutable"
+    Cache-Control = "public, max-age=0, must-revalidate"
 
+[[headers]]
+  for = "/data/build/*"
+  [headers.values]
+    Cache-Control = "public, max-age=0, must-revalidate"
+
+[[headers]]
+  for = "/sw.js"
+  [headers.values]
+    Cache-Control = "public, max-age=0, must-revalidate"
+
+# ── Routing ───────────────────────────────────────────────────
+# Path routing (/g, /g/12): every unknown path serves the app shell.
 [[redirects]]
   from = "/*"
   to = "/index.html"
