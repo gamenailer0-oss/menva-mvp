@@ -1,0 +1,71 @@
+{
+  "id": "steak-sandwich",
+  "source": {
+    "folder": "steak-sandwich",
+    "model": "steak-sandwich/steak-sandwich.glb",
+    "photo": null
+  },
+  "sourceHash": "7c4fd52eee7d",
+  "audit": "amber",
+  "dimensions_cm": {
+    "width": 18.4,
+    "height": 6.5,
+    "depth": 27.6
+  },
+  "scale": 1,
+  "triangles": 25002,
+  "vertices": 15102,
+  "textures": {
+    "albedo": "512px jpeg q84 (AO baked)",
+    "normal": "512px jpeg q85"
+  },
+  "roughness": 0.6,
+  "poster": "render",
+  "posterQuality": 82,
+  "spin": {
+    "frames": 36,
+    "frameWidth": 480,
+    "frameHeight": 360,
+    "columns": 6,
+    "rows": 6,
+    "quality": 50
+  },
+  "usdz": "model.usdz",
+  "usdzTextures": {
+    "size": 2048,
+    "quality": 84,
+    "normalMap": true
+  },
+  "files": {
+    "model.glb": {
+      "bytes": 242928,
+      "hash": "77d580b30f7f"
+    },
+    "poster.webp": {
+      "bytes": 59682,
+      "hash": "f1dbf883b6bf"
+    },
+    "poster-blur.webp": {
+      "bytes": 686,
+      "hash": "a2ae1f6a5d52"
+    },
+    "spin.webp": {
+      "bytes": 294992,
+      "hash": "a50bd6b8601e"
+    },
+    "model.usdz": {
+      "bytes": 1560507,
+      "hash": "33430d189dd9"
+    }
+  },
+  "before": {
+    "steak-sandwich.glb": 1190400
+  },
+  "warnings": [
+    "plate_length_cm not confirmed — kept the scan's own scale (27.6 cm across). Photogrammetry scans are metric, but confirm the plate size.",
+    "Roughness was flat 0.9 with no map — set to 0.6. Needs a manual look for clay-like appearance.",
+    "Albedo is only 512px — low-res colour is the main quality limit; a re-scan would help most.",
+    "AO baked into albedo (strength 0.6); AO slot dropped."
+  ],
+  "budgetErrors": []
+}

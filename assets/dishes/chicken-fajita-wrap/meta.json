@@ -1,0 +1,72 @@
+{
+  "id": "chicken-fajita-wrap",
+  "source": {
+    "folder": "chicken-fajita-wrap",
+    "model": "chicken-fajita-wrap/chicken-fajita-wrap.usdz",
+    "photo": null
+  },
+  "sourceHash": "de324c8f6545",
+  "audit": "amber",
+  "dimensions_cm": {
+    "width": 29.1,
+    "height": 8.9,
+    "depth": 42.1
+  },
+  "scale": 1,
+  "triangles": 25000,
+  "vertices": 14619,
+  "textures": {
+    "albedo": "2048px jpeg q84 (AO baked)",
+    "normal": "1024px jpeg q85"
+  },
+  "roughness": 0.6,
+  "poster": "render",
+  "posterQuality": 82,
+  "spin": {
+    "frames": 36,
+    "frameWidth": 480,
+    "frameHeight": 360,
+    "columns": 6,
+    "rows": 6,
+    "quality": 50
+  },
+  "usdz": "model.usdz",
+  "usdzTextures": {
+    "size": 1024,
+    "quality": 84,
+    "normalMap": true
+  },
+  "files": {
+    "model.glb": {
+      "bytes": 872100,
+      "hash": "dd6a775b6612"
+    },
+    "poster.webp": {
+      "bytes": 68128,
+      "hash": "b6f8460172d4"
+    },
+    "poster-blur.webp": {
+      "bytes": 724,
+      "hash": "da16f5f594be"
+    },
+    "spin.webp": {
+      "bytes": 292068,
+      "hash": "160d2bfd9b4b"
+    },
+    "model.usdz": {
+      "bytes": 1776446,
+      "hash": "279238204906"
+    }
+  },
+  "before": {
+    "chicken-fajita-wrap.usdz": 10399507
+  },
+  "warnings": [
+    "plate_length_cm not confirmed — kept the scan's own scale (42.1 cm across). Photogrammetry scans are metric, but confirm the plate size.",
+    "Roughness was flat 0.9 with no map — set to 0.6. Needs a manual look for clay-like appearance.",
+    "AO baked into albedo (strength 0.6); AO slot dropped.",
+    "GLB 852 KB is over the 800 KB target (within the hard budget).",
+    "USDZ (iPhone AR) uses 1024px textures q84 to fit 1.80 MB."
+  ],
+  "budgetErrors": []
+}

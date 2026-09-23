@@ -1,0 +1,72 @@
+{
+  "id": "steak-main",
+  "source": {
+    "folder": "tomahawk-steak",
+    "model": "tomahawk-steak/tomahawk-steak.usdz",
+    "photo": null
+  },
+  "sourceHash": "5e6250dfd7c1",
+  "audit": "amber",
+  "dimensions_cm": {
+    "width": 29.5,
+    "height": 9.4,
+    "depth": 42.5
+  },
+  "scale": 1,
+  "triangles": 24999,
+  "vertices": 15361,
+  "textures": {
+    "albedo": "2048px jpeg q84 (AO baked)",
+    "normal": "1024px jpeg q85"
+  },
+  "roughness": 0.6,
+  "poster": "render",
+  "posterQuality": 78,
+  "spin": {
+    "frames": 36,
+    "frameWidth": 480,
+    "frameHeight": 360,
+    "columns": 6,
+    "rows": 6,
+    "quality": 40
+  },
+  "usdz": "model.usdz",
+  "usdzTextures": {
+    "size": 1024,
+    "quality": 84,
+    "normalMap": false
+  },
+  "files": {
+    "model.glb": {
+      "bytes": 1029820,
+      "hash": "3add196f698d"
+    },
+    "poster.webp": {
+      "bytes": 76822,
+      "hash": "b9a624a54e3c"
+    },
+    "poster-blur.webp": {
+      "bytes": 746,
+      "hash": "8be51434f314"
+    },
+    "spin.webp": {
+      "bytes": 297708,
+      "hash": "0500f08d9a52"
+    },
+    "model.usdz": {
+      "bytes": 1677050,
+      "hash": "1e758865f2bb"
+    }
+  },
+  "before": {
+    "tomahawk-steak.usdz": 11472883
+  },
+  "warnings": [
+    "plate_length_cm not confirmed — kept the scan's own scale (42.5 cm across). Photogrammetry scans are metric, but confirm the plate size.",
+    "Roughness was flat 0.9 with no map — set to 0.6. Needs a manual look for clay-like appearance.",
+    "AO baked into albedo (strength 0.6); AO slot dropped.",
+    "GLB 1006 KB is over the 800 KB target (within the hard budget).",
+    "USDZ (iPhone AR) uses 1024px textures q84, no normal map to fit 1.80 MB."
+  ],
+  "budgetErrors": []
+}

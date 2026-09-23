@@ -1,0 +1,72 @@
+{
+  "id": "garlic-prawn-skewers",
+  "source": {
+    "folder": "garlic-prawn-skewers",
+    "model": "garlic-prawn-skewers/garlic-prawn-skewers.usdz",
+    "photo": null
+  },
+  "sourceHash": "d6a07565c4b1",
+  "audit": "amber",
+  "dimensions_cm": {
+    "width": 27.6,
+    "height": 9.2,
+    "depth": 17.9
+  },
+  "scale": 1,
+  "triangles": 25000,
+  "vertices": 15527,
+  "textures": {
+    "albedo": "2048px jpeg q84 (AO baked)",
+    "normal": "1024px jpeg q85"
+  },
+  "roughness": 0.6,
+  "poster": "render",
+  "posterQuality": 82,
+  "spin": {
+    "frames": 36,
+    "frameWidth": 480,
+    "frameHeight": 360,
+    "columns": 6,
+    "rows": 6,
+    "quality": 50
+  },
+  "usdz": "model.usdz",
+  "usdzTextures": {
+    "size": 1024,
+    "quality": 84,
+    "normalMap": false
+  },
+  "files": {
+    "model.glb": {
+      "bytes": 964620,
+      "hash": "68aca1278ac2"
+    },
+    "poster.webp": {
+      "bytes": 69284,
+      "hash": "6f42da4a82bf"
+    },
+    "poster-blur.webp": {
+      "bytes": 728,
+      "hash": "8fa5abafa60a"
+    },
+    "spin.webp": {
+      "bytes": 297576,
+      "hash": "6f1eae720aff"
+    },
+    "model.usdz": {
+      "bytes": 1693114,
+      "hash": "c0bf94c77045"
+    }
+  },
+  "before": {
+    "garlic-prawn-skewers.usdz": 11026844
+  },
+  "warnings": [
+    "plate_length_cm not confirmed — kept the scan's own scale (27.6 cm across). Photogrammetry scans are metric, but confirm the plate size.",
+    "Roughness was flat 0.9 with no map — set to 0.6. Needs a manual look for clay-like appearance.",
+    "AO baked into albedo (strength 0.6); AO slot dropped.",
+    "GLB 942 KB is over the 800 KB target (within the hard budget).",
+    "USDZ (iPhone AR) uses 1024px textures q84, no normal map to fit 1.80 MB."
+  ],
+  "budgetErrors": []
+}

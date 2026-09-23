@@ -1,0 +1,71 @@
+{
+  "chicken-fajita-wrap": {
+    "dish": "chicken-fajita-wrap",
+    "light": "amber",
+    "red": [],
+    "amber": [
+      "**OBJ is the wrong scan:** only 0% of its vertices match this folder's USDZ; it matches `steak-main`'s USDZ instead. Its MTL points at this dish's textures, so OBJ+MTL would render scrambled. Pipeline must use the USDZ mesh, not the OBJ.",
+      "No GLB — pipeline must convert from USDZ (usdc inside).",
+      "**Flat / clay risk:** material \"(unnamed)\" roughness 0.9 with no roughness map.",
+      "Normal 2048×2048 → downsample to 1024.",
+      "Albedo is PNG → re-encode JPEG.",
+      "No Draco compression.",
+      "USDZ 9.92 MB > 1.80 MB budget — rebuild from processed GLB.",
+      "`plate_length_cm` is TO_CONFIRM — scale cannot be calibrated or cross-checked."
+    ]
+  },
+  "garlic-prawn-skewers": {
+    "dish": "garlic-prawn-skewers",
+    "light": "amber",
+    "red": [],
+    "amber": [
+      "No GLB — pipeline must convert from USDZ (usdc inside).",
+      "**Flat / clay risk:** material \"(unnamed)\" roughness 0.9 with no roughness map.",
+      "Normal 2048×2048 → downsample to 1024.",
+      "Albedo is PNG → re-encode JPEG.",
+      "No Draco compression.",
+      "USDZ 10.52 MB > 1.80 MB budget — rebuild from processed GLB.",
+      "`plate_length_cm` is TO_CONFIRM — scale cannot be calibrated or cross-checked."
+    ]
+  },
+  "steak-main": {
+    "dish": null,
+    "light": "superseded",
+    "red": [],
+    "amber": [
+      "uint32 indices on a mesh that fits uint16.",
+      "**Flat / clay risk:** material \"food_material\" roughness 0.9 with no roughness map.",
+      "Albedo only 512×512 — low-res colour is the main quality limit.",
+      "No Draco compression.",
+      "USDZ fails stored/64-byte-aligned check → rebuild or omit ios-src.",
+      "`plate_length_cm` is TO_CONFIRM — scale cannot be calibrated or cross-checked."
+    ]
+  },
+  "steak-sandwich": {
+    "dish": "steak-sandwich",
+    "light": "amber",
+    "red": [],
+    "amber": [
+      "uint32 indices on a mesh that fits uint16.",
+      "**Flat / clay risk:** material \"food_material\" roughness 0.9 with no roughness map.",
+      "Albedo only 512×512 — low-res colour is the main quality limit.",
+      "No Draco compression.",
+      "USDZ fails stored/64-byte-aligned check → rebuild or omit ios-src.",
+      "`plate_length_cm` is TO_CONFIRM — scale cannot be calibrated or cross-checked."
+    ]
+  },
+  "tomahawk-steak": {
+    "dish": "steak-main",
+    "light": "amber",
+    "red": [],
+    "amber": [
+      "No GLB — pipeline must convert from USDZ (usdc inside).",
+      "**Flat / clay risk:** material \"(unnamed)\" roughness 0.9 with no roughness map.",
+      "Normal 2048×2048 → downsample to 1024.",
+      "Albedo is PNG → re-encode JPEG.",
+      "No Draco compression.",
+      "USDZ 10.94 MB > 1.80 MB budget — rebuild from processed GLB.",
+      "`plate_length_cm` is TO_CONFIRM — scale cannot be calibrated or cross-checked."
+    ]
+  }
+}

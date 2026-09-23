@@ -1,0 +1,79 @@
+<!DOCTYPE html>
+<!-- Tooling only (scripts/render.mjs drives this in headless Chrome). Never published. -->
+<html>
+<head>
+  <meta charset="utf-8">
+  <style>
+    html, body { margin: 0; background: transparent; }
+    model-viewer { display: block; background: transparent; --poster-color: transparent; }
+  </style>
+  <script type="importmap">
+    { "imports": { "three": "/node_modules/three/build/three.module.js", "three/addons/": "/node_modules/three/examples/jsm/" } }
+  </script>
+  <script type="module" src="/vendor/model-viewer.min.js"></script>
+</head>
+<body>
+  <model-viewer id="mv" environment-image="neutral" shadow-intensity="1" shadow-softness="0.6"
+    exposure="1" interaction-prompt="none" disable-zoom disable-pan loading="eager" reveal="auto"></model-viewer>
+  <script type="module">
+    import { GLTFLoader } from 'three/addons/loaders/GLTFLoader.js';
+    import { DRACOLoader } from 'three/addons/loaders/DRACOLoader.js';
+    import { USDZExporter } from 'three/addons/exporters/USDZExporter.js';
+
+    await customElements.whenDefined('model-viewer');
+    const ModelViewer = customElements.get('model-viewer');
+    ModelViewer.dracoDecoderLocation = '/vendor/draco/';
+    ModelViewer.minimumRenderScale = 1; // never let model-viewer drop resolution in slow headless rendering
+    const mv = document.getElementById('mv');
+    const frame = () => new Promise((r) => requestAnimationFrame(() => requestAnimationFrame(r)));
+
+    // Load a model at a given element size. Resolves once the first frame is rendered.
+    // Re-setting the same src fires no 'load' event, so only wait when the model actually changes.
+    let current = null;
+    window.loadModel = async (src, width, height) => {
+      mv.style.width = width + 'px';
+      mv.style.height = height + 'px';
+      if (src !== current) {
+        current = src;
+        const loaded = new Promise((resolve, reject) => {
+          mv.addEventListener('load', resolve, { once: true });
+          mv.addEventListener('error', (e) => reject(new Error('model-viewer error: ' + (e.detail?.type || 'unknown'))), { once: true });
+        });
+        mv.src = src;
+        await loaded;
+      }
+      await frame();
+      return { dims: mv.getDimensions() };
+    };
+
+    // Render one view as a PNG data URL. orbit like "30deg 55deg auto".
+    window.shoot = async (orbit) => {
+      mv.cameraOrbit = orbit;
+      mv.fieldOfView = 'auto';
+      mv.jumpCameraToGoal();
+      await frame();
+      await frame();
+      return mv.toDataURL('image/png');
+    };
+
+    // Export the processed GLB as USDZ (textures as PNG; scripts/render.mjs re-encodes and re-packs).
+    // opts: { maxTextureSize, normalMap } — the pipeline steps these down to fit the USDZ budget.
+    window.exportUsdz = async (src, opts) => {
+      const draco = new DRACOLoader().setDecoderPath('/vendor/draco/');
+      const gltf = await new GLTFLoader().setDRACOLoader(draco).loadAsync(src);
+      if (!opts.normalMap) gltf.scene.traverse((o) => { if (o.material) o.material.normalMap = null; });
+      const exporter = new USDZExporter();
+      const bytes = await exporter.parseAsync(gltf.scene, {
+        quickLookCompatible: true,
+        maxTextureSize: opts.maxTextureSize,
+        ar: { anchoring: { type: 'plane' }, planeAnchoring: { alignment: 'horizontal' } },
+      });
+      let binary = '';
+      for (let i = 0; i < bytes.length; i += 0x8000) binary += String.fromCharCode(...bytes.subarray(i, i + 0x8000));
+      return btoa(binary);
+    };
+
+    window.rendererReady = true;
+  </script>
+</body>
+</html>
