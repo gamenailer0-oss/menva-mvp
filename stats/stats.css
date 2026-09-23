@@ -1,0 +1,17 @@
+/* Private pilot dashboard — plain and readable. */
+:root { --paper: #FAF7F2; --ink: #1E1A16; --muted: #6B6056; --line: #E7DFD3; --accent: #7C2A1C; }
+* { box-sizing: border-box; }
+body { margin: 0; background: var(--paper); color: var(--ink); font: 15px/1.5 system-ui, -apple-system, 'Segoe UI', Roboto, Arial, sans-serif; }
+main { max-width: 1200px; margin: 0 auto; padding: 32px 20px 64px; }
+h1 { font: 400 32px/1.1 Georgia, 'Times New Roman', serif; margin: 0 0 6px; }
+h2 { font: 400 20px/1.2 Georgia, 'Times New Roman', serif; margin: 36px 0 12px; }
+#meta, .note, #message { color: var(--muted); font-size: 13px; }
+.controls { display: flex; gap: 16px; align-items: center; margin-top: 16px; flex-wrap: wrap; }
+select, .button { min-height: 44px; padding: 0 14px; border: 1px solid var(--line); border-radius: 8px; background: #fff; color: var(--ink); font: inherit; }
+.button { display: inline-flex; align-items: center; text-decoration: none; color: var(--accent); font-weight: 600; }
+.scroll { overflow-x: auto; border: 1px solid var(--line); border-radius: 10px; background: #fff; }
+table { border-collapse: collapse; width: 100%; font-variant-numeric: tabular-nums; }
+th, td { padding: 10px 12px; text-align: right; border-bottom: 1px solid var(--line); white-space: nowrap; }
+th:first-child, td:first-child { text-align: left; }
+th { font-size: 12px; text-transform: uppercase; letter-spacing: 0.06em; color: var(--muted); font-weight: 600; background: #FCFAF6; }
+tr:last-child td { border-bottom: 0; }

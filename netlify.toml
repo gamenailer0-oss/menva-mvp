@@ -5,6 +5,16 @@
   command = "npm run build"
   publish = "dist"
 
+# Analytics: netlify/functions/e.mjs (POST /api/e) and stats.mjs (GET /api/stats), stored in
+# Netlify Blobs. Needs a Git-connected or CLI deploy — drag-and-drop does not deploy functions.
+# Set STATS_KEY (32+ random characters) under Site configuration → Environment variables.
+[functions]
+  directory = "netlify/functions"
+
+[build.environment]
+  NODE_VERSION = "22"
+  AWS_LAMBDA_JS_RUNTIME = "nodejs22.x"
+
 # ── Security (every response) ─────────────────────────────────
 # Only our own origin is allowed for anything. 'wasm-unsafe-eval' is for the Draco decoder
 # (WebAssembly); blob: workers/fetches are how three.js decodes meshes and embedded textures.
