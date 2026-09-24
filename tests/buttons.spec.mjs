@@ -138,9 +138,24 @@ test('dish sheet: every control', async ({ page }) => {
     await expect(details).not.toHaveAttribute('open', '');
   });
 
+  await test.step('"Add to my table" adds the dish', async () => {
+    await page.locator('.tray-step[data-step="1"]').click();
+    await expect(page.locator('.tray-qty')).toHaveText('2');
+    await page.locator('.tray-add-btn').click();
+    await expect(page.locator('.tray-add-btn')).toHaveText('Added');
+  });
+
   await test.step('"Back to menu" closes the sheet', async () => {
     await page.locator('.back-menu').click();
     await expect(page.locator('dialog[open]')).toHaveCount(0);
+  });
+
+  await test.step('the tray pill opens and closes "Show the waiter"', async () => {
+    await expect(page.locator('.tray-pill')).toHaveText('Show the waiter · 2');
+    await page.locator('.tray-pill').click();
+    await expect(page.locator('#waiter-dialog')).toBeVisible();
+    await page.locator('.waiter-done').click();
+    await expect(page.locator('#waiter-dialog[open]')).toHaveCount(0);
   });
 
   await test.step('Escape closes the sheet', async () => {

@@ -19,7 +19,10 @@
 
   let data = null;
   let activeRestaurant = null;
+  let currentTable = null;
   let lastTrigger = null;
+  let lastWaiterTrigger = null;
+  let trayUnsubscribe = null;
 
   // ─── Formatting ───────────────────────────────────────────────
   const CONFIRM = 'Please confirm with your server';
@@ -206,6 +209,7 @@
   // ─── Restaurant Page ──────────────────────────────────────────
   function restaurantPage(r, table) {
     activeRestaurant = r;
+    currentTable = table;
     document.title = `${r.name} — MENVA`;
     document.body.dataset.theme = r.theme || 'default';
 
@@ -257,7 +261,9 @@
         ${menuHTML}
       </section>
       <p class="menu-disclaimer">3D views are scans of the actual dishes served at ${esc(r.name)}. Allergen, halal and nutrition details come from the restaurant — where it says "${CONFIRM}", please ask before ordering.</p>
-    </main>` + footer + `<dialog id="dish-dialog" aria-labelledby="dish-title"><div class="sheet-handle" aria-hidden="true"></div><button class="close-dialog" aria-label="Close">${closeIcon}</button><div id="dish-content"></div></dialog>`;
+    </main>` + footer + `<dialog id="dish-dialog" aria-labelledby="dish-title"><div class="sheet-handle" aria-hidden="true"></div><button class="close-dialog" aria-label="Close">${closeIcon}</button><div id="dish-content"></div></dialog>` +
+      `<button type="button" class="tray-pill" id="tray-pill" hidden></button>` +
+      `<dialog id="waiter-dialog" class="waiter-dialog" aria-labelledby="waiter-title"><div class="waiter-content"></div></dialog>`;
 
     app.querySelectorAll('[data-dish]').forEach(btn => {
       btn.addEventListener('click', () => openDish(r.dishes.find(d => d.id === btn.dataset.dish), btn));
@@ -308,6 +314,108 @@
       app.querySelector('#dish-content').innerHTML = '';
       lastTrigger?.focus();
     });
+
+    initTray(r, table);
+  }
+
+  // ─── Tray pill + "Show the waiter" (CLAUDE.md Phase 7) ──────────
+  // The pill is hidden by CSS while the dish sheet is open (#dish-dialog[open] ~ #tray-pill), and
+  // by JS whenever the table has nothing on it.
+  function initTray(r, table) {
+    const pill = app.querySelector('#tray-pill');
+    const waiterDialog = app.querySelector('#waiter-dialog');
+    let clearArmed = false;
+    let clearTimer = 0;
+
+    function renderPill() {
+      const n = MenvaTray.count(r.id, table);
+      pill.hidden = n === 0;
+      if (n > 0) pill.textContent = `Show the waiter · ${n}`;
+    }
+
+    function renderWaiter() {
+      const items = MenvaTray.get(r.id, table);
+      const content = waiterDialog.querySelector('.waiter-content');
+      const tableLabel = table ? `Table ${esc(table)}` : 'Your order';
+      const rows = items.map((it) => {
+        const dish = r.dishes.find((d) => d.id === it.id);
+        if (!dish) return '';
+        const price = dish.price_pkr != null ? `<span class="waiter-item-price">${esc(formatPrice(dish.price_pkr))}</span>` : '';
+        return `<li class="waiter-item" data-item="${esc(it.id)}">
+            <div class="waiter-item-row">
+              <span class="waiter-item-qty">${it.qty} ×</span>
+              <span class="waiter-item-name">${esc(dish.name)}</span>
+              ${price}
+            </div>
+            ${it.note ? `<p class="waiter-item-note">${esc(it.note)}</p>` : ''}
+            <div class="waiter-item-edit">
+              <button type="button" class="waiter-edit-btn waiter-edit-minus" aria-label="Fewer ${esc(dish.name)}">−</button>
+              <button type="button" class="waiter-edit-btn waiter-edit-plus" aria-label="More ${esc(dish.name)}">+</button>
+              <button type="button" class="waiter-edit-btn waiter-edit-remove" aria-label="Remove ${esc(dish.name)}">Remove</button>
+            </div>
+          </li>`;
+      }).join('');
+      content.innerHTML = `
+        <button type="button" class="waiter-done">Done</button>
+        <h2 id="waiter-title">${esc(tableLabel)}</h2>
+        <p class="waiter-hint">Turn your screen toward your server.</p>
+        <ul class="waiter-list">${rows || '<li class="waiter-empty">Nothing on the table yet.</li>'}</ul>
+        ${items.length ? `<button type="button" class="waiter-clear">Clear the list</button>` : ''}
+      `;
+
+      content.querySelector('.waiter-done').addEventListener('click', () => waiterDialog.close());
+      content.querySelectorAll('.waiter-item').forEach((li) => {
+        const id = li.dataset.item;
+        li.querySelector('.waiter-edit-minus').addEventListener('click', () => {
+          const item = MenvaTray.get(r.id, table).find((x) => x.id === id);
+          if (!item) return;
+          if (item.qty <= 1) MenvaTray.remove(r.id, table, id);
+          else MenvaTray.setQty(r.id, table, id, item.qty - 1);
+        });
+        li.querySelector('.waiter-edit-plus').addEventListener('click', () => {
+          const item = MenvaTray.get(r.id, table).find((x) => x.id === id);
+          if (item) MenvaTray.setQty(r.id, table, id, item.qty + 1);
+        });
+        li.querySelector('.waiter-edit-remove').addEventListener('click', () => {
+          MenvaTray.remove(r.id, table, id);
+        });
+      });
+      content.querySelector('.waiter-clear')?.addEventListener('click', (e) => {
+        const btn = e.currentTarget;
+        if (!clearArmed) {
+          clearArmed = true;
+          btn.textContent = 'Tap again to clear';
+          clearTimer = setTimeout(() => { clearArmed = false; if (btn.isConnected) btn.textContent = 'Clear the list'; }, 3000);
+          return;
+        }
+        clearTimeout(clearTimer);
+        clearArmed = false;
+        MenvaTray.clear(r.id, table);
+        waiterDialog.close();
+      });
+    }
+
+    pill.addEventListener('click', () => {
+      lastWaiterTrigger = pill;
+      MenvaTrack('waiter_view');
+      renderWaiter();
+      document.body.classList.add('modal-open');
+      waiterDialog.showModal();
+    });
+    waiterDialog.addEventListener('close', () => {
+      document.body.classList.remove('modal-open');
+      waiterDialog.querySelector('.waiter-content').innerHTML = '';
+      clearArmed = false;
+      clearTimeout(clearTimer);
+      lastWaiterTrigger?.focus();
+    });
+
+    trayUnsubscribe?.();
+    trayUnsubscribe = MenvaTray.onChange(() => {
+      renderPill();
+      if (waiterDialog.open) renderWaiter();
+    });
+    renderPill();
   }
 
   // ─── Dish facts (order fixed by CLAUDE.md, Phase 3) ────────────
@@ -344,6 +452,40 @@
       </dl>
       <details class="nutrition"><summary>Nutrition</summary>${nutrition}</details>
       ${d.confirmed_by ? `<p class="fact-note">Details confirmed by ${esc(d.confirmed_by)}</p>` : ''}`;
+  }
+
+  // "Add to my table" row: stepper + optional note. Pre-fills from the tray if the dish is
+  // already on the table, and swaps its own label to "Update my table".
+  function initTrayAdd(content, dish) {
+    const btn = content.querySelector('.tray-add-btn');
+    const qtyEl = content.querySelector('.tray-qty');
+    const noteEl = content.querySelector('.tray-note');
+    const statusEl = content.querySelector('.tray-add-status');
+    const existing = MenvaTray.get(activeRestaurant.id, currentTable).find((it) => it.id === dish.id);
+    let qty = existing ? existing.qty : 1;
+    let resetLabelTimer = 0;
+
+    qtyEl.textContent = String(qty);
+    if (existing) {
+      noteEl.value = existing.note || '';
+      btn.textContent = 'Update my table';
+    }
+
+    content.querySelectorAll('.tray-step').forEach((step) => {
+      step.addEventListener('click', () => {
+        qty = Math.min(20, Math.max(1, qty + Number(step.dataset.step)));
+        qtyEl.textContent = String(qty);
+      });
+    });
+
+    btn.addEventListener('click', () => {
+      MenvaTray.add(activeRestaurant.id, currentTable, dish.id, qty, noteEl.value);
+      MenvaTrack('tray_add', { dish: dish.id });
+      clearTimeout(resetLabelTimer);
+      btn.textContent = 'Added';
+      statusEl.textContent = `Added to your table — ${qty} × ${dish.name}${noteEl.value.trim() ? `, ${noteEl.value.trim()}` : ''}`;
+      resetLabelTimer = setTimeout(() => { if (btn.isConnected) btn.textContent = 'Update my table'; }, 1200);
+    });
   }
 
   // ─── Dish Sheet ──────────────────────────────────────────────
@@ -383,12 +525,23 @@
         <p class="detail-price${dish.price_pkr == null ? ' fact-unconfirmed' : ''}">${esc(formatPrice(dish.price_pkr))}</p>
         ${dish.description ? `<p>${esc(dish.description)}</p>` : ''}
         ${dishFacts(dish)}
+        <div class="tray-add">
+          <div class="tray-stepper">
+            <button type="button" class="tray-step" data-step="-1" aria-label="Fewer">−</button>
+            <output class="tray-qty" aria-live="polite">1</output>
+            <button type="button" class="tray-step" data-step="1" aria-label="More">+</button>
+          </div>
+          <input type="text" class="tray-note" placeholder="Note for the kitchen (optional)" maxlength="80" aria-label="Note for the kitchen (optional)">
+          <button type="button" class="tray-add-btn">Add to my table</button>
+          <p class="tray-add-status" role="status" aria-live="polite"></p>
+        </div>
         <button class="back-menu">Back to menu ${arrow}</button>
       </section>
     `;
 
     content.querySelector('.back-menu').addEventListener('click', () => dialog.close());
     content.querySelector('.copy-link')?.addEventListener('click', copyLink);
+    initTrayAdd(content, dish);
     document.body.classList.add('modal-open');
     dialog.showModal();
 
