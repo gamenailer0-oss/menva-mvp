@@ -776,6 +776,7 @@ details.nutrition[open] summary::after { transform: rotate(45deg); }
 .waiter-list {
   display: grid;
   gap: 22px;
+  align-content: start; /* rows keep their height; the space goes below the list */
   flex: 1;
 }
 .waiter-empty { font-size: var(--text-lg); color: #C9BFAE; }
@@ -788,7 +789,7 @@ details.nutrition[open] summary::after { transform: rotate(45deg); }
 }
 .waiter-item-qty { font-variant-numeric: tabular-nums; color: #FFFFFF; font-weight: 600; flex: none; }
 .waiter-item-name { color: #FFFFFF; font-weight: 500; }
-.waiter-item-price { margin-left: auto; color: #C9BFAE; font-size: var(--text-base); font-variant-numeric: tabular-nums; }
+.waiter-item-price { margin-left: auto; white-space: nowrap; color: #C9BFAE; font-size: var(--text-base); font-variant-numeric: tabular-nums; }
 .waiter-item-note { margin-top: 6px; font-size: var(--text-base); color: #C9BFAE; font-style: italic; }
 .waiter-item-edit {
   display: flex;
