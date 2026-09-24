@@ -1,0 +1,43 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<title>MENVA story</title>
+<!--
+  1080×1920 Story that points followers at the new feed post:
+    story.html?img=/media/<first slide>.jpg&n=12&handle=@menva.pk
+  The image is the post's own first slide (already rendered), so the Story always matches the post.
+-->
+<link rel="stylesheet" href="post.css">
+<style>
+  html, body { width: 1080px; height: 1920px; }
+  .story { width: 1080px; height: 1920px; background: var(--chili); color: #fff; display: flex; flex-direction: column; align-items: center; padding: 150px 90px 170px; }
+  .story .over { color: rgba(255,255,255,.85); }
+  .story img { width: 900px; height: 1125px; border-radius: 36px; margin-top: 70px; box-shadow: 0 30px 80px rgba(26,23,20,.35); display: block; }
+  .story h1 { font-size: 92px; margin-top: 80px; text-align: center; }
+  .story h1 em { color: var(--cream); }
+  .story .foot { width: 100%; }
+  .story .wordmark i { color: var(--ink); }
+</style>
+</head>
+<body>
+<main class="story">
+  <span class="over" id="over">New post</span>
+  <img id="img" alt="">
+  <h1>New on the <em>feed.</em></h1>
+  <div class="foot"><span class="wordmark">menva<i>.</i></span><span class="handle" id="handle"></span></div>
+</main>
+<script>
+  const q = new URLSearchParams(location.search);
+  const fail = (m) => { window.__error = m; setTimeout(() => { throw new Error('MENVA story: ' + m); }); };
+  if (q.get('n')) document.getElementById('over').textContent = 'New post · No. ' + q.get('n');
+  document.getElementById('handle').textContent = q.get('handle') || '';
+  const img = document.getElementById('img');
+  const src = q.get('img') || '';
+  if (!/^\/media\/[\w.-]+\.jpg$/.test(src)) fail('img must be /media/<file>.jpg');
+  img.onload = () => document.fonts.ready.then(() => { window.__ready = true; });
+  img.onerror = () => fail('Image failed: ' + src);
+  img.src = src;
+</script>
+</body>
+</html>

@@ -70,6 +70,46 @@ const main = {
       parameters: { jsCode: code('publish.js') },
       notes: 'DRY_RUN=true in .env: only makes the images. Refreshes the Instagram token weekly.',
     },
+    {
+      id: 'b0c1a001-0000-4000-8000-000000000008', name: 'Build story request', type: 'n8n-nodes-base.code', typeVersion: 2, position: [1440, 100],
+      onError: 'continueRegularOutput',
+      parameters: { jsCode: code('story-build.js') },
+      notes: 'STORIES=false in .env switches Stories off.',
+    },
+    {
+      id: 'b0c1a001-0000-4000-8000-000000000009', name: 'Render story (Gotenberg)', type: 'n8n-nodes-base.httpRequest', typeVersion: 4.2, position: [1680, 100],
+      onError: 'continueRegularOutput',
+      parameters: {
+        method: 'POST',
+        url: 'http://gotenberg:3000/forms/chromium/screenshot/url',
+        sendBody: true,
+        contentType: 'multipart-form-data',
+        bodyParameters: {
+          parameters: [
+            form('url', '={{ $json.renderUrl }}'),
+            form('width', '1080'),
+            form('height', '1920'),
+            form('clip', 'true'),
+            form('format', 'jpeg'),
+            form('quality', '90'),
+            form('waitForExpression', 'window.__ready === true'),
+            form('failOnConsoleExceptions', 'true'),
+          ],
+        },
+        options: { response: { response: { responseFormat: 'file', outputPropertyName: 'data' } }, timeout: 90000 },
+      },
+    },
+    {
+      id: 'b0c1a001-0000-4000-8000-000000000010', name: 'Save story image', type: 'n8n-nodes-base.readWriteFile', typeVersion: 1, position: [1920, 100],
+      onError: 'continueRegularOutput',
+      parameters: { operation: 'write', fileName: "={{ $('Build story request').item.json.filePath }}", dataPropertyName: 'data', options: {} },
+    },
+    {
+      id: 'b0c1a001-0000-4000-8000-000000000011', name: 'Publish story', type: 'n8n-nodes-base.code', typeVersion: 2, position: [2160, 100],
+      onError: 'continueRegularOutput',
+      parameters: { jsCode: code('story-publish.js') },
+      notes: 'Never fails the run: a Story problem only logs and alerts.',
+    },
   ],
   connections: {
     'Every 15 minutes': { main: [[{ node: "Pick today's post", type: 'main', index: 0 }]] },
@@ -78,6 +118,10 @@ const main = {
     'Build render requests': { main: [[{ node: 'Render slide (Gotenberg)', type: 'main', index: 0 }]] },
     'Render slide (Gotenberg)': { main: [[{ node: 'Save image', type: 'main', index: 0 }]] },
     'Save image': { main: [[{ node: 'Publish to Instagram', type: 'main', index: 0 }]] },
+    'Publish to Instagram': { main: [[{ node: 'Build story request', type: 'main', index: 0 }]] },
+    'Build story request': { main: [[{ node: 'Render story (Gotenberg)', type: 'main', index: 0 }]] },
+    'Render story (Gotenberg)': { main: [[{ node: 'Save story image', type: 'main', index: 0 }]] },
+    'Save story image': { main: [[{ node: 'Publish story', type: 'main', index: 0 }]] },
   },
   pinData: {},
 };

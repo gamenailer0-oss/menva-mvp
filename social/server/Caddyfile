@@ -22,6 +22,11 @@
 # the post template, real dish renders, fonts and the content calendar, straight from the repo.
 :8081 {
 	root * /srv/repo
+	# finished post images, so the Story template can show the post's first slide
+	handle_path /media/* {
+		root * /srv/media
+		file_server
+	}
 	@public path /social/templates/* /social/content/calendar.json /assets/dishes/*/poster.webp /vendor/fonts/*
 	handle @public {
 		header Cache-Control "no-store"
