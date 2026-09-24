@@ -19,7 +19,7 @@ const sleep = (ms) => new Promise((r) => setTimeout(r, ms));
 
 // Token: the newest refreshed one we saved, unless a new token was pasted into .env since.
 const envToken = ($env.IG_ACCESS_TOKEN || '').trim();
-if (!envToken && !(state.token && state.token.value)) throw new Error('IG_ACCESS_TOKEN is empty in .env — see SETUP.md step 5');
+if (!envToken && !(state.token && state.token.value)) throw new Error('IG_ACCESS_TOKEN is empty in .env — see SETUP.md step 6');
 const envTag = envToken.slice(-12);
 if (!state.token || state.token.fromEnv !== envTag) state.token = { value: envToken, fromEnv: envTag, refreshedAt: null };
 let token = state.token.value;
@@ -32,7 +32,7 @@ async function graph(method, path, qs) {
   if (r.statusCode >= 200 && r.statusCode < 300) return r.body;
   const err = r.body && r.body.error ? r.body.error : { message: JSON.stringify(r.body) };
   if (err.code === 190 || /expired|access token/i.test(err.message || '')) {
-    throw new Error('Instagram token is expired or invalid: make a new one (SETUP.md step 5), paste it into .env, then run: docker compose up -d. Instagram said: ' + err.message);
+    throw new Error('Instagram token is expired or invalid: make a new one (SETUP.md step 6), paste it into .env, then run: docker compose up -d. Instagram said: ' + err.message);
   }
   throw new Error(`Instagram ${method} ${path} failed (${r.statusCode}): ${err.message}${err.error_user_msg ? ' ' + err.error_user_msg : ''}`);
 }
