@@ -13,6 +13,9 @@
   let queue = [];
   let context = { r: null, t: null };
   let timer = 0;
+  // Automated browsers (our Playwright runs against the live site) aren't diners: record locally,
+  // send nothing, so pilot numbers stay clean. ?track=1 forces sending, to check the pipeline end to end.
+  const send = !navigator.webdriver || new URLSearchParams(location.search).has('track');
 
   function sessionId() {
     try {
@@ -30,6 +33,7 @@
   function flush() {
     clearTimeout(timer);
     timer = 0;
+    if (!send) { queue = []; return; }
     if (!queue.length || !context.r) return;
     const body = JSON.stringify({ s: sessionId(), r: context.r, t: context.t, e: queue.splice(0, 50) });
     try {
