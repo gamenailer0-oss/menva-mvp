@@ -16,3 +16,6 @@ dist/
 test-results/
 playwright-report/
 .local-blobs/
+
+# Test QR codes (menva-ar.netlify.app) — never printed
+print/qr-preview/
