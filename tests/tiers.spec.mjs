@@ -13,8 +13,9 @@ for (const t of [1, 2]) {
     await expect(page.locator('.pass[data-state="live"]')).toBeVisible({ timeout: 60_000 });
     expect(await tier(page)).toBe(String(t));
     await expect(page.locator('.ar-btn')).toBeVisible();
-    await expect(page.locator('.ar-btn')).toHaveText(/See it on your table/);
-    await expect(page.locator('.stage-status')).toHaveText('Ready — see it on your table.');
+    // on iPhone (tier 1) the button first shows 'Preparing your table view… n%' while the USDZ downloads
+    await expect(page.locator('.ar-btn')).toHaveText(/See it on your table/, { timeout: 60_000 });
+    await expect(page.locator('.stage-status')).toHaveText('Ready — see it on your table.', { timeout: 60_000 });
   });
 }
 
@@ -47,7 +48,7 @@ test('tier 4: 360° sprite you can swipe, and no 3D downloaded', async ({ page }
   await settled(page);
   expect(await tier(page)).toBe('4');
   const spin = page.locator('.spin.ready');
-  await expect(spin).toBeVisible();
+  await expect(spin).toBeVisible({ timeout: 30_000 });
   await expect(page.locator('.pass-slow')).toBeVisible();
   await expect(page.locator('.pass-slow')).toHaveText('Swipe to turn the dish');
 
@@ -99,7 +100,7 @@ test('low-memory phone (≤ 2 GB): straight to the 360° view, no 3D download', 
   await openDish(page, 'steak-main');
   await settled(page);
   expect(await tier(page)).toBe('4');
-  await expect(page.locator('.spin.ready')).toBeVisible();
+  await expect(page.locator('.spin.ready')).toBeVisible({ timeout: 30_000 }); // sprite comes over the network live
   expect(glbRequested(urls)).toBe(false);
 });
 
@@ -114,10 +115,13 @@ test('no WebGL: straight to the 360° view', async ({ page }) => {
   await openDish(page, 'steak-main');
   await settled(page);
   expect(await tier(page)).toBe('4');
-  await expect(page.locator('.spin.ready')).toBeVisible();
+  await expect(page.locator('.spin.ready')).toBeVisible({ timeout: 30_000 }); // sprite comes over the network live
 });
 
 test('slow connection (?slow=1): 360° after 12 s, then the full view takes over', async ({ page }) => {
+  // ?slow=1 throttles to ~1 Mbps of *uncompressed* bytes; a live host gzips the viewer script, so the
+  // model can arrive before the 12 s cut-off and the 360° step never shows. Local runs only.
+  test.skip(!!process.env.BASE_URL, 'timing depends on the local server');
   test.setTimeout(120_000);
   const w = watch(page);
   await page.goto('/g/12?slow=1');
@@ -126,7 +130,7 @@ test('slow connection (?slow=1): 360° after 12 s, then the full view takes over
   await expect(page.locator('.pass-slow')).toBeVisible({ timeout: 16_000 });
   await expect(page.locator('.pass-slow')).toContainText('360°');
   expect(await tier(page)).toBe('4');
-  await expect(page.locator('.spin.ready')).toBeVisible();
+  await expect(page.locator('.spin.ready')).toBeVisible({ timeout: 30_000 }); // sprite comes over the network live
 
   await expect(page.locator('.pass[data-state="live"]')).toBeVisible({ timeout: 90_000 });
   expect(await tier(page)).toBe('3');
