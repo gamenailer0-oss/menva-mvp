@@ -1,0 +1,33 @@
+{
+	email {$ACME_EMAIL}
+}
+
+# Public: the n8n dashboard (HTTPS certificate is automatic) and the finished post images,
+# which Instagram downloads from https://<domain>/media/<file>.jpg when publishing.
+{$DOMAIN} {
+	encode gzip
+
+	handle_path /media/* {
+		root * /srv/media
+		file_server
+		header Cache-Control "public, max-age=604800"
+	}
+
+	handle {
+		reverse_proxy n8n:5678
+	}
+}
+
+# Private (port 8081 is not published, only n8n and Gotenberg can reach it):
+# the post template, real dish renders, fonts and the content calendar, straight from the repo.
+:8081 {
+	root * /srv/repo
+	@public path /social/templates/* /social/content/calendar.json /assets/dishes/*/poster.webp /vendor/fonts/*
+	handle @public {
+		header Cache-Control "no-store"
+		file_server
+	}
+	handle {
+		respond 404
+	}
+}

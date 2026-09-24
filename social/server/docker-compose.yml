@@ -1,0 +1,86 @@
+# MENVA social autoposter — runs on one small server (Oracle Cloud free tier, ARM).
+#
+#   n8n        the automation: picks today's post, renders it, publishes it to Instagram
+#   gotenberg  a headless Chrome that turns the post template into a JPEG
+#   caddy      HTTPS for the n8n dashboard + serves the finished JPEGs to Instagram
+#
+# Start / update:  docker compose up -d        (run inside social/server/)
+# All settings live in .env (copy .env.example; install.sh does this for you).
+# Image versions are pinned — change them on purpose, never to "latest".
+
+services:
+  n8n:
+    image: n8nio/n8n:2.40.6
+    restart: unless-stopped
+    environment:
+      - N8N_HOST=${DOMAIN}
+      - N8N_PROTOCOL=https
+      - N8N_PORT=5678
+      - N8N_LISTEN_ADDRESS=0.0.0.0
+      - WEBHOOK_URL=https://${DOMAIN}/
+      - N8N_EDITOR_BASE_URL=https://${DOMAIN}/
+      - N8N_ENCRYPTION_KEY=${N8N_ENCRYPTION_KEY}
+      - GENERIC_TIMEZONE=Asia/Karachi
+      - TZ=Asia/Karachi
+      - N8N_DIAGNOSTICS_ENABLED=false
+      - N8N_PERSONALIZATION_ENABLED=false
+      - N8N_RUNNERS_ENABLED=true
+      # The workflow reads its settings (tokens, domain, start date) from these env vars
+      - N8N_BLOCK_ENV_ACCESS_IN_NODE=false
+      # The workflow only writes inside /files (finished images + the posting log)
+      - N8N_RESTRICT_FILE_ACCESS_TO=/files
+      - NODE_FUNCTION_ALLOW_BUILTIN=fs
+      - EXECUTIONS_DATA_PRUNE=true
+      - EXECUTIONS_DATA_MAX_AGE=336
+      # ── read by the workflow ──
+      - MENVA_PUBLIC_URL=https://${DOMAIN}
+      - MENVA_RENDER_BASE=http://caddy:8081
+      - MENVA_START_DATE=${START_DATE}
+      - MENVA_POST_TIME=${POST_TIME}
+      - MENVA_DRY_RUN=${DRY_RUN}
+      - MENVA_IG_HANDLE=${IG_HANDLE}
+      - IG_ACCESS_TOKEN=${IG_ACCESS_TOKEN}
+      - IG_USER_ID=${IG_USER_ID}
+      - IG_GRAPH_URL=${IG_GRAPH_URL:-https://graph.instagram.com}
+      - NTFY_TOPIC=${NTFY_TOPIC}
+    volumes:
+      - n8n_data:/home/node/.n8n
+      - ./files:/files
+      # The repo (calendar + workflow file) — read-only
+      - ../..:/repo:ro
+    depends_on:
+      - gotenberg
+      - caddy
+
+  gotenberg:
+    image: gotenberg/gotenberg:8.37.0
+    restart: unless-stopped
+    # Only reachable from n8n inside this private network — never published to the internet.
+    command:
+      - gotenberg
+      - --api-timeout=60s
+      - --chromium-auto-start=true
+      - --log-level=warn
+
+  caddy:
+    image: caddy:2.11.4
+    restart: unless-stopped
+    ports:
+      - "80:80"
+      - "443:443"
+      - "443:443/udp"
+    environment:
+      - DOMAIN=${DOMAIN}
+      - ACME_EMAIL=${ACME_EMAIL}
+    volumes:
+      - ./Caddyfile:/etc/caddy/Caddyfile:ro
+      - ./files/media:/srv/media:ro
+      # The repo (templates, dish renders, fonts, calendar) — read-only
+      - ../..:/srv/repo:ro
+      - caddy_data:/data
+      - caddy_config:/config
+
+volumes:
+  n8n_data:
+  caddy_data:
+  caddy_config:
