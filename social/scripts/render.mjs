@@ -5,6 +5,7 @@
 //   node social/scripts/render.mjs 12 13           only posts #12 and #13
 //   node social/scripts/render.mjs --sheet         also build contact sheets (social/previews/sheet-*.jpg)
 //   node social/scripts/render.mjs --file x.json   render the slides in x.json ([{...slide}, ...])
+//   node social/scripts/render.mjs --calendar social/content/trend-bank.json --sheet   another calendar file
 //
 // Needs `npm install` (Playwright + sharp from the repo's package.json).
 
@@ -26,10 +27,13 @@ const fileArg = args.includes('--file') ? args[args.indexOf('--file') + 1] : nul
 const only = args.filter((a) => /^\d+$/.test(a)).map(Number);
 
 let jobs;
+let sheetName = 'sheet';
 if (fileArg) {
   jobs = JSON.parse(fs.readFileSync(fileArg, 'utf8')).map((s, i) => ({ name: `slide-${String(i + 1).padStart(2, '0')}`, slide: s }));
 } else {
-  const cal = JSON.parse(fs.readFileSync(path.join(ROOT, 'social/content/calendar.json'), 'utf8'));
+  const calArg = args.includes('--calendar') ? args[args.indexOf('--calendar') + 1] : 'social/content/calendar.json';
+  const cal = JSON.parse(fs.readFileSync(path.resolve(ROOT, calArg), 'utf8'));
+  if (!/calendar\.json$/.test(calArg)) sheetName = path.basename(calArg, '.json') + '-sheet';
   jobs = cal.posts.filter((p) => !only.length || only.includes(p.n)).flatMap((p) =>
     p.slides.map((s, i) => ({ name: `${String(p.n).padStart(3, '0')}-${p.id}-${i + 1}`, slide: { handle: cal.handle, ...s } })));
 }
@@ -71,8 +75,8 @@ if (sheet) {
       left: (i % cols) * (tw + 8) + 8, top: Math.floor(i / cols) * (th + 8) + 8,
     })));
     await sharp({ create: { width: cols * (tw + 8) + 8, height: rows * (th + 8) + 8, channels: 3, background: '#cfc6b6' } })
-      .composite(tiles).jpeg({ quality: 80 }).toFile(path.join(ROOT, `social/previews/sheet-${s + 1}.jpg`));
+      .composite(tiles).jpeg({ quality: 80 }).toFile(path.join(ROOT, `social/previews/${sheetName}-${s + 1}.jpg`));
   }
-  console.log('Contact sheets → social/previews/sheet-*.jpg');
+  console.log(`Contact sheets → social/previews/${sheetName}-*.jpg`);
 }
 if (errors.length) { console.error('Slide errors:\n  ' + errors.join('\n  ')); process.exit(1); }

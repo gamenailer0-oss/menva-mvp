@@ -1,7 +1,8 @@
 // Checks social/content/calendar.json against MENVA's content rules, then writes
 // social/content/calendar.csv (the same posts, for reading in Excel / Google Sheets).
 //
-//   node social/scripts/check-calendar.mjs
+//   node social/scripts/check-calendar.mjs                  (the calendar)
+//   node social/scripts/check-calendar.mjs social/content/trend-bank.json
 //
 // Run it after every edit to calendar.json. It stops with a clear list of problems.
 import fs from 'node:fs';
@@ -9,7 +10,8 @@ import path from 'node:path';
 import { fileURLToPath } from 'node:url';
 
 const ROOT = path.resolve(path.dirname(fileURLToPath(import.meta.url)), '../..');
-const CAL = path.join(ROOT, 'social/content/calendar.json');
+const CAL = path.resolve(process.argv[2] || path.join(ROOT, 'social/content/calendar.json'));
+const NAME = path.basename(CAL, '.json');
 const cal = JSON.parse(fs.readFileSync(CAL, 'utf8'));
 
 // The crops the template knows, read straight from post.js so the two never disagree.
@@ -72,7 +74,7 @@ cal.posts.forEach((p, i) => {
 });
 
 if (problems.length) {
-  console.error(`calendar.json has ${problems.length} problem(s):\n  ` + problems.join('\n  '));
+  console.error(`${NAME}.json has ${problems.length} problem(s):\n  ` + problems.join('\n  '));
   process.exit(1);
 }
 
@@ -85,11 +87,11 @@ for (const p of cal.posts) {
   rows.push([p.n, p.day, d.toISOString().slice(0, 10), d.toUTCString().slice(0, 3), p.id, p.pillar, p.audience, p.format, p.slides.length,
     p.caption, (p.hashtags || []).join(' '), p.alt || '', p.note || '', p.slides.map((s) => s.h.replace(/\*/g, '').replace(/\n/g, ' ')).join(' | ')]);
 }
-fs.writeFileSync(path.join(ROOT, 'social/content/calendar.csv'), '﻿' + rows.map((r) => r.map(cell).join(',')).join('\r\n') + '\r\n');
+fs.writeFileSync(path.join(path.dirname(CAL), NAME + '.csv'), '﻿' + rows.map((r) => r.map(cell).join(',')).join('\r\n') + '\r\n');
 
 const count = (k) => Object.entries(cal.posts.reduce((a, p) => ((a[p[k]] = (a[p[k]] || 0) + 1), a), {})).map(([x, c]) => `${x} ${c}`).join(', ');
-console.log(`calendar.json OK: ${cal.posts.length} posts over ${cal.posts.at(-1).day} days.`);
+console.log(`${NAME}.json OK: ${cal.posts.length} posts over ${cal.posts.at(-1).day} days.`);
 console.log(`  pillars:   ${count('pillar')}`);
 console.log(`  audience:  ${count('audience')}`);
 console.log(`  format:    ${count('format')}`);
-console.log('Wrote social/content/calendar.csv');
+console.log(`Wrote ${path.relative(ROOT, path.join(path.dirname(CAL), NAME + '.csv'))}`);

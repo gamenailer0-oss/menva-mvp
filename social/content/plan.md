@@ -16,7 +16,7 @@ What counts as success in 100 days (read from Instagram Insights, not promised):
 | For Gen Z, Instagram is the first step in choosing where to eat, a "camera eats first" culture ([Tastewise](https://tastewise.io/blog/gen-z-food-trends); [Restaurant India](https://www.restaurantindia.in/article/how-instagram-is-shaping-food-trends-in-india.15972)). | Every dish post uses a real scan, shown large. The product *is* the visual. |
 | Lahore 2026: aesthetic, experience-led cafés; sharing plates / tapas for groups; reservations and zero-wait expectations ([ReserveKaru, 2026](https://www.reservekaru.com/blog/7-massive-dining-trends-taking-over-lahore-in-2026-and-where-to-try-them)). | Group-ordering guides, "sab share karenge", "is this enough for two?", portion posts. |
 | Ranking signals Instagram has confirmed: watch time, likes per reach and **sends per reach**. DM shares weigh more than likes ([Later](https://later.com/blog/how-instagram-algorithm-works/); [Buffer](https://buffer.com/resources/instagram-algorithms/)). | Most captions end with "send this to…" or "tag…". "Types of people at dinner" is a series built for tagging. |
-| Carousels get the highest engagement per follower; Reels get the most reach ([Later](https://later.com/blog/how-instagram-algorithm-works/)). Caption keywords now drive Instagram search. | 18 carousels for explainers and FAQs. Captions say "Lahore", "restaurant", "menu", "3D" in plain words. Reels are a later step (see OPEN-QUESTIONS.md). |
+| Carousels get the highest engagement per follower; Reels get the most reach ([Later](https://later.com/blog/how-instagram-algorithm-works/)). Caption keywords now drive Instagram search. | 19 carousels for explainers and FAQs. Captions say "Lahore", "restaurant", "menu", "3D" in plain words. Reels are a later step (see OPEN-QUESTIONS.md). |
 | In Pakistan, engagement peaks at **6–10 pm PKT**, strongest Thursday to Sunday, and dips around Maghrib and Isha ([Sherazi Marketing](https://sherazimarketingsolutions.com/what-are-the-best-posting-times-in-pakistan-for-instagram-facebook-tiktok-and-youtube/); [Digital Umbrellas](https://digitalumbrellas.com/best-times-to-post-on-social-media-in-pakistan-2026-guide-2/)). | Posts go out at **20:30 PKT**, after Isha all season (Isha in Lahore is about 18:40–19:15 from October to January). Posting days are **Tue, Thu, Fri, Sat, Sun**; Mondays and Wednesdays are rest days. |
 | Pakistani brands on Instagram mix English with Urdu and Roman Urdu to sound local ([Liberal Journal of Language & Literature Review](https://llrjournal.com/index.php/11/article/view/782)). | English leads so the post reads for everyone, then one Roman Urdu line that sounds like a friend talking ("Order se pehle dekh lo"). |
 | Diners research menus before going out, and 18–24 year olds look for food photos more than any other age group ([Restaurant Dive](https://www.restaurantdive.com/news/77-of-diners-visit-restaurant-websites-before-going-survey-finds/562008/), US data). | This is the core argument of the restaurant posts. We never quote these numbers in posts (they are not Lahore numbers). |
@@ -25,13 +25,13 @@ What counts as success in 100 days (read from Instagram Insights, not promised):
 
 | Pillar | Posts | What it is | Example |
 |---|---|---|---|
-| Relatable (dining culture) | 31 | Moments every Lahori table knows: menu anxiety, the over-orderer, the safe order, A-or-B votes, seasonal hooks | #2 "The waiter is back. Again." |
+| Relatable (dining culture) | 30 | Moments every Lahori table knows: menu anxiety, the over-orderer, the safe order, A-or-B votes, seasonal hooks | #2 "The waiter is back. Again." |
 | See it first (product) | 16 | What MENVA does, shown with real scans: true size, turn it around, show the waiter, no app | #1 launch carousel |
 | For restaurants | 13 | For owners and managers: plating gets the credit, staff time, myths, how the pilot works, what they get to see | #6 "Your menu is your quietest salesperson" |
-| Menu truth (useful) | 8 | Saveable checklists and guides: group orders, trying a new place, portion questions | #5 group-order rules |
+| Menu truth (useful) | 9 | Saveable checklists and guides: group orders, trying a new place, portion questions, the sight test | #5 group-order rules |
 | Behind the scan | 4 | How a dish becomes a scan, "no AI food, ever", note from the team, day 100 | #23 how we scan |
 
-Audience split: 55 diners, 13 restaurants, 4 both. Formats: 54 single images, 18 carousels.
+Audience split: 55 diners, 13 restaurants, 4 both. Formats: 53 single images, 19 carousels.
 
 ### Recurring series (so people come back)
 - **This or that** (#4, #19, #48): two real dishes, comment A or B.
@@ -67,3 +67,8 @@ If START_DATE moves by more than about two weeks, check these posts (see `calend
 ## 7. After day 100
 
 Read Insights for the top 10 posts by sends and saves, make more of those formats, and add Reels made from the 360° spin renders once they are approved for social use (OPEN-QUESTIONS.md).
+
+## 8. Trend bank (`trend-bank.json`)
+
+22 more ready posts built on the marketing research (`social/marketing/research/`). The core insight is that Pakistani food hype runs on *doubt resolved in public* ("is it really that big / worth it / real?"), and a true-size scan answers exactly that doubt. The bank includes the **Dish drop** weekly-reveal series (a Crumble-style reveal, done as honest scarcity since only four scans exist), the **Sight test** (taste-test culture, flipped to before you order), "is it worth the hype", queue culture, "is this even real", expectation-vs-reality done honestly, trend-jacks (Dubai chocolate, three milk cake, smash burgers, match nights) as text-only posts, Lahori-life formats (desi parents, family dawat, student budget) and the brand line **"Pehle dekho, phir order."**
+Two are already in the calendar (#25 sight test, #34 worth the hype). To use another, copy it over a calendar post, keep that post's `n`, `day`, `date` and `weekday`, then run `node social/scripts/check-calendar.mjs`. Previews: `social/previews/trend-bank-sheet-*.jpg`.
