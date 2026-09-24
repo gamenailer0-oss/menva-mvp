@@ -1,0 +1,159 @@
+/* MENVA social posts — direction "A · Chili".
+   Same tokens as the site (css/tokens.css): warm cream paper, ink, one chili-red accent.
+   Instrument Serif for headlines (one italic word), DM Sans for everything else.
+   No emoji, no glassmorphism, no decorative gradients, no second accent. */
+
+@font-face { font-family: 'DM Sans'; font-weight: 400; src: url('../../vendor/fonts/dm-sans-400.woff2') format('woff2'); }
+@font-face { font-family: 'DM Sans'; font-weight: 500; src: url('../../vendor/fonts/dm-sans-500.woff2') format('woff2'); }
+@font-face { font-family: 'DM Sans'; font-weight: 600; src: url('../../vendor/fonts/dm-sans-600.woff2') format('woff2'); }
+@font-face { font-family: 'Instrument Serif'; font-style: normal; src: url('../../vendor/fonts/instrument-serif-400.woff2') format('woff2'); }
+@font-face { font-family: 'Instrument Serif'; font-style: italic; src: url('../../vendor/fonts/instrument-serif-400-italic.woff2') format('woff2'); }
+
+:root {
+  --paper: #EFEBE2;
+  --surface: #FFFFFF;
+  --sand: #E3DCCF;
+  --stage: #E9E3D7;
+  --line: #DCD3C4;
+  --ink: #1A1714;
+  --muted: #5C5349;
+  --chili: #B5371F;
+  --cream: #F5EFE4;
+  --serif: 'Instrument Serif', Georgia, serif;
+  --sans: 'DM Sans', system-ui, sans-serif;
+}
+
+* { box-sizing: border-box; margin: 0; padding: 0; }
+html, body { width: 1080px; height: 1350px; overflow: hidden; background: var(--paper); }
+body { font-family: var(--sans); color: var(--ink); letter-spacing: -0.01em; -webkit-font-smoothing: antialiased; }
+
+.slide { position: relative; width: 1080px; height: 1350px; padding: 88px 88px 80px; display: flex; flex-direction: column; overflow: hidden; }
+
+/* Backgrounds */
+.bg-paper { background: var(--paper); }
+.bg-sand  { background: var(--sand); }
+.bg-white { background: var(--surface); }
+.bg-chili { background: var(--chili); color: #fff; }
+.bg-ink   { background: var(--ink); color: var(--cream); }
+.bg-chili .muted, .bg-ink .muted { color: rgba(255,255,255,.78); }
+.bg-chili em, .bg-ink em { color: var(--cream); }
+
+/* Top bar: overline left, slide counter right */
+.top { display: flex; justify-content: space-between; align-items: center; min-height: 28px; }
+.over { font-size: 24px; font-weight: 600; letter-spacing: .14em; text-transform: uppercase; }
+.count { font-size: 24px; font-weight: 500; letter-spacing: .06em; font-variant-numeric: tabular-nums; }
+.muted { color: var(--muted); }
+
+/* Type */
+h1 { font-family: var(--serif); font-weight: 400; line-height: .98; letter-spacing: -0.015em; }
+h1 em { font-style: italic; color: var(--chili); }
+.h-xl { font-size: 150px; }
+.h-l  { font-size: 116px; }
+.h-m  { font-size: 92px; }
+.h-s  { font-size: 72px; }
+.body { font-size: 36px; line-height: 1.34; font-weight: 400; max-width: 860px; }
+.body strong { font-weight: 600; }
+.roman { font-size: 32px; line-height: 1.35; font-style: normal; font-weight: 500; }
+
+/* Footer: wordmark + handle / tag */
+.foot { margin-top: auto; display: flex; justify-content: space-between; align-items: flex-end; padding-top: 32px; }
+.wordmark { font-family: var(--serif); font-size: 60px; line-height: 1; letter-spacing: -0.02em; }
+.wordmark i { font-style: normal; color: var(--chili); }
+.bg-chili .wordmark i { color: var(--ink); }
+.handle { font-size: 26px; font-weight: 500; }
+
+/* Pills */
+.pill { display: inline-flex; align-items: center; gap: 14px; height: 76px; padding: 0 34px; border-radius: 999px; font-size: 30px; font-weight: 600; white-space: nowrap; }
+.pill-chili { background: var(--chili); color: #fff; }
+.pill-white { background: #fff; color: var(--ink); }
+.pill-line  { border: 2px solid currentColor; }
+.pill svg { width: 34px; height: 34px; }
+
+/* Dish image (cropped by post.js so no restaurant branding shows) */
+.dish { position: relative; overflow: hidden; }
+.dish img { position: absolute; display: block; max-width: none; }
+.stage { position: relative; flex: 1 1 0; min-height: 0; display: flex; align-items: center; justify-content: center; }
+h1, .body, .roman { position: relative; z-index: 1; }
+
+/* ── Layouts ───────────────────────────────────────────── */
+
+/* hero: dish centre stage, headline below */
+.l-hero .stage { margin: 12px -40px 8px; }
+.l-hero .stage::before { content: ''; position: absolute; height: min(900px, 100%); aspect-ratio: 1; border-radius: 50%; background: var(--stage); }
+.bg-sand.l-hero .stage::before { background: var(--paper); }
+.l-hero .dish { z-index: 1; }
+.l-hero h1 { margin-top: 8px; }
+.l-hero .body { margin-top: 22px; }
+
+/* statement: type only */
+.l-statement h1 { margin-top: auto; }
+.l-statement .body { margin-top: 44px; }
+.l-statement .roman { margin-top: 28px; }
+
+/* phone: the AR promise */
+.l-phone { padding-bottom: 72px; }
+.l-phone h1 { margin-top: 36px; }
+.phone-wrap { flex: 1; display: flex; align-items: flex-end; justify-content: center; margin-top: 36px; margin-bottom: -80px; }
+.phone { position: relative; width: 560px; height: 820px; border-radius: 76px 76px 0 0; background: var(--ink); padding: 22px 22px 0; box-shadow: 0 30px 80px rgba(26,23,20,.22); }
+.screen { position: relative; width: 100%; height: 100%; border-radius: 56px 56px 0 0; background: var(--stage); overflow: hidden; }
+.screen .table { position: absolute; left: -10%; right: -10%; bottom: 0; height: 58%; background: var(--sand); border-top: 2px solid var(--line); }
+.screen .reticle { position: absolute; left: 50%; top: 58%; width: 420px; height: 150px; transform: translate(-50%, -50%); border: 3px solid #fff; border-radius: 50%; opacity: .9; }
+.screen .screen-dish { position: absolute; left: 50%; top: 52%; transform: translate(-50%, -50%); flex: none; }
+.screen .notch { position: absolute; top: 20px; left: 50%; transform: translateX(-50%); width: 150px; height: 40px; border-radius: 20px; background: var(--ink); }
+.screen .pill { position: absolute; left: 50%; bottom: 60px; transform: translateX(-50%); height: 68px; font-size: 26px; }
+
+/* step: numbered explainer slide */
+.l-step .num { font-family: var(--serif); font-size: 260px; line-height: .8; color: var(--chili); margin-top: 40px; }
+.bg-chili.l-step .num, .bg-ink.l-step .num { color: var(--cream); }
+.l-step h1 { margin-top: 36px; }
+.l-step .body { margin-top: 32px; }
+.l-step .stage { margin-top: 20px; }
+
+/* split: plain menu line vs the real thing */
+.l-split h1 { margin-top: 40px; }
+.split { flex: 1; display: grid; grid-template-columns: 1fr 1fr; gap: 28px; margin-top: 56px; }
+.card { border-radius: 32px; padding: 40px 36px; display: flex; flex-direction: column; }
+.card-plain { background: var(--surface); border: 2px solid var(--line); }
+.card-real  { background: var(--stage); }
+.card .label { font-size: 22px; font-weight: 600; letter-spacing: .14em; text-transform: uppercase; color: var(--muted); }
+.card .menu-line { margin-top: auto; margin-bottom: auto; font-family: var(--serif); font-size: 56px; line-height: 1.05; }
+.card .menu-desc { font-size: 26px; line-height: 1.4; color: var(--muted); margin-top: 18px; }
+.dots { display: block; border-bottom: 3px dotted var(--line); margin: 24px 0 0; }
+
+/* duo: this or that */
+.l-duo h1 { margin-top: 36px; text-align: center; }
+.duo { flex: 1; display: grid; grid-template-columns: 1fr 1fr; gap: 24px; margin-top: 48px; }
+.duo .card { background: var(--stage); align-items: center; padding: 32px 20px; }
+.duo .card .stage { width: 100%; }
+.duo .tagline { font-size: 30px; font-weight: 600; text-align: center; }
+.duo .letter { width: 84px; height: 84px; border-radius: 50%; background: var(--ink); color: #fff; font-family: var(--serif); font-size: 52px; display: flex; align-items: center; justify-content: center; }
+.duo .card:last-child .letter { background: var(--chili); }
+.l-duo .body { text-align: center; margin: 32px auto 0; }
+
+/* note: short quote / founder note */
+.l-note .mark { font-family: var(--serif); font-size: 280px; line-height: .7; color: var(--chili); margin-top: auto; height: 150px; }
+.bg-chili.l-note .mark, .bg-ink.l-note .mark { color: var(--cream); }
+.l-note h1 { margin-top: 20px; }
+.l-note .by { margin-top: 48px; font-size: 30px; font-weight: 600; }
+
+/* closeup: the dish as big as it goes, caption card below */
+.l-closeup.bg-paper { background: var(--stage); }
+.l-closeup .stage { margin: 8px -60px; }
+.l-closeup .caption { background: var(--surface); border-radius: 32px; padding: 40px 44px; }
+.l-closeup .caption h1 { font-size: 76px; }
+.l-closeup .caption .body { font-size: 30px; margin-top: 16px; color: var(--muted); }
+.l-closeup .foot { padding-top: 28px; }
+
+/* list: checklist */
+.l-list h1 { margin-top: 40px; }
+.list { list-style: none; margin-top: 56px; display: flex; flex-direction: column; gap: 26px; }
+.list li { display: flex; gap: 28px; align-items: baseline; font-size: 38px; line-height: 1.28; padding-bottom: 26px; border-bottom: 2px solid var(--line); }
+.bg-chili .list li, .bg-ink .list li { border-color: rgba(255,255,255,.22); }
+.list li:last-child { border-bottom: 0; }
+.list .n { font-family: var(--serif); font-size: 54px; color: var(--chili); min-width: 56px; }
+.bg-chili .list .n, .bg-ink .list .n { color: var(--cream); }
+
+/* cta: last slide */
+.l-cta h1 { margin-top: auto; }
+.l-cta .body { margin-top: 36px; }
+.l-cta .actions { display: flex; gap: 20px; margin-top: 56px; flex-wrap: wrap; }

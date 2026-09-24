@@ -1,0 +1,21 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=1080">
+<title>MENVA post</title>
+<!--
+  One 1080×1350 Instagram slide, drawn from the data in the URL:
+    post.html?d=<base64url(JSON)>      (what the n8n workflow sends to Gotenberg)
+    post.html#<URL-encoded JSON>       (handy when editing by hand)
+  Slide fields and layouts are documented in social/templates/README.md.
+  When everything (fonts + dish image) has loaded, window.__ready becomes true —
+  Gotenberg waits for that before taking the screenshot.
+-->
+<link rel="stylesheet" href="post.css">
+</head>
+<body>
+<main id="slide" class="slide"></main>
+<script src="post.js"></script>
+</body>
+</html>
