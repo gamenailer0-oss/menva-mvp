@@ -16,22 +16,22 @@
       "audience": "diners",
       "format": "carousel",
       "note": "Launch post",
-      "caption": "Meet MENVA.\n\nScan the QR on your table, tap a dish, and the real plate appears in front of you. Scanned in 3D, true to size, before you order.\n\nMenu ki photo kuch aur, plate kuch aur? Ab nahi. Order se pehle dekh lo.\n\nTry it on your own table (link in bio), then send this to the friend who takes 20 minutes to order.",
+      "caption": "MENVA, in one sentence: scan the QR on your table, tap a dish, and the exact plate, same size, same everything, shows up on your own table before you order it.\n\nNo app. No download. Safari ya Chrome mein hi khul jata hai.\n\nYeh menu ki tasveer nahi, asli plate ka 3D scan hai. Jo dikhega, wahi aayega.\n\nBuild your list, show the waiter, order with confidence, the waiter still takes the order, we just help you decide.\n\nTry it tonight (link in bio), or send this to the friend who takes 20 minutes to order. You know the one.",
       "hashtags": [
         "#menva",
         "#lahorefood",
         "#lahorefoodies",
         "#3dmenu"
       ],
-      "alt": "A real steak board scanned in 3D, with the words: see it before you order it.",
+      "alt": "A real steak board, scanned in 3D exactly as it's plated, with the words: see it before you order it.",
       "slides": [
         {
           "layout": "hero",
-          "over": "Hello, Lahore",
+          "over": "Lahore, we need to talk",
           "n": "1/4",
           "dish": "steak-main",
           "h": "See it before you *order it.*",
-          "b": "Real dishes, scanned in 3D. On your table, at true size."
+          "b": "Real dishes, scanned in 3D. On your table, before you order."
         },
         {
           "layout": "phone",
@@ -71,22 +71,21 @@
       "pillar": "relatable",
       "audience": "diners",
       "format": "single",
-      "caption": "The waiter is back. Again. And you are still on page two.\n\nBhai bas 2 minute aur. Hum decide kar rahe hain.\n\nSend this to the friend who always says \"tum order karo, main wohi le lunga\".",
+      "caption": "Third time the waiter's swung by and we're still on \"jo bhi tum lo.\"\n\nBhai do minute... theek hai, paanch.",
       "hashtags": [
         "#menva",
         "#lahorefood",
         "#lahorefoodies",
         "#foodiesoflahore"
       ],
-      "alt": "Text post: the waiter is back, again, and you still haven't decided.",
+      "alt": "Text post: the waiter's back for the third time, and no one has decided.",
       "slides": [
         {
           "layout": "statement",
           "bg": "chili",
-          "over": "Every. Single. Time.",
-          "h": "The waiter is back. *Again.*",
-          "b": "You still haven't decided.",
-          "ru": "Bhai bas 2 minute aur..."
+          "over": "9:47 pm, third time",
+          "h": "The waiter's back. *Still on page two.*",
+          "ru": "Bhai do minute... theek hai, paanch."
         }
       ]
     },
@@ -99,22 +98,23 @@
       "pillar": "see-it-first",
       "audience": "diners",
       "format": "single",
-      "caption": "This is not a photo. It is a 3D scan of the real plate.\n\nThe dish is photographed from every side and rebuilt in 3D, so what you turn on your phone is what comes out of the kitchen. No stock photos. No AI food.\n\nAsli plate, asli size.\n\nSave this for the next time a menu photo lets you down.",
+      "caption": "This is not a photoshoot. It's a full 3D scan of the actual plate, turned, measured, rebuilt so what you see on your phone is exactly what lands on your table. No stock photo, no \"creative liberties,\" no AI food.\n\nAsli plate, asli size, koi filter nahi.\n\nSave this for the next menu photo that lied to you.",
       "hashtags": [
         "#menva",
         "#lahorefood",
         "#lahorefoodies",
         "#3dscan"
       ],
-      "alt": "Close-up of a real steak sandwich, scanned in 3D.",
+      "alt": "Close-up of a real steak sandwich, scanned in 3D from every side.",
       "slides": [
         {
           "layout": "closeup",
           "dish": "steak-sandwich",
           "crop": "close",
           "over": "Zoom in",
-          "h": "This is a *scan*, not a photo.",
-          "b": "Every angle is real. Turn it with one finger."
+          "h": "Not a photo. *A full 3D scan.*",
+          "b": "Every angle, every side, turn it yourself.",
+          "stamp": "Not a photo"
         }
       ]
     },
@@ -127,7 +127,7 @@
       "pillar": "relatable",
       "audience": "diners",
       "format": "single",
-      "caption": "Friday night. You get one. No sharing, no \"dono le lete hain\".\n\nA: the steak board\nB: the trio\n\nComment A or B. Tag the friend who would pick the other one.",
+      "caption": "Friday, 9 pm. You get one, not two, not \"thori thori dono.\"\n\nA: the steak board\nB: the trio\n\nComment A or B, and tag the friend who'd order both and regret it by dessert.",
       "hashtags": [
         "#menva",
         "#lahorefood",
@@ -139,7 +139,7 @@
         {
           "layout": "duo",
           "over": "This or that",
-          "h": "Friday night. *Pick one.*",
+          "h": "Friday, 9 pm. *Pick one.*",
           "dishes": [
             "steak-main",
             "chicken-fajita-wrap"
@@ -148,7 +148,7 @@
             "The steak board",
             "The trio"
           ],
-          "b": "Comment A or B. \"Dono\" is not an answer."
+          "b": "Comment A or B. \"Dono le lete hain\" is not a valid strategy."
         }
       ]
     },
@@ -161,7 +161,7 @@
       "pillar": "menu-truth",
       "audience": "diners",
       "format": "carousel",
-      "caption": "Ordering for eight people without the chaos. A short guide.\n\n1. One person holds the menu.\n2. Pick the sharing plates first.\n3. See the portion before you order.\n4. Order one extra, not five.\n5. Show the waiter one list.\n\nAik banda order kare, baqi sab chup. Seriously.\n\nSave it for the next birthday dinner. Send it to the group chat.",
+      "caption": "Ordering for eight without the group chat descending into chaos. A short, tested method:\n\n1. One person holds the menu, seriously, just one.\n2. Sharing plates first.\n3. See the portion before you commit.\n4. One extra dish, not five \"just in case.\"\n5. Build one list. Show the waiter.\n\nAik banda menu pakre, baaki chup.",
       "hashtags": [
         "#menva",
         "#lahorefood",
@@ -175,8 +175,8 @@
           "over": "Group dinner guide",
           "n": "1/3",
           "size": "l",
-          "h": "Ordering for eight, *without the chaos.*",
-          "ru": "Aik banda order kare, baqi sab chup."
+          "h": "Group of eight. *One order, not eight arguments.*",
+          "ru": "Aik banda menu pakre, baaki chup."
         },
         {
           "layout": "list",
@@ -184,11 +184,11 @@
           "n": "2/3",
           "h": "Five rules for the *group order*",
           "items": [
-            "One person holds the menu. Nobody else.",
-            "Pick the sharing plates first.",
-            "See the portion before you order.",
-            "Order one extra, not five.",
-            "Show the waiter **one** list."
+            "One person holds the menu, just one.",
+            "Sharing plates first, always.",
+            "See the portion before you commit.",
+            "One extra dish, not five “just in case.”",
+            "Show the waiter **one** list, not six phones."
           ]
         },
         {
@@ -196,7 +196,7 @@
           "over": "Rule 5, sorted",
           "n": "3/3",
           "dish": "garlic-prawn-skewers",
-          "h": "Build one list. *Show the waiter.*",
+          "h": "Rule five, sorted: *show the waiter.*",
           "pill": "Show the waiter"
         }
       ]
@@ -210,7 +210,7 @@
       "pillar": "for-restaurants",
       "audience": "restaurants",
       "format": "carousel",
-      "caption": "For restaurant owners and managers in Lahore.\n\nYour menu talks to every guest, every night, and most of the time it is just text. MENVA puts your real dishes on the guest's table, in 3D and at true size, straight from the table QR. No app for them to download.\n\nLahore pilot: PKR 25,000. DM \"PILOT\" and we will walk you through what is included.",
+      "caption": "Every guest at your table is silently asking questions your menu can't answer: what does it actually look like, is it enough for two, which one should I get. MENVA answers all three before the waiter says a word, the real dish, in 3D, on the guest's own table, straight off your QR.\n\nNo app for them. No new habit for your staff. Just your plating, doing what it's good at.\n\nLahore pilot: PKR 25,000. DM \"PILOT\".",
       "hashtags": [
         "#menva",
         "#lahorerestaurants",
@@ -225,18 +225,18 @@
           "over": "For restaurants",
           "n": "1/4",
           "size": "l",
-          "h": "Your menu is your quietest *salesperson.*"
+          "h": "Your menu sells *before anyone speaks.*"
         },
         {
           "layout": "list",
           "over": "When guests can see the dish",
           "n": "2/4",
-          "h": "What a 3D menu *answers* before anyone asks",
+          "h": "What a 3D menu *answers first*",
           "items": [
-            "\"What does it look like?\"",
-            "\"How big is it?\"",
-            "\"Is it enough for two?\"",
-            "\"Which one should I get?\""
+            "\"What does it actually look like?\"",
+            "\"Is that enough for two of us?\"",
+            "\"Which one's better, this or that?\"",
+            "\"Worth ordering, or skip it?\""
           ]
         },
         {
@@ -244,14 +244,14 @@
           "over": "Your real plating",
           "n": "3/4",
           "dish": "steak-sandwich",
-          "h": "Your plating gets *the credit.*",
-          "b": "Real dishes, scanned in 3D. Not stock photos."
+          "h": "Your plating *does the talking.*",
+          "b": "Real dishes, scanned in 3D. Not a stock photo, not a re-shoot."
         },
         {
           "layout": "cta",
           "bg": "chili",
           "over": "4/4",
-          "h": "Put your menu on the *table.*",
+          "h": "Put your menu *on the table.*",
           "b": "Lahore pilot: PKR 25,000.",
           "actions": [
             "DM \"PILOT\"",
@@ -269,21 +269,21 @@
       "pillar": "menu-truth",
       "audience": "diners",
       "format": "single",
-      "caption": "Menu photos have one job, and too many of them are from 2019.\n\nA scan shows you the plate that is actually coming out tonight, from every side.\n\nPhoto kuch aur, plate kuch aur? Ab nahi.\n\nSend this to someone who has been betrayed by a menu photo.",
+      "caption": "That menu photo was shot in 2019, probably by someone's cousin with a good camera and better lighting. The plate coming out of the kitchen tonight has never met it.\n\nA scan doesn't get that luxury, it's the plate, tonight, from every side.\n\nThat's the whole argument for a scan over a photo.",
       "hashtags": [
         "#menva",
         "#lahorefood",
         "#lahorefoodies",
         "#foodiesoflahore"
       ],
-      "alt": "Text post: menu photos lie, scans don't.",
+      "alt": "Text post: menu photos are years old, scans are tonight's plate.",
       "slides": [
         {
           "layout": "statement",
           "bg": "chili",
           "over": "Menu truth",
-          "h": "Menu photos *lie.*\nScans don't.",
-          "ru": "Photo kuch aur, plate kuch aur? Ab nahi."
+          "h": "That photo's from 2019. *The plate isn't.*",
+          "ru": "Photo kuch aur, plate kuch aur, ab nahi."
         }
       ]
     },
@@ -296,7 +296,7 @@
       "pillar": "see-it-first",
       "audience": "diners",
       "format": "carousel",
-      "caption": "How MENVA works, in three steps.\n\n1. Scan the code on your table. The menu opens on your phone. No app.\n2. Tap a dish. The real dish comes into focus. Turn it with a finger.\n3. See it on your table. Place it in front of you at its true size, then decide.\n\nTeen step. Bas.\n\nSave this so you know what to do when you see the QR.",
+      "caption": "How it actually works, no fluff:\n\n1. Scan the QR that's already sitting on your table.\n2. Tap a dish, the real plate loads in 3D, turn it with one finger.\n3. Place it on your table at true size. Then decide.\n\nTeen step, bas itna hi. Save this so you're not fumbling with it on your first table.",
       "hashtags": [
         "#menva",
         "#lahorefood",
@@ -310,16 +310,16 @@
           "over": "How it works",
           "n": "1/3",
           "num": "01",
-          "h": "Scan the code on *your table*",
-          "b": "The menu opens on your phone. No app to install."
+          "h": "Scan the code *already on your table*",
+          "b": "Opens straight in your browser. No app, no download, no sign-up."
         },
         {
           "layout": "step",
           "over": "How it works",
           "n": "2/3",
           "num": "02",
-          "h": "Tap a *dish*",
-          "b": "The real dish comes into focus. Turn it around with a finger.",
+          "h": "Tap *any dish*",
+          "b": "The real plate loads, turn it around, check every side.",
           "dish": "steak-main",
           "crop": "sides"
         },
@@ -328,8 +328,8 @@
           "over": "How it works",
           "n": "3/3",
           "dish": "steak-sandwich",
-          "h": "03 · See it on *your table*",
-          "b": "True size, before you decide."
+          "h": "03 · Place it *on your table*",
+          "b": "True size. No pinch, no resize, no surprises."
         }
       ]
     },
@@ -343,21 +343,21 @@
       "audience": "diners",
       "format": "single",
       "note": "World Food Day, 16 Oct",
-      "caption": "It is World Food Day, and we have one request: order food you actually wanted.\n\nLess guessing, less waste, fewer \"yeh toh mujhe pasand hi nahi\" moments at the table.\n\nKhana wohi mangwao jo khana hai.\n\nTell us: which dish did you regret ordering most?",
+      "caption": "World Food Day thought: a lot of dinner regret is just bad guessing. \"Yeh toh mujhe pasand hi nahi tha\" is not a rare sentence at our tables.\n\nKhana wohi mangwao jo khana hai, see it first, then order it.\n\nWhich dish do you still regret ordering? Comments are open, be honest.",
       "hashtags": [
         "#menva",
         "#lahorefood",
         "#lahorefoodies",
         "#worldfoodday"
       ],
-      "alt": "A plate of real food, scanned in 3D, with the words: order what you actually want.",
+      "alt": "A plate of real food, scanned in 3D, with the words: order what you actually wanted.",
       "slides": [
         {
           "layout": "hero",
           "bg": "sand",
           "over": "World Food Day",
           "dish": "garlic-prawn-skewers",
-          "h": "Order what you *actually* want.",
+          "h": "Order what you *actually* wanted.",
           "b": "Less guessing. Less waste."
         }
       ]
@@ -371,7 +371,7 @@
       "pillar": "relatable",
       "audience": "diners",
       "format": "single",
-      "caption": "POV: you ordered \"a starter\" and it arrived on a board the size of a laptop.\n\nOr the opposite: you ordered a main and needed a second one.\n\nPortion size is the thing a menu never tells you. A 3D dish at true size does.\n\nYaar yeh itna bara kyun hai?\n\nComment the dish that surprised you the most.",
+      "caption": "POV: \"chhota sa kuch\" arrives and it's bigger than the table can hold. Nobody warns you. A menu line never will, a 3D dish at true size does.\n\nYaar yeh itna bara kyun hai?\n\nWhich dish surprised you the most, too big or too small? Comment below.",
       "hashtags": [
         "#menva",
         "#lahorefood",
@@ -384,7 +384,7 @@
           "layout": "hero",
           "over": "POV",
           "dish": "steak-main",
-          "h": "You didn't check the *portion size.*",
+          "h": "You ordered *a starter.* It arrived on a board.",
           "b": "Yaar yeh itna bara kyun hai?"
         }
       ]
@@ -398,7 +398,7 @@
       "pillar": "see-it-first",
       "audience": "diners",
       "format": "carousel",
-      "caption": "The questions we get the most, answered.\n\nDo I need an app? No. It opens in your phone's browser.\nWhich phones? Safari on iPhone, Chrome on Android.\nDoes it work on restaurant wifi? It is built to: the dish photo shows first, the 3D follows.\nCan I order through it? No. The waiter stays in charge. You show them your list.\n\nKoi aur sawal? Comments mein poochein.",
+      "caption": "The questions we get on repeat, answered without the corporate FAQ voice:\n\nApp? No. Phone? iPhone's Safari, Android's Chrome. Restaurant wifi? Built for it, photo first, 3D behind it. Ordering through it? Never, your waiter's still the one taking your order.\n\nKoi aur sawal ho toh comments mein daal do, hum padhte hain sab.",
       "hashtags": [
         "#menva",
         "#lahorefood",
@@ -412,35 +412,35 @@
           "over": "FAQ",
           "n": "1/5",
           "h": "Do I need *an app?*",
-          "b": "No. It opens in your phone's browser, straight from the table QR."
+          "b": "No. Straight from your browser, no download, no login."
         },
         {
           "layout": "statement",
           "over": "FAQ",
           "n": "2/5",
           "h": "Which *phones?*",
-          "b": "Safari on iPhone, Chrome on Android. The table view needs a phone with AR; everyone else can still turn the dish in 3D."
+          "b": "Safari on iPhone, Chrome on Android. Everyone can turn a dish in 3D; AR needs a phone that supports it."
         },
         {
           "layout": "statement",
           "over": "FAQ",
           "n": "3/5",
           "h": "On restaurant *wifi?*",
-          "b": "Built for it. The dish photo shows first, then the 3D arrives."
+          "b": "Built for it. The photo shows first, the 3D catches up behind it."
         },
         {
           "layout": "statement",
           "over": "FAQ",
           "n": "4/5",
-          "h": "Can I order *through it?*",
-          "b": "No. The waiter stays in charge. You build a list and show it to them."
+          "h": "Can I *order* through it?",
+          "b": "No. The waiter's still in charge, you just show them a cleaner list."
         },
         {
           "layout": "cta",
           "bg": "chili",
           "over": "",
           "h": "Still curious? *Try it.*",
-          "b": "The demo is one tap away.",
+          "b": "One tap, right now.",
           "actions": [
             "Link in bio"
           ]
@@ -456,21 +456,49 @@
       "pillar": "relatable",
       "audience": "diners",
       "format": "single",
-      "caption": "Every group has one. New place, new menu, and they still order the one thing they always order.\n\nNothing wrong with it. But what if they could see the other dish first?\n\nHar dafa wohi order. Kabhi kuch naya try karo.\n\nTag your safe-order friend.",
+      "caption": "Every group has a Hamza. New restaurant, 42-item menu, and by the time everyone else is deciding, he's already ordered the chicken karahi. Again.\n\nHar dafa wohi order, kam se kam MENVA pe dekh toh lo kya miss kar rahe ho.\n\nTag your group's Hamza.",
       "hashtags": [
         "#menva",
         "#lahorefood",
         "#lahorefoodies",
         "#foodiesoflahore"
       ],
-      "alt": "Text post about the friend who always orders the same safe dish.",
+      "alt": "A fake group chat about a friend who always orders the same safe dish.",
       "slides": [
         {
-          "layout": "note",
+          "layout": "chat",
           "bg": "paper",
           "over": "We all know one",
-          "h": "New restaurant. New menu. *Same order.*",
-          "ru": "Har dafa wohi order. Kabhi kuch naya try karo."
+          "h": "New menu. *Same order.* Every time.",
+          "ru": "Har dafa wohi order.",
+          "title": "New place tonight?",
+          "members": "Hamza, Ayesha, Bilal, you",
+          "msgs": [
+            {
+              "from": "Hamza",
+              "t": "guys try something new tonight?"
+            },
+            {
+              "from": "Ayesha",
+              "t": "yes!! no chicken karahi please"
+            },
+            {
+              "me": true,
+              "t": "deal"
+            },
+            {
+              "from": "Hamza",
+              "t": "orders chicken karahi anyway"
+            },
+            {
+              "from": "Ayesha",
+              "t": "HAMZA"
+            },
+            {
+              "from": "Hamza",
+              "t": "it's a safe choice ok"
+            }
+          ]
         }
       ]
     },
@@ -483,22 +511,23 @@
       "pillar": "see-it-first",
       "audience": "diners",
       "format": "single",
-      "caption": "The side of the plate a menu photo never shows you.\n\nWith a 3D dish you turn it around, look underneath the garnish, check how much is actually there.\n\nGhooma ke dekho. Phir order karo.\n\nSave this post and try it with the demo: link in bio.",
+      "caption": "The one side a menu photo never shows you: the other side. With a scan you spin it, check what's actually under the garnish, see how much is really there.\n\nGhooma ke dekho, phir order karo. Try it, link in bio.",
       "hashtags": [
         "#menva",
         "#lahorefood",
         "#lahorefoodies",
         "#3dscan"
       ],
-      "alt": "A real plate of food, scanned in 3D, with the words: turn it around.",
+      "alt": "A real plate of food, scanned in 3D, with the words: check the other side first.",
       "slides": [
         {
           "layout": "closeup",
           "dish": "garlic-prawn-skewers",
           "crop": "close",
           "over": "One finger",
-          "h": "Turn it *around.*",
-          "b": "See every side before you order."
+          "h": "Check the *other* side first.",
+          "b": "Underneath the garnish, behind the sauce, every side, before you commit.",
+          "stamp": "Every side"
         }
       ]
     },
@@ -511,7 +540,7 @@
       "pillar": "for-restaurants",
       "audience": "restaurants",
       "format": "single",
-      "caption": "Restaurant owners: how many times a night does your staff hear \"what does this look like?\"\n\nEvery one of those questions is a guest who is not sure yet. A 3D menu answers it at the table, in the guest's hand, so your team can focus on service.\n\nDM \"PILOT\" to see how the Lahore pilot works.",
+      "caption": "Count it tonight: how many times a guest asks what a dish looks like before they'll order it. Every one of those is a guest still deciding, and your waiter explaining the same platter for the fourth time this hour.\n\nA 3D menu answers it in the guest's hand, at their table. Your team gets back to hosting.\n\nDM \"PILOT\" to see how the Lahore pilot works.",
       "hashtags": [
         "#menva",
         "#lahorerestaurants",
@@ -525,8 +554,8 @@
           "bg": "ink",
           "over": "For restaurants",
           "size": "l",
-          "h": "The most asked question in your restaurant: *\"What does it look like?\"*",
-          "b": "Answer it at the table, before anyone asks."
+          "h": "\"What does this *even* look like?\"",
+          "b": "Your staff hears it more than you'd think, every night, table after table. Answer it before it's asked."
         }
       ]
     },
@@ -539,21 +568,21 @@
       "pillar": "relatable",
       "audience": "diners",
       "format": "single",
-      "caption": "Weekend plan: pick the place in 2 minutes, argue about the order for 45.\n\nUs fixes the second part.\n\nPlan bana lo, order hum sambhal lenge.\n\nSend this to the group chat that is still deciding where to go.",
+      "caption": "Weekend math: deciding where to go takes two minutes. Deciding what to order takes forty-five, and still ends in \"tum order karo, main wohi le lunga.\"\n\nWe can only fix the second half.\n\nPlan bana lo, order hum sambhal lenge.",
       "hashtags": [
         "#menva",
         "#lahorefood",
         "#lahorefoodies",
         "#lahoreeats"
       ],
-      "alt": "A real steak sandwich with the words: weekend plans, sorted.",
+      "alt": "A real steak sandwich with the words: where to go, two minutes. What to order, longer.",
       "slides": [
         {
           "layout": "hero",
-          "over": "Saturday",
+          "over": "Saturday, 8:15 pm",
           "dish": "steak-sandwich",
-          "h": "Weekend plans, *sorted.*",
-          "b": "Where to go: 2 minutes. What to order: see it first."
+          "h": "Where to go: *2 minutes.* What to order: 45.",
+          "b": "Order hum sambhal lenge."
         }
       ]
     },
@@ -566,7 +595,7 @@
       "pillar": "menu-truth",
       "audience": "diners",
       "format": "carousel",
-      "caption": "Three things a 3D dish tells you that a menu line never will.\n\n1. How big it really is.\n2. What is actually on the plate.\n3. Whether it is a \"share it\" or a \"mine\".\n\nSave this, and look for the QR on your next table.",
+      "caption": "Three things a menu line will never tell you: how big it actually is, what's really on the plate, and whether it's a \"share it\" or a \"this is mine, back off.\"\n\nA 3D scan answers all three before the waiter's even back. Save this, then look for the QR on your next table.",
       "hashtags": [
         "#menva",
         "#lahorefood",
@@ -596,7 +625,7 @@
           "over": "Two",
           "n": "3/4",
           "num": "02",
-          "h": "What is *on the plate*",
+          "h": "What's actually *on the plate*",
           "dish": "chicken-fajita-wrap",
           "crop": "close"
         },
@@ -605,7 +634,7 @@
           "over": "Three",
           "n": "4/4",
           "num": "03",
-          "h": "Share it, or *keep it*",
+          "h": "Share it, or *keep it to yourself*",
           "b": "Aik plate, do log? Pehle dekh lo.",
           "dish": "steak-sandwich"
         }
@@ -620,20 +649,20 @@
       "pillar": "relatable",
       "audience": "diners",
       "format": "single",
-      "caption": "Menu anxiety is real. Twelve pages, no pictures, a waiter standing right there.\n\nWe think you should be able to see your food before you commit to it.\n\nPressure mein order mat karo.\n\nComment \"same\" if this is you.",
+      "caption": "Menu anxiety is real: twelve pages, no pictures, and a waiter standing right there like a countdown timer.\n\nYou should be allowed to see your food before you commit to it in front of an audience.\n\nComment \"same\" if this is your Friday night.",
       "hashtags": [
         "#menva",
         "#lahorefood",
         "#lahorefoodies",
         "#foodiesoflahore"
       ],
-      "alt": "Text post: menu anxiety is real.",
+      "alt": "Text post: twelve pages, no pictures, the waiter is watching.",
       "slides": [
         {
-          "layout": "statement",
+          "layout": "shout",
           "bg": "chili",
           "over": "Menu anxiety",
-          "h": "Twelve pages.\nNo pictures.\n*The waiter is watching.*",
+          "h": "Twelve pages.\nNo pictures.\n*Waiter is watching.*",
           "ru": "Pressure mein order mat karo."
         }
       ]
@@ -647,7 +676,7 @@
       "pillar": "for-restaurants",
       "audience": "restaurants",
       "format": "single",
-      "caption": "Your chefs spend years on plating. Then the guest meets it as eleven words in a menu.\n\nWith MENVA, the guest sees the real plate, in 3D, before they order. Your plating does the selling.\n\nDM \"PILOT\" for the Lahore pilot.",
+      "caption": "Your kitchen spends years getting the plating right. Then the guest meets it as eleven words between a comma and a price. With MENVA, they see the real plate in 3D before they order, your plating gets to do the selling it was built for.\n\nDM \"PILOT\" for the Lahore pilot.",
       "hashtags": [
         "#menva",
         "#lahorerestaurants",
@@ -661,8 +690,8 @@
           "dish": "chicken-fajita-wrap",
           "crop": "board",
           "over": "For restaurants",
-          "h": "Your plating, *before the order.*",
-          "b": "Not eleven words on a page."
+          "h": "Years on plating. *Eleven words on a page.*",
+          "b": "MENVA shows the real thing, in 3D, before anyone orders."
         }
       ]
     },
@@ -675,7 +704,7 @@
       "pillar": "relatable",
       "audience": "diners",
       "format": "single",
-      "caption": "Round two. One is on a plate, one is on a board. You get one.\n\nA or B in the comments. We are counting.",
+      "caption": "Round two of an argument that never ends. A or B, no \"dono,\" no abstaining.",
       "hashtags": [
         "#menva",
         "#lahorefood",
@@ -687,7 +716,7 @@
         {
           "layout": "duo",
           "over": "This or that · Round 2",
-          "h": "Lunch or dinner, *pick one.*",
+          "h": "One's on a plate, *one's on a board.*",
           "dishes": [
             "steak-sandwich",
             "garlic-prawn-skewers"
@@ -696,7 +725,7 @@
             "The sandwich",
             "The green plate"
           ],
-          "b": "Comment A or B."
+          "b": "You get one. We're counting the comments."
         }
       ]
     },
@@ -710,7 +739,7 @@
       "audience": "diners",
       "format": "carousel",
       "note": "Halloween, 31 Oct",
-      "caption": "Happy Halloween. Here are the scariest things you can find on a menu.\n\n1. No photos at all.\n2. \"Market price\".\n3. A photo that was clearly taken somewhere else.\n4. \"Chef's special\" with no description.\n\nSab se darawna? Jab plate aaye aur woh bilkul different ho.\n\nWhich one scares you most?",
+      "caption": "Happy Halloween. Here's what actually scares us on a menu:\n\nNo photos anywhere. \"Market price.\" A photo that was clearly shot at a different restaurant. \"Chef's special,\" no description, no mercy.\n\nSab se darawna? Jab plate aaye aur bilkul different nikle.\n\nWhich one scares you the most?",
       "hashtags": [
         "#menva",
         "#lahorefood",
@@ -725,21 +754,22 @@
           "over": "Halloween",
           "n": "1/2",
           "size": "l",
-          "h": "The scariest thing in Lahore tonight is *a menu with no photos.*"
+          "h": "Scariest thing in Lahore tonight? *A menu with zero photos.*"
         },
         {
-          "layout": "list",
-          "bg": "ink",
-          "over": "Truly terrifying",
+          "layout": "notes",
+          "bg": "paper",
+          "over": "Field notes, 31 Oct",
           "n": "2/2",
-          "h": "Scary menu *moments*",
+          "h": "Scary menu moments",
           "items": [
-            "No photos at all",
-            "\"Market price\"",
-            "A photo from a different restaurant",
-            "\"Chef's special\", no description",
-            "The plate arrives. It's *different.*"
-          ]
+            "No photos, anywhere.",
+            "“Market price.” (make it stop)",
+            "A photo clearly shot somewhere else.",
+            "“Chef's special”, no description, no mercy.",
+            "~~It's fine~~ the plate arrives. It's different."
+          ],
+          "title": "31 Oct, reading the menu"
         }
       ]
     },
@@ -752,22 +782,23 @@
       "pillar": "see-it-first",
       "audience": "diners",
       "format": "single",
-      "caption": "Date night tip: do not order the messiest thing on the menu. See it first.\n\nPehli date pe risk mat lo.\n\nSave this and send it to someone who has a date this week.",
+      "caption": "Date night rule nobody tells you: don't order the thing that needs two napkins and a strategy. See it first, order the one you can actually eat like a functioning adult.\n\nPehli date pe risk mat lo.",
       "hashtags": [
         "#menva",
         "#lahorefood",
         "#lahorefoodies",
         "#datenight"
       ],
-      "alt": "A neat steak sandwich with the words: date night, no surprises.",
+      "alt": "A neat steak sandwich with the words: don't order the messy thing.",
       "slides": [
         {
           "layout": "hero",
           "bg": "sand",
           "over": "Date night tip",
           "dish": "steak-sandwich",
-          "h": "Date night. *No surprises.*",
-          "b": "See it first. Order the one you can eat gracefully."
+          "h": "Rule one: *don't order the messiest thing.*",
+          "b": "See it first. Pehli date pe risk mat lo.",
+          "stamp": "No surprises"
         }
       ]
     },
@@ -781,7 +812,7 @@
       "audience": "diners",
       "format": "single",
       "note": "Smog season",
-      "caption": "Smog season is here, which means outdoor plans become indoor plans.\n\nIf you are staying in the restaurant longer, at least order right the first time.\n\nBahar smog, andar khana. Mask pehno, menu dekho.\n\nStay safe, Lahore.",
+      "caption": "Smog season turned every outdoor plan into an indoor one, so if you're stuck at a table longer than usual, at least order right the first time.\n\nMask pehno, menu dekho, phir order karo. Stay safe, Lahore.",
       "hashtags": [
         "#menva",
         "#lahorefood",
@@ -794,8 +825,8 @@
           "layout": "statement",
           "bg": "sand",
           "over": "Smog season",
-          "h": "Smog outside.\n*Good food inside.*",
-          "ru": "Bahar smog, andar khana. Mask pehno, menu dekho."
+          "h": "Outdoor plans just became *indoor plans.*",
+          "ru": "Bahar smog, andar aish."
         }
       ]
     },
@@ -808,7 +839,7 @@
       "pillar": "behind-the-scan",
       "audience": "both",
       "format": "carousel",
-      "caption": "How a dish becomes a 3D scan.\n\n1. The real plate is photographed from every angle.\n2. Those photos are rebuilt into a 3D model.\n3. We clean it, check its size and make it light enough for restaurant wifi.\n4. It goes on the menu, behind the table QR.\n\nNo AI-generated food. What you see is what was served.",
+      "caption": "How a dish actually becomes a scan, no shortcuts:\n\n1. The real plate, photographed from every angle.\n2. Those photos rebuilt into one 3D model.\n3. Cleaned up and made light enough for restaurant wifi that's seen better days.\n4. Onto the menu, behind your table's QR.\n\nNo AI-generated food, ever. What you see is what left the kitchen.",
       "hashtags": [
         "#menva",
         "#lahorefood",
@@ -831,7 +862,7 @@
           "n": "2/5",
           "num": "01",
           "h": "Photograph the *real plate*",
-          "b": "From every angle, all the way around."
+          "b": "Every angle, all the way around, nothing skipped."
         },
         {
           "layout": "step",
@@ -839,7 +870,7 @@
           "n": "3/5",
           "num": "02",
           "h": "Rebuild it *in 3D*",
-          "b": "The photos become one model you can turn.",
+          "b": "The photos become one model you can turn with a finger.",
           "dish": "steak-main",
           "crop": "steak"
         },
@@ -849,7 +880,7 @@
           "n": "4/5",
           "num": "03",
           "h": "Make it *light*",
-          "b": "Checked, cleaned and small enough for restaurant wifi."
+          "b": "Checked, cleaned, and small enough for restaurant wifi that's seen better days."
         },
         {
           "layout": "step",
@@ -857,7 +888,7 @@
           "n": "5/5",
           "num": "04",
           "h": "Onto *your table*",
-          "b": "Behind the QR. No AI food, ever.",
+          "b": "Behind the QR. No AI food, not once.",
           "dish": "steak-sandwich"
         }
       ]
@@ -871,7 +902,7 @@
       "pillar": "see-it-first",
       "audience": "diners",
       "format": "single",
-      "caption": "True size means true size. In AR you cannot pinch the dish bigger or smaller. What you see on your table is the portion you get.\n\nHonest portions. That is the whole point.\n\nJitna dikhe, utna hi aaye.",
+      "caption": "In AR you can't pinch the dish bigger or smaller, what you see on your table is exactly the portion you're getting. No creative angles, no forced perspective.\n\nJitna dikhe, utna hi aaye. Honest portions, that's the whole point.",
       "hashtags": [
         "#menva",
         "#lahorefood",
@@ -885,8 +916,9 @@
           "over": "True size",
           "dish": "steak-main",
           "crop": "board",
-          "h": "No zoom. No tricks. *True size.*",
-          "b": "What lands on your table is the portion you get."
+          "h": "You can't pinch it *bigger.*",
+          "b": "True size, locked. What you see on your table is what lands on it.",
+          "stamp": "True size"
         }
       ]
     },
@@ -899,7 +931,7 @@
       "pillar": "menu-truth",
       "audience": "diners",
       "format": "carousel",
-      "caption": "The sight test. Food vloggers do taste tests after they order. We do the sight test before.\n\nRead the menu line. Guess the size. Swipe to see the real plate.\n\nPehle andaza lagao, phir dekho.\n\nHow close was your guess? Comment \"close\" or \"way off\".",
+      "caption": "Food vloggers do taste tests after they order. We do the sight test before, read the menu line, guess the size in your head, then see the actual plate.\n\nPehle andaza lagao, phir dekho.\n\nHow close was your guess? \"Close\" or \"way off,\" comment it.",
       "hashtags": [
         "#menva",
         "#lahorefood",
@@ -920,7 +952,7 @@
           "layout": "split",
           "over": "Step 1: guess",
           "n": "2/3",
-          "h": "How big is *this?*",
+          "h": "How big is *this, really?*",
           "menuLine": "Steak sandwich",
           "menuDesc": "Sliced steak, greens, aioli.",
           "dish": "steak-sandwich",
@@ -947,7 +979,7 @@
       "pillar": "for-restaurants",
       "audience": "restaurants",
       "format": "carousel",
-      "caption": "Restaurant owners ask us the same four things. Here are the answers.\n\nDo guests need an app? No, it opens in the browser from your table QR.\nDoes it replace my menu or my staff? No. The waiter stays in charge; there is no online ordering.\nWill it work on my wifi? It is built for slow restaurant wifi: the photo shows first, the 3D follows.\nWhat does the pilot cost? PKR 25,000 in Lahore.\n\nDM \"PILOT\" for the details.",
+      "caption": "Owners ask us the same four things, so here's the honest version:\n\nDo guests need an app? No. Does it replace my staff? No, no online ordering, ever, your waiter stays in charge. My wifi's bad, will it even work? Built for that exact wifi. What's the pilot cost? PKR 25,000 for a Lahore pilot.\n\nDM \"PILOT\" for the rest.",
       "hashtags": [
         "#menva",
         "#lahorerestaurants",
@@ -962,7 +994,7 @@
           "over": "Owners ask",
           "n": "1/5",
           "h": "Do guests need *an app?*",
-          "b": "No. It opens in their browser, straight from your table QR."
+          "b": "No. It opens in their browser, straight off your table QR."
         },
         {
           "layout": "statement",
@@ -970,7 +1002,7 @@
           "over": "Owners ask",
           "n": "2/5",
           "h": "Does it replace *my staff?*",
-          "b": "No. There is no online ordering or payment. Guests build a list and show it to the waiter."
+          "b": "No online ordering, no payment. Guests build a list and hand it to your waiter."
         },
         {
           "layout": "statement",
@@ -978,7 +1010,7 @@
           "over": "Owners ask",
           "n": "3/5",
           "h": "Will it work on *my wifi?*",
-          "b": "It is built for slow restaurant wifi. The dish photo shows first, the 3D arrives after."
+          "b": "Built for slow restaurant wifi, the photo lands first, the 3D catches up."
         },
         {
           "layout": "statement",
@@ -986,14 +1018,14 @@
           "over": "Owners ask",
           "n": "4/5",
           "h": "What does *the pilot* cost?",
-          "b": "PKR 25,000 for a Lahore pilot."
+          "b": "PKR 25,000 for a Lahore pilot, for now."
         },
         {
           "layout": "cta",
           "bg": "chili",
           "over": "",
           "h": "Questions we didn't cover? *DM us.*",
-          "b": "We reply to every message.",
+          "b": "We reply to everyone.",
           "actions": [
             "DM \"PILOT\""
           ]
@@ -1009,7 +1041,7 @@
       "pillar": "menu-truth",
       "audience": "diners",
       "format": "single",
-      "caption": "Left: what a menu gives you. Right: what MENVA gives you.\n\nWhich one makes you hungrier? Be honest.",
+      "caption": "Left: what a printed menu gives you. Right: what MENVA gives you. Same dish, same kitchen.\n\nBe honest, which one's making you order more?",
       "hashtags": [
         "#menva",
         "#lahorefood",
@@ -1021,7 +1053,7 @@
         {
           "layout": "split",
           "over": "Same dish, two menus",
-          "h": "Which one makes you *hungry?*",
+          "h": "Which one makes you *actually* hungry?",
           "menuLine": "Steak sandwich",
           "menuDesc": "Sliced steak, greens, aioli.",
           "dish": "steak-sandwich",
@@ -1039,7 +1071,7 @@
       "pillar": "see-it-first",
       "audience": "diners",
       "format": "single",
-      "caption": "MENVA does not take your order. The waiter does.\n\nTap \"Add to my table\" on the dishes you want, add a note like \"medium rare\" or \"no onions\", then turn your phone to the waiter. One clear list, big text, no confusion.\n\nWaiter ko list dikhao, baat khatam.",
+      "caption": "MENVA doesn't take your order, the waiter still does. Tap \"add to my table\" on what you want, drop a note like \"no onions,\" then turn your phone around.\n\nWaiter ko list dikhao, baat khatam.",
       "hashtags": [
         "#menva",
         "#lahorefood",
@@ -1054,7 +1086,7 @@
           "dish": "chicken-fajita-wrap",
           "crop": "close",
           "h": "Build your list. *Show the waiter.*",
-          "b": "Notes like \"no onions\" included.",
+          "b": "Add “medium rare” or “no onions” as a note, one clear list, no shouting across the table.",
           "pill": "Show the waiter"
         }
       ]
@@ -1068,22 +1100,44 @@
       "pillar": "relatable",
       "audience": "diners",
       "format": "single",
-      "caption": "Types of people at dinner, part one: the over-orderer.\n\n\"Yeh bhi le lo, woh bhi le lo, bach gaya toh pack karwa lenge.\"\n\nIt never gets packed. Tag them.",
+      "caption": "Types of people at dinner, part one: the over-orderer.\n\n\"Yeh bhi le lo, woh bhi le lo, bach gaya toh pack karwa lenge.\" It never gets packed. Not once. Not this year.\n\nTag them, they know who they are.",
       "hashtags": [
         "#menva",
         "#lahorefood",
         "#lahorefoodies",
         "#lahoreeats"
       ],
-      "alt": "Text post about the friend who over-orders.",
+      "alt": "A till slip listing the over-orderer's habits, in joke amounts.",
       "slides": [
         {
-          "layout": "note",
-          "bg": "chili",
-          "over": "Types of people at dinner · 1",
-          "h": "The over-orderer.",
-          "ru": "\"Yeh bhi le lo, woh bhi le lo, bach gaya toh pack karwa lenge.\"",
-          "by": "It never gets packed."
+          "layout": "receipt",
+          "bg": "paper",
+          "over": "Table 4, tonight",
+          "h": "The over-orderer, *itemised.*",
+          "title": "Table 4",
+          "lines": [
+            [
+              "Extra plates ordered “just in case”",
+              "x4"
+            ],
+            [
+              "“Bach gaya toh pack karwa lenge”",
+              "x3"
+            ],
+            [
+              "Boxes actually packed",
+              "0"
+            ],
+            [
+              "Regret",
+              "1 (large)"
+            ]
+          ],
+          "total": [
+            "Balance owed to your stomach",
+            "everything"
+          ],
+          "footer": "Print this and hand it to your over-orderer."
         }
       ]
     },
@@ -1096,7 +1150,7 @@
       "pillar": "see-it-first",
       "audience": "diners",
       "format": "single",
-      "caption": "Look at that sear. This is a scan of the real steak, not a render made on a computer.\n\nClose enough to count the grill marks. Asli cheez.\n\nSave this for your next steak night.",
+      "caption": "Look at that sear. This isn't a render made on a laptop somewhere, it's a scan of the actual steak, grill marks and all.\n\nAsli cheez, asli sear. Save this before your next steak night.",
       "hashtags": [
         "#menva",
         "#lahorefood",
@@ -1110,7 +1164,8 @@
           "dish": "steak-main",
           "crop": "steak",
           "over": "Zoom in",
-          "h": "Close enough to *count the grill marks.*"
+          "h": "Close enough to *count the grill marks.*",
+          "stamp": "Real steak"
         }
       ]
     },
@@ -1123,26 +1178,27 @@
       "pillar": "for-restaurants",
       "audience": "restaurants",
       "format": "single",
-      "caption": "Five signs your menu might be costing you orders.\n\n1. No photos, or old ones.\n2. Guests ask what a dish looks like.\n3. Everyone orders the same safe dish.\n4. Portion size surprises people.\n5. Your best dish is invisible on page three.\n\nIf you nodded at two or more, DM \"PILOT\".",
+      "caption": "Five signs your menu might be quietly costing you orders: no photos (or old ones), guests asking what a dish looks like, everyone ordering the same safe thing, portion size surprising people, your best dish buried on page three.\n\nIf two of these sound familiar, DM \"PILOT.\"",
       "hashtags": [
         "#menva",
         "#lahorerestaurants",
         "#restaurantmarketing",
         "#menudesign"
       ],
-      "alt": "Checklist: five signs your menu is costing you orders.",
+      "alt": "A phone notes page listing five signs your menu is costing you orders.",
       "slides": [
         {
-          "layout": "list",
+          "layout": "notes",
           "over": "For restaurants",
-          "h": "Five signs your menu is *costing you orders*",
+          "h": "Five signs your menu's *costing you orders*",
           "items": [
-            "No photos, or old ones",
-            "Guests ask what a dish looks like",
-            "Everyone orders the same safe dish",
-            "Portion size surprises people",
-            "Your best dish is invisible on page 3"
-          ]
+            "No photos, or photos from another decade.",
+            "Guests keep asking what a dish looks like.",
+            "Everyone defaults to the same safe order.",
+            "Portion size keeps surprising people.",
+            "Your best dish is stuck on page 3."
+          ],
+          "title": "Menu audit, page 1"
         }
       ]
     },
@@ -1155,7 +1211,7 @@
       "pillar": "relatable",
       "audience": "diners",
       "format": "single",
-      "caption": "Types of people at dinner, part two: the photographer.\n\nNobody touches the food until the angle is right. Camera pehle khata hai.\n\nHere is the good news: this plate already has every angle. Tag the photographer.",
+      "caption": "Types of people at dinner, part two: the photographer. Nobody touches the food until the angle's right, the lighting's right, and the group has waited four minutes in silence.\n\nCamera pehle khata hai, phir sab.\n\nTag the photographer. They'll probably repost this.",
       "hashtags": [
         "#menva",
         "#lahorefood",
@@ -1170,7 +1226,7 @@
           "dish": "chicken-fajita-wrap",
           "crop": "board",
           "h": "The photographer. *Camera eats first.*",
-          "b": "Good news: this plate already has every angle."
+          "b": "Good news for them: this plate already has every angle covered."
         }
       ]
     },
@@ -1183,7 +1239,7 @@
       "pillar": "behind-the-scan",
       "audience": "both",
       "format": "single",
-      "caption": "A promise: no AI-generated food on MENVA. Ever.\n\nEvery dish you see is a scan of a real plate from a real kitchen. If it does not look good in real life, it does not get a filter.\n\nAsli khana. Bas.",
+      "caption": "A promise, plain and simple: no AI food on MENVA, ever. If a dish doesn't look good in real life, it doesn't get a filter, it just doesn't go up.\n\nAsli khana, bas.",
       "hashtags": [
         "#menva",
         "#lahorefood",
@@ -1196,9 +1252,10 @@
           "layout": "statement",
           "bg": "ink",
           "over": "A promise",
-          "h": "No AI food. *Ever.*",
-          "b": "Every dish is a scan of a real plate from a real kitchen.",
-          "ru": "Asli khana. Bas."
+          "h": "No AI-generated food. *Not once, not ever.*",
+          "b": "Every dish you see came out of a real kitchen and got scanned, not prompted.",
+          "ru": "Asli khana. Bas.",
+          "stamp": "No filter"
         }
       ]
     },
@@ -1211,7 +1268,7 @@
       "pillar": "relatable",
       "audience": "diners",
       "format": "single",
-      "caption": "\"Is it worth the hype?\" is Lahore's favourite question. Usually you only find out after a two-hour queue and a full bill.\n\nWe would rather you found out before. See the dish at true size first, then decide if it is worth it.\n\nHype pe nahi, plate pe faisla karo.",
+      "caption": "\"Is it worth the hype?\" might be Lahore's most asked question, and usually you only get the answer after a two-hour queue and a full bill.\n\nWe'd rather you saw the actual plate first and decided for yourself.\n\nHype pe nahi, plate pe faisla karo.",
       "hashtags": [
         "#menva",
         "#lahorefood",
@@ -1225,8 +1282,9 @@
           "bg": "chili",
           "over": "The Lahore question",
           "size": "l",
-          "h": "\"Is it worth the hype?\"\n*Decide before you order.*",
-          "ru": "Hype pe nahi, plate pe faisla karo."
+          "h": "\"Is it worth the *hype?*\"",
+          "ru": "Hype pe nahi, plate pe faisla karo.",
+          "b": "Usually you find out after the queue and the bill. We'd rather you found out before."
         }
       ],
       "note": "From trend-bank (Worth-the-hype reviews + launch queues (§1 points 2 and 7))"
@@ -1240,7 +1298,7 @@
       "pillar": "see-it-first",
       "audience": "diners",
       "format": "carousel",
-      "caption": "What changes when you can see the dish first.\n\nYou try the thing you would have skipped. You order the right amount. You stop asking the waiter \"yeh kaisa hota hai?\"\n\nSwipe, then save it.",
+      "caption": "What actually changes once you can see the dish before ordering: you try the thing you'd normally skip, you order the right amount instead of guessing, and you stop asking the waiter \"yeh kaisa hota hai\" for the fifth time tonight.\n\nSwipe through, then save it.",
       "hashtags": [
         "#menva",
         "#lahorefood",
@@ -1293,7 +1351,7 @@
       "pillar": "for-restaurants",
       "audience": "restaurants",
       "format": "carousel",
-      "caption": "How the MENVA pilot works for a restaurant.\n\n1. Your signature dishes are scanned in 3D.\n2. Your menu goes live behind a QR on every table.\n3. Guests see dishes on their table, then order with your staff.\n4. You see what guests looked at: dish opens, AR views, the lists they showed the waiter.\n\nLahore pilot: PKR 25,000. DM \"PILOT\".",
+      "caption": "How the MENVA pilot actually runs at a restaurant: your signature dishes get scanned in 3D, a QR goes on every table, guests see the real plate before ordering and your staff still take the order, no online ordering, ever. You get to see what guests looked at: dish opens, AR placements, the lists shown to your waiters.\n\nLahore pilot: PKR 25,000. DM \"PILOT\".",
       "hashtags": [
         "#menva",
         "#lahorerestaurants",
@@ -1315,7 +1373,7 @@
           "over": "Step 1",
           "n": "2/5",
           "num": "01",
-          "h": "Your signature dishes, *in 3D*",
+          "h": "Your signature dishes, *scanned in 3D*",
           "dish": "steak-main",
           "crop": "board"
         },
@@ -1325,23 +1383,23 @@
           "n": "3/5",
           "num": "02",
           "h": "A QR on *every table*",
-          "b": "Your menu opens on the guest's phone. No app."
+          "b": "Your menu opens on the guest's own phone. No app for them to install."
         },
         {
           "layout": "step",
           "over": "Step 3",
           "n": "4/5",
           "num": "03",
-          "h": "Guests see it, *staff take the order*",
-          "b": "No online ordering. Your team stays in charge."
+          "h": "Guests see it. *Staff still take the order.*",
+          "b": "No online ordering, ever. Your team stays in charge of service."
         },
         {
           "layout": "step",
           "over": "Step 4",
           "n": "5/5",
           "num": "04",
-          "h": "You see what *guests looked at*",
-          "b": "Dish opens, table views, and the lists shown to your waiters."
+          "h": "You see what *guests actually looked at*",
+          "b": "Dish opens, table placements, and the lists shown to your waiters."
         }
       ]
     },
@@ -1355,7 +1413,7 @@
       "audience": "diners",
       "format": "single",
       "note": "Wedding season",
-      "caption": "Wedding season means four events a week and zero control over the menu.\n\nSo when you do go out with friends, at least pick what you want.\n\nShaadi ka khana fix hai. Weekend ka khana tumhari marzi.",
+      "caption": "Wedding season means four events a week and the exact same buffet you didn't choose. So on the one weekend dinner that's actually up to you, order what you want, not what's easy.\n\nShaadi ka khana fix hai. Weekend ka khana tumhari marzi.",
       "hashtags": [
         "#menva",
         "#lahorefood",
@@ -1368,8 +1426,8 @@
           "layout": "statement",
           "bg": "chili",
           "over": "Wedding season",
-          "h": "Shaadi ka khana *fix hai.*",
-          "b": "Weekend dinner is your choice. Make it count."
+          "h": "Zero control *over the menu.*",
+          "b": "So when you do get to pick where to go, actually pick what you want."
         }
       ]
     },
@@ -1382,7 +1440,7 @@
       "pillar": "relatable",
       "audience": "diners",
       "format": "single",
-      "caption": "Types of people at dinner, part three: \"sab share karenge\".\n\nIt sounds fair until the board arrives and there are four pieces for six people.\n\nSee the portion first. Then decide if it is really for sharing. Tag your group.",
+      "caption": "Types of people at dinner, part three: \"sab share karenge.\" Sounds democratic until the board arrives and there are three pieces for six people and a very tense silence.\n\nSee the portion first. Then decide if it's really \"for sharing.\" Tag your group.",
       "hashtags": [
         "#menva",
         "#lahorefood",
@@ -1397,7 +1455,7 @@
           "dish": "chicken-fajita-wrap",
           "crop": "board",
           "h": "Three pieces. *Six people.*",
-          "b": "\"Sab share karenge\" needs a plan."
+          "b": "“Sab share karenge” sounded fair in the group chat."
         }
       ]
     },
@@ -1411,7 +1469,7 @@
       "audience": "diners",
       "format": "single",
       "note": "White Friday",
-      "caption": "White Friday deals everywhere. Here is a free one: know what you are ordering before you order it.\n\nSale ho ya na ho, pehle dekh lo.",
+      "caption": "White Friday deals everywhere, discount codes in every group chat. Here's a free one nobody's advertising: know exactly what you're ordering before you order it.\n\nSale ho ya na ho, pehle dekh lo.",
       "hashtags": [
         "#menva",
         "#lahorefood",
@@ -1421,7 +1479,7 @@
       "alt": "Text post: the best White Friday deal is no surprises.",
       "slides": [
         {
-          "layout": "statement",
+          "layout": "shout",
           "bg": "ink",
           "over": "White Friday",
           "h": "Best deal today: *no surprises.*",
@@ -1438,7 +1496,7 @@
       "pillar": "see-it-first",
       "audience": "diners",
       "format": "single",
-      "caption": "Our favourite moment at the table: someone places a dish in AR and the whole table leans in.\n\n\"Itna bara? Chalo yehi mangwate hain.\"\n\nTry it on your table tonight. Link in bio.",
+      "caption": "Our favourite moment at any table: someone places a dish in AR and the whole group leans in at the same second.\n\n\"Itna bara? Chalo yehi mangwate hain.\"\n\nTry it tonight. Link in bio.",
       "hashtags": [
         "#menva",
         "#lahorefood",
@@ -1452,7 +1510,8 @@
           "over": "The moment",
           "dish": "steak-sandwich",
           "h": "The whole table *leans in.*",
-          "b": "\"Itna bara? Chalo yehi mangwate hain.\""
+          "b": "“Itna bara? Chalo yehi mangwate hain.” Every single time.",
+          "stamp": "No pinch"
         }
       ]
     },
@@ -1465,7 +1524,7 @@
       "pillar": "for-restaurants",
       "audience": "restaurants",
       "format": "single",
-      "caption": "A busy Saturday is not the time for your staff to describe every dish, table after table.\n\nLet the menu show the plate. Let your team take care of the guest.\n\nDM \"PILOT\" for the Lahore pilot.",
+      "caption": "A packed Saturday isn't the night for your staff to describe the same platter forty times. Let the menu show the plate, in 3D, at true size, and let your team focus on actually hosting.\n\nDM \"PILOT\" for the Lahore pilot.",
       "hashtags": [
         "#menva",
         "#lahorerestaurants",
@@ -1478,7 +1537,7 @@
           "layout": "note",
           "bg": "ink",
           "over": "For restaurants",
-          "h": "Let the menu show the plate. *Let your team host.*"
+          "h": "Let the menu do the *describing.* Let your team host."
         }
       ]
     },
@@ -1492,7 +1551,7 @@
       "audience": "diners",
       "format": "single",
       "note": "December",
-      "caption": "December in Lahore: cold nights, long dinners, and every friend back in town.\n\nPlans are easy. Ordering for all of them is the hard part. Save our group-order rules from earlier and you are set.\n\nThand hai, chai hai, dost hain. Aur kya chahiye?",
+      "caption": "December in Lahore: cold nights, long dinners, and suddenly every friend who moved away is back and free at the same time. Ordering for twelve of them is the actual hard part, save our group-order rules from earlier, you'll need them.\n\nThand hai, chai hai, dost hain. Aur kya chahiye?",
       "hashtags": [
         "#menva",
         "#lahorefood",
@@ -1505,7 +1564,7 @@
           "layout": "statement",
           "bg": "sand",
           "over": "December",
-          "h": "Cold nights. *Long dinners.*",
+          "h": "Every friend's *back in town.*",
           "ru": "Thand hai, chai hai, dost hain. Aur kya chahiye?"
         }
       ]
@@ -1519,7 +1578,7 @@
       "pillar": "menu-truth",
       "audience": "diners",
       "format": "carousel",
-      "caption": "Quick game: is this plate for one, or for sharing?\n\nSwipe for our answer, then tell us if you agreed.\n\nThis is exactly why true size matters.",
+      "caption": "Quick game: is this plate for one, or for sharing? Decide in your head, then swipe for our very unhelpful answer.\n\nThis is exactly why true size matters more than a menu description ever could.",
       "hashtags": [
         "#menva",
         "#lahorefood",
@@ -1541,7 +1600,7 @@
           "over": "Our answer",
           "n": "2/2",
           "h": "Honestly? *Depends how hungry you are.*",
-          "b": "That's the point: on MENVA you place it on your own table and judge it yourself."
+          "b": "That's the point: on MENVA you put it on your own table and judge it yourself."
         }
       ]
     },
@@ -1554,21 +1613,48 @@
       "pillar": "relatable",
       "audience": "diners",
       "format": "single",
-      "caption": "Types of people at dinner, part four: the one who reads the full menu twice and orders last.\n\n\"Tum log kya le rahe ho? Achha phir main bhi wohi.\"\n\nTag them. Gently.",
+      "caption": "Types of people at dinner, part four: reads the full menu twice, asks what everyone else is getting, orders exactly that.\n\n\"Tum log kya le rahe ho? Achha phir main bhi wohi.\"\n\nTag them. Gently, they mean well.",
       "hashtags": [
         "#menva",
         "#lahorefood",
         "#lahorefoodies",
         "#lahoreeats"
       ],
-      "alt": "Text post about the friend who orders last.",
+      "alt": "A fake group chat about the friend who orders last.",
       "slides": [
         {
-          "layout": "note",
+          "layout": "chat",
           "bg": "paper",
           "over": "Types of people at dinner · 4",
           "h": "Reads the menu twice. *Orders last.*",
-          "ru": "\"Tum log kya le rahe ho? Achha phir main bhi wohi.\""
+          "title": "Deciding (still)",
+          "members": "the usual suspects",
+          "msgs": [
+            {
+              "from": "Sana",
+              "t": "guys what are we getting"
+            },
+            {
+              "from": "Bilal",
+              "t": "reading the menu for the 3rd time"
+            },
+            {
+              "me": true,
+              "t": "any decision?"
+            },
+            {
+              "from": "Bilal",
+              "t": "tum log kya le rahe ho"
+            },
+            {
+              "me": true,
+              "t": "we already said"
+            },
+            {
+              "from": "Bilal",
+              "t": "achha phir main bhi wohi"
+            }
+          ]
         }
       ]
     },
@@ -1581,7 +1667,7 @@
       "pillar": "see-it-first",
       "audience": "diners",
       "format": "single",
-      "caption": "Steak sandwich from above, from the side, from underneath. You choose the angle.\n\nThat is the difference between a photo and a scan.\n\nSave this and try it: link in bio.",
+      "caption": "Steak sandwich from above, from the side, from underneath if you want. You pick the angle, that's what separates a photo from an actual scan.\n\nTry it yourself: link in bio.",
       "hashtags": [
         "#menva",
         "#lahorefood",
@@ -1595,8 +1681,9 @@
           "bg": "sand",
           "over": "Every angle",
           "dish": "steak-sandwich",
-          "h": "You pick *the angle.*",
-          "b": "That's the difference between a photo and a scan."
+          "h": "Above. Side. *Underneath.* Your choice.",
+          "b": "That's the whole difference between a photo and a scan.",
+          "stamp": "Your angle"
         }
       ]
     },
@@ -1609,7 +1696,7 @@
       "pillar": "for-restaurants",
       "audience": "restaurants",
       "format": "carousel",
-      "caption": "Three myths about 3D menus, from owners we have spoken to.\n\n\"Guests won't bother.\" They only need to scan the QR already on the table.\n\"It needs an app.\" It doesn't. It opens in the browser.\n\"It will slow service down.\" The waiter still takes the order, now with a clear list.\n\nDM \"PILOT\" if you want to see it on your own table.",
+      "caption": "Three myths about 3D menus, answered:\n\n\"Guests won't bother\": they only need to scan the QR that's already on the table. \"It needs an app\": it doesn't, it opens in the browser. \"It'll slow service down\": your waiter still takes the order, now from one clean list.\n\nDM \"PILOT\" to see it on your own table.",
       "hashtags": [
         "#menva",
         "#lahorerestaurants",
@@ -1631,20 +1718,20 @@
           "over": "Myth 1",
           "n": "2/4",
           "h": "\"Guests *won't bother.*\"",
-          "b": "They only have to scan the QR that is already on the table."
+          "b": "They only have to scan the QR that's already on the table."
         },
         {
           "layout": "statement",
           "over": "Myth 2",
           "n": "3/4",
           "h": "\"It needs *an app.*\"",
-          "b": "It doesn't. It opens in Safari or Chrome."
+          "b": "It doesn't. It opens straight in Safari or Chrome."
         },
         {
           "layout": "statement",
           "over": "Myth 3",
           "n": "4/4",
-          "h": "\"It slows *service down.*\"",
+          "h": "\"It'll slow *service down.*\"",
           "b": "Your waiter still takes the order, now from one clear list."
         }
       ]
@@ -1658,7 +1745,7 @@
       "pillar": "relatable",
       "audience": "diners",
       "format": "single",
-      "caption": "Order regret: when their plate arrives and it looks better than yours.\n\nWe cannot stop you from looking at your friend's plate. We can help you see yours first.\n\nDost ki plate hamesha behtar lagti hai. Kyun?",
+      "caption": "Order regret: the exact second their plate lands and yours suddenly looks smaller, sadder, and like the wrong choice.\n\nWe can't stop you from eyeing your friend's plate. We can help you see yours first, so it doesn't happen.\n\nDost ki plate hamesha behtar lagti hai. Kyun?",
       "hashtags": [
         "#menva",
         "#lahorefood",
@@ -1671,7 +1758,7 @@
           "layout": "statement",
           "bg": "chili",
           "over": "Order regret",
-          "h": "When their plate arrives and it looks *better than yours.*",
+          "h": "Their plate *always* looks better.",
           "ru": "Dost ki plate hamesha behtar lagti hai. Kyun?"
         }
       ]
@@ -1685,7 +1772,7 @@
       "pillar": "relatable",
       "audience": "diners",
       "format": "single",
-      "caption": "Round three. Cold December night. One of these is yours.\n\nComment A or B.",
+      "caption": "Round three. Cold December night, jacket weather, decision paralysis. One of these is yours.\n\nComment A or B, no abstaining this time.",
       "hashtags": [
         "#menva",
         "#lahorefood",
@@ -1698,7 +1785,7 @@
           "layout": "duo",
           "bg": "sand",
           "over": "This or that · Round 3",
-          "h": "Cold night. *Pick one.*",
+          "h": "Cold night, *one plate.*",
           "dishes": [
             "steak-main",
             "steak-sandwich"
@@ -1724,7 +1811,7 @@
       "pillar": "see-it-first",
       "audience": "diners",
       "format": "single",
-      "caption": "Tip: if you open MENVA from inside Instagram, you can turn the dish in 3D, but the table view needs a real browser.\n\nTap the three dots at the top, choose \"Open in external browser\", and you are in. Safari on iPhone, Chrome on Android.\n\nChhoti si tip, bara farq.",
+      "caption": "Small tip, real difference: opening MENVA from inside Instagram lets you spin the dish in 3D, but placing it on your table needs a real browser.\n\nTap the three dots up top, hit \"open in external browser,\" and you're in, Safari on iPhone, Chrome on Android.\n\nChhoti si tip, bara farq.",
       "hashtags": [
         "#menva",
         "#lahorefood",
@@ -1738,7 +1825,7 @@
           "over": "Quick tip",
           "num": "Tip",
           "h": "Open it in *Safari or Chrome*",
-          "b": "Inside Instagram you can turn the dish in 3D. The table view needs your phone's real browser.",
+          "b": "Inside Instagram you can still turn the dish in 3D. For the table view, you need your phone's actual browser.",
           "dish": "garlic-prawn-skewers",
           "crop": "close"
         }
@@ -1753,21 +1840,28 @@
       "pillar": "relatable",
       "audience": "diners",
       "format": "single",
-      "caption": "Types of people at dinner, part five: the food critic.\n\n\"Theek hai, but maine isse better khaya hai.\"\n\nTag the critic in your group.",
+      "caption": "Types of people at dinner, part five: the food critic. Everything is \"theek hai, but I've had better,\" and the better one is never named, dated, or provable.\n\nTag the critic in your group.",
       "hashtags": [
         "#menva",
         "#lahorefood",
         "#lahorefoodies",
         "#lahorefoodie"
       ],
-      "alt": "Text post about the food critic friend.",
+      "alt": "A phone notes page about the food critic friend.",
       "slides": [
         {
-          "layout": "note",
-          "bg": "ink",
+          "layout": "notes",
+          "bg": "paper",
           "over": "Types of people at dinner · 5",
-          "h": "The food critic.",
-          "ru": "\"Theek hai, but maine isse better khaya hai.\""
+          "h": "The food critic",
+          "title": "11:52 pm, after dinner",
+          "items": [
+            "“Theek hai, but maine isse better khaya hai.”",
+            "Never says where.",
+            "Never says when.",
+            "Rates it 6/10, out loud, to the table.",
+            "Orders the exact same thing next time."
+          ]
         }
       ]
     },
@@ -1780,7 +1874,7 @@
       "pillar": "for-restaurants",
       "audience": "restaurants",
       "format": "single",
-      "caption": "What a restaurant sees during a MENVA pilot: how many tables scanned, which dishes guests opened, how often they placed a dish on the table, and how many lists were shown to the waiter.\n\nReal numbers from your own tables, not guesses. DM \"PILOT\".",
+      "caption": "What a restaurant actually sees during a MENVA pilot: how many tables scanned, which dishes guests opened, how often they placed one in AR, how many lists made it to your waiters.\n\nReal numbers off your own tables, not projections. DM \"PILOT\".",
       "hashtags": [
         "#menva",
         "#lahorerestaurants",
@@ -1795,10 +1889,10 @@
           "over": "For restaurants",
           "h": "What you see during *the pilot*",
           "items": [
-            "Tables that scanned the QR",
+            "Tables that actually scanned the QR",
             "Which dishes guests opened",
-            "How often they placed a dish in AR",
-            "Lists shown to your waiters"
+            "How often a dish got placed in AR",
+            "Lists that made it to your waiters"
           ]
         }
       ]
@@ -1813,7 +1907,7 @@
       "audience": "diners",
       "format": "single",
       "note": "Winter break",
-      "caption": "Winter break has started, which means every dinner plan is now a group of twelve.\n\nSave our group-order rules. You will need them.\n\nChhuttiyan shuru. Group chat active.",
+      "caption": "Winter break started, which means every dinner plan is now a group of twelve and a group chat that never stops buzzing.\n\nChhuttiyan shuru, group chat active. Save our group-order rules, you'll need them by Thursday.",
       "hashtags": [
         "#menva",
         "#lahorefood",
@@ -1840,7 +1934,7 @@
       "pillar": "see-it-first",
       "audience": "diners",
       "format": "single",
-      "caption": "Look closer. Every shred of lettuce and every drizzle is where the kitchen put it.\n\nThat is a scan of a real plate. Nothing added, nothing painted on.",
+      "caption": "Look closer, every shred of lettuce, every drizzle, is exactly where the kitchen put it. This is a scan of the real plate, not a touch-up.",
       "hashtags": [
         "#menva",
         "#lahorefood",
@@ -1854,7 +1948,8 @@
           "dish": "chicken-fajita-wrap",
           "crop": "close",
           "over": "Zoom in",
-          "h": "Nothing added. *Nothing painted on.*"
+          "h": "Nothing added. *Nothing painted on.*",
+          "stamp": "Real plate"
         }
       ]
     },
@@ -1867,7 +1962,7 @@
       "pillar": "menu-truth",
       "audience": "diners",
       "format": "single",
-      "caption": "\"Is this enough for two?\" is the most important question on any menu, and no menu answers it.\n\nPut the dish on your table at its true size and answer it yourself.\n\nDo logon ke liye kaafi hai? Khud dekh lo.",
+      "caption": "\"Is this enough for two?\" is the most important question on any menu, and somehow no menu ever answers it.\n\nPut the dish on your table at true size and answer it yourself.\n\nDo logon ke liye kaafi hai? Khud dekh lo.",
       "hashtags": [
         "#menva",
         "#lahorefood",
@@ -1895,25 +1990,27 @@
       "pillar": "menu-truth",
       "audience": "diners",
       "format": "single",
-      "caption": "A checklist for your next new restaurant.\n\n1. See the portion.\n2. Check what is on the plate.\n3. Ask about spice and allergies.\n4. Order one thing you have never tried.\n\nSave it. Use it this weekend.",
+      "caption": "A short checklist for the next new place you try: see the portion, check what's on the plate, ask about spice and allergies, order one thing you've never had.\n\nSave it, use it this weekend.",
       "hashtags": [
         "#menva",
         "#lahorefood",
         "#lahorefoodies",
         "#lahoreeats"
       ],
-      "alt": "Checklist for trying a new restaurant.",
+      "alt": "A phone notes checklist for trying a new restaurant.",
       "slides": [
         {
-          "layout": "list",
+          "layout": "notes",
           "over": "Save this",
-          "h": "Trying a new place? *Checklist.*",
+          "h": "Checklist *before you order*",
           "items": [
-            "See the portion",
-            "Check what's on the plate",
-            "Ask about spice and allergies",
-            "Order one thing you've never tried"
-          ]
+            "See the portion first.",
+            "Check what's actually on the plate.",
+            "Ask about spice and allergies.",
+            "Order one thing you've never tried.",
+            "~~Order the usual~~ (just this once)"
+          ],
+          "title": "New place tonight"
         }
       ]
     },
@@ -1926,7 +2023,7 @@
       "pillar": "for-restaurants",
       "audience": "restaurants",
       "format": "single",
-      "caption": "The first thing a guest sees of your food is not the food. It is the menu.\n\nMake that first impression the real plate.\n\nDM \"PILOT\" to try MENVA at your restaurant.",
+      "caption": "The first thing a guest meets of your food isn't the food. It's the menu, eleven words and a price. Make that first impression the real plate instead.\n\nDM \"PILOT\" to try MENVA at your restaurant.",
       "hashtags": [
         "#menva",
         "#lahorerestaurants",
@@ -1954,7 +2051,7 @@
       "pillar": "behind-the-scan",
       "audience": "both",
       "format": "single",
-      "caption": "A note from the team.\n\nWe built MENVA because we kept ordering the wrong thing, and we were tired of menus that describe food instead of showing it.\n\nOrder se pehle dekh lo. That is the whole idea.\n\nThank you for following along this year.",
+      "caption": "A note from us: we built MENVA because we kept ordering the wrong thing, and got tired of menus that describe food instead of just showing it.\n\nOrder se pehle dekh lo, that's genuinely the whole idea.\n\nThanks for following along this year.",
       "hashtags": [
         "#menva",
         "#lahorefood",
@@ -1981,7 +2078,7 @@
       "pillar": "relatable",
       "audience": "diners",
       "format": "single",
-      "caption": "Year-end dinner with the whole group? Here is your job: see the dishes first, order once, and do not let anyone say \"abhi aur mangwa lete hain\" four times.\n\nSend this to whoever is organising.",
+      "caption": "Year-end dinner with the whole group? Your one job: see the dishes first, order once, and don't let anyone say \"abhi aur mangwa lete hain\" four separate times.\n\nSend this to whoever's organising, they'll need the backup.",
       "hashtags": [
         "#menva",
         "#lahorefood",
@@ -1991,11 +2088,11 @@
       "alt": "Text post about year-end group dinners.",
       "slides": [
         {
-          "layout": "statement",
+          "layout": "shout",
           "bg": "chili",
           "over": "Year-end dinner",
           "h": "Order once. *Order right.*",
-          "ru": "\"Abhi aur mangwa lete hain\" sirf aik dafa."
+          "ru": "“Abhi aur mangwa lete hain” sirf aik dafa."
         }
       ]
     },
@@ -2009,7 +2106,7 @@
       "audience": "diners",
       "format": "single",
       "note": "25 December: Quaid-e-Azam Day (and Christmas)",
-      "caption": "A long weekend, a public holiday and every friend free at the same time. Happy Quaid Day, and Merry Christmas to everyone celebrating.\n\nWhere are you eating tonight?",
+      "caption": "Long weekend, public holiday, and every friend free on the same night for once. Happy Quaid Day, and Merry Christmas to everyone celebrating.\n\nWhere are you eating tonight?",
       "hashtags": [
         "#menva",
         "#lahorefood",
@@ -2035,7 +2132,7 @@
       "pillar": "relatable",
       "audience": "diners",
       "format": "carousel",
-      "caption": "Our 2026 awards for menus. Totally unofficial.\n\nMost confusing menu name. Biggest portion surprise. Best \"I should have ordered that\".\n\nTell us your winners in the comments.",
+      "caption": "Our totally unofficial 2026 menu awards: most confusing dish name, biggest portion surprise, best \"I should've ordered that\" moment at the table.\n\nTell us your winners, we're judging every comment.",
       "hashtags": [
         "#menva",
         "#lahorefood",
@@ -2057,7 +2154,7 @@
           "over": "Award 1",
           "n": "2/4",
           "h": "Most confusing *dish name*",
-          "b": "You read it three times. Still no idea."
+          "b": "Read it three times. Still no clue what's coming."
         },
         {
           "layout": "hero",
@@ -2071,7 +2168,7 @@
           "layout": "statement",
           "over": "Award 3",
           "n": "4/4",
-          "h": "Best *\"I should have ordered that\"*",
+          "h": "Best *\"I should've ordered that\"*",
           "b": "Comment your winner."
         }
       ]
@@ -2085,7 +2182,7 @@
       "pillar": "for-restaurants",
       "audience": "restaurants",
       "format": "single",
-      "caption": "Planning a new menu for 2027? Plan how guests will see it, too.\n\nLahore pilot: PKR 25,000. DM \"PILOT\" and we will walk you through it.",
+      "caption": "Planning a new menu for 2027? Plan how guests actually see it, too.\n\nLahore pilot: PKR 25,000. DM \"PILOT\" and we'll walk you through it.",
       "hashtags": [
         "#menva",
         "#lahorerestaurants",
@@ -2115,7 +2212,7 @@
       "pillar": "see-it-first",
       "audience": "diners",
       "format": "carousel",
-      "caption": "The year in four plates. Every one of them a real dish, scanned in 3D.\n\nWhich one would you order first? Comment 1, 2, 3 or 4.",
+      "caption": "The year in four plates, every single one a real scan, no exceptions.\n\nWhich would you order first? Comment 1, 2, 3 or 4.",
       "hashtags": [
         "#menva",
         "#lahorefood",
@@ -2174,7 +2271,7 @@
       "audience": "diners",
       "format": "single",
       "note": "31 December",
-      "caption": "Last dinner of the year. Make it the one you actually wanted.\n\nSaal ka aakhri khana. Soch samajh ke.\n\nHappy New Year's Eve, Lahore.",
+      "caption": "Last dinner of the year. Make it the one you actually wanted, not the one that was easiest to agree on.\n\nSaal ka aakhri khana, soch samajh ke.\n\nHappy New Year's Eve, Lahore.",
       "hashtags": [
         "#menva",
         "#lahorefood",
@@ -2187,7 +2284,7 @@
           "layout": "statement",
           "bg": "ink",
           "over": "31 December",
-          "h": "Last dinner of the year. *Make it count.*",
+          "h": "Last dinner. *Make it count.*",
           "ru": "Saal ka aakhri khana. Soch samajh ke."
         }
       ]
@@ -2202,7 +2299,7 @@
       "audience": "diners",
       "format": "single",
       "note": "1 January",
-      "caption": "2027 resolution: try one new dish every month. Twelve new plates, zero regrets, because you will see each one first.\n\nComment the first dish on your list.",
+      "caption": "2027 resolution: one new dish a month. Twelve new plates, zero regrets, because you'll see every single one before you order it.\n\nComment the first dish on your list.",
       "hashtags": [
         "#menva",
         "#lahorefood",
@@ -2229,7 +2326,7 @@
       "pillar": "see-it-first",
       "audience": "diners",
       "format": "single",
-      "caption": "New dish number one for 2027? Start here. See it on your table first, then decide.\n\nLink in bio.",
+      "caption": "New dish number one for 2027? Start here, see it on your table first, then decide if it's worth the order.\n\nLink in bio.",
       "hashtags": [
         "#menva",
         "#lahorefood",
@@ -2257,7 +2354,7 @@
       "pillar": "for-restaurants",
       "audience": "restaurants",
       "format": "carousel",
-      "caption": "January is when guests try new places. Here is what they see first when your menu is on MENVA.\n\nYour real plating, in 3D, on their own table, before they order.\n\nDM \"PILOT\" for the Lahore pilot.",
+      "caption": "January's when Lahore goes looking for somewhere new. Here's what they see first when your menu's on MENVA: your actual plating, in 3D, on their own table, before they've even ordered.\n\nDM \"PILOT\" for the Lahore pilot.",
       "hashtags": [
         "#menva",
         "#lahorerestaurants",
@@ -2303,21 +2400,28 @@
       "pillar": "relatable",
       "audience": "diners",
       "format": "single",
-      "caption": "Types of people at dinner, part six: the one who sends it back.\n\nWith a scan, what you see is what you get. Fewer surprises, fewer plates going back.\n\nTag someone. Or don't. We won't tell.",
+      "caption": "Types of people at dinner, part six: the one who sends it back. Fewer surprises with a scan means fewer plates going back, though we can't promise fewer opinions.\n\nTag someone. Or don't, we won't tell.",
       "hashtags": [
         "#menva",
         "#lahorefood",
         "#lahorefoodies",
         "#lahoreeats"
       ],
-      "alt": "Text post about the friend who sends food back.",
+      "alt": "A phone notes page about the friend who sends food back.",
       "slides": [
         {
-          "layout": "note",
+          "layout": "notes",
           "bg": "paper",
           "over": "Types of people at dinner · 6",
-          "h": "\"Excuse me, *yeh wo nahi hai.*\"",
-          "by": "What you see is what you get."
+          "h": "\"Excuse me, *yeh wo nahi hai.\"*",
+          "title": "Sent back",
+          "items": [
+            "Orders confidently.",
+            "Plate arrives.",
+            "Suddenly very unsure.",
+            "“Yeh wo nahi hai jo maine socha tha.”",
+            "With a scan, what you see is what you get."
+          ]
         }
       ]
     },
@@ -2330,7 +2434,7 @@
       "pillar": "menu-truth",
       "audience": "diners",
       "format": "single",
-      "caption": "The same steak, two ways. One menu tells you. The other shows you.\n\nWhich one would you rather order from?",
+      "caption": "The same steak, told two ways. One menu describes it. The other shows you exactly what's coming.\n\nWhich one would you rather order from?",
       "hashtags": [
         "#menva",
         "#lahorefood",
@@ -2361,7 +2465,7 @@
       "pillar": "relatable",
       "audience": "diners",
       "format": "carousel",
-      "caption": "What to order on a first date, ranked by how graceful you will look eating it.\n\nSwipe. Save. Thank us later.",
+      "caption": "What to order on a first date, ranked purely by how graceful you'll look eating it.\n\nSwipe, save, thank us in the comments.",
       "hashtags": [
         "#menva",
         "#lahorefood",
@@ -2384,10 +2488,10 @@
           "n": "2/3",
           "h": "From easy to *risky*",
           "items": [
-            "Anything you can cut into neat pieces",
-            "Sharing plates: easy talking point",
-            "Anything with a lot of sauce",
-            "Anything you eat with both hands"
+            "Anything you can cut into neat pieces.",
+            "Sharing plates, built-in conversation.",
+            "Anything drowning in sauce. Risky.",
+            "Anything that needs both hands. Retire this idea."
           ]
         },
         {
@@ -2409,7 +2513,7 @@
       "pillar": "relatable",
       "audience": "diners",
       "format": "single",
-      "caption": "Which restaurant in Lahore should we put in 3D next? Comment it, and tag them.\n\nWe read every comment.",
+      "caption": "Which Lahore restaurant should we scan next? Comment it and tag them, we read every single one, and yes, we're taking requests seriously.",
       "hashtags": [
         "#menva",
         "#lahorefood",
@@ -2436,7 +2540,7 @@
       "pillar": "for-restaurants",
       "audience": "restaurants",
       "format": "single",
-      "caption": "Lahore restaurants: when guests tag you in our comments, they are telling you something. They want to see your food before they order it.\n\nWant to be next? DM \"PILOT\". Lahore pilot: PKR 25,000.",
+      "caption": "When guests tag you in our comments, they're telling you something plainly: they want to see your food before they order it.\n\nWant to be next? DM \"PILOT.\" Lahore pilot: PKR 25,000.",
       "hashtags": [
         "#menva",
         "#lahorerestaurants",
@@ -2468,7 +2572,7 @@
       "audience": "both",
       "format": "carousel",
       "note": "Day 100",
-      "caption": "100 days of MENVA on Instagram. Thank you for every comment, A-or-B vote and friend you tagged.\n\nThe idea has not changed: see it on your table, then order it.\n\nAgle 100 din? Aur restaurants, aur plates. Stay close.",
+      "caption": "100 days of MENVA on Instagram. Thank you for every A-or-B vote, every comment, every friend you tagged without asking first.\n\nThe idea hasn't moved an inch: see it on your table, then order it.\n\nAgle 100 din? Aur restaurants, aur plates. Stay close.",
       "hashtags": [
         "#menva",
         "#lahorefood",
@@ -2498,7 +2602,7 @@
           "bg": "ink",
           "over": "3/3",
           "h": "Next 100 days: *more plates.*",
-          "b": "Restaurants: DM \"PILOT\". Everyone else: tag the place you want scanned next.",
+          "b": "Restaurants: DM “PILOT.” Everyone else: tag the place you want scanned next.",
           "actions": [
             "DM \"PILOT\"",
             "Link in bio"
