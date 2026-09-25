@@ -18,6 +18,9 @@ Ten 1080×1920 Reels, 11–14 s, made from the brand design and the real dish re
 | `portion-police.mp4` | 13 s | Comments | "Generous" according to whom? Anum placed it on the table to check. Sharing hai ya single? | #menva #lahorefood #lahorefoodies #khanakahan |
 | `kal-se-diet.mp4` | 13 s | Sends, tags | Hamza, Monday: kal se diet. Hamza, Friday: this. At least he saw it first. | #menva #lahorefood #lahorefoodies #khanakahan |
 | `mama-joined.mp4` | 13 s | Sends, tags | Mama has joined the chat. "Itna bara? Photo mein chota tha." Asli size dekho, mama.<br><br>Tag the friend whose mom would send this. | #menva #lahorefood #lahorefoodies #khanakahan |
+| `every-side.mp4` | 15 s | Reach, saves | Every side, every dish: the steak board, the chicken pizza and the steak sandwich turning 360°, from their real scans.<br><br>Real scans, not photos. Turn it before you order it. | #menva #lahorefood #lahorefoodies #eatmenva |
+| `pizza-turn.mp4` | 12 s | Sends | Pizza photos lie about the crust. So we scanned the whole thing.<br><br>Pehle dekho, phir order. | #menva #lahorefood #pizzalahore #eatmenva |
+| `green-plate-turn.mp4` | 11 s | Saves | What's under the garnish? Turn it and see. The green plate, no secrets. | #menva #lahorefood #lahorefoodies #eatmenva |
 
 **When:** the Reels slots in reels.md (Mon, Wed and Sun at 13:00 PKT) don't clash with the automated feed. Suggested order (Mon/Wed/Sun): week 1 `pehle-dekho`, `menu-photos-lie`, `sight-test`; week 2 `no-app`, `true-size`, `the-over-orderer`; week 3 `dish-drop-1`, then the filmed Reels from reels.md. The four *Khana kahan?* Reels (group-chat sitcom, `content/series-khana-kahan.json`) go in the same Reels slots, in episode order, in the weeks the matching feed episodes run. Keep `order-before-the-toss` for PSL season and `iftar-table` for Ramadan (both in calendar part 2's window). `for-restaurants` also works as a 9:16 ad (paid-ads.md) and as a WhatsApp video to send after a first DM.
 

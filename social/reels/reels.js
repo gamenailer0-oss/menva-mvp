@@ -21,6 +21,9 @@
     <div class="chat-body">${msgs.map(([from, t], i) => `<div class="a msg${from ? '' : ' me'}" data-fx="pop" data-at="${start + i * step}">${from ? `<span class="from">${from}</span>` : ''}<p>${t}</p></div>`).join('')}</div></div>`;
   const shout = (h, at = 0.1) => `<div class="a shout" data-fx="pop" data-at="${at}" style="margin:0">${h}</div>`;
   const CAST = 'Hamza, Anum, Zain, Sara, Ali bhai, you';
+  // A 360° turn of a real dish from its spin sprite (36 frames, 6×6, 480×360 each), drawn at `w` px wide.
+  // render() steps the frame from the scene time: one full turn every `turn` seconds.
+  const spin = (id, w, at = 0.2, turn = 4) => `<div class="a spin" data-fx="fade" data-at="${at}" data-turn="${turn}" style="width:${w}px;height:${Math.round(w * 0.75)}px;background-image:url(../../assets/dishes/${id}/spin.webp);background-size:${w * 6}px ${Math.round(w * 0.75) * 6}px"></div>`;
   const wm = (at) => `<div class="a wm" data-fx="fade" data-at="${at}">menva<i>.</i></div>`;
 
   const REELS = {
@@ -103,6 +106,23 @@
       { t: [6.4, 10.4], bg: 'stage', html: `<div class="a mid" data-fx="rise" data-at="0.1" style="position:relative;z-index:2">Asli size. <em>Asli plate.</em></div>${table('steak-main-board', 820, 0.7)}` },
       { t: [10.4, 13], bg: 'paper', html: `${chat('Family (4)', 'Mama, Hamza, Anum, you', [['Mama', 'achha. phir theek hai.'], ['Mama', 'aur naan?']], 0.3, 0.8)}<div style="margin-top:auto;text-align:center">${wm(1.6)}</div>` },
     ] },
+    'every-side': { len: 15, scenes: [
+      { t: [0, 2.4], bg: 'ink', cls: 'center', html: `<div class="a big" data-fx="rise" data-at="0.1">Every side.</div><div class="a big" data-fx="rise" data-at="0.7"><em>Every dish.</em></div>` },
+      { t: [2.4, 5.6], bg: 'paper', cls: 'center', html: `<div class="a mid" data-fx="rise" data-at="0">The steak <em>board.</em></div><div style="margin-top:60px">${spin('steak-main', 900, 0.1, 3.2)}</div>` },
+      { t: [5.6, 8.8], bg: 'paper', cls: 'center', html: `<div class="a mid" data-fx="rise" data-at="0">The chicken <em>pizza.</em></div><div style="margin-top:60px">${spin('bz-chicken-pizza', 900, 0.1, 3.2)}</div>` },
+      { t: [8.8, 12], bg: 'paper', cls: 'center', html: `<div class="a mid" data-fx="rise" data-at="0">The steak <em>sandwich.</em></div><div style="margin-top:60px">${spin('steak-sandwich', 900, 0.1, 3.2)}</div>` },
+      { t: [12, 15], bg: 'chili', cls: 'center', html: `<div class="a mid" data-fx="rise" data-at="0.1">Real scans. <em>Not photos.</em></div><div class="a small" data-fx="rise" data-at="0.6" style="margin-top:36px">Turn it before you order it.</div><div style="margin-top:80px">${wm(1)}</div>` },
+    ] },
+    'pizza-turn': { len: 12, scenes: [
+      { t: [0, 2.6], bg: 'chili', cls: 'center', html: `<div class="a mid" data-fx="rise" data-at="0.1">Pizza photos <em>lie</em> about the crust.</div>` },
+      { t: [2.6, 9.4], bg: 'paper', cls: 'center', html: `<div class="a mid" data-fx="rise" data-at="0">So we scanned <em>the whole thing.</em></div><div style="margin-top:70px">${spin('bz-chicken-pizza', 960, 0.2, 5)}</div><div class="a" data-fx="pop" data-at="2.4" style="margin-top:60px"><span class="tag">Every side, true size</span></div>` },
+      { t: [9.4, 12], bg: 'ink', cls: 'center', html: `<div class="a mid" data-fx="rise" data-at="0.1">Pehle dekho, <em>phir order.</em></div><div style="margin-top:80px">${wm(0.6)}</div>` },
+    ] },
+    'green-plate-turn': { len: 11, scenes: [
+      { t: [0, 2.4], bg: 'paper', cls: 'center', html: `<div class="a mid" data-fx="rise" data-at="0.1">What's under <em>the garnish?</em></div>` },
+      { t: [2.4, 8.6], bg: 'stage', cls: 'center', html: `<div class="a mid" data-fx="rise" data-at="0">Turn it <em>and see.</em></div><div style="margin-top:70px">${spin('garlic-prawn-skewers', 960, 0.2, 4.5)}</div>` },
+      { t: [8.6, 11], bg: 'chili', cls: 'center', html: `<div class="a mid" data-fx="rise" data-at="0.1">The green plate. <em>No secrets.</em></div><div style="margin-top:80px">${wm(0.6)}</div>` },
+    ] },
   };
 
   const name = new URLSearchParams(location.search).get('reel') || 'pehle-dekho';
@@ -129,6 +149,11 @@
       s.el.style.opacity = s.t[0] === 0 && t < FADE ? 1 : vis; // first frame is never blank
       if (!vis && !(s.t[0] === 0 && t < FADE)) continue;
       const local = t - a;
+      for (const sp of s.el.querySelectorAll('.spin')) { // step the 360° sprite with the scene clock
+        const turn = Number(sp.dataset.turn || 4), f = Math.floor(((Math.max(0, local) % turn) / turn) * 36) % 36;
+        const w = sp.offsetWidth, h = sp.offsetHeight;
+        sp.style.backgroundPosition = `-${(f % 6) * w}px -${Math.floor(f / 6) * h}px`;
+      }
       for (const it of s.items) {
         const at = Number(it.dataset.at || 0), out = it.dataset.out ? Number(it.dataset.out) : Infinity;
         const fx = it.dataset.fx || 'fade';

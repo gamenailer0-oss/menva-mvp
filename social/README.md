@@ -6,7 +6,7 @@ Posts MENVA's Instagram for 300 days (214 posts, each with a Story), fully autom
 
 What's in the kit:
 - **Automated Instagram**: 214 feed posts over 300 days (`content/calendar.json`, `calendar-2.json`, `calendar-3.json`), a Story teaser for each, a 22-post trend bank, and *Khana kahan?*, a 37-episode group-chat sitcom that posts itself on Wednesdays (`content/series-khana-kahan.json`). That makes 251 automatic posts in total.
-- **Ready to post by hand**: 14 motion Reels (`reels/`), a WhatsApp Status week and 8 ad creatives in 9:16 (`previews/ready/`).
+- **Ready to post by hand**: 17 motion Reels (`reels/`), a WhatsApp Status week and 8 ad creatives in 9:16 (`previews/ready/`).
 - **Print**: table tent, menu stickers, window sticker, A4 one-pager, 10-slide pitch deck, pilot results report (`print/`).
 - **Web**: a "for restaurants" landing page (`landing/`) and an Instagram profile kit (`profile/`).
 - **Voice**: `marketing/voice-spice.md` sets out how every post should sound (Lahori, specific, opinionated, not brochure). Also: human-sounding outreach in `marketing/outreach-spiced.md` and bolder campaign ideas in `marketing/spicy-ideas.md`.
