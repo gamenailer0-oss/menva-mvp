@@ -1,2 +1,4 @@
 User-agent: *
 Allow: /
+# The private pilot results page
+Disallow: /stats
