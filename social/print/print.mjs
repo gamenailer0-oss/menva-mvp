@@ -110,7 +110,7 @@ async function onePager() {
   return page('210mm', '297mm', `<section class="page bg-paper" style="padding:16mm 16mm 12mm">
     <div style="display:flex;justify-content:space-between;align-items:baseline"><span class="over">For restaurants in Lahore</span><span class="wordmark" style="font-size:22pt">menva<i>.</i></span></div>
     <div style="display:grid;grid-template-columns:1.15fr 1fr;gap:8mm;align-items:center;margin-top:10mm">
-      <div><h1 style="font-size:40pt">Let guests see the dish <em>before they order.</em></h1>
+      <div><h1 style="font-size:40pt">"How big is it?" <em>Answered at the table.</em></h1>
         <p style="font-size:10.5pt;line-height:1.5;margin-top:5mm">Guests scan the QR on the table and your real dishes, scanned in 3D, appear on their own table at true size. Then they order with your staff, as they always do.</p></div>
       <div style="background:var(--stage);border-radius:6mm;height:70mm;display:flex;align-items:center;justify-content:center"><img class="dish" src="${board}" style="width:80mm;height:62mm"></div>
     </div>
@@ -163,11 +163,11 @@ async function deck() {
       <p style="font-size:10pt;line-height:1.55;margin-top:6mm">For Gen Z, Instagram is where the decision about where to eat starts. Diners look up menus before they go, and 18 to 24 year olds look for food photos more than any other age group.</p>
       <p style="font-size:7pt;margin-top:4mm" class="muted">Sources: Tastewise, Gen Z food trends (2026); Restaurant Dive, US diner survey (77% check a restaurant website before visiting; ~60% of 18–24s look for food photos). US data, shown as direction, not a Lahore number.</p></div>
       <div style="background:var(--stage);border-radius:6mm;height:95mm;display:flex;align-items:center;justify-content:center">${img(sClose, '90mm', '80mm')}</div></div>`, 3),
-    S('bg-paper', `<span class="over">MENVA</span><h1 style="font-size:34pt;margin-top:4mm">Three taps from the QR to <em>the dish on their table.</em></h1>
+    S('bg-paper', `<span class="over">MENVA</span><h1 style="font-size:34pt;margin-top:4mm">QR. Tap. <em>Dish on the table.</em></h1>
       <div style="display:grid;grid-template-columns:repeat(3,1fr);gap:5mm;margin-top:8mm;flex:1">${[[sandwich, '1 · Scan the table QR', 'The menu opens in the browser. No app.'], [green, '2 · Tap a dish', 'The real dish comes into focus. Turn it around.'], [board, '3 · See it on the table', 'Placed in AR at true size, then they decide.']].map(([s, t, b]) => `<div style="background:#fff;border-radius:5mm;padding:5mm;display:flex;flex-direction:column"><div style="flex:1;display:flex;align-items:center;justify-content:center;background:var(--stage);border-radius:3mm">${img(s, '68mm', '42mm')}</div><div style="font-family:var(--serif);font-size:16pt;margin-top:4mm">${t}</div><div style="font-size:9pt;margin-top:1.5mm" class="muted">${b}</div></div>`).join('')}</div>`, 4),
     S('bg-sand', `<div style="display:grid;grid-template-columns:1fr 1fr;gap:10mm;flex:1;align-items:center">
       <div style="display:flex;justify-content:center">${img(steak, '100mm', '85mm')}</div>
-      <div><span class="over">Real scans, true size</span><h1 style="font-size:36pt;margin-top:4mm">Your real plating. <em>Not stock photos. Not AI.</em></h1>
+      <div><span class="over">Real scans, true size</span><h1 style="font-size:36pt;margin-top:4mm">Your chef's plating, <em>not a stock photo.</em></h1>
       <ul style="font-size:10pt;line-height:1.7;margin:6mm 0 0 5mm"><li>Every dish is a 3D scan of a real plate from your kitchen</li><li>In AR it sits at its true size and can't be pinched bigger</li><li>Honest portions build trust before the plate arrives</li></ul></div></div>`, 5),
     S('bg-paper', `<span class="over">Built for your floor</span><h1 style="font-size:34pt;margin-top:4mm">Nothing changes for your team, <em>except fewer questions.</em></h1>
       <div style="display:grid;grid-template-columns:repeat(4,1fr);gap:4mm;margin-top:10mm">${[['No app', 'Opens from the table QR in Safari or Chrome.'], ['Slow wifi', 'The dish photo shows first; the 3D follows.'], ['Waiter in charge', 'No online ordering or payment. Guests show the waiter a list.'], ['Every phone', 'No AR on a phone? Guests still turn the dish in 3D.']].map(([t, b]) => `<div style="background:#fff;border-radius:4mm;padding:6mm 5mm;min-height:48mm"><div style="font-family:var(--serif);font-size:18pt">${t}</div><div style="font-size:9pt;line-height:1.45;margin-top:2mm" class="muted">${b}</div></div>`).join('')}</div>`, 6),
