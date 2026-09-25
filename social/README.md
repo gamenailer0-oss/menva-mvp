@@ -2,7 +2,7 @@
 
 Posts MENVA's Instagram for 300 days (214 posts, each with a Story), fully automatically, from a free server we control. No third-party scheduler, no approval step, and no AI at runtime: every caption and slide is already written in `content/calendar.json`, `calendar-2.json` and `calendar-3.json`.
 
-**Start here:** [HOW-TO-FINISH.md](HOW-TO-FINISH.md) (the last steps, in plain words) · [marketing/MORNING.md](marketing/MORNING.md) (decisions and to-dos) · [marketing/STRATEGY.md](marketing/STRATEGY.md) (the whole marketing plan on one page) · [SETUP.md](SETUP.md) (server, click by click) · [marketing/LAUNCH-30.md](marketing/LAUNCH-30.md) (the first 30 days) · [OPEN-QUESTIONS.md](OPEN-QUESTIONS.md)
+**Start here:** [HOW-TO-FINISH.md](HOW-TO-FINISH.md) (the last steps, in plain words) · [actions/README.md](actions/README.md) (autoposting on GitHub, no server) · [marketing/MORNING.md](marketing/MORNING.md) (decisions and to-dos) · [marketing/STRATEGY.md](marketing/STRATEGY.md) (the whole marketing plan on one page) · [SETUP.md](SETUP.md) (server, click by click) · [marketing/LAUNCH-30.md](marketing/LAUNCH-30.md) (the first 30 days) · [OPEN-QUESTIONS.md](OPEN-QUESTIONS.md)
 
 What's in the kit:
 - **Automated Instagram**: 214 feed posts over 300 days (`content/calendar.json`, `calendar-2.json`, `calendar-3.json`), a Story teaser for each, a 22-post trend bank, and *Khana kahan?*, a 37-episode group-chat sitcom that posts itself on Wednesdays (`content/series-khana-kahan.json`). That makes 251 automatic posts in total.

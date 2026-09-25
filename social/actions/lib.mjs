@@ -2,7 +2,7 @@
 //
 // Where things live while a workflow runs:
 //   ./                       the social-automation branch (calendars, templates, dish renders, Reels)
-//   ./autopost-data/         the autopost-data branch: state.enc (encrypted posting history + token),
+//   ./menva-autopost-data/   the menva-autopost-data branch: state.enc (encrypted posting history + token),
 //                            log/posts.csv (readable log) and media/ (finished images Instagram downloads)
 import fs from 'node:fs';
 import path from 'node:path';
@@ -11,7 +11,8 @@ import { execFileSync } from 'node:child_process';
 import { fileURLToPath } from 'node:url';
 
 export const ROOT = path.resolve(path.dirname(fileURLToPath(import.meta.url)), '../..');
-export const DATA = process.env.MENVA_DATA_DIR || path.join(ROOT, 'autopost-data');
+export const DATA = process.env.MENVA_DATA_DIR || path.join(ROOT, 'menva-autopost-data');
+export const DATA_BRANCH = 'menva-autopost-data';
 export const env = (k, d = '') => (process.env[k] ?? '').toString().trim() || d;
 export const isTrue = (v) => /^(1|true|yes|on)$/i.test(String(v ?? '').trim());
 export const dryRun = () => env('DRY_RUN') === '' ? true : isTrue(env('DRY_RUN'));
@@ -85,16 +86,19 @@ export function logLine(fields) {
 const git = (...a) => execFileSync('git', ['-C', DATA, ...a], { encoding: 'utf8' }).trim();
 export function commitData(message) {
   if (isTrue(env('MENVA_NO_PUSH'))) return 'local';
+  // Safety: only ever commit inside the data branch's own worktree, never the content branch.
+  if (!fs.existsSync(path.join(DATA, '.git'))) throw new Error(`${DATA} is not the ${DATA_BRANCH} worktree; refusing to commit.`);
+  if (git('symbolic-ref', '--short', 'HEAD') !== DATA_BRANCH) throw new Error(`${DATA} is not on branch ${DATA_BRANCH}; refusing to commit.`);
   git('add', '-A');
   if (!git('status', '--porcelain')) return git('rev-parse', 'HEAD');
   git('-c', 'user.name=MENVA autopost', '-c', 'user.email=autopost@users.noreply.github.com', 'commit', '-q', '-m', message);
   for (let i = 0; i < 4; i++) {
-    try { git('push', '-q', 'origin', 'HEAD:autopost-data'); return git('rev-parse', 'HEAD'); } catch (e) {
-      try { git('pull', '-q', '--rebase', 'origin', 'autopost-data'); } catch (e2) { /* retry push */ }
+    try { git('push', '-q', 'origin', 'HEAD:' + DATA_BRANCH); return git('rev-parse', 'HEAD'); } catch (e) {
+      try { git('pull', '-q', '--rebase', 'origin', DATA_BRANCH); } catch (e2) { /* retry push */ }
       execFileSync('sleep', [String(2 ** (i + 1))]);
     }
   }
-  throw new Error('Could not push the autopost-data branch');
+  throw new Error('Could not push the ' + DATA_BRANCH + ' branch');
 }
 // Public URL for a file in the data branch at a commit (jsDelivr serves the right Content-Type).
 export function mediaUrl(sha, rel) {

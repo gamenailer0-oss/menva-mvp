@@ -16,7 +16,7 @@ on:
         default: autopost
 
 permissions:
-  contents: write   # to save the posting history and images on the autopost-data branch
+  contents: write   # to save the posting history and images on the menva-autopost-data branch
 
 concurrency:
   group: menva-social
@@ -46,13 +46,13 @@ jobs:
         with:
           ref: social-automation
 
-      - name: Posting history (autopost-data branch)
+      - name: Posting history (menva-autopost-data branch)
         run: |
-          if git ls-remote --exit-code --heads origin autopost-data >/dev/null; then
-            git fetch -q --depth=1 origin autopost-data
-            git worktree add -B autopost-data autopost-data FETCH_HEAD
+          if git ls-remote --exit-code --heads origin menva-autopost-data >/dev/null; then
+            git fetch -q --depth=1 origin menva-autopost-data
+            git worktree add -B menva-autopost-data menva-autopost-data FETCH_HEAD
           else
-            git worktree add --orphan -b autopost-data autopost-data
+            git worktree add --orphan -b menva-autopost-data menva-autopost-data
           fi
 
       - uses: actions/setup-node@v4

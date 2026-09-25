@@ -19,3 +19,7 @@ playwright-report/
 
 # Test QR codes (menva-ar.netlify.app) — never printed
 print/qr-preview/
+
+# GitHub Actions autoposter data worktree (its own branch)
+menva-autopost-data/
+autopost-data/

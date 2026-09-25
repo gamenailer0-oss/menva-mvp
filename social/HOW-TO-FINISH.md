@@ -4,27 +4,17 @@ Five things are left, and each needs you in person. This is the order that gets 
 
 ---
 
-## 1. Get the automatic posting running (about 1 hour, once)
+## 1. Get the automatic posting running (about 25 minutes, once)
 
-Everything posts by itself once the server is up:
-- the calendar at 8:30 pm on Tue, Thu, Fri, Sat and Sun;
-- the *Khana kahan?* sitcom on Wednesdays;
-- Reels on Mondays;
-- trend posts when something new comes up.
+**No server needed:** GitHub runs the poster for free. Follow `social/actions/README.md`:
+1. Make @eatmenva a Business account.
+2. Install the ntfy app and subscribe to your topic.
+3. Get the Instagram key.
+4. Paste the key and topic into GitHub as secrets.
+5. Run a test post (nothing is published).
+6. Set `DRY_RUN` = `false`.
 
-Follow `social/SETUP.md` in order:
-1. Make the Instagram account (@eatmenva) a Business account.
-2. Create a free Oracle Cloud server. It needs a card for identity only; the free tier isn't charged.
-3. Pick the web address. The free `sslip.io` option is fine.
-4. Create a GitHub key so the server can download the files.
-5. Connect and run `install.sh`, which does the rest.
-6. Get the Instagram key from Meta's developer site.
-7. Install the free **ntfy** app on your phone for alerts.
-8. Test run with `DRY_RUN=true`: nothing is posted, you get the images on your phone.
-9. Go live: set `DRY_RUN=false`.
-10. Switch on trend posts (`TRENDS=true`), and optionally add the Anthropic key.
-
-After that you don't touch it. Your phone buzzes when something posts, fails, or needs your "Stop it".
+(`social/SETUP.md` has the older server option, which needs an Oracle or paid server. You don't need it.)
 
 ## 2. Checkout for MENVA Plus and MENVA Black
 
