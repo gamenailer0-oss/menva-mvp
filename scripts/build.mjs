@@ -60,6 +60,17 @@ for (const line of fs.readFileSync(path.join(ROOT, 'netlify.toml'), 'utf8').spli
   if (block.kind === 'h') m[1] === 'for' ? (block.for = m[2]) : block.values.push(`${m[1]}: ${m[2]}`);
   else block[m[1]] = m[2];
 }
+
+// Pitch demos: a restaurant not yet public (listed !== true, e.g. Baraza) gets noindex on its
+// pages, so a private client demo can never be indexed or found before it's approved to go live.
+const dishesPath = path.join(ROOT, 'data', 'build', 'dishes.json');
+if (fs.existsSync(dishesPath)) {
+  const { restaurants } = JSON.parse(fs.readFileSync(dishesPath, 'utf8'));
+  for (const r of restaurants) {
+    if (r.listed === true) continue;
+    for (const pattern of [`/${r.slug}`, `/${r.slug}/*`]) headers.push({ kind: 'h', for: pattern, values: ['X-Robots-Tag: noindex, nofollow'] });
+  }
+}
 fs.writeFileSync(path.join(DIST, '_headers'), headers.map((h) => `${h.for}\n${h.values.map((v) => `  ${v}`).join('\n')}`).join('\n\n') + '\n');
 fs.writeFileSync(path.join(DIST, '_redirects'), redirects.map((r) => `${r.from}  ${r.to}  ${r.status}`).join('\n') + '\n');
 

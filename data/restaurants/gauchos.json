@@ -6,6 +6,7 @@
   "logo": "/assets/restaurant/gauchos-logo.svg",
   "theme": "gauchos",
   "pilot": true,
+  "listed": true,
   "cuisine": "Steakhouse",
   "tagline": "Argentine-inspired · Oakwood-smoked",
   "area": "Gulberg III",

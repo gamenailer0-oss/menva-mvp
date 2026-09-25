@@ -68,8 +68,11 @@ const median = (xs) => {
 const rate = (a, b) => (b ? Math.round((a / b) * 1000) / 10 : null); // percent, 1 decimal
 
 // batches: [{ day: 'YYYY-MM-DD', restaurant, table, session, events: [...] }]
+// restaurant (optional): scope to one restaurant's batches only, e.g. so a private pitch demo's
+// visits never mix into the pilot's numbers. Omitted/null/undefined → every batch, as before.
 // → { days: [...], dishes: [...] } — the pilot results (CLAUDE.md Phase 8 §4).
-export function summarise(batches) {
+export function summarise(batches, restaurant) {
+  const scoped = restaurant == null ? batches : batches.filter((b) => b.restaurant === restaurant);
   const byDay = new Map();
   const byDish = new Map();
   const day = (d) => byDay.get(d) ?? byDay.set(d, { day: d, sessions: new Set(), scans: 0, dish_opens: 0, loads: [], failures: 0, tiers: {}, ar_launches: 0, placed: [], tray_adds: 0, waiter_views: 0 }).get(d);
@@ -79,7 +82,7 @@ export function summarise(batches) {
   // the distribution counts the last tier each session reached for each dish, per day.
   const finalTier = new Map();
 
-  for (const b of batches) {
+  for (const b of scoped) {
     const D = day(b.day);
     D.sessions.add(b.session);
     for (const ev of b.events) {
@@ -119,6 +122,18 @@ export function summarise(batches) {
     days: [...byDay.values()].sort((a, b) => b.day.localeCompare(a.day)).map(finish),
     dishes: [...byDish.values()].sort((a, b) => b.opens - a.opens).map(finish),
   };
+}
+
+// Sessions per restaurant across every batch given — powers the restaurant picker on /stats
+// (the /api/stats "restaurants" field, always computed unscoped so the picker keeps its options
+// even while a filter is applied).
+export function restaurantCounts(batches) {
+  const sessions = new Map();
+  for (const b of batches) {
+    if (!b.restaurant) continue;
+    (sessions.get(b.restaurant) ?? sessions.set(b.restaurant, new Set()).get(b.restaurant)).add(b.session);
+  }
+  return [...sessions].map(([id, s]) => ({ id, sessions: s.size })).sort((a, b) => b.sessions - a.sessions || a.id.localeCompare(b.id));
 }
 
 // Constant-time string comparison for the stats key.

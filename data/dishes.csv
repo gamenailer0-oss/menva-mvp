@@ -1,5 +1,11 @@
-id,name,category,price_pkr,description,is_3d,plate_shape,plate_length_cm,plate_width_cm,ingredients,allergens,halal,spice_level,dietary,calories,protein_g,fat_g,carbs_g,serving_g,confirmed_by
-steak-main,Premium Ribeye Steak,Signature Cuts,3495,"Oakwood-grilled ribeye with supreme marbling. Served with sautéed vegetables and steak fries.",yes,rect,TO_CONFIRM,TO_CONFIRM,TO_CONFIRM,TO_CONFIRM,TO_CONFIRM,0,,,,,,,
-steak-sandwich,Signature Steak Sandwich,Sandwiches,1295,"Tender sliced steak layered with fresh greens, house aioli, and artisan bread.",yes,round,TO_CONFIRM,TO_CONFIRM,TO_CONFIRM,TO_CONFIRM,TO_CONFIRM,0,,,,,,,
-garlic-prawn-skewers,Smoked Garlic Prawn Skewers,Starters,TO_CONFIRM,"Placeholder description — confirm with Abdullah.",yes,round,TO_CONFIRM,TO_CONFIRM,TO_CONFIRM,TO_CONFIRM,TO_CONFIRM,0,,,,,,,
-chicken-fajita-wrap,Grilled Chicken Fajita Wrap,Sandwiches,TO_CONFIRM,"Placeholder description — confirm with Abdullah.",yes,round,TO_CONFIRM,TO_CONFIRM,TO_CONFIRM,TO_CONFIRM,TO_CONFIRM,0,,,,,,,
+restaurant,id,name,category,price_pkr,description,is_3d,plate_shape,plate_length_cm,plate_width_cm,ingredients,allergens,halal,spice_level,dietary,calories,protein_g,fat_g,carbs_g,serving_g,confirmed_by,origin,tasting_notes,brew_method,serve
+gauchos,steak-main,Premium Ribeye Steak,Signature Cuts,3495,Oakwood-grilled ribeye with supreme marbling. Served with sautéed vegetables and steak fries.,yes,rect,TO_CONFIRM,TO_CONFIRM,TO_CONFIRM,TO_CONFIRM,TO_CONFIRM,0,,,,,,,,,,,
+gauchos,steak-sandwich,Signature Steak Sandwich,Sandwiches,1295,"Tender sliced steak layered with fresh greens, house aioli, and artisan bread.",yes,round,TO_CONFIRM,TO_CONFIRM,TO_CONFIRM,TO_CONFIRM,TO_CONFIRM,0,,,,,,,,,,,
+gauchos,garlic-prawn-skewers,Smoked Garlic Prawn Skewers,Starters,TO_CONFIRM,Placeholder description — confirm with Abdullah.,yes,round,TO_CONFIRM,TO_CONFIRM,TO_CONFIRM,TO_CONFIRM,TO_CONFIRM,0,,,,,,,,,,,
+gauchos,chicken-fajita-wrap,Grilled Chicken Fajita Wrap,Sandwiches,TO_CONFIRM,Placeholder description — confirm with Abdullah.,yes,round,TO_CONFIRM,TO_CONFIRM,TO_CONFIRM,TO_CONFIRM,TO_CONFIRM,0,,,,,,,,,,,
+baraza,bz-flat-white,Flat White,Specialty Coffee,TO_CONFIRM,,no,,,,TO_CONFIRM,TO_CONFIRM,TO_CONFIRM,,,,,,,,,,,,hot
+baraza,bz-ethiopian-pour-over,Ethiopian Pour Over,Specialty Coffee,TO_CONFIRM,,no,,,,TO_CONFIRM,TO_CONFIRM,TO_CONFIRM,,,,,,,,,Ethiopia,,Pour over,hot
+baraza,bz-cold-brew,Cold Brew,Chillers,TO_CONFIRM,Slow-steeped for 24 hours.,no,,,,TO_CONFIRM,TO_CONFIRM,TO_CONFIRM,,,,,,,,,,,Cold brew,iced
+baraza,bz-nitro-float,Nitro Float,Chillers,TO_CONFIRM,,no,,,,TO_CONFIRM,TO_CONFIRM,TO_CONFIRM,,,,,,,,,,,,iced
+baraza,bz-english-breakfast,English Breakfast,Brunch,TO_CONFIRM,,no,,,,TO_CONFIRM,TO_CONFIRM,TO_CONFIRM,,,,,,,,,,,,
+baraza,bz-avocado-toast,Smashed Avocado Toast,Kitchen,TO_CONFIRM,,no,,,,TO_CONFIRM,TO_CONFIRM,TO_CONFIRM,,,,,,,,,,,,

@@ -1,0 +1,53 @@
+{
+  "id": "baraza",
+  "slug": "baraza",
+  "name": "Baraza Coffee",
+  "displayName": "Baraza",
+  "logo": "/assets/restaurant/baraza-logo-wide.png",
+  "logoRound": "/assets/restaurant/baraza-logo.webp",
+  "theme": "baraza",
+  "pilot": false,
+  "listed": false,
+  "cuisine": "Specialty coffee",
+  "tagline": "Pakistan's largest specialty coffee brew bar",
+  "hours": "Open 24/7",
+  "area": "Gulberg III",
+  "location": "Lahore",
+  "branch": "Gulberg",
+  "address": "Fashion Avenue, Gulberg III, Lahore",
+  "website": "https://barazacoffee.com/",
+  "description": "Specialty coffee, kitchen and bakes. Single-origin beans from Ethiopia, Colombia and Kenya, pulled on La Marzocco.",
+  "menuTitle": "The Menu",
+  "menuSubtitle": "Prices in PKR",
+  "showCheffy": false,
+  "categoryNotes": {
+    "Specialty Coffee": "Double shots pulled with precision on La Marzocco.",
+    "Chillers": "24-hour slow-steeped cold brew, nitro float, and flash-chilled iced creations.",
+    "Brunch": "Morning to afternoon.",
+    "Kitchen": "House-baked pastries, smashed avocado toast, and seasonal small plates.",
+    "Sweet Side": "Desserts & pastries."
+  },
+  "quickNotes": [],
+  "loaderLines": [
+    {
+      "until": 25,
+      "text": "Grinding the beans"
+    },
+    {
+      "until": 60,
+      "text": "Pulling your shot"
+    },
+    {
+      "until": 90,
+      "text": "Warming the cup"
+    },
+    {
+      "until": 99,
+      "text": "Finishing touches"
+    },
+    {
+      "loaded": true,
+      "text": "Served."
+    }
+  ]
+}

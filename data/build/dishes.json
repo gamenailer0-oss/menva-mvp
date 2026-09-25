@@ -1,5 +1,5 @@
 {
-  "generated": "2026-09-23T20:39:09.768Z",
+  "generated": "2026-09-25T07:28:44.332Z",
   "restaurants": [
     {
       "id": "gauchos",
@@ -9,6 +9,7 @@
       "logo": "/assets/restaurant/gauchos-logo.svg",
       "theme": "gauchos",
       "pilot": true,
+      "listed": true,
       "cuisine": "Steakhouse",
       "tagline": "Argentine-inspired · Oakwood-smoked",
       "area": "Gulberg III",
@@ -84,7 +85,11 @@
             "height": 9.4,
             "depth": 42.5
           },
-          "confirmed_by": null
+          "confirmed_by": null,
+          "origin": null,
+          "tasting_notes": null,
+          "brew_method": null,
+          "serve": null
         },
         {
           "id": "steak-sandwich",
@@ -123,7 +128,11 @@
             "height": 6.5,
             "depth": 27.6
           },
-          "confirmed_by": null
+          "confirmed_by": null,
+          "origin": null,
+          "tasting_notes": null,
+          "brew_method": null,
+          "serve": null
         },
         {
           "id": "garlic-prawn-skewers",
@@ -162,7 +171,11 @@
             "height": 9.2,
             "depth": 17.9
           },
-          "confirmed_by": null
+          "confirmed_by": null,
+          "origin": null,
+          "tasting_notes": null,
+          "brew_method": null,
+          "serve": null
         },
         {
           "id": "chicken-fajita-wrap",
@@ -201,7 +214,204 @@
             "height": 8.9,
             "depth": 42.1
           },
-          "confirmed_by": null
+          "confirmed_by": null,
+          "origin": null,
+          "tasting_notes": null,
+          "brew_method": null,
+          "serve": null
+        }
+      ]
+    },
+    {
+      "id": "baraza",
+      "slug": "baraza",
+      "name": "Baraza Coffee",
+      "displayName": "Baraza",
+      "logo": "/assets/restaurant/baraza-logo-wide.png",
+      "logoRound": "/assets/restaurant/baraza-logo.webp",
+      "theme": "baraza",
+      "pilot": false,
+      "listed": false,
+      "cuisine": "Specialty coffee",
+      "tagline": "Pakistan's largest specialty coffee brew bar",
+      "hours": "Open 24/7",
+      "area": "Gulberg III",
+      "location": "Lahore",
+      "branch": "Gulberg",
+      "address": "Fashion Avenue, Gulberg III, Lahore",
+      "website": "https://barazacoffee.com/",
+      "description": "Specialty coffee, kitchen and bakes. Single-origin beans from Ethiopia, Colombia and Kenya, pulled on La Marzocco.",
+      "menuTitle": "The Menu",
+      "menuSubtitle": "Prices in PKR",
+      "showCheffy": false,
+      "categoryNotes": {
+        "Specialty Coffee": "Double shots pulled with precision on La Marzocco.",
+        "Chillers": "24-hour slow-steeped cold brew, nitro float, and flash-chilled iced creations.",
+        "Brunch": "Morning to afternoon.",
+        "Kitchen": "House-baked pastries, smashed avocado toast, and seasonal small plates.",
+        "Sweet Side": "Desserts & pastries."
+      },
+      "quickNotes": [],
+      "loaderLines": [
+        {
+          "until": 25,
+          "text": "Grinding the beans"
+        },
+        {
+          "until": 60,
+          "text": "Pulling your shot"
+        },
+        {
+          "until": 90,
+          "text": "Warming the cup"
+        },
+        {
+          "until": 99,
+          "text": "Finishing touches"
+        },
+        {
+          "loaded": true,
+          "text": "Served."
+        }
+      ],
+      "categories": [
+        "Specialty Coffee",
+        "Chillers",
+        "Brunch",
+        "Kitchen"
+      ],
+      "dishes": [
+        {
+          "id": "bz-flat-white",
+          "restaurant": "baraza",
+          "name": "Flat White",
+          "category": "Specialty Coffee",
+          "price_pkr": null,
+          "description": null,
+          "ingredients": null,
+          "allergens": null,
+          "halal": "unconfirmed",
+          "spice_level": null,
+          "dietary": null,
+          "nutrition": null,
+          "has3d": false,
+          "assets": null,
+          "dimensions_cm": null,
+          "confirmed_by": null,
+          "origin": null,
+          "tasting_notes": null,
+          "brew_method": null,
+          "serve": "hot"
+        },
+        {
+          "id": "bz-ethiopian-pour-over",
+          "restaurant": "baraza",
+          "name": "Ethiopian Pour Over",
+          "category": "Specialty Coffee",
+          "price_pkr": null,
+          "description": null,
+          "ingredients": null,
+          "allergens": null,
+          "halal": "unconfirmed",
+          "spice_level": null,
+          "dietary": null,
+          "nutrition": null,
+          "has3d": false,
+          "assets": null,
+          "dimensions_cm": null,
+          "confirmed_by": null,
+          "origin": "Ethiopia",
+          "tasting_notes": null,
+          "brew_method": "Pour over",
+          "serve": "hot"
+        },
+        {
+          "id": "bz-cold-brew",
+          "restaurant": "baraza",
+          "name": "Cold Brew",
+          "category": "Chillers",
+          "price_pkr": null,
+          "description": "Slow-steeped for 24 hours.",
+          "ingredients": null,
+          "allergens": null,
+          "halal": "unconfirmed",
+          "spice_level": null,
+          "dietary": null,
+          "nutrition": null,
+          "has3d": false,
+          "assets": null,
+          "dimensions_cm": null,
+          "confirmed_by": null,
+          "origin": null,
+          "tasting_notes": null,
+          "brew_method": "Cold brew",
+          "serve": "iced"
+        },
+        {
+          "id": "bz-nitro-float",
+          "restaurant": "baraza",
+          "name": "Nitro Float",
+          "category": "Chillers",
+          "price_pkr": null,
+          "description": null,
+          "ingredients": null,
+          "allergens": null,
+          "halal": "unconfirmed",
+          "spice_level": null,
+          "dietary": null,
+          "nutrition": null,
+          "has3d": false,
+          "assets": null,
+          "dimensions_cm": null,
+          "confirmed_by": null,
+          "origin": null,
+          "tasting_notes": null,
+          "brew_method": null,
+          "serve": "iced"
+        },
+        {
+          "id": "bz-english-breakfast",
+          "restaurant": "baraza",
+          "name": "English Breakfast",
+          "category": "Brunch",
+          "price_pkr": null,
+          "description": null,
+          "ingredients": null,
+          "allergens": null,
+          "halal": "unconfirmed",
+          "spice_level": null,
+          "dietary": null,
+          "nutrition": null,
+          "has3d": false,
+          "assets": null,
+          "dimensions_cm": null,
+          "confirmed_by": null,
+          "origin": null,
+          "tasting_notes": null,
+          "brew_method": null,
+          "serve": null
+        },
+        {
+          "id": "bz-avocado-toast",
+          "restaurant": "baraza",
+          "name": "Smashed Avocado Toast",
+          "category": "Kitchen",
+          "price_pkr": null,
+          "description": null,
+          "ingredients": null,
+          "allergens": null,
+          "halal": "unconfirmed",
+          "spice_level": null,
+          "dietary": null,
+          "nutrition": null,
+          "has3d": false,
+          "assets": null,
+          "dimensions_cm": null,
+          "confirmed_by": null,
+          "origin": null,
+          "tasting_notes": null,
+          "brew_method": null,
+          "serve": null
         }
       ]
     }

@@ -22,10 +22,20 @@
       + `<tbody>${rows.length ? rows.map((r) => `<tr>${r.map((c) => `<td>${esc(c)}</td>`).join('')}</tr>`).join('') : `<tr><td colspan="${head.length}">No data yet</td></tr>`}</tbody>`;
   }
 
+  // Restaurant picker: All + every id seen in the data, so a private pitch demo (Baraza) never
+  // mixes into the pilot's (Gauchos) numbers unless picked on purpose.
+  function syncRestaurantOptions(list) {
+    const sel = $('restaurant');
+    const current = sel.value;
+    sel.innerHTML = '<option value="">All</option>' + (list || []).map((r) => `<option value="${esc(r.id)}">${esc(r.id)} (${r.sessions})</option>`).join('');
+    sel.value = (list || []).some((r) => r.id === current) ? current : '';
+  }
+
   async function load() {
     if (!key) { $('meta').textContent = 'Open this page with ?key= followed by your stats key.'; return; }
     const days = $('days').value;
-    const q = `key=${encodeURIComponent(key)}&days=${days}`;
+    const restaurant = $('restaurant').value;
+    const q = `key=${encodeURIComponent(key)}&days=${days}${restaurant ? `&r=${encodeURIComponent(restaurant)}` : ''}`;
     $('csv').href = `/api/stats?${q}&format=csv`;
     $('message').textContent = '';
     let res;
@@ -33,7 +43,8 @@
     const data = await res.json().catch(() => ({}));
     if (!res.ok) { $('meta').textContent = data.error || `Error ${res.status}`; return; }
 
-    $('meta').textContent = `Last ${data.range_days} days · ${data.batches} batches · updated ${new Date(data.generated).toLocaleString()}`;
+    syncRestaurantOptions(data.restaurants);
+    $('meta').textContent = `Last ${data.range_days} days · ${restaurant || 'all restaurants'} · ${data.batches} batches · updated ${new Date(data.generated).toLocaleString()}`;
     table($('by-day'),
       ['Day', 'Sessions', 'Scans', 'Dish opens', 'Median load', 'Load failures', 'Tiers 1/2/3/4/5', 'AR launches', 'AR launch rate', 'Median tap → placed', 'Added to table', 'Waiter views'],
       data.days.map((d) => [d.day, d.sessions, d.scans, d.dish_opens, secs(d.median_load_ms), fmt(d.failure_rate_pct, '%'), tiers(d.tiers), d.ar_launches, fmt(d.ar_launch_rate_pct, '%'), secs(d.median_tap_to_placed_ms), d.tray_adds, d.waiter_views]));
@@ -43,5 +54,6 @@
   }
 
   $('days').addEventListener('change', load);
+  $('restaurant').addEventListener('change', load);
   load();
 })();

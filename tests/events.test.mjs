@@ -114,6 +114,44 @@ test('summarise: medians, rates, final tier per opening, per day and per dish', 
   assert.equal(steak.failure_rate_pct, 50);
 });
 
+test('summarise: restaurant filter scopes to one restaurant, others untouched', () => {
+  const b = (session, restaurant, events) => ({ day: '2026-09-23', restaurant, table: null, session, events });
+  const batches = [
+    b('s1', 'gauchos', [{ e: 'scan' }, { e: 'dish_open', d: 'steak-main' }]),
+    b('s2', 'baraza', [{ e: 'scan' }, { e: 'dish_open', d: 'bz-flat-white' }]),
+  ];
+  const all = summarise(batches);
+  assert.equal(all.days[0].scans, 2);
+  assert.equal(all.dishes.length, 2);
+
+  const gauchosOnly = summarise(batches, 'gauchos');
+  assert.equal(gauchosOnly.days[0].scans, 1);
+  assert.deepEqual(gauchosOnly.dishes.map((d) => d.dish), ['steak-main']);
+
+  const barazaOnly = summarise(batches, 'baraza');
+  assert.equal(barazaOnly.days[0].scans, 1);
+  assert.deepEqual(barazaOnly.dishes.map((d) => d.dish), ['bz-flat-white']);
+});
+
+test('stats handler: ?r= filters and lists restaurants seen; bad r → empty', async () => {
+  const store = memoryStore();
+  await ingest(post(batch([{ e: 'scan' }, { e: 'dish_open', d: 'steak-main' }])), store); // gauchos
+  await ingest(post({ ...batch([{ e: 'scan' }]), r: 'baraza', s: 'b0000000000000a1' }), store); // distinct session id — the flood test above exhausts 'ffff…'
+  const get = (q) => stats(new Request(`https://menva.test/api/stats?${q}`), store, { STATS_KEY: 'a-long-enough-secret-key' });
+
+  const all = await (await get('key=a-long-enough-secret-key')).json();
+  assert.equal(all.batches, 2);
+  assert.deepEqual(all.restaurants.map((r) => r.id).sort(), ['baraza', 'gauchos']);
+
+  const gauchosOnly = await (await get('key=a-long-enough-secret-key&r=gauchos')).json();
+  assert.equal(gauchosOnly.batches, 1);
+  assert.equal(gauchosOnly.days[0].scans, 1);
+
+  const bad = await (await get(`key=a-long-enough-secret-key&r=${encodeURIComponent('not a valid id!')}`)).json();
+  assert.equal(bad.batches, 0);
+  assert.deepEqual(bad.days, []);
+});
+
 test('stats CSV export', async () => {
   const store = memoryStore();
   await ingest(post(batch([{ e: 'scan' }, { e: 'dish_open', d: 'steak-main' }])), store);

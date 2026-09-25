@@ -1,10 +1,16 @@
 // Builds data/build/dishes.json from:
-//   data/dishes.csv                 (source of truth, filled by the restaurant)
+//   data/dishes.csv                 (source of truth, filled by each restaurant, one row per dish)
 //   data/restaurants/<id>.json      (restaurant identity + loader copy)
 //   assets/dishes/<id>/meta.json    (pipeline output)
 //
 // Never invents food data: empty / TO_CONFIRM fields become null or "unconfirmed" and the
 // app shows "Please confirm with your server". Bad values fail the build with a clear message.
+//
+// dishes.csv's `restaurant` column (first column) says which data/restaurants/<id>.json a row
+// belongs to; dish ids are still globally unique across every restaurant.
+//
+// `plate_length_cm` is the widest horizontal size in cm — the plate, or for drinks the cup
+// including handle/saucer. It calibrates the 3D scan's scale (scripts/pipeline.mjs).
 //
 // Usage: npm run build-data
 
@@ -102,6 +108,17 @@ function dish(row, restaurantId) {
   const is3d = row.is_3d.toLowerCase();
   if (!['yes', 'no', ''].includes(is3d)) err('is_3d', `"${row.is_3d}" must be yes or no`);
 
+  // Coffee-menu fields (optional; empty/TO_CONFIRM on dishes that don't use them, e.g. Gauchos).
+  const origin = unconfirmed(row.origin) ? null : row.origin;
+  const tastingNotes = unconfirmed(row.tasting_notes) ? null : row.tasting_notes.split(/[;|]/).map((s) => s.trim()).filter(Boolean);
+  const brewMethod = unconfirmed(row.brew_method) ? null : row.brew_method;
+  let serve = null;
+  if (!unconfirmed(row.serve)) {
+    const s = row.serve.toLowerCase();
+    if (!['hot', 'iced'].includes(s)) err('serve', `"${row.serve}" must be hot, iced or empty`);
+    else serve = s;
+  }
+
   // 3D assets from the pipeline; URLs carry a content hash because /assets is cached as immutable.
   let assets = null, dimensions = null;
   if (is3d === 'yes') {
@@ -143,6 +160,10 @@ function dish(row, restaurantId) {
     assets,
     dimensions_cm: dimensions,
     confirmed_by: confirmedBy,
+    origin,
+    tasting_notes: tastingNotes,
+    brew_method: brewMethod,
+    serve,
   };
 }
 
@@ -151,15 +172,25 @@ function dish(row, restaurantId) {
 const csvRows = parseCSV(fs.readFileSync(path.join(ROOT, 'data', 'dishes.csv'), 'utf8'));
 const restaurantsDir = path.join(ROOT, 'data', 'restaurants');
 const restaurants = fs.readdirSync(restaurantsDir).filter((f) => f.endsWith('.json')).map((f) => JSON.parse(fs.readFileSync(path.join(restaurantsDir, f), 'utf8')));
+const restaurantIds = new Set(restaurants.map((r) => r.id));
 
-// The CSV has no restaurant column yet; every row belongs to the pilot restaurant.
-const pilot = restaurants.find((r) => r.pilot) ?? restaurants[0];
+// Exactly one restaurant is the pilot (its numbers are what Gauchos sees; a private pitch demo
+// like Baraza must never carry pilot: true).
+const pilots = restaurants.filter((r) => r.pilot);
+if (pilots.length !== 1) {
+  console.error(`\n✗ exactly one data/restaurants/*.json must have "pilot": true — found ${pilots.length}${pilots.length ? ` (${pilots.map((r) => r.id).join(', ')})` : ''}.\n`);
+  process.exit(1);
+}
+const pilot = pilots[0];
+
 const seen = new Set();
 const dishes = [];
 for (const row of csvRows) {
   if (seen.has(row.id)) errors.push(`dishes.csv line ${row.line}: duplicate id "${row.id}"`);
   seen.add(row.id);
-  dishes.push(dish(row, pilot.id));
+  if (!row.restaurant) errors.push(`dishes.csv line ${row.line} (${row.id || 'no id'}), restaurant: required`);
+  else if (!restaurantIds.has(row.restaurant)) errors.push(`dishes.csv line ${row.line} (${row.id || 'no id'}), restaurant: "${row.restaurant}" does not match any data/restaurants/*.json id (${[...restaurantIds].join(', ')})`);
+  dishes.push(dish(row, row.restaurant));
 }
 
 if (errors.length) {
@@ -169,9 +200,12 @@ if (errors.length) {
   process.exit(1);
 }
 
+// Pilot first, then alphabetical — readdir order otherwise puts "baraza" before "gauchos".
+const orderedRestaurants = [...restaurants].sort((a, b) => (a.id === pilot.id ? -1 : b.id === pilot.id ? 1 : a.id.localeCompare(b.id)));
+
 const out = {
   generated: new Date().toISOString(),
-  restaurants: restaurants.map((r) => {
+  restaurants: orderedRestaurants.map((r) => {
     const own = dishes.filter((d) => d.restaurant === r.id);
     return { ...r, categories: [...new Set(own.map((d) => d.category))], dishes: own }; // categories in CSV order
   }),

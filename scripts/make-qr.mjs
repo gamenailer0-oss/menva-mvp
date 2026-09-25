@@ -1,7 +1,9 @@
-// Print-ready table QR codes (CLAUDE.md Phase 9).
+// Print-ready table QR codes (CLAUDE.md Phase 9). One restaurant per run (--restaurant, default
+// "gauchos"); each writes to its own print/qr*/<slug>/ subfolder, so a run for one restaurant
+// never deletes another restaurant's codes — only that subfolder is wiped.
 //
-//   npm run qr -- --tables 30                 → print/qr/<slug>-table-<n>.svg + print/qr/sheet.html
-//   npm run qr -- --tables 1-12 --preview     → print/qr-preview/, stamped "TEST — not for print"
+//   npm run qr -- --tables 30                                → print/qr/gauchos/g-table-<n>.svg + sheet.html
+//   npm run qr -- --restaurant baraza --tables 1-3 --preview → print/qr-preview/baraza/, stamped "TEST — not for print"
 //
 // Each code points to https://<domain>/<slug>/<table>, with error correction H (still scans with
 // ~30% of it smudged or covered) and a wide quiet zone, dark on white.
@@ -78,7 +80,8 @@ function card(url, table) {
 }
 
 // ---------- write ----------
-const outDir = path.join(ROOT, 'print', preview ? 'qr-preview' : 'qr');
+// Per-restaurant subfolder: a run for one restaurant only ever wipes its own codes.
+const outDir = path.join(ROOT, 'print', preview ? 'qr-preview' : 'qr', restaurant.slug);
 fs.rmSync(outDir, { recursive: true, force: true });
 fs.mkdirSync(outDir, { recursive: true });
 

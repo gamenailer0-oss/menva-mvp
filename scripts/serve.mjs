@@ -20,6 +20,8 @@ const TYPES = {
   '.glb': 'application/octet-stream', '.usdz': 'application/octet-stream', // overridden by netlify.toml, as on Netlify
 };
 
+const toPattern = (glob) => new RegExp('^' + glob.replace(/[.+?^${}()|[\]\\]/g, '\\$&').replace(/\*/g, '.*') + '$');
+
 // Minimal reader for the [[headers]] blocks we use: for = "..." then key = "value" lines.
 function headerRules() {
   const rules = [];
@@ -30,13 +32,29 @@ function headerRules() {
     if (t.startsWith('[[') || (t.startsWith('[') && t !== '[headers.values]')) { cur = null; continue; }
     const m = t.match(/^([\w-]+)\s*=\s*"(.*)"$/);
     if (!cur || !m) continue;
-    if (m[1] === 'for') cur.pattern = new RegExp('^' + m[2].replace(/[.+?^${}()|[\]\\]/g, '\\$&').replace(/\*/g, '.*') + '$');
+    if (m[1] === 'for') cur.pattern = toPattern(m[2]);
     else cur.values[m[1]] = m[2];
   }
   return rules;
 }
 
-const rules = headerRules();
+// dist/_headers (written by scripts/build.mjs) also carries rules netlify.toml doesn't know about
+// — e.g. per-restaurant noindex for a private pitch demo, computed from data/build/dishes.json.
+function headersFileRules() {
+  const file = path.join(DIST, '_headers');
+  if (!fs.existsSync(file)) return [];
+  const rules = [];
+  let cur = null;
+  for (const line of fs.readFileSync(file, 'utf8').split('\n')) {
+    if (!line.trim()) { cur = null; continue; }
+    if (!/^\s/.test(line)) { cur = { pattern: toPattern(line.trim()), values: {} }; rules.push(cur); continue; }
+    const m = line.trim().match(/^([\w-]+):\s*(.*)$/);
+    if (cur && m) cur.values[m[1]] = m[2];
+  }
+  return rules;
+}
+
+const rules = [...headerRules(), ...headersFileRules()];
 
 // Netlify Functions, locally: same handlers, in-memory blob store, a dev-only stats key.
 const memory = new Map();
