@@ -34,6 +34,22 @@ function logLine(fields) {
 const isTrue = (v) => /^(1|true|yes|on)$/i.test(String(v ?? '').trim());
 const dryRun = () => $env.MENVA_DRY_RUN === undefined || $env.MENVA_DRY_RUN === '' ? true : isTrue($env.MENVA_DRY_RUN);
 
+// Form-encode parameters by hand (no URLSearchParams in n8n's Code sandbox).
+const formBody = (o) => Object.entries(o).filter(([, v]) => v !== undefined && v !== null)
+  .map(([k, v]) => encodeURIComponent(k) + '=' + encodeURIComponent(String(v))).join('&');
+// One Graph API call. POST parameters go in a form body (captions can be long; URLs have limits),
+// GET parameters in the query string. Returns { statusCode, body }.
+async function graphCall(helpers, base, token, method, path, params) {
+  const all = Object.assign({}, params, { access_token: token });
+  const opts = { method, url: base + path, json: true, timeout: 60000, returnFullResponse: true, ignoreHttpStatusErrors: true };
+  if (method === 'GET') opts.qs = all;
+  else { opts.body = formBody(all); opts.headers = { 'Content-Type': 'application/x-www-form-urlencoded' }; opts.json = false; }
+  const r = await helpers.httpRequest(opts);
+  let body = r.body;
+  if (typeof body === 'string') { try { body = JSON.parse(body); } catch (e) { /* leave as text */ } }
+  return { statusCode: r.statusCode, body };
+}
+
 // Phone alert through ntfy.sh, only if NTFY_TOPIC is set. Never throws.
 async function notify(helpers, title, message, click) {
   const topic = ($env.NTFY_TOPIC || '').trim();

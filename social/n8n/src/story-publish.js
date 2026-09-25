@@ -15,7 +15,7 @@ const G = ($env.IG_GRAPH_URL || 'https://graph.instagram.com').replace(/\/$/, ''
 const state = readState();
 const token = (state.token && state.token.value) || ($env.IG_ACCESS_TOKEN || '').trim();
 async function graph(method, path, qs) {
-  const r = await helpers.httpRequest({ method, url: G + path, qs: Object.assign({}, qs, { access_token: token }), json: true, timeout: 60000, returnFullResponse: true, ignoreHttpStatusErrors: true });
+  const r = await graphCall(helpers, G, token, method, path, qs);
   if (r.statusCode >= 200 && r.statusCode < 300) return r.body;
   throw new Error(`Instagram ${method} ${path} failed (${r.statusCode}): ${(r.body && r.body.error && r.body.error.message) || JSON.stringify(r.body)}`);
 }
