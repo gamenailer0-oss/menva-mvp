@@ -4,6 +4,8 @@ Everything that needs your permission, money, login or a real person was saved h
 
 ## A. Decisions (answer these first, 20 minutes)
 
+*Evening update, 25 Sep:* after "feels AI generic", every post was rewritten in a sharper voice, and a weekly sitcom series was added. Decisions 16 and 17 below cover that.
+
 | # | Decision | Why it matters | Options / default |
 |---|---|---|---|
 | 1 | **Can posts name or show Gauchos?** | Unlocks the full steak and trio boards, filming at the restaurant, PR and case studies | Default: no (everything is built to work without it) |
@@ -23,6 +25,8 @@ Everything that needs your permission, money, login or a real person was saved h
 | 14 | **Next segment**: banquet halls/weddings or custom-cake bakeries | Both fit "see it before you commit"; banquets need 6–8 scans per deal | segments.md |
 
 | 15 | **Filming and demos show the carved "Gauchos" on two boards** (the 3D models themselves, not our crops) | Affects AR screen recordings, Reels, and demos to other restaurants | Until naming is OK'd, film and demo with the steak sandwich and the green plate |
+| 16 | **Keep the *Khana kahan?* series?** A weekly group-chat sitcom with six made-up friends, posted by itself on Wednesdays (37 episodes over the 300 days) | It's the most shareable thing in the kit and gives people a reason to come back weekly. It also makes the account one post a week busier | Keep it. To switch it off, delete `content/series-khana-kahan.json` and run `./update.sh`. To pause one episode, remove it from that file |
+| 17 | **OK the new voice** (`marketing/voice-spice.md`): Lahori, specific, a bit opinionated, Roman Urdu mixed into sentences | Every caption was rewritten in it on 25 Sep evening. Skim `content/calendar.csv` or the preview sheets | Keep it. If a line feels too much, edit that post's text and run `check-calendar.mjs` |
 
 ## B. Setup (in this order, about 4 hours total)
 
