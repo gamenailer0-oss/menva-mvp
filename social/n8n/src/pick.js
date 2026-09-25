@@ -14,8 +14,6 @@ const start = DateTime.fromISO(startIso, { zone });
 if (!start.isValid) throw new Error('START_DATE "' + startIso + '" is not a date like 2026-10-05 — fix it in .env');
 
 const dateOf = (p) => start.plus({ days: p.day - 1 }).toISODate();
-const [hh, mm] = String($env.MENVA_POST_TIME || '20:30').split(':').map(Number);
-const postTime = now.set({ hour: hh || 0, minute: mm || 0, second: 0, millisecond: 0 });
 
 let post = cal.posts.find((p) => dateOf(p) === today);
 let test = false;
@@ -24,6 +22,10 @@ if (manual && !post) {
   test = true;
 }
 if (!post) return []; // rest day (5 posts a week) or the calendar has ended
+
+// A post can carry its own "time" (e.g. Ramadan posts go out before iftar); otherwise POST_TIME.
+const [hh, mm] = String(post.time || $env.MENVA_POST_TIME || '20:30').split(':').map(Number);
+const postTime = now.set({ hour: hh || 0, minute: mm || 0, second: 0, millisecond: 0 });
 
 const live = !dryRun() && !test;
 const done = live ? state.posted && state.posted[post.id] : state.dry && state.dry[post.id];

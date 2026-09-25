@@ -39,6 +39,7 @@ cal.posts.forEach((p, i) => {
   if (seenDays.has(p.day)) bad(p, `two posts on day ${p.day}`); seenDays.add(p.day);
   if (i && p.day <= cal.posts[i - 1].day) bad(p, 'days must go up');
 
+  if (p.time !== undefined && !/^([01]\d|2[0-3]):[0-5]\d$/.test(p.time)) bad(p, `time "${p.time}" must be HH:MM (24h, Pakistan time)`);
   const slides = p.slides || [];
   if (!slides.length || slides.length > 10) bad(p, 'needs 1–10 slides');
   if ((slides.length > 1) !== (p.format === 'carousel')) bad(p, `format "${p.format}" doesn't match ${slides.length} slide(s)`);
@@ -82,10 +83,10 @@ if (problems.length) {
 // CSV, with dates worked out from the default start date.
 const start = new Date(cal.defaultStart + 'T00:00:00Z');
 const cell = (v) => '"' + String(v ?? '').replace(/"/g, '""') + '"';
-const rows = [['n', 'day', 'date', 'weekday', 'id', 'pillar', 'audience', 'format', 'slides', 'caption', 'hashtags', 'alt_text', 'note', 'slide_headlines']];
+const rows = [['n', 'day', 'date', 'weekday', 'time', 'id', 'pillar', 'audience', 'format', 'slides', 'caption', 'hashtags', 'alt_text', 'note', 'slide_headlines']];
 for (const p of cal.posts) {
   const d = new Date(start); d.setUTCDate(d.getUTCDate() + p.day - 1);
-  rows.push([p.n, p.day, d.toISOString().slice(0, 10), d.toUTCString().slice(0, 3), p.id, p.pillar, p.audience, p.format, p.slides.length,
+  rows.push([p.n, p.day, d.toISOString().slice(0, 10), d.toUTCString().slice(0, 3), p.time || cal.postTime || '20:30', p.id, p.pillar, p.audience, p.format, p.slides.length,
     p.caption, (p.hashtags || []).join(' '), p.alt || '', p.note || '', p.slides.map((s) => s.h.replace(/\*/g, '').replace(/\n/g, ' ')).join(' | ')]);
 }
 fs.writeFileSync(path.join(path.dirname(CAL), NAME + '.csv'), '﻿' + rows.map((r) => r.map(cell).join(',')).join('\r\n') + '\r\n');

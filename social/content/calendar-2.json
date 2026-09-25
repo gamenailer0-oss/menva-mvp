@@ -1,0 +1,2454 @@
+{
+  "version": 1,
+  "about": "MENVA Instagram calendar, season two: 100 more days. Read by the n8n workflow. Edit, then run: node social/scripts/check-calendar.mjs social/content/calendar-2.json Ramadan posts (days 28-47) carry time 16:30: before iftar, when people decide where to eat.",
+  "defaultStart": "2027-01-13",
+  "timezone": "Asia/Karachi",
+  "postTime": "20:30",
+  "handle": "",
+  "posts": [
+    {
+      "n": 1,
+      "day": 1,
+      "date": "2027-01-13",
+      "weekday": "Wed",
+      "id": "new-season-menva",
+      "pillar": "see-it-first",
+      "audience": "diners",
+      "format": "carousel",
+      "note": "Launch of season two",
+      "caption": "Season two on MENVA starts today.\n\nSame idea as day one: scan the QR, tap a dish, see the real plate in 3D on your table at true size, before you order.\n\nNaya season, wahi tareeqa — order se pehle dekh lo.\n\nSend this to a friend who missed season one.",
+      "hashtags": [
+        "#menva",
+        "#lahorefood",
+        "#lahorefoodies",
+        "#3dmenu"
+      ],
+      "alt": "A real steak board scanned in 3D, marking the start of a new season on MENVA.",
+      "slides": [
+        {
+          "layout": "hero",
+          "over": "New season",
+          "n": "1/4",
+          "dish": "steak-main",
+          "crop": "board",
+          "h": "Season two. *Same idea.*",
+          "b": "Real dishes, scanned in 3D. True size, before you order."
+        },
+        {
+          "layout": "phone",
+          "over": "How it works",
+          "n": "2/4",
+          "dish": "steak-sandwich",
+          "h": "Scan. Tap. *Point at the table.*",
+          "b": "No app to install. Works in Safari and Chrome."
+        },
+        {
+          "layout": "statement",
+          "over": "What's ahead",
+          "n": "3/4",
+          "size": "l",
+          "h": "Match nights, Ramadan, Eid, then *spring.*",
+          "b": "We'll be here for all of it."
+        },
+        {
+          "layout": "cta",
+          "bg": "chili",
+          "over": "4/4",
+          "h": "Try it on *your* table.",
+          "b": "Open the demo on your phone and place a real dish in front of you.",
+          "actions": [
+            "Link in bio",
+            "Send to a friend"
+          ]
+        }
+      ]
+    },
+    {
+      "n": 2,
+      "day": 2,
+      "date": "2027-01-14",
+      "weekday": "Thu",
+      "id": "types-of-people-7-director",
+      "pillar": "relatable",
+      "audience": "diners",
+      "format": "single",
+      "caption": "Types of people at dinner, part seven: the one who films the whole table before anyone is allowed to eat.\n\n\"Bas ek video aur.\" Food is getting cold.\n\nTag the director in your group.",
+      "hashtags": [
+        "#menva",
+        "#lahorefood",
+        "#lahorefoodies",
+        "#lahoreeats"
+      ],
+      "alt": "Text post about the friend who films the table before anyone eats.",
+      "slides": [
+        {
+          "layout": "note",
+          "bg": "paper",
+          "over": "Types of people at dinner · 7",
+          "h": "The director. *One more video.*",
+          "ru": "\"Bas ek video aur.\" Khana thanda ho raha hai."
+        }
+      ]
+    },
+    {
+      "n": 3,
+      "day": 3,
+      "date": "2027-01-15",
+      "weekday": "Fri",
+      "id": "closeup-trio-layers",
+      "pillar": "see-it-first",
+      "audience": "diners",
+      "format": "single",
+      "caption": "Look closer. Every layer, exactly where the kitchen put it.\n\nThis is a scan of a real plate, not a photo touched up after.\n\nHar layer asli hai.\n\nSave this for the next time a menu photo lets you down.",
+      "hashtags": [
+        "#menva",
+        "#lahorefood",
+        "#lahorefoodies",
+        "#3dscan"
+      ],
+      "alt": "Close-up of the trio, a real dish scanned in 3D.",
+      "slides": [
+        {
+          "layout": "closeup",
+          "dish": "chicken-fajita-wrap",
+          "crop": "close",
+          "over": "Zoom in",
+          "h": "Every layer. *Where it should be.*"
+        }
+      ]
+    },
+    {
+      "n": 4,
+      "day": 4,
+      "date": "2027-01-16",
+      "weekday": "Sat",
+      "id": "dish-drop-5-steak-board",
+      "pillar": "see-it-first",
+      "audience": "diners",
+      "format": "carousel",
+      "caption": "Dish drop, week five: the steak board is back on the table.\n\nSwipe to see it from the side, then tell us: is it a share plate or a solo mission tonight?\n\nIs hafte ki plate. Akele ya share?\n\nComment your answer.",
+      "hashtags": [
+        "#menva",
+        "#lahorefood",
+        "#lahorefoodies",
+        "#dishdrop"
+      ],
+      "alt": "Dish drop week five: a real steak board scanned in 3D.",
+      "slides": [
+        {
+          "layout": "hero",
+          "over": "Dish drop · Week 5",
+          "n": "1/2",
+          "dish": "steak-main",
+          "crop": "board",
+          "h": "Back on *the table.*",
+          "b": "Real scan. True size. Your call."
+        },
+        {
+          "layout": "hero",
+          "over": "Dish drop · Week 5",
+          "n": "2/2",
+          "dish": "steak-main",
+          "crop": "steak",
+          "h": "Solo mission, *or share plate?*",
+          "b": "Comment your answer."
+        }
+      ]
+    },
+    {
+      "n": 5,
+      "day": 5,
+      "date": "2027-01-17",
+      "weekday": "Sun",
+      "id": "owners-season-ahead",
+      "pillar": "for-restaurants",
+      "audience": "restaurants",
+      "format": "carousel",
+      "caption": "For restaurant owners: the next few months are the busiest on the Lahore calendar. Match nights, Ramadan iftar, Eid dawats, then spring evenings on the patio.\n\nGet your menu ready to be seen before any of it starts: real dishes, in 3D, at true size, straight from the table QR.\n\nDM \"PILOT\" and we will walk you through what is included.",
+      "hashtags": [
+        "#menva",
+        "#lahorerestaurants",
+        "#restaurantmarketing",
+        "#lahorefood"
+      ],
+      "alt": "Carousel for restaurants about the busy months ahead in Lahore.",
+      "slides": [
+        {
+          "layout": "statement",
+          "bg": "ink",
+          "over": "For restaurants",
+          "n": "1/4",
+          "size": "l",
+          "h": "The next few months are *your busiest.*"
+        },
+        {
+          "layout": "list",
+          "over": "What's coming",
+          "n": "2/4",
+          "h": "Match nights. Iftar. Eid. *Spring.*",
+          "items": [
+            "Match-night crowds who want to order fast",
+            "Iftar tables racing the azaan",
+            "Eid dawats with the whole family",
+            "Patio season, once the weather turns"
+          ]
+        },
+        {
+          "layout": "hero",
+          "over": "Your real plating",
+          "n": "3/4",
+          "dish": "chicken-fajita-wrap",
+          "crop": "board",
+          "h": "Your plating gets *the credit.*",
+          "b": "Real dishes, scanned in 3D. Not stock photos."
+        },
+        {
+          "layout": "cta",
+          "bg": "chili",
+          "over": "4/4",
+          "h": "Get ready *before the rush.*",
+          "b": "Lahore pilot: PKR 25,000.",
+          "actions": [
+            "DM \"PILOT\"",
+            "Link in bio"
+          ]
+        }
+      ]
+    },
+    {
+      "n": 6,
+      "day": 7,
+      "date": "2027-01-19",
+      "weekday": "Tue",
+      "id": "this-or-that-round-4",
+      "pillar": "relatable",
+      "audience": "diners",
+      "format": "single",
+      "caption": "Round four. Same rule as always: you get one.\n\nA: the green plate\nB: the trio\n\nComment A or B. Tag the friend who would want both.",
+      "hashtags": [
+        "#menva",
+        "#lahorefood",
+        "#lahorefoodies",
+        "#lahoreeats"
+      ],
+      "alt": "Two real dishes side by side: the green plate marked A and the trio marked B.",
+      "slides": [
+        {
+          "layout": "duo",
+          "over": "This or that · Round 4",
+          "h": "You get *one.*",
+          "dishes": [
+            "garlic-prawn-skewers",
+            "chicken-fajita-wrap"
+          ],
+          "labels": [
+            "The green plate",
+            "The trio"
+          ],
+          "b": "Comment A or B."
+        }
+      ]
+    },
+    {
+      "n": 7,
+      "day": 9,
+      "date": "2027-01-21",
+      "weekday": "Thu",
+      "id": "sight-test-3",
+      "pillar": "menu-truth",
+      "audience": "diners",
+      "format": "carousel",
+      "caption": "Sight test, round three. The menu says \"ribeye steak, served with sides.\" Picture it, then swipe.\n\nPehle andaza lagao, phir dekho.\n\nComment \"close\" or \"way off\".",
+      "hashtags": [
+        "#menva",
+        "#lahorefood",
+        "#lahorefoodies",
+        "#sighttest"
+      ],
+      "alt": "Sight test round three: guess the size of a steak board before seeing it.",
+      "slides": [
+        {
+          "layout": "split",
+          "over": "Step 1: guess",
+          "n": "1/2",
+          "h": "Picture *this.*",
+          "menuLine": "Ribeye steak",
+          "menuDesc": "Grilled. Served with sides.",
+          "dish": "steak-main",
+          "crop": "sides",
+          "leftLabel": "The menu says",
+          "rightLabel": "Swipe for size"
+        },
+        {
+          "layout": "hero",
+          "over": "Step 2: see",
+          "n": "2/2",
+          "dish": "steak-main",
+          "crop": "board",
+          "h": "Real size. *How close were you?*"
+        }
+      ]
+    },
+    {
+      "n": 8,
+      "day": 10,
+      "date": "2027-01-22",
+      "weekday": "Fri",
+      "id": "psl-season-teaser",
+      "pillar": "relatable",
+      "audience": "diners",
+      "format": "single",
+      "caption": "PSL season is almost here, which means the whole country turns into eleven commentators for two months.\n\nAt least get the ordering sorted before the toss.\n\nMatch shuru hone se pehle, order pakka kar lo.\n\nTag your match-night crew.",
+      "hashtags": [
+        "#menva",
+        "#lahorefood",
+        "#lahorefoodies",
+        "#cricket"
+      ],
+      "alt": "Text post about PSL season and match-night ordering.",
+      "slides": [
+        {
+          "layout": "statement",
+          "bg": "chili",
+          "over": "PSL season",
+          "h": "Eleven commentators. *One kitchen.*",
+          "ru": "Match shuru hone se pehle, order pakka kar lo."
+        }
+      ]
+    },
+    {
+      "n": 9,
+      "day": 11,
+      "date": "2027-01-23",
+      "weekday": "Sat",
+      "id": "true-size-reminder",
+      "pillar": "see-it-first",
+      "audience": "diners",
+      "format": "single",
+      "caption": "A reminder for the new season: true size means true size. In AR you cannot pinch the dish bigger or smaller.\n\nJitna dikhe, utna hi aaye.\n\nSave this and try it on your own table: link in bio.",
+      "hashtags": [
+        "#menva",
+        "#lahorefood",
+        "#lahorefoodies",
+        "#arfood"
+      ],
+      "alt": "A phone showing a real dish placed on a table at true size.",
+      "slides": [
+        {
+          "layout": "phone",
+          "over": "True size",
+          "dish": "steak-main",
+          "crop": "sides",
+          "h": "No zoom. No tricks. *True size.*",
+          "b": "What lands on your table is the portion you get."
+        }
+      ]
+    },
+    {
+      "n": 10,
+      "day": 12,
+      "date": "2027-01-24",
+      "weekday": "Sun",
+      "id": "owners-myths-recap",
+      "pillar": "for-restaurants",
+      "audience": "restaurants",
+      "format": "carousel",
+      "caption": "New followers, quick recap: three things owners assume about a 3D menu that are not true.\n\nIt needs an app, it slows service down, and guests will not bother scanning. None of that has been our experience.\n\nDM \"PILOT\" if you want to see it on your own table.",
+      "hashtags": [
+        "#menva",
+        "#lahorerestaurants",
+        "#restaurantmarketing",
+        "#restaurantownerspakistan"
+      ],
+      "alt": "Carousel recap of common myths about 3D menus.",
+      "slides": [
+        {
+          "layout": "statement",
+          "bg": "ink",
+          "over": "Myth check",
+          "n": "1/3",
+          "size": "l",
+          "h": "Three things owners *assume, wrongly.*"
+        },
+        {
+          "layout": "list",
+          "over": "The myths",
+          "n": "2/3",
+          "h": "Not *true*",
+          "items": [
+            "\"It needs an app.\" It doesn't.",
+            "\"It slows service down.\" Waiters still take the order.",
+            "\"Guests won't bother.\" They just scan the table QR."
+          ]
+        },
+        {
+          "layout": "cta",
+          "bg": "chili",
+          "over": "3/3",
+          "h": "See it on *your* table.",
+          "b": "Lahore pilot: PKR 25,000.",
+          "actions": [
+            "DM \"PILOT\""
+          ]
+        }
+      ]
+    },
+    {
+      "n": 11,
+      "day": 14,
+      "date": "2027-01-26",
+      "weekday": "Tue",
+      "id": "types-of-people-8-accountant",
+      "pillar": "relatable",
+      "audience": "diners",
+      "format": "single",
+      "caption": "Types of people at dinner, part eight: the one who tries to negotiate the bill split down to the last bite.\n\n\"Maine toh sirf half khaya tha.\"\n\nTag your accountant friend.",
+      "hashtags": [
+        "#menva",
+        "#lahorefood",
+        "#lahorefoodies",
+        "#foodiesoflahore"
+      ],
+      "alt": "Text post about the friend who negotiates the bill split.",
+      "slides": [
+        {
+          "layout": "note",
+          "bg": "chili",
+          "over": "Types of people at dinner · 8",
+          "h": "The accountant. *Down to the last bite.*",
+          "ru": "\"Maine toh sirf half khaya tha.\""
+        }
+      ]
+    },
+    {
+      "n": 12,
+      "day": 16,
+      "date": "2027-01-28",
+      "weekday": "Thu",
+      "id": "dish-drop-6-sandwich",
+      "pillar": "see-it-first",
+      "audience": "diners",
+      "format": "single",
+      "caption": "Dish drop, week six: the steak sandwich, stacked and exactly this big on your table.\n\nLunch for one, or a starter for two? Comment your answer.",
+      "hashtags": [
+        "#menva",
+        "#lahorefood",
+        "#lahorefoodies",
+        "#dishdrop"
+      ],
+      "alt": "Dish drop week six: a real steak sandwich scanned in 3D.",
+      "slides": [
+        {
+          "layout": "hero",
+          "bg": "sand",
+          "over": "Dish drop · Week 6",
+          "dish": "steak-sandwich",
+          "h": "Lunch for one, or *starter for two?*",
+          "b": "Real scan. True size. Your call."
+        }
+      ]
+    },
+    {
+      "n": 13,
+      "day": 17,
+      "date": "2027-01-29",
+      "weekday": "Fri",
+      "id": "group-order-guide-v2",
+      "pillar": "menu-truth",
+      "audience": "diners",
+      "format": "carousel",
+      "caption": "Ordering for a big group, the short version, part two.\n\n1. One person holds the menu.\n2. See the portion before you order.\n3. Order one extra, not five.\n4. Build one list for the waiter.\n\nAik banda menu sambhale, baqi log ruko.\n\nSave it for the next big table.",
+      "hashtags": [
+        "#menva",
+        "#lahorefood",
+        "#lahorefoodies",
+        "#lahoreeats"
+      ],
+      "alt": "A four-step guide to ordering for a big group.",
+      "slides": [
+        {
+          "layout": "statement",
+          "over": "Group order guide",
+          "n": "1/2",
+          "size": "l",
+          "h": "Big table? *Four rules.*",
+          "ru": "Aik banda menu sambhale, baqi log ruko."
+        },
+        {
+          "layout": "list",
+          "over": "The rules",
+          "n": "2/2",
+          "h": "Keep it *simple*",
+          "items": [
+            "One person holds the menu.",
+            "See the portion before you order.",
+            "Order one extra, not five.",
+            "Build one list for the waiter."
+          ]
+        }
+      ]
+    },
+    {
+      "n": 14,
+      "day": 18,
+      "date": "2027-01-30",
+      "weekday": "Sat",
+      "id": "this-or-that-round-5",
+      "pillar": "relatable",
+      "audience": "diners",
+      "format": "single",
+      "caption": "Round five. Saturday night, one plate, your call.\n\nA: the steak board\nB: the green plate\n\nComment A or B.",
+      "hashtags": [
+        "#menva",
+        "#lahorefood",
+        "#lahorefoodies",
+        "#lahoreeats"
+      ],
+      "alt": "Two real dishes: a steak board marked A and the green plate marked B.",
+      "slides": [
+        {
+          "layout": "duo",
+          "over": "This or that · Round 5",
+          "h": "Saturday night. *Pick one.*",
+          "dishes": [
+            "steak-main",
+            "garlic-prawn-skewers"
+          ],
+          "crops": [
+            "board",
+            "close"
+          ],
+          "labels": [
+            "The steak board",
+            "The green plate"
+          ],
+          "b": "Comment A or B."
+        }
+      ]
+    },
+    {
+      "n": 15,
+      "day": 19,
+      "date": "2027-01-31",
+      "weekday": "Sun",
+      "id": "owners-staff-time-2",
+      "pillar": "for-restaurants",
+      "audience": "restaurants",
+      "format": "single",
+      "caption": "Your team should not be describing every dish, table after table, on your busiest night.\n\nLet the menu show the plate. Let your staff take care of the guest.\n\nDM \"PILOT\" for the Lahore pilot.",
+      "hashtags": [
+        "#menva",
+        "#lahorerestaurants",
+        "#restaurantmarketing",
+        "#hospitalitypk"
+      ],
+      "alt": "Text post for restaurants about staff time on busy nights.",
+      "slides": [
+        {
+          "layout": "note",
+          "bg": "ink",
+          "over": "For restaurants",
+          "h": "Let the menu show the plate. *Let your team host.*"
+        }
+      ]
+    },
+    {
+      "n": 16,
+      "day": 21,
+      "date": "2027-02-02",
+      "weekday": "Tue",
+      "id": "psl-season-here",
+      "pillar": "relatable",
+      "audience": "diners",
+      "format": "carousel",
+      "note": "PSL season",
+      "caption": "PSL season is here. Every restaurant with a screen is suddenly full.\n\nIf the whole table is watching the match, at least order before the first over.\n\nToss se pehle order, phir match dekho aaram se.\n\nSend this to your match-night group.",
+      "hashtags": [
+        "#menva",
+        "#lahorefood",
+        "#lahorefoodies",
+        "#cricket"
+      ],
+      "alt": "Carousel marking the start of PSL season and match-night dining.",
+      "slides": [
+        {
+          "layout": "statement",
+          "bg": "chili",
+          "over": "PSL season",
+          "n": "1/2",
+          "size": "l",
+          "h": "Every screen in Lahore is *full again.*"
+        },
+        {
+          "layout": "hero",
+          "over": "Order before the toss",
+          "n": "2/2",
+          "dish": "steak-main",
+          "crop": "sides",
+          "h": "See it. Order it. *Watch in peace.*",
+          "b": "Toss se pehle order, phir match dekho aaram se."
+        }
+      ]
+    },
+    {
+      "n": 17,
+      "day": 23,
+      "date": "2027-02-04",
+      "weekday": "Thu",
+      "id": "owners-match-night-pitch",
+      "pillar": "for-restaurants",
+      "audience": "restaurants",
+      "format": "single",
+      "note": "PSL season",
+      "caption": "Restaurant owners: match nights fill every table at once. Guests decide fast when they can see the dish, not read eleven lines about it.\n\nDM \"PILOT\" to get your menu ready before the next big match.",
+      "hashtags": [
+        "#menva",
+        "#lahorerestaurants",
+        "#restaurantmarketing",
+        "#hospitalitypk"
+      ],
+      "alt": "Text post for restaurants about match-night ordering speed.",
+      "slides": [
+        {
+          "layout": "statement",
+          "bg": "ink",
+          "over": "For restaurants",
+          "size": "l",
+          "h": "Match night fills every table *at once.*",
+          "b": "Let guests decide fast: show them the plate."
+        }
+      ]
+    },
+    {
+      "n": 18,
+      "day": 24,
+      "date": "2027-02-05",
+      "weekday": "Fri",
+      "id": "dish-drop-7-green-plate",
+      "pillar": "see-it-first",
+      "audience": "diners",
+      "format": "single",
+      "caption": "Dish drop, week seven: the green plate. Look at the colour on it.\n\nComment your rating out of ten. Honest ratings only.",
+      "hashtags": [
+        "#menva",
+        "#lahorefood",
+        "#lahorefoodies",
+        "#dishdrop"
+      ],
+      "alt": "Dish drop week seven: the green plate, scanned in 3D.",
+      "slides": [
+        {
+          "layout": "closeup",
+          "dish": "garlic-prawn-skewers",
+          "crop": "close",
+          "over": "Dish drop · Week 7",
+          "h": "Out of ten. *Go.*",
+          "b": "Real scan, true size, every angle."
+        }
+      ]
+    },
+    {
+      "n": 19,
+      "day": 25,
+      "date": "2027-02-06",
+      "weekday": "Sat",
+      "id": "ramadan-almost-here",
+      "pillar": "relatable",
+      "audience": "diners",
+      "format": "single",
+      "note": "Ahead of Ramadan, expected to begin around this time, subject to moon sighting",
+      "caption": "Ramadan is almost here. Iftar tables get busy fast, and nobody wants to be deciding what to order while the azaan is minutes away.\n\nRamadan qareeb hai. Pehle se soch lo, waqt pe kaam aayega.\n\nSave this and send it to your iftar group.",
+      "hashtags": [
+        "#menva",
+        "#lahorefood",
+        "#lahorefoodies",
+        "#ramadan"
+      ],
+      "alt": "Text post: Ramadan is almost here, iftar tables get busy fast.",
+      "slides": [
+        {
+          "layout": "statement",
+          "bg": "sand",
+          "over": "Ahead of Ramadan",
+          "h": "Iftar tables fill up *fast.*",
+          "ru": "Ramadan qareeb hai. Pehle se soch lo."
+        }
+      ]
+    },
+    {
+      "n": 20,
+      "day": 26,
+      "date": "2027-02-07",
+      "weekday": "Sun",
+      "id": "owners-ramadan-ready",
+      "pillar": "for-restaurants",
+      "audience": "restaurants",
+      "format": "carousel",
+      "note": "Ahead of Ramadan",
+      "caption": "For restaurant owners, ahead of Ramadan: iftar covers turn over fast, and every minute your staff spends describing a dish is a minute against the clock.\n\nLet guests see the plate the moment they sit down, so ordering takes seconds.\n\nDM \"PILOT\" to get set up before the first iftar rush.",
+      "hashtags": [
+        "#menva",
+        "#lahorerestaurants",
+        "#restaurantmarketing",
+        "#ramadan"
+      ],
+      "alt": "Carousel for restaurants preparing for Ramadan iftar service.",
+      "slides": [
+        {
+          "layout": "statement",
+          "bg": "ink",
+          "over": "Ahead of Ramadan",
+          "n": "1/3",
+          "size": "l",
+          "h": "Iftar tables turn over *fast.*"
+        },
+        {
+          "layout": "list",
+          "over": "What changes",
+          "n": "2/3",
+          "h": "Every minute *counts*",
+          "items": [
+            "Guests sit down hungry and in a hurry",
+            "A menu with no photos means more questions",
+            "A 3D menu answers most of them at a glance",
+            "Your waiter takes the order, not the questions"
+          ]
+        },
+        {
+          "layout": "cta",
+          "bg": "chili",
+          "over": "3/3",
+          "h": "Be ready *before the rush.*",
+          "b": "Lahore pilot: PKR 25,000.",
+          "actions": [
+            "DM \"PILOT\""
+          ]
+        }
+      ]
+    },
+    {
+      "n": 21,
+      "day": 28,
+      "date": "2027-02-09",
+      "weekday": "Tue",
+      "id": "ramadan-begins",
+      "pillar": "relatable",
+      "audience": "diners",
+      "format": "single",
+      "note": "Ramadan is expected to begin around now, subject to moon sighting",
+      "caption": "Ramadan Mubarak, Lahore.\n\nWhen the table is hungry and the azaan is close, seeing the dish before you order saves everyone a few precious minutes.\n\nRamadan Mubarak. Sabko sehat aur barkat ke sath yeh mahina mubarak ho.\n\nSend this to your iftar group chat.",
+      "hashtags": [
+        "#menva",
+        "#lahorefood",
+        "#lahorefoodies",
+        "#ramadan"
+      ],
+      "alt": "A calm text post marking the start of Ramadan.",
+      "slides": [
+        {
+          "layout": "statement",
+          "bg": "ink",
+          "over": "Ramadan Mubarak",
+          "size": "l",
+          "h": "A gentler way to *order at iftar.*",
+          "ru": "Ramadan Mubarak, Lahore."
+        }
+      ],
+      "time": "16:30"
+    },
+    {
+      "n": 22,
+      "day": 30,
+      "date": "2027-02-11",
+      "weekday": "Thu",
+      "id": "iftar-see-it-first",
+      "pillar": "see-it-first",
+      "audience": "diners",
+      "format": "single",
+      "note": "Ramadan",
+      "caption": "At iftar, every minute before the azaan matters. See the dish, point, done.\n\nAzaan lagne se pehle, dekho aur order karo.\n\nSave this for your next iftar out.",
+      "hashtags": [
+        "#menva",
+        "#lahorefood",
+        "#lahorefoodies",
+        "#ramadan"
+      ],
+      "alt": "A phone showing a real dish at an iftar table, placed in AR.",
+      "slides": [
+        {
+          "layout": "phone",
+          "over": "At iftar",
+          "dish": "chicken-fajita-wrap",
+          "crop": "close",
+          "h": "See it. Point. *Done.*",
+          "b": "No back-and-forth with the waiter when the azaan is close."
+        }
+      ],
+      "time": "16:30"
+    },
+    {
+      "n": 23,
+      "day": 31,
+      "date": "2027-02-12",
+      "weekday": "Fri",
+      "id": "group-iftar-guide",
+      "pillar": "menu-truth",
+      "audience": "diners",
+      "format": "carousel",
+      "note": "Ramadan",
+      "caption": "Ordering for a big iftar table, without the chaos.\n\n1. Decide before you sit down, if you can.\n2. See the portion before you order.\n3. One person holds the list.\n4. Order enough to share, not to waste.\n\nAik list, sab ka khayal.\n\nSave it for your next family iftar.",
+      "hashtags": [
+        "#menva",
+        "#lahorefood",
+        "#lahorefoodies",
+        "#ramadan"
+      ],
+      "alt": "A four-step guide to ordering for a big iftar table.",
+      "slides": [
+        {
+          "layout": "statement",
+          "over": "Group iftar guide",
+          "n": "1/2",
+          "size": "l",
+          "h": "Big iftar table, *without the chaos.*",
+          "ru": "Aik list, sab ka khayal."
+        },
+        {
+          "layout": "list",
+          "over": "The rules",
+          "n": "2/2",
+          "h": "Four rules for *iftar*",
+          "items": [
+            "Decide before you sit down, if you can.",
+            "See the portion before you order.",
+            "One person holds the list.",
+            "Order enough to share, not to waste."
+          ]
+        }
+      ],
+      "time": "16:30"
+    },
+    {
+      "n": 24,
+      "day": 32,
+      "date": "2027-02-13",
+      "weekday": "Sat",
+      "id": "family-iftar",
+      "pillar": "relatable",
+      "audience": "diners",
+      "format": "single",
+      "note": "Ramadan",
+      "caption": "Family iftar: three generations, one table, and everyone hungry at the same time.\n\nShow Dadi the plate before it arrives, and there is no \"yeh kya mangwa liya\" once the azaan goes.\n\nDadi ko pehle dikha do. Phir koi shikayat nahi.\n\nTag the person who organises your family iftar.",
+      "hashtags": [
+        "#menva",
+        "#lahorefood",
+        "#lahorefoodies",
+        "#ramadan"
+      ],
+      "alt": "Text post about ordering for a big family iftar.",
+      "slides": [
+        {
+          "layout": "statement",
+          "bg": "sand",
+          "over": "Family iftar",
+          "h": "Three generations. *One table.*",
+          "ru": "Dadi ko pehle dikha do. Phir koi shikayat nahi."
+        }
+      ],
+      "time": "16:30"
+    },
+    {
+      "n": 25,
+      "day": 33,
+      "date": "2027-02-14",
+      "weekday": "Sun",
+      "id": "types-of-people-iftar-ready-early",
+      "pillar": "relatable",
+      "audience": "diners",
+      "format": "single",
+      "note": "Ramadan",
+      "caption": "The one at every iftar table who is ready with their hand on the water glass ten minutes before the azaan.\n\nRespect, honestly.\n\nTag them.",
+      "hashtags": [
+        "#menva",
+        "#lahorefood",
+        "#lahorefoodies",
+        "#ramadan"
+      ],
+      "alt": "Text post about the friend who is always ready early for iftar.",
+      "slides": [
+        {
+          "layout": "note",
+          "bg": "paper",
+          "over": "Iftar table, every day",
+          "h": "Hand on the glass. *Ten minutes early.*",
+          "ru": "Respect, honestly."
+        }
+      ],
+      "time": "16:30"
+    },
+    {
+      "n": 26,
+      "day": 35,
+      "date": "2027-02-16",
+      "weekday": "Tue",
+      "id": "no-back-and-forth-iftar",
+      "pillar": "see-it-first",
+      "audience": "diners",
+      "format": "single",
+      "note": "Ramadan",
+      "caption": "No back-and-forth with the waiter when the azaan is about to go. See the dish, decide, order.\n\nDekho, faisla karo, order karo. Bas.\n\nSave this for the next iftar out.",
+      "hashtags": [
+        "#menva",
+        "#lahorefood",
+        "#lahorefoodies",
+        "#ramadan"
+      ],
+      "alt": "Text post about ordering quickly and calmly at iftar.",
+      "slides": [
+        {
+          "layout": "statement",
+          "bg": "chili",
+          "over": "At iftar",
+          "h": "See it. Decide. *Order.*",
+          "ru": "Dekho, faisla karo, order karo. Bas."
+        }
+      ],
+      "time": "16:30"
+    },
+    {
+      "n": 27,
+      "day": 37,
+      "date": "2027-02-18",
+      "weekday": "Thu",
+      "id": "owners-ramadan-pilot",
+      "pillar": "for-restaurants",
+      "audience": "restaurants",
+      "format": "single",
+      "note": "Ramadan",
+      "caption": "Restaurant owners: this Ramadan, let your iftar menu do the talking before your staff have to.\n\nDM \"PILOT\" for the Lahore pilot.",
+      "hashtags": [
+        "#menva",
+        "#lahorerestaurants",
+        "#restaurantmarketing",
+        "#ramadan"
+      ],
+      "alt": "Text post for restaurants about their iftar menu.",
+      "slides": [
+        {
+          "layout": "cta",
+          "bg": "ink",
+          "over": "For restaurants",
+          "h": "Let your iftar menu *do the talking.*",
+          "b": "Lahore pilot: PKR 25,000.",
+          "actions": [
+            "DM \"PILOT\""
+          ]
+        }
+      ],
+      "time": "16:30"
+    },
+    {
+      "n": 28,
+      "day": 38,
+      "date": "2027-02-19",
+      "weekday": "Fri",
+      "id": "this-or-that-round-6-iftar",
+      "pillar": "relatable",
+      "audience": "diners",
+      "format": "single",
+      "note": "Ramadan",
+      "caption": "Iftar edition. Azaan is close, you get one to start.\n\nA: the steak sandwich\nB: the trio\n\nComment A or B before the plate goes cold.",
+      "hashtags": [
+        "#menva",
+        "#lahorefood",
+        "#lahorefoodies",
+        "#ramadan"
+      ],
+      "alt": "Two real dishes for iftar: a steak sandwich marked A and the trio marked B.",
+      "slides": [
+        {
+          "layout": "duo",
+          "over": "This or that · Iftar edition",
+          "h": "Azaan is close. *Pick one.*",
+          "dishes": [
+            "steak-sandwich",
+            "chicken-fajita-wrap"
+          ],
+          "crops": [
+            "close",
+            "close"
+          ],
+          "labels": [
+            "The sandwich",
+            "The trio"
+          ],
+          "b": "Comment A or B."
+        }
+      ],
+      "time": "16:30"
+    },
+    {
+      "n": 29,
+      "day": 39,
+      "date": "2027-02-20",
+      "weekday": "Sat",
+      "id": "enough-to-share-iftar",
+      "pillar": "menu-truth",
+      "audience": "diners",
+      "format": "single",
+      "note": "Ramadan",
+      "caption": "\"Is this enough for the whole table?\" is the iftar question nobody's menu answers.\n\nSee the portion at true size and answer it yourself, before the azaan.\n\nPuri family ke liye kaafi hai? Khud dekh lo.\n\nSave this for your next iftar order.",
+      "hashtags": [
+        "#menva",
+        "#lahorefood",
+        "#lahorefoodies",
+        "#ramadan"
+      ],
+      "alt": "A real steak board with the words: is this enough for the whole table?",
+      "slides": [
+        {
+          "layout": "hero",
+          "over": "The iftar question",
+          "dish": "steak-main",
+          "crop": "board",
+          "h": "Enough for *the whole table?*",
+          "b": "Puri family ke liye kaafi hai? Khud dekh lo."
+        }
+      ],
+      "time": "16:30"
+    },
+    {
+      "n": 30,
+      "day": 40,
+      "date": "2027-02-21",
+      "weekday": "Sun",
+      "id": "owners-ramadan-analytics",
+      "pillar": "for-restaurants",
+      "audience": "restaurants",
+      "format": "single",
+      "note": "Ramadan",
+      "caption": "During the pilot, a restaurant can see which dishes guests actually opened at iftar, and how many lists were shown to the waiter.\n\nReal numbers from your own tables. DM \"PILOT\".",
+      "hashtags": [
+        "#menva",
+        "#lahorerestaurants",
+        "#restaurantmarketing",
+        "#ramadan"
+      ],
+      "alt": "Text post for restaurants about iftar pilot analytics.",
+      "slides": [
+        {
+          "layout": "list",
+          "over": "For restaurants",
+          "h": "What you see *during iftar*",
+          "items": [
+            "Which dishes guests opened",
+            "How often they were placed in AR",
+            "Lists shown to your waiters"
+          ]
+        }
+      ],
+      "time": "16:30"
+    },
+    {
+      "n": 31,
+      "day": 42,
+      "date": "2027-02-23",
+      "weekday": "Tue",
+      "id": "types-of-people-9-dessert-first",
+      "pillar": "relatable",
+      "audience": "diners",
+      "format": "single",
+      "note": "Ramadan",
+      "caption": "Types of people at dinner, part nine: the one who plans the dessert order before the mains even arrive.\n\n\"Pehle sweet dish confirm karo, baaki baad mein.\"\n\nTag them.",
+      "hashtags": [
+        "#menva",
+        "#lahorefood",
+        "#lahorefoodies",
+        "#ramadan"
+      ],
+      "alt": "Text post about the friend who orders dessert first.",
+      "slides": [
+        {
+          "layout": "note",
+          "bg": "paper",
+          "over": "Types of people at dinner · 9",
+          "h": "Dessert first. *Mains, whenever.*",
+          "ru": "\"Pehle sweet dish confirm karo, baaki baad mein.\""
+        }
+      ],
+      "time": "16:30"
+    },
+    {
+      "n": 32,
+      "day": 44,
+      "date": "2027-02-25",
+      "weekday": "Thu",
+      "id": "closeup-steak-2",
+      "pillar": "see-it-first",
+      "audience": "diners",
+      "format": "single",
+      "note": "Ramadan",
+      "caption": "Look at that sear. A scan of the real steak, not a render made on a screen.\n\nAsli cheez, asli size.\n\nSave this for your next iftar or dinner out.",
+      "hashtags": [
+        "#menva",
+        "#lahorefood",
+        "#lahorefoodies",
+        "#steak"
+      ],
+      "alt": "Close-up of a real grilled steak, scanned in 3D.",
+      "slides": [
+        {
+          "layout": "closeup",
+          "dish": "steak-main",
+          "crop": "steak",
+          "over": "Zoom in",
+          "h": "Close enough to *count the grill marks.*"
+        }
+      ],
+      "time": "16:30"
+    },
+    {
+      "n": 33,
+      "day": 45,
+      "date": "2027-02-26",
+      "weekday": "Fri",
+      "id": "no-ai-food-reminder",
+      "pillar": "behind-the-scan",
+      "audience": "both",
+      "format": "single",
+      "note": "Ramadan",
+      "caption": "A reminder for the season: no AI-generated food on MENVA, ever. Every dish is a scan of a real plate from a real kitchen.\n\nAsli khana, iftar ho ya koi aur waqt.\n\nSave this if you have ever doubted a menu photo.",
+      "hashtags": [
+        "#menva",
+        "#lahorefood",
+        "#lahorefoodies",
+        "#realfood"
+      ],
+      "alt": "Text post: no AI food, ever, a reminder.",
+      "slides": [
+        {
+          "layout": "statement",
+          "bg": "ink",
+          "over": "A promise",
+          "h": "No AI food. *Ever.*",
+          "b": "Every dish is a scan of a real plate from a real kitchen.",
+          "ru": "Asli khana, iftar ho ya koi aur waqt."
+        }
+      ],
+      "time": "16:30"
+    },
+    {
+      "n": 34,
+      "day": 46,
+      "date": "2027-02-27",
+      "weekday": "Sat",
+      "id": "sehri-late-night",
+      "pillar": "relatable",
+      "audience": "diners",
+      "format": "single",
+      "note": "Ramadan",
+      "caption": "Sehri runs at three in the morning are their own kind of dedication.\n\nHalf asleep is not the time to be guessing what you are ordering.\n\nAankhen khuli rakho, order theek karo.\n\nTag your sehri crew.",
+      "hashtags": [
+        "#menva",
+        "#lahorefood",
+        "#lahorefoodies",
+        "#ramadan"
+      ],
+      "alt": "Text post about late-night sehri runs during Ramadan.",
+      "slides": [
+        {
+          "layout": "statement",
+          "bg": "sand",
+          "over": "Sehri run",
+          "h": "Half asleep. *Order right anyway.*",
+          "ru": "Aankhen khuli rakho, order theek karo."
+        }
+      ],
+      "time": "16:30"
+    },
+    {
+      "n": 35,
+      "day": 47,
+      "date": "2027-02-28",
+      "weekday": "Sun",
+      "id": "owners-myths-round-2",
+      "pillar": "for-restaurants",
+      "audience": "restaurants",
+      "format": "carousel",
+      "note": "Ramadan",
+      "caption": "Three more myths about 3D menus, from owners we have spoken to this Ramadan.\n\n\"It only works for fancy places.\" It works for any menu with real dishes.\n\"Guests are too busy fasting to scan a code.\" A scan takes seconds.\n\"It replaces the waiter.\" It never does.\n\nDM \"PILOT\" if you want to see it on your own table.",
+      "hashtags": [
+        "#menva",
+        "#lahorerestaurants",
+        "#restaurantmarketing",
+        "#ramadan"
+      ],
+      "alt": "Carousel: three more myths about 3D menus.",
+      "slides": [
+        {
+          "layout": "statement",
+          "bg": "ink",
+          "over": "Myth vs fact",
+          "n": "1/4",
+          "size": "l",
+          "h": "Three more myths, *answered.*"
+        },
+        {
+          "layout": "statement",
+          "over": "Myth 1",
+          "n": "2/4",
+          "h": "\"It's only for *fancy places.*\"",
+          "b": "It works for any menu with real dishes."
+        },
+        {
+          "layout": "statement",
+          "over": "Myth 2",
+          "n": "3/4",
+          "h": "\"Guests are *too busy* to scan.\"",
+          "b": "A scan takes seconds, even at a full iftar table."
+        },
+        {
+          "layout": "statement",
+          "over": "Myth 3",
+          "n": "4/4",
+          "h": "\"It *replaces* the waiter.\"",
+          "b": "It never does. Your waiter still takes the order."
+        }
+      ],
+      "time": "16:30"
+    },
+    {
+      "n": 36,
+      "day": 49,
+      "date": "2027-03-02",
+      "weekday": "Tue",
+      "id": "eid-coming-soon",
+      "pillar": "relatable",
+      "audience": "diners",
+      "format": "single",
+      "note": "Ahead of Eid ul Fitr, subject to moon sighting",
+      "caption": "Eid is close. Somewhere a family group chat is already arguing about where to go for the Eid dawat.\n\nEid qareeb hai. Jagah decide karo, order hum sambhal lenge.\n\nSend this to that group chat.",
+      "hashtags": [
+        "#menva",
+        "#lahorefood",
+        "#lahorefoodies",
+        "#eid"
+      ],
+      "alt": "Text post: Eid is close, plan the family dawat.",
+      "slides": [
+        {
+          "layout": "statement",
+          "bg": "chili",
+          "over": "Ahead of Eid",
+          "h": "Eid qareeb hai. *Group chat, get ready.*",
+          "ru": "Jagah decide karo, order hum sambhal lenge."
+        }
+      ]
+    },
+    {
+      "n": 37,
+      "day": 51,
+      "date": "2027-03-04",
+      "weekday": "Thu",
+      "id": "turn-it-around-2",
+      "pillar": "see-it-first",
+      "audience": "diners",
+      "format": "single",
+      "caption": "A menu photo never shows you the side of the plate. A 3D dish lets you spin it and check.\n\nGhoom ke dekho, phir faisla karo.\n\nSave this and try it: link in bio.",
+      "hashtags": [
+        "#menva",
+        "#lahorefood",
+        "#lahorefoodies",
+        "#3dscan"
+      ],
+      "alt": "A real plate of food, scanned in 3D, with the words: spin it, then decide.",
+      "slides": [
+        {
+          "layout": "closeup",
+          "dish": "garlic-prawn-skewers",
+          "crop": "close",
+          "over": "One finger",
+          "h": "Spin it. *Then decide.*",
+          "b": "See every side before you order."
+        }
+      ]
+    },
+    {
+      "n": 38,
+      "day": 52,
+      "date": "2027-03-05",
+      "weekday": "Fri",
+      "id": "owners-eid-rush",
+      "pillar": "for-restaurants",
+      "audience": "restaurants",
+      "format": "single",
+      "note": "Ahead of Eid",
+      "caption": "Eid week fills every table in Lahore. Guests who can see the dish decide faster, and your staff can focus on hosting instead of describing the menu twice.\n\nDM \"PILOT\" to get set up before Eid.",
+      "hashtags": [
+        "#menva",
+        "#lahorerestaurants",
+        "#restaurantmarketing",
+        "#eid"
+      ],
+      "alt": "Text post for restaurants ahead of Eid week.",
+      "slides": [
+        {
+          "layout": "statement",
+          "bg": "ink",
+          "over": "Ahead of Eid",
+          "size": "l",
+          "h": "Eid week fills *every table.*",
+          "b": "Guests who can see the dish decide faster."
+        }
+      ]
+    },
+    {
+      "n": 39,
+      "day": 53,
+      "date": "2027-03-06",
+      "weekday": "Sat",
+      "id": "this-or-that-round-7",
+      "pillar": "relatable",
+      "audience": "diners",
+      "format": "single",
+      "note": "Ahead of Eid",
+      "caption": "Round seven. Weekend before Eid, one plate, your call.\n\nA: the steak board\nB: the steak sandwich\n\nComment A or B.",
+      "hashtags": [
+        "#menva",
+        "#lahorefood",
+        "#lahorefoodies",
+        "#lahoreeats"
+      ],
+      "alt": "Two real dishes: a steak board marked A and a steak sandwich marked B.",
+      "slides": [
+        {
+          "layout": "duo",
+          "over": "This or that · Round 7",
+          "h": "Weekend before Eid. *Pick one.*",
+          "dishes": [
+            "steak-main",
+            "steak-sandwich"
+          ],
+          "crops": [
+            "sides",
+            "full"
+          ],
+          "labels": [
+            "The steak board",
+            "The sandwich"
+          ],
+          "b": "Comment A or B."
+        }
+      ]
+    },
+    {
+      "n": 40,
+      "day": 54,
+      "date": "2027-03-07",
+      "weekday": "Sun",
+      "id": "portion-for-eid-dawat",
+      "pillar": "menu-truth",
+      "audience": "diners",
+      "format": "single",
+      "note": "Ahead of Eid",
+      "caption": "Ordering for the Eid dawat? See the portion before you commit to it, not after the whole family is at the table.\n\nPehle size dekho, phir order karo.\n\nSave this for the planning group chat.",
+      "hashtags": [
+        "#menva",
+        "#lahorefood",
+        "#lahorefoodies",
+        "#eid"
+      ],
+      "alt": "A real steak board with the words: see the portion before the whole family arrives.",
+      "slides": [
+        {
+          "layout": "hero",
+          "bg": "sand",
+          "over": "Ahead of Eid",
+          "dish": "steak-main",
+          "crop": "board",
+          "h": "See the portion *before everyone arrives.*",
+          "b": "Pehle size dekho, phir order karo."
+        }
+      ]
+    },
+    {
+      "n": 41,
+      "day": 56,
+      "date": "2027-03-09",
+      "weekday": "Tue",
+      "id": "eid-ul-fitr",
+      "pillar": "relatable",
+      "audience": "diners",
+      "format": "carousel",
+      "note": "Eid ul Fitr is expected around this time, subject to moon sighting",
+      "caption": "Eid Mubarak, Lahore.\n\nHowever your table is set today, we hope it is full and nobody is still deciding what to order.\n\nEid Mubarak. Khushiyan aur barkatein aap sab ke ghar aayein.\n\nTag the family you are celebrating with.",
+      "hashtags": [
+        "#menva",
+        "#lahorefood",
+        "#lahorefoodies",
+        "#eid"
+      ],
+      "alt": "Carousel marking Eid ul Fitr with a real dish and a greeting.",
+      "slides": [
+        {
+          "layout": "statement",
+          "bg": "chili",
+          "over": "Eid Mubarak",
+          "n": "1/3",
+          "size": "xl",
+          "h": "Eid *Mubarak.*"
+        },
+        {
+          "layout": "hero",
+          "over": "The dawat table",
+          "n": "2/3",
+          "dish": "steak-main",
+          "crop": "board",
+          "h": "However it's set, *we hope it's full.*"
+        },
+        {
+          "layout": "statement",
+          "over": "3/3",
+          "h": "Khushiyan aur barkatein *aap sab ke ghar aayein.*",
+          "b": "Tag the family you're celebrating with."
+        }
+      ]
+    },
+    {
+      "n": 42,
+      "day": 58,
+      "date": "2027-03-11",
+      "weekday": "Thu",
+      "id": "eid-dawat-marathon",
+      "pillar": "see-it-first",
+      "audience": "diners",
+      "format": "single",
+      "note": "Eid week",
+      "caption": "The Eid dawat marathon: three houses, three tables, three menus to figure out.\n\nSee each plate before you order it, every single time.\n\nTeen ghar, teen dawatein — har jagah pehle dekh lo.\n\nSave this for your Eid week rounds.",
+      "hashtags": [
+        "#menva",
+        "#lahorefood",
+        "#lahorefoodies",
+        "#eid"
+      ],
+      "alt": "A phone showing a real dish placed on a table in AR during Eid week.",
+      "slides": [
+        {
+          "layout": "phone",
+          "over": "Eid week",
+          "dish": "chicken-fajita-wrap",
+          "crop": "close",
+          "h": "Three houses. *Three dawats.*",
+          "b": "See each plate before you order it, every time."
+        }
+      ]
+    },
+    {
+      "n": 43,
+      "day": 59,
+      "date": "2027-03-12",
+      "weekday": "Fri",
+      "id": "owners-eid-week",
+      "pillar": "for-restaurants",
+      "audience": "restaurants",
+      "format": "single",
+      "note": "Eid week",
+      "caption": "Eid week bookings fill up fast. Give guests a reason to choose your table before they even arrive: a menu they can actually see.\n\nDM \"PILOT\" for the Lahore pilot.",
+      "hashtags": [
+        "#menva",
+        "#lahorerestaurants",
+        "#restaurantmarketing",
+        "#eid"
+      ],
+      "alt": "Text post for restaurants about Eid week bookings.",
+      "slides": [
+        {
+          "layout": "cta",
+          "bg": "ink",
+          "over": "For restaurants",
+          "h": "Eid bookings fill fast. *Give guests a reason.*",
+          "b": "A menu they can actually see, before they arrive.",
+          "actions": [
+            "DM \"PILOT\""
+          ]
+        }
+      ]
+    },
+    {
+      "n": 44,
+      "day": 60,
+      "date": "2027-03-13",
+      "weekday": "Sat",
+      "id": "types-of-people-10-table-captain",
+      "pillar": "relatable",
+      "audience": "diners",
+      "format": "single",
+      "note": "Eid week",
+      "caption": "Types of people at dinner, part ten: the relative who insists on ordering for the entire Eid table, no exceptions.\n\n\"Tum log kuch mat kaho, main dekh leta hoon.\"\n\nTag that relative.",
+      "hashtags": [
+        "#menva",
+        "#lahorefood",
+        "#lahorefoodies",
+        "#eid"
+      ],
+      "alt": "Text post about the relative who orders for everyone at Eid dawat.",
+      "slides": [
+        {
+          "layout": "note",
+          "bg": "chili",
+          "over": "Types of people at dinner · 10",
+          "h": "The Eid table captain.",
+          "ru": "\"Tum log kuch mat kaho, main dekh leta hoon.\""
+        }
+      ]
+    },
+    {
+      "n": 45,
+      "day": 61,
+      "date": "2027-03-14",
+      "weekday": "Sun",
+      "id": "new-restaurant-checklist-2",
+      "pillar": "menu-truth",
+      "audience": "diners",
+      "format": "single",
+      "caption": "A short checklist for trying somewhere new this spring.\n\n1. See the portion before you order.\n2. Check what is actually on the plate.\n3. Ask about spice if you are unsure.\n4. Order one thing you have never had.\n\nSave it. Use it this weekend.",
+      "hashtags": [
+        "#menva",
+        "#lahorefood",
+        "#lahorefoodies",
+        "#lahoreeats"
+      ],
+      "alt": "Checklist for trying a new restaurant.",
+      "slides": [
+        {
+          "layout": "list",
+          "over": "Save this",
+          "h": "New place? *Checklist.*",
+          "items": [
+            "See the portion before you order",
+            "Check what's actually on the plate",
+            "Ask about spice if you're unsure",
+            "Order one thing you've never had"
+          ]
+        }
+      ]
+    },
+    {
+      "n": 46,
+      "day": 63,
+      "date": "2027-03-16",
+      "weekday": "Tue",
+      "id": "spring-in-lahore",
+      "pillar": "relatable",
+      "audience": "diners",
+      "format": "single",
+      "note": "Spring in Lahore",
+      "caption": "Spring has landed in Lahore. Parks are green again, patios are full, and everyone suddenly has dinner plans.\n\nBaharon ka mausam, aur khane ke plan bhi zyada.\n\nTag the friend you are finally taking outside again.",
+      "hashtags": [
+        "#menva",
+        "#lahorefood",
+        "#lahorefoodies",
+        "#springinlahore"
+      ],
+      "alt": "Text post about spring arriving in Lahore.",
+      "slides": [
+        {
+          "layout": "statement",
+          "bg": "sand",
+          "over": "Jashn-e-Baharan",
+          "h": "Spring is here. *So are the dinner plans.*",
+          "ru": "Baharon ka mausam, aur khane ke plan bhi zyada."
+        }
+      ]
+    },
+    {
+      "n": 47,
+      "day": 65,
+      "date": "2027-03-18",
+      "weekday": "Thu",
+      "id": "how-we-scan-revisit",
+      "pillar": "behind-the-scan",
+      "audience": "both",
+      "format": "carousel",
+      "caption": "A quick reminder of how a dish becomes a scan on MENVA.\n\n1. The real plate is photographed from every angle.\n2. Those photos are rebuilt into a 3D model.\n3. It is cleaned, checked and made light for restaurant wifi.\n4. It goes on the menu, behind the table QR.\n\nNo AI-generated food, ever. Save this if you have ever wondered how it works.",
+      "hashtags": [
+        "#menva",
+        "#lahorefood",
+        "#lahorefoodies",
+        "#3dscan",
+        "#behindthescenes"
+      ],
+      "alt": "Carousel explaining how a dish becomes a 3D scan.",
+      "slides": [
+        {
+          "layout": "statement",
+          "over": "Behind the scan",
+          "n": "1/4",
+          "size": "l",
+          "h": "How a dish becomes *a scan.*"
+        },
+        {
+          "layout": "step",
+          "over": "Step 1",
+          "n": "2/4",
+          "num": "01",
+          "h": "Photograph the *real plate*",
+          "b": "From every angle, all the way around."
+        },
+        {
+          "layout": "step",
+          "over": "Step 2",
+          "n": "3/4",
+          "num": "02",
+          "h": "Rebuild it *in 3D*",
+          "b": "Cleaned, checked, light enough for restaurant wifi.",
+          "dish": "steak-sandwich",
+          "crop": "close"
+        },
+        {
+          "layout": "step",
+          "over": "Step 3",
+          "n": "4/4",
+          "num": "03",
+          "h": "Onto *your table*",
+          "b": "Behind the QR. No AI food, ever.",
+          "dish": "chicken-fajita-wrap",
+          "crop": "board"
+        }
+      ]
+    },
+    {
+      "n": 48,
+      "day": 66,
+      "date": "2027-03-19",
+      "weekday": "Fri",
+      "id": "owners-spring-patio",
+      "pillar": "for-restaurants",
+      "audience": "restaurants",
+      "format": "carousel",
+      "note": "Spring in Lahore",
+      "caption": "Spring means patio season in Lahore. New guests, new crowds, and a first impression that happens before anyone sits down.\n\nMake that first impression the real plate, in 3D, straight from the table QR.\n\nDM \"PILOT\".",
+      "hashtags": [
+        "#menva",
+        "#lahorerestaurants",
+        "#restaurantmarketing",
+        "#lahorefood"
+      ],
+      "alt": "Carousel for restaurants about spring patio season.",
+      "slides": [
+        {
+          "layout": "statement",
+          "bg": "ink",
+          "over": "Spring season",
+          "n": "1/3",
+          "size": "l",
+          "h": "Patio season *is back.*"
+        },
+        {
+          "layout": "hero",
+          "over": "First impressions",
+          "n": "2/3",
+          "dish": "steak-main",
+          "crop": "board",
+          "h": "Your plating, *before they sit down.*"
+        },
+        {
+          "layout": "cta",
+          "bg": "chili",
+          "over": "3/3",
+          "h": "Be ready for *the new crowd.*",
+          "b": "Lahore pilot: PKR 25,000.",
+          "actions": [
+            "DM \"PILOT\""
+          ]
+        }
+      ]
+    },
+    {
+      "n": 49,
+      "day": 67,
+      "date": "2027-03-20",
+      "weekday": "Sat",
+      "id": "this-or-that-round-8-spring",
+      "pillar": "relatable",
+      "audience": "diners",
+      "format": "single",
+      "note": "Spring in Lahore",
+      "caption": "Round eight. First outdoor dinner of spring, one plate, your call.\n\nA: the green plate\nB: the steak sandwich\n\nComment A or B.",
+      "hashtags": [
+        "#menva",
+        "#lahorefood",
+        "#lahorefoodies",
+        "#springinlahore"
+      ],
+      "alt": "Two real dishes: the green plate marked A and a steak sandwich marked B.",
+      "slides": [
+        {
+          "layout": "duo",
+          "over": "This or that · Round 8",
+          "h": "First patio dinner. *Pick one.*",
+          "dishes": [
+            "garlic-prawn-skewers",
+            "steak-sandwich"
+          ],
+          "labels": [
+            "The green plate",
+            "The sandwich"
+          ],
+          "b": "Comment A or B."
+        }
+      ]
+    },
+    {
+      "n": 50,
+      "day": 68,
+      "date": "2027-03-21",
+      "weekday": "Sun",
+      "id": "split-compare-2",
+      "pillar": "menu-truth",
+      "audience": "diners",
+      "format": "single",
+      "caption": "Left: what a menu gives you. Right: what MENVA gives you.\n\nComment which one makes you hungrier. Be honest.",
+      "hashtags": [
+        "#menva",
+        "#lahorefood",
+        "#lahorefoodies",
+        "#foodiesoflahore"
+      ],
+      "alt": "Side by side: a plain menu line next to a real dish in 3D.",
+      "slides": [
+        {
+          "layout": "split",
+          "over": "Same dish, two menus",
+          "h": "Which one makes you *hungry?*",
+          "menuLine": "Chef's plate",
+          "menuDesc": "Grilled, served with greens.",
+          "dish": "garlic-prawn-skewers",
+          "crop": "close",
+          "leftLabel": "Printed menu",
+          "rightLabel": "On MENVA"
+        }
+      ]
+    },
+    {
+      "n": 51,
+      "day": 70,
+      "date": "2027-03-23",
+      "weekday": "Tue",
+      "id": "pakistan-day",
+      "pillar": "relatable",
+      "audience": "diners",
+      "format": "single",
+      "note": "Pakistan Day, 23 March",
+      "caption": "Happy Pakistan Day, Lahore.\n\nHowever you are marking it today, we hope there is good food on the table.\n\nPakistan Day Mubarak.\n\nComment where you're eating tonight.",
+      "hashtags": [
+        "#menva",
+        "#lahorefood",
+        "#lahorefoodies",
+        "#pakistanday"
+      ],
+      "alt": "Text post for Pakistan Day, 23 March.",
+      "slides": [
+        {
+          "layout": "statement",
+          "bg": "sand",
+          "over": "23 March",
+          "h": "Pakistan Day. *Good food on the table.*"
+        }
+      ]
+    },
+    {
+      "n": 52,
+      "day": 72,
+      "date": "2027-03-25",
+      "weekday": "Thu",
+      "id": "dish-drop-8-sandwich2",
+      "pillar": "see-it-first",
+      "audience": "diners",
+      "format": "single",
+      "caption": "Dish drop, week eight: the steak sandwich again, this time from above.\n\nComment your guess: bigger or smaller than it looks?",
+      "hashtags": [
+        "#menva",
+        "#lahorefood",
+        "#lahorefoodies",
+        "#dishdrop"
+      ],
+      "alt": "Dish drop week eight: a real steak sandwich scanned in 3D, viewed from above.",
+      "slides": [
+        {
+          "layout": "hero",
+          "over": "Dish drop · Week 8",
+          "dish": "steak-sandwich",
+          "crop": "full",
+          "h": "From *above.*",
+          "b": "Comment your guess: bigger or smaller than it looks?"
+        }
+      ]
+    },
+    {
+      "n": 53,
+      "day": 73,
+      "date": "2027-03-26",
+      "weekday": "Fri",
+      "id": "owners-general-1",
+      "pillar": "for-restaurants",
+      "audience": "restaurants",
+      "format": "single",
+      "caption": "Five signs your menu might be costing you orders, spring edition.\n\n1. No photos, or old ones.\n2. Guests ask what a dish looks like.\n3. Everyone orders the same safe dish.\n4. Portion size surprises people.\n5. Your best dish is invisible on page three.\n\nIf you nodded at two or more, DM \"PILOT\".",
+      "hashtags": [
+        "#menva",
+        "#lahorerestaurants",
+        "#restaurantmarketing",
+        "#menudesign"
+      ],
+      "alt": "Checklist: five signs your menu is costing you orders.",
+      "slides": [
+        {
+          "layout": "list",
+          "over": "For restaurants",
+          "h": "Five signs your menu is *costing you orders*",
+          "items": [
+            "No photos, or old ones",
+            "Guests ask what a dish looks like",
+            "Everyone orders the same safe dish",
+            "Portion size surprises people",
+            "Your best dish is invisible on page 3"
+          ]
+        }
+      ]
+    },
+    {
+      "n": 54,
+      "day": 74,
+      "date": "2027-03-27",
+      "weekday": "Sat",
+      "id": "spring-hangout-plan",
+      "pillar": "relatable",
+      "audience": "diners",
+      "format": "single",
+      "note": "Spring in Lahore",
+      "caption": "The group chat finally agrees on a place for spring. Now somebody has to agree on what to order.\n\nBaharon mein plan banana asaan hai, order karna mushkil.\n\nSend this to the group chat before the usual debate starts.",
+      "hashtags": [
+        "#menva",
+        "#lahorefood",
+        "#lahorefoodies",
+        "#springinlahore"
+      ],
+      "alt": "Text post about planning a spring hangout with friends.",
+      "slides": [
+        {
+          "layout": "statement",
+          "bg": "chili",
+          "over": "Spring plans",
+          "h": "Picking the place: easy. *Picking the order: not.*",
+          "ru": "Baharon mein plan banana asaan hai, order karna mushkil."
+        }
+      ]
+    },
+    {
+      "n": 55,
+      "day": 75,
+      "date": "2027-03-28",
+      "weekday": "Sun",
+      "id": "owners-general-2",
+      "pillar": "for-restaurants",
+      "audience": "restaurants",
+      "format": "single",
+      "caption": "A guest who can see your food before they order it is a guest who trusts your kitchen already.\n\nThat trust starts at the table, with the menu.\n\nDM \"PILOT\" for the Lahore pilot.",
+      "hashtags": [
+        "#menva",
+        "#lahorerestaurants",
+        "#restaurantmarketing",
+        "#hospitalitypk"
+      ],
+      "alt": "Text post for restaurants about guest trust.",
+      "slides": [
+        {
+          "layout": "note",
+          "bg": "ink",
+          "over": "For restaurants",
+          "h": "Trust starts at *the table.*",
+          "b": "Let the menu earn it."
+        }
+      ]
+    },
+    {
+      "n": 56,
+      "day": 77,
+      "date": "2027-03-30",
+      "weekday": "Tue",
+      "id": "this-or-that-round-9",
+      "pillar": "relatable",
+      "audience": "diners",
+      "format": "single",
+      "caption": "Round nine. End of the month, one plate, your call.\n\nA: the steak board\nB: the trio\n\nComment A or B.",
+      "hashtags": [
+        "#menva",
+        "#lahorefood",
+        "#lahorefoodies",
+        "#lahoreeats"
+      ],
+      "alt": "Two real dishes: a steak board marked A and the trio marked B.",
+      "slides": [
+        {
+          "layout": "duo",
+          "over": "This or that · Round 9",
+          "h": "End of the month. *Pick one.*",
+          "dishes": [
+            "steak-main",
+            "chicken-fajita-wrap"
+          ],
+          "crops": [
+            "board",
+            "board"
+          ],
+          "labels": [
+            "The steak board",
+            "The trio"
+          ],
+          "b": "Comment A or B."
+        }
+      ]
+    },
+    {
+      "n": 57,
+      "day": 79,
+      "date": "2027-04-01",
+      "weekday": "Thu",
+      "id": "closeup-general",
+      "pillar": "see-it-first",
+      "audience": "diners",
+      "format": "single",
+      "caption": "Close enough to see exactly what is on the plate. Nothing added, nothing painted on.\n\nAsli plate, asli tafseel.\n\nSave this for the next time a menu photo lets you down.",
+      "hashtags": [
+        "#menva",
+        "#lahorefood",
+        "#lahorefoodies",
+        "#3dscan"
+      ],
+      "alt": "Close-up of a real dish, scanned in 3D.",
+      "slides": [
+        {
+          "layout": "closeup",
+          "dish": "steak-sandwich",
+          "crop": "close",
+          "over": "Zoom in",
+          "h": "Nothing added. *Nothing painted on.*"
+        }
+      ]
+    },
+    {
+      "n": 58,
+      "day": 80,
+      "date": "2027-04-02",
+      "weekday": "Fri",
+      "id": "sight-test-4",
+      "pillar": "menu-truth",
+      "audience": "diners",
+      "format": "carousel",
+      "caption": "Sight test, round four. The menu says \"chef's plate, served with greens.\" Guess the size, then swipe.\n\nPehle andaza, phir haqeeqat.\n\nComment \"close\" or \"way off\".",
+      "hashtags": [
+        "#menva",
+        "#lahorefood",
+        "#lahorefoodies",
+        "#sighttest"
+      ],
+      "alt": "Sight test round four: guess the size before seeing the real plate.",
+      "slides": [
+        {
+          "layout": "split",
+          "over": "Step 1: guess",
+          "n": "1/2",
+          "h": "Guess *this.*",
+          "menuLine": "Chef's plate",
+          "menuDesc": "Grilled, served with greens.",
+          "dish": "garlic-prawn-skewers",
+          "crop": "close",
+          "leftLabel": "The menu says",
+          "rightLabel": "Swipe for size"
+        },
+        {
+          "layout": "hero",
+          "over": "Step 2: see",
+          "n": "2/2",
+          "dish": "garlic-prawn-skewers",
+          "crop": "full",
+          "h": "Real size. *How close were you?*"
+        }
+      ]
+    },
+    {
+      "n": 59,
+      "day": 81,
+      "date": "2027-04-03",
+      "weekday": "Sat",
+      "id": "exam-season-begins",
+      "pillar": "relatable",
+      "audience": "diners",
+      "format": "single",
+      "note": "Exam season",
+      "caption": "Exam season is back, which means every dinner out is squeezed between two papers.\n\nWhen you only have thirty minutes, see the dish first and order in one go.\n\nPapers ke beech thoda break, order fast rakho.\n\nTag your study group.",
+      "hashtags": [
+        "#menva",
+        "#lahorefood",
+        "#lahorefoodies",
+        "#examseason"
+      ],
+      "alt": "Text post about exam season and quick dinners.",
+      "slides": [
+        {
+          "layout": "statement",
+          "bg": "sand",
+          "over": "Exam season",
+          "h": "Thirty minutes. *Order in one go.*",
+          "ru": "Papers ke beech thoda break, order fast rakho."
+        }
+      ]
+    },
+    {
+      "n": 60,
+      "day": 82,
+      "date": "2027-04-04",
+      "weekday": "Sun",
+      "id": "owners-campus-area",
+      "pillar": "for-restaurants",
+      "audience": "restaurants",
+      "format": "carousel",
+      "note": "Exam season",
+      "caption": "For restaurants near campus: exam season means guests who are in a hurry and want to decide fast.\n\nA menu they can see, not just read, gets them ordering in seconds.\n\nDM \"PILOT\" for the Lahore pilot.",
+      "hashtags": [
+        "#menva",
+        "#lahorerestaurants",
+        "#restaurantmarketing",
+        "#examseason"
+      ],
+      "alt": "Carousel for restaurants near campuses during exam season.",
+      "slides": [
+        {
+          "layout": "statement",
+          "bg": "ink",
+          "over": "For restaurants",
+          "n": "1/3",
+          "size": "l",
+          "h": "Exam season means guests *in a hurry.*"
+        },
+        {
+          "layout": "list",
+          "over": "What helps",
+          "n": "2/3",
+          "h": "Faster *decisions*",
+          "items": [
+            "A menu guests can see, not just read",
+            "Fewer questions for your staff to answer",
+            "One clear list, straight to the waiter"
+          ]
+        },
+        {
+          "layout": "cta",
+          "bg": "chili",
+          "over": "3/3",
+          "h": "Get them ordering *in seconds.*",
+          "b": "Lahore pilot: PKR 25,000.",
+          "actions": [
+            "DM \"PILOT\""
+          ]
+        }
+      ]
+    },
+    {
+      "n": 61,
+      "day": 84,
+      "date": "2027-04-06",
+      "weekday": "Tue",
+      "id": "study-break-dinner",
+      "pillar": "relatable",
+      "audience": "diners",
+      "format": "single",
+      "note": "Exam season",
+      "caption": "Study break dinner rule: decide before you leave the house, or you will lose the whole break to the menu.\n\nGhar se nikalne se pehle order soch lo.\n\nSend this to your exam group chat.",
+      "hashtags": [
+        "#menva",
+        "#lahorefood",
+        "#lahorefoodies",
+        "#examseason"
+      ],
+      "alt": "Text post about deciding dinner before a study break ends.",
+      "slides": [
+        {
+          "layout": "statement",
+          "bg": "chili",
+          "over": "Study break",
+          "h": "Decide *before you leave the house.*",
+          "ru": "Ghar se nikalne se pehle order soch lo."
+        }
+      ]
+    },
+    {
+      "n": 62,
+      "day": 86,
+      "date": "2027-04-08",
+      "weekday": "Thu",
+      "id": "dish-drop-9",
+      "pillar": "see-it-first",
+      "audience": "diners",
+      "format": "single",
+      "note": "Exam season",
+      "caption": "Dish drop, week nine: the trio, three of them, side by side, real size.\n\nEnough for a quick study-break dinner for two? Comment your answer.",
+      "hashtags": [
+        "#menva",
+        "#lahorefood",
+        "#lahorefoodies",
+        "#dishdrop"
+      ],
+      "alt": "Dish drop week nine: three filled items on a board, scanned in 3D.",
+      "slides": [
+        {
+          "layout": "hero",
+          "over": "Dish drop · Week 9",
+          "dish": "chicken-fajita-wrap",
+          "crop": "board",
+          "h": "Enough for *two, quickly?*",
+          "b": "Comment your answer."
+        }
+      ]
+    },
+    {
+      "n": 63,
+      "day": 87,
+      "date": "2027-04-09",
+      "weekday": "Fri",
+      "id": "budget-exam-season",
+      "pillar": "menu-truth",
+      "audience": "diners",
+      "format": "single",
+      "note": "Exam season",
+      "caption": "Exam season budget rule: never pay for a surprise. See exactly what you are getting before the week's last rupees go on dinner.\n\nBudget tight hai? Pehle dekh lo, phir kharcha karo.\n\nSend this to your hostel group.",
+      "hashtags": [
+        "#menva",
+        "#lahorefood",
+        "#lahorefoodies",
+        "#examseason"
+      ],
+      "alt": "Text post: exam season budget rule, never pay for a surprise.",
+      "slides": [
+        {
+          "layout": "statement",
+          "bg": "sand",
+          "over": "Exam season, rule 1",
+          "h": "Never pay for *a surprise.*",
+          "ru": "Budget tight hai? Pehle dekh lo, phir kharcha karo."
+        }
+      ]
+    },
+    {
+      "n": 64,
+      "day": 88,
+      "date": "2027-04-10",
+      "weekday": "Sat",
+      "id": "this-or-that-round-10",
+      "pillar": "relatable",
+      "audience": "diners",
+      "format": "single",
+      "note": "Exam season",
+      "caption": "Round ten. Weekend after a long week of papers, one plate, your call.\n\nA: the steak sandwich\nB: the green plate\n\nComment A or B.",
+      "hashtags": [
+        "#menva",
+        "#lahorefood",
+        "#lahorefoodies",
+        "#lahoreeats"
+      ],
+      "alt": "Two real dishes: a steak sandwich marked A and the green plate marked B.",
+      "slides": [
+        {
+          "layout": "duo",
+          "over": "This or that · Round 10",
+          "h": "Papers are over. *Pick one.*",
+          "dishes": [
+            "steak-sandwich",
+            "garlic-prawn-skewers"
+          ],
+          "labels": [
+            "The sandwich",
+            "The green plate"
+          ],
+          "b": "Comment A or B."
+        }
+      ]
+    },
+    {
+      "n": 65,
+      "day": 89,
+      "date": "2027-04-11",
+      "weekday": "Sun",
+      "id": "note-from-team-2",
+      "pillar": "behind-the-scan",
+      "audience": "both",
+      "format": "single",
+      "caption": "A short note from the team.\n\nWe are still scanning the same four dishes, still refusing to fake a photo, and still building this one honest habit at a time: see it, then order it.\n\nOrder se pehle dekh lo. Wahi baat hai.\n\nSend this to a friend who's followed along this season.",
+      "hashtags": [
+        "#menva",
+        "#lahorefood",
+        "#lahorefoodies"
+      ],
+      "alt": "A note from the MENVA team.",
+      "slides": [
+        {
+          "layout": "note",
+          "bg": "ink",
+          "over": "From the team",
+          "h": "Still the same *honest habit.*",
+          "ru": "Order se pehle dekh lo. Wahi baat hai.",
+          "by": "Team MENVA"
+        }
+      ]
+    },
+    {
+      "n": 66,
+      "day": 91,
+      "date": "2027-04-13",
+      "weekday": "Tue",
+      "id": "papers-done-celebrate",
+      "pillar": "relatable",
+      "audience": "diners",
+      "format": "single",
+      "note": "End of exam season",
+      "caption": "Papers are done. First proper dinner out in weeks, and this time nobody is watching the clock.\n\nPapers khatam, ab khana aaram se.\n\nTag the friend you're finally celebrating with.",
+      "hashtags": [
+        "#menva",
+        "#lahorefood",
+        "#lahorefoodies",
+        "#examseason"
+      ],
+      "alt": "Text post about celebrating the end of exam season.",
+      "slides": [
+        {
+          "layout": "statement",
+          "bg": "chili",
+          "over": "Papers done",
+          "h": "Finally, *dinner without a clock.*",
+          "ru": "Papers khatam, ab khana aaram se."
+        }
+      ]
+    },
+    {
+      "n": 67,
+      "day": 93,
+      "date": "2027-04-15",
+      "weekday": "Thu",
+      "id": "show-the-waiter-2",
+      "pillar": "see-it-first",
+      "audience": "diners",
+      "format": "single",
+      "caption": "MENVA still does not take your order. The waiter does.\n\nAdd what you want, note what you don't, then turn your phone around.\n\nWaiter ko list dikhao, baat khatam.\n\nSave this if you haven't tried it yet.",
+      "hashtags": [
+        "#menva",
+        "#lahorefood",
+        "#lahorefoodies",
+        "#3dmenu"
+      ],
+      "alt": "A phone showing the show the waiter list.",
+      "slides": [
+        {
+          "layout": "phone",
+          "over": "Show the waiter",
+          "dish": "garlic-prawn-skewers",
+          "crop": "close",
+          "h": "Build your list. *Show the waiter.*",
+          "b": "Notes like \"no onions\" included.",
+          "pill": "Show the waiter"
+        }
+      ]
+    },
+    {
+      "n": 68,
+      "day": 94,
+      "date": "2027-04-16",
+      "weekday": "Fri",
+      "id": "how-pilot-works-recap",
+      "pillar": "for-restaurants",
+      "audience": "restaurants",
+      "format": "carousel",
+      "caption": "A recap for new followers: how the MENVA pilot works for a restaurant.\n\n1. Your signature dishes are scanned in 3D.\n2. Your menu goes live behind a QR on every table.\n3. Guests see the dish, then order with your staff.\n4. You see what guests looked at.\n\nDM \"PILOT\".",
+      "hashtags": [
+        "#menva",
+        "#lahorerestaurants",
+        "#restaurantmarketing",
+        "#hospitalitypk"
+      ],
+      "alt": "Carousel recap: how the MENVA pilot works for restaurants.",
+      "slides": [
+        {
+          "layout": "statement",
+          "bg": "ink",
+          "over": "For restaurants",
+          "n": "1/4",
+          "size": "l",
+          "h": "How the pilot *works.*"
+        },
+        {
+          "layout": "step",
+          "over": "Step 1",
+          "n": "2/4",
+          "num": "01",
+          "h": "Your signature dishes, *in 3D*",
+          "dish": "steak-main",
+          "crop": "board"
+        },
+        {
+          "layout": "step",
+          "over": "Step 2",
+          "n": "3/4",
+          "num": "02",
+          "h": "A QR on *every table*",
+          "b": "No app. It opens straight in the browser."
+        },
+        {
+          "layout": "cta",
+          "bg": "chili",
+          "over": "4/4",
+          "h": "You see *what guests looked at.*",
+          "b": "Lahore pilot: PKR 25,000.",
+          "actions": [
+            "DM \"PILOT\""
+          ]
+        }
+      ]
+    },
+    {
+      "n": 69,
+      "day": 95,
+      "date": "2027-04-17",
+      "weekday": "Sat",
+      "id": "weekend-general",
+      "pillar": "relatable",
+      "audience": "diners",
+      "format": "single",
+      "caption": "Weekend plan: pick the place in two minutes, argue about the order for forty-five.\n\nMENVA fixes the second part.\n\nPlan bana lo, order hum sambhal lenge.\n\nSend this to the group chat still deciding.",
+      "hashtags": [
+        "#menva",
+        "#lahorefood",
+        "#lahorefoodies",
+        "#lahoreeats"
+      ],
+      "alt": "Text post about weekend dinner plans.",
+      "slides": [
+        {
+          "layout": "hero",
+          "bg": "sand",
+          "over": "Saturday",
+          "dish": "steak-sandwich",
+          "h": "Weekend plans, *sorted.*",
+          "b": "Where to go: two minutes. What to order: see it first."
+        }
+      ]
+    },
+    {
+      "n": 70,
+      "day": 96,
+      "date": "2027-04-18",
+      "weekday": "Sun",
+      "id": "checklist-wrapup",
+      "pillar": "menu-truth",
+      "audience": "diners",
+      "format": "single",
+      "caption": "Three things a 3D dish tells you that a menu line never will.\n\n1. How big it really is.\n2. What is actually on the plate.\n3. Whether it's a share or a solo order.\n\nSave this, and look for the QR on your next table.",
+      "hashtags": [
+        "#menva",
+        "#lahorefood",
+        "#lahorefoodies",
+        "#3dmenu"
+      ],
+      "alt": "Checklist: three things a 3D dish tells you.",
+      "slides": [
+        {
+          "layout": "list",
+          "over": "Before you order",
+          "h": "Three things a menu line *never tells you*",
+          "items": [
+            "How big it really is",
+            "What's actually on the plate",
+            "Whether it's a share or a solo order"
+          ]
+        }
+      ]
+    },
+    {
+      "n": 71,
+      "day": 98,
+      "date": "2027-04-20",
+      "weekday": "Tue",
+      "id": "owners-final-push",
+      "pillar": "for-restaurants",
+      "audience": "restaurants",
+      "format": "single",
+      "caption": "Lahore restaurants: every guest who has tagged a friend under our posts this season is telling you something. They want to see your food before they order it.\n\nDM \"PILOT\" for the Lahore pilot: PKR 25,000.",
+      "hashtags": [
+        "#menva",
+        "#lahorerestaurants",
+        "#restaurantmarketing",
+        "#lahorefood"
+      ],
+      "alt": "Text post for restaurants: your guests are asking.",
+      "slides": [
+        {
+          "layout": "cta",
+          "bg": "chili",
+          "over": "For restaurants",
+          "h": "Your guests are *still asking.*",
+          "b": "They want to see your food before they order it.",
+          "actions": [
+            "DM \"PILOT\"",
+            "Link in bio"
+          ]
+        }
+      ]
+    },
+    {
+      "n": 72,
+      "day": 100,
+      "date": "2027-04-22",
+      "weekday": "Thu",
+      "id": "day-100-v2",
+      "pillar": "behind-the-scan",
+      "audience": "both",
+      "format": "carousel",
+      "note": "Day 100 of season two (200 days of MENVA overall)",
+      "caption": "200 days of MENVA on Instagram, counting both seasons.\n\nSame idea, unchanged: see it on your table, then order it.\n\nDo sau din ho gaye. Idea wahi hai.\n\nRestaurants: DM \"PILOT\". Everyone else: tag the place you want scanned next.",
+      "hashtags": [
+        "#menva",
+        "#lahorefood",
+        "#lahorefoodies",
+        "#3dmenu"
+      ],
+      "alt": "Carousel marking 200 days of MENVA across two seasons.",
+      "slides": [
+        {
+          "layout": "statement",
+          "bg": "chili",
+          "over": "Day 100, season two",
+          "n": "1/3",
+          "size": "xl",
+          "h": "200 *days.*"
+        },
+        {
+          "layout": "hero",
+          "over": "Same idea",
+          "n": "2/3",
+          "dish": "steak-sandwich",
+          "h": "See it on your table. *Then order it.*"
+        },
+        {
+          "layout": "cta",
+          "bg": "ink",
+          "over": "3/3",
+          "h": "What's next? *More plates.*",
+          "b": "Restaurants: DM \"PILOT\". Everyone else: tag the place you want scanned next.",
+          "actions": [
+            "DM \"PILOT\"",
+            "Link in bio"
+          ]
+        }
+      ]
+    }
+  ]
+}
