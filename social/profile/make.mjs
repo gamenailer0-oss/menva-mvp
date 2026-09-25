@@ -34,7 +34,10 @@ const og = `<!DOCTYPE html><html><head>${css.replace('W', '1200px').replace('H',
 <div class="wordmark" style="font-size:44px;margin-top:34px">menva<i>.</i></div></div>
 <div style="flex:1;height:470px;border-radius:28px;background:#E9E3D7;display:flex;align-items:center;justify-content:center">
 <img src="/social/print/.cache/steak-sandwich-full.png" style="width:470px;height:420px;object-fit:contain"></div></body></html>`;
-const pages = { 'og-image': [og, 1200, 630], 'profile-picture': [avatar, 1080, 1080], ...Object.fromEntries(Object.entries({ how: 'How it works', try: 'Try it', restaurants: 'Restaurants', faq: 'FAQ', scans: 'Real scans', pilot: 'Pilot' }).map(([k, l]) => [`highlight-${k}`, [cover(k, l), 1080, 1920]])) };
+// Wordmark files for the press kit (transparent background)
+const mark = (color, dot) => `<!DOCTYPE html><html><head>${css.replace('W', '1600px').replace('H', '600px')}<style>html,body{background:transparent}</style></head>
+<body style="display:flex;align-items:center;justify-content:center"><span class="wordmark" style="font-size:380px;margin-top:-40px;color:${color}">menva<i style="color:${dot}">.</i></span></body></html>`;
+const pages = { 'og-image': [og, 1200, 630], 'wordmark-ink': [mark('#1A1714', '#B5371F'), 1600, 600], 'wordmark-white': [mark('#FFFFFF', '#B5371F'), 1600, 600], 'wordmark-on-chili': [mark('#FFFFFF', '#1A1714'), 1600, 600], 'profile-picture': [avatar, 1080, 1080], ...Object.fromEntries(Object.entries({ how: 'How it works', try: 'Try it', restaurants: 'Restaurants', faq: 'FAQ', scans: 'Real scans', pilot: 'Pilot' }).map(([k, l]) => [`highlight-${k}`, [cover(k, l), 1080, 1920]])) };
 
 const server = http.createServer((req, res) => {
   const u = decodeURIComponent(new URL(req.url, 'http://x').pathname);
@@ -50,7 +53,7 @@ for (const [name, [, w, h]] of Object.entries(pages)) {
   await page.goto(`http://127.0.0.1:${server.address().port}/page/${name}`);
   await page.evaluate(() => document.fonts.ready);
   await page.waitForLoadState('networkidle');
-  await page.screenshot({ path: path.join(OUT, name + '.png') });
+  await page.screenshot({ path: path.join(OUT, name + '.png'), omitBackground: name.startsWith('wordmark') });
   await page.close();
 }
 await browser.close(); server.close();
