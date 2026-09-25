@@ -1,6 +1,19 @@
 // ── Shared helpers (build-workflow.mjs puts this at the top of every Code node) ──
 const fs = require('fs');
-const CALENDAR = '/repo/social/content/calendar.json';
+// calendar.json covers days 1–100 from START_DATE; calendar-2.json the next 100 days, and so on.
+const CALENDAR_DIR = '/repo/social/content';
+function readCalendars() {
+  const files = fs.readdirSync(CALENDAR_DIR).filter((f) => /^calendar(-\d+)?\.json$/.test(f))
+    .sort((a, b) => (Number((a.match(/-(\d+)/) || [0, 1])[1])) - (Number((b.match(/-(\d+)/) || [0, 1])[1])));
+  const first = JSON.parse(fs.readFileSync(CALENDAR_DIR + '/calendar.json', 'utf8'));
+  const posts = [];
+  files.forEach((f, i) => {
+    const cal = i === 0 ? first : JSON.parse(fs.readFileSync(CALENDAR_DIR + '/' + f, 'utf8'));
+    const offset = i * 100; // each file is a 100-day block
+    for (const p of cal.posts) posts.push(Object.assign({}, p, { day: p.day + offset, part: i + 1 }));
+  });
+  return { defaultStart: first.defaultStart, posts };
+}
 const STATE = '/files/state.json';   // what has been posted, the current Instagram token
 const LOG = '/files/log/posts.csv';  // one line per attempt, human-readable
 const MAX_ATTEMPTS = 3;              // per post per day, then give up and alert

@@ -3,7 +3,7 @@
 // "Run now (test)": today's post if there is one, otherwise the next upcoming post — and a
 // test run of a future post is always a dry run, so nothing is ever published early.
 const manual = $('Run now (test)').isExecuted;
-const cal = JSON.parse(fs.readFileSync(CALENDAR, 'utf8'));
+const cal = readCalendars();
 const state = readState();
 
 const zone = 'Asia/Karachi';
