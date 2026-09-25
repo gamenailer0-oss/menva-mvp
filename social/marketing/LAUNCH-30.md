@@ -6,7 +6,7 @@ Assumes today is **Fri 25 Sep 2026** and the automated calendar starts on its de
 
 | Day | Date | Do this | Time | Files |
 |---|---|---|---|---|
-| S1 | Fri 25 Sep | Answer the 14 decisions in MORNING.md §A (at least the handle, WhatsApp number, Gauchos yes/no, and the dish names) | 20 min | [MORNING.md](MORNING.md) |
+| S1 | Fri 25 Sep | Answer the 15 decisions in MORNING.md §A (at least the handle, WhatsApp number, Gauchos yes/no, and the dish names) | 20 min | [MORNING.md](MORNING.md) |
 | S2 | Sat 26 Sep | Instagram → Business account. Profile picture, name, bio, highlight covers | 30 min | [../profile/](../profile/) |
 | S3 | Sun 27 Sep | Oracle server + install (SETUP.md steps 2–5) | 60 min | [../SETUP.md](../SETUP.md) |
 | S4 | Mon 28 Sep | Meta app + Instagram token, ntfy alerts, **dry run** (SETUP.md steps 6–8). Check the test images | 30 min | [../SETUP.md](../SETUP.md) |
