@@ -14,7 +14,7 @@
       "pillar": "see-it-first",
       "audience": "diners",
       "format": "carousel",
-      "caption": "Dish drop, week 1. Every week we put one real scanned dish on the table and let you judge it at true size.\n\nThis week: the steak board. Swipe to see it from every side, then tell us: share it, or keep it?\n\nIs hafte ki plate. Share karoge ya akele?",
+      "caption": "Dish drop is a weekly thing now on this page. Weekly-drop energy, minus the countdown panic: one real scan, out in the open, every week.\n\nThis week: the steak board. No diagonal camera angle, no zoom quietly lying to you about size.\n\nShare karoge ya akele rakhoge?",
       "hashtags": [
         "#menva",
         "#lahorefood",
@@ -29,7 +29,7 @@
           "over": "Dish drop · Week 1",
           "n": "1/3",
           "size": "xl",
-          "h": "This week on *the table.*"
+          "h": "One plate. Whole spotlight. *This week only.*"
         },
         {
           "layout": "hero",
@@ -37,14 +37,15 @@
           "n": "2/3",
           "dish": "steak-main",
           "crop": "board",
-          "h": "The steak board.",
-          "b": "Real scan. True size. Your call."
+          "h": "The steak board. *No angles. No lies.*",
+          "b": "Real scan. True size. Zero filter.",
+          "stamp": "True size"
         },
         {
           "layout": "duo",
           "over": "Your verdict",
           "n": "3/3",
-          "h": "Share it, or *keep it?*",
+          "h": "Share it, or *keep it to yourself?*",
           "dishes": [
             "steak-main",
             "steak-main"
@@ -57,7 +58,7 @@
             "Share it",
             "Keep it"
           ],
-          "b": "Comment A or B."
+          "b": "Comment A or B. No judgment. (Some judgment.)"
         }
       ]
     },
@@ -71,7 +72,7 @@
       "pillar": "see-it-first",
       "audience": "diners",
       "format": "single",
-      "caption": "Dish drop, week 2: the steak sandwich. Open, stacked, and exactly this big on your table.\n\nLunch for one, or a starter for two? Comment your answer.",
+      "caption": "Week 2 on the pass: the steak sandwich, stacked exactly the way it lands on your table.\n\nOne question before you order: whole lunch, or shared starter? Fight about it in the comments.",
       "hashtags": [
         "#menva",
         "#lahorefood",
@@ -85,8 +86,8 @@
           "bg": "sand",
           "over": "Dish drop · Week 2",
           "dish": "steak-sandwich",
-          "h": "Lunch for one, or *starter for two?*",
-          "b": "Real scan. True size. Your call."
+          "h": "One person's lunch, or *two people's starter?*",
+          "b": "Real scan. True size. You decide."
         }
       ]
     },
@@ -100,22 +101,22 @@
       "pillar": "see-it-first",
       "audience": "diners",
       "format": "single",
-      "caption": "Dish drop, week 3: the green plate. Look at the colour on it.\n\nRate it out of 10 in the comments. Honest ratings only.",
+      "caption": "Dish drop, week 3: the green plate. Look at that colour before you say anything.\n\nRate it out of 10. Decimals allowed if you're that person.",
       "hashtags": [
         "#menva",
         "#lahorefood",
         "#lahorefoodies",
         "#dishdrop"
       ],
-      "alt": "Dish drop week 3: a real plate of food on a green dish, scanned in 3D.",
+      "alt": "Dish drop week 3: the green plate, a real dish scanned in 3D.",
       "slides": [
         {
           "layout": "closeup",
           "dish": "garlic-prawn-skewers",
           "crop": "full",
           "over": "Dish drop · Week 3",
-          "h": "Out of 10. *Go.*",
-          "b": "Real scan, true size, every angle."
+          "h": "Out of 10. *No half marks.*",
+          "b": "Real scan, every angle, zero mercy."
         }
       ]
     },
@@ -129,21 +130,21 @@
       "pillar": "see-it-first",
       "audience": "diners",
       "format": "single",
-      "caption": "Dish drop, week 4: the trio. Three of them, side by side, real size.\n\nTag the two people you would share this with. Only two.",
+      "caption": "Dish drop, week 4: the trio, lined up, real size, no crop trick making it look bigger than it is.\n\nTag the two people this is going straight to. Only two, choose wisely.",
       "hashtags": [
         "#menva",
         "#lahorefood",
         "#lahorefoodies",
         "#dishdrop"
       ],
-      "alt": "Dish drop week 4: three filled tortillas on a board, scanned in 3D.",
+      "alt": "Dish drop week 4: the trio, three real dishes scanned in 3D.",
       "slides": [
         {
           "layout": "hero",
           "over": "Dish drop · Week 4",
           "dish": "chicken-fajita-wrap",
           "crop": "board",
-          "h": "Three of them. *Tag two people.*"
+          "h": "Three of them. *Tag exactly two people.*"
         }
       ]
     },
@@ -157,14 +158,14 @@
       "pillar": "menu-truth",
       "audience": "diners",
       "format": "carousel",
-      "caption": "The sight test. Food vloggers do taste tests after they order. We do the sight test before.\n\nRead the menu line. Guess the size. Swipe to see the real plate.\n\nPehle andaza lagao, phir dekho.\n\nHow close was your guess? Comment \"close\" or \"way off\".",
+      "caption": "Food vloggers taste-test after they've already paid. We do the sight test before you order anything.\n\nRead the menu line, picture the size in your head, then swipe and see how wrong you were.\n\nPehle andaza lagao, phir dekho, bas honest rehna.\n\nComment \"close\" or \"way off\". No in-between.",
       "hashtags": [
         "#menva",
         "#lahorefood",
         "#lahorefoodies",
         "#sighttest"
       ],
-      "alt": "The sight test: read a menu line, guess the size, then see the real plate.",
+      "alt": "The sight test: guess the size from the menu line, then see the real steak sandwich.",
       "slides": [
         {
           "layout": "statement",
@@ -172,26 +173,26 @@
           "over": "The sight test",
           "n": "1/3",
           "size": "l",
-          "h": "Taste tests happen after you order. *Sight tests happen before.*"
+          "h": "Everyone taste-tests after. *We sight-test first.*"
         },
         {
           "layout": "split",
           "over": "Step 1: guess",
           "n": "2/3",
-          "h": "How big is *this?*",
+          "h": "Guess the size. *No peeking.*",
           "menuLine": "Steak sandwich",
           "menuDesc": "Sliced steak, greens, aioli.",
           "dish": "steak-sandwich",
           "crop": "close",
           "leftLabel": "The menu says",
-          "rightLabel": "Swipe for size"
+          "rightLabel": "Swipe to check"
         },
         {
           "layout": "hero",
           "over": "Step 2: see",
           "n": "3/3",
           "dish": "steak-sandwich",
-          "h": "Real size. *How close were you?*"
+          "h": "Real size. *How far off were you?*"
         }
       ]
     },
@@ -205,20 +206,20 @@
       "pillar": "menu-truth",
       "audience": "diners",
       "format": "carousel",
-      "caption": "Sight test, round two. The menu says \"ribeye steak, served with sides\". What does that look like to you?\n\nGuess first, then swipe.",
+      "caption": "Sight test, round two. The menu says \"ribeye steak, served with sides\", five words doing a lot of heavy lifting.\n\nPicture it, then swipe for the actual board. Be honest about how off you were.",
       "hashtags": [
         "#menva",
         "#lahorefood",
         "#lahorefoodies",
         "#sighttest"
       ],
-      "alt": "Sight test round two with a steak board.",
+      "alt": "Sight test round two: guessing the steak board size from the menu.",
       "slides": [
         {
           "layout": "split",
           "over": "Sight test · Round 2",
           "n": "1/2",
-          "h": "Guess the *board.*",
+          "h": "Round two. *Guess the board.*",
           "menuLine": "Ribeye steak",
           "menuDesc": "Grilled. Served with sides.",
           "dish": "steak-main",
@@ -232,7 +233,7 @@
           "n": "2/2",
           "dish": "steak-main",
           "crop": "board",
-          "h": "The whole board. *Did you guess it?*"
+          "h": "The whole board. *Called it, or nah?*"
         }
       ]
     },
@@ -246,7 +247,7 @@
       "pillar": "relatable",
       "audience": "diners",
       "format": "single",
-      "caption": "\"Is it worth the hype?\" is Lahore's favourite question. Usually you only find out after a two-hour queue and a full bill.\n\nWe would rather you found out before. See the dish at true size first, then decide if it is worth it.\n\nHype pe nahi, plate pe faisla karo.",
+      "caption": "Lahore's national pastime: standing in a queue for two hours, then telling everyone whether it was worth it.\n\nWe'd rather you knew before the bill shows up, not after. See the actual plate, then decide: worth it or not?\n\nHype pe nahi, plate pe faisla karo.",
       "hashtags": [
         "#menva",
         "#lahorefood",
@@ -258,9 +259,9 @@
         {
           "layout": "statement",
           "bg": "chili",
-          "over": "The Lahore question",
+          "over": "Lahore's favourite question",
           "size": "l",
-          "h": "\"Is it worth the hype?\"\n*Decide before you order.*",
+          "h": "\"Is it actually worth the hype?\"\n*We'd rather you knew first.*",
           "ru": "Hype pe nahi, plate pe faisla karo."
         }
       ]
@@ -275,21 +276,48 @@
       "pillar": "relatable",
       "audience": "diners",
       "format": "single",
-      "caption": "New place opens. The queue goes round the block. Everyone posts the queue, nobody posts the menu.\n\nImagine standing in that line already knowing what you will order, because you have seen it on your table.\n\nLine mein khade ho? Kam se kam order toh pakka ho.",
+      "caption": "New place, queue around the block, and nobody in line actually knows what they're ordering yet.\n\nAt least make the wait productive. Scan while you stand there, know your order before you're at the counter.\n\nLine mein khade ho? Order toh pakka kar lo.",
       "hashtags": [
         "#menva",
         "#lahorefood",
         "#lahorefoodies",
         "#lahoreeats"
       ],
-      "alt": "Text post about restaurant opening queues in Lahore.",
+      "alt": "A group chat about waiting in a restaurant queue and scanning the menu while they wait.",
       "slides": [
         {
-          "layout": "statement",
-          "bg": "sand",
+          "layout": "chat",
+          "bg": "paper",
           "over": "Opening week",
-          "h": "Two-hour queue.\n*Zero idea what to order.*",
-          "ru": "Line mein khade ho? Kam se kam order toh pakka ho."
+          "h": "Same queue. *Zero guessing.*",
+          "title": "Dinner plan",
+          "members": "You, Hamza, Areeba, Bilal",
+          "msgs": [
+            {
+              "from": "Hamza",
+              "t": "queue is literally around the corner"
+            },
+            {
+              "from": "Areeba",
+              "t": "ok but what are we even ordering"
+            },
+            {
+              "me": true,
+              "t": "scanned the QR, steak board looks unreal"
+            },
+            {
+              "from": "Bilal",
+              "t": "wait you can see it before we're even in?"
+            },
+            {
+              "me": true,
+              "t": "true size too, no lying angles"
+            },
+            {
+              "from": "Hamza",
+              "t": "ok NOW the wait makes sense"
+            }
+          ]
         }
       ]
     },
@@ -303,22 +331,23 @@
       "pillar": "behind-the-scan",
       "audience": "both",
       "format": "single",
-      "caption": "\"Is this even real?\" is a fair question in 2026. Half the food on your feed was never cooked.\n\nEverything on MENVA is a scan of a real plate from a real kitchen. If it was not on the pass, it is not on the menu.\n\nAsli plate. Asli size. Koi AI nahi.",
+      "caption": "\"Is this even real?\" is a fair question when half your feed was never actually cooked.\n\nEvery dish here is a scan of a real plate, from a real kitchen, on a day someone actually plated it.\n\nAsli plate, asli size, koi AI nahi, kasam se.",
       "hashtags": [
         "#menva",
         "#lahorefood",
         "#lahorefoodies",
         "#realfood"
       ],
-      "alt": "A real steak sandwich with the words: is this even real? Yes.",
+      "alt": "A real steak sandwich, scanned in 3D, not AI generated.",
       "slides": [
         {
           "layout": "closeup",
           "dish": "steak-sandwich",
           "crop": "close",
-          "over": "Fair question",
-          "h": "\"Is this even real?\" *Yes.*",
-          "b": "A scan of a real plate. No AI, ever."
+          "over": "The 2026 question",
+          "h": "\"Wait, is this even real?\" *Yes. Every pixel.*",
+          "b": "A scan of an actual plate. No AI touched this.",
+          "stamp": "No AI, ever"
         }
       ]
     },
@@ -332,14 +361,14 @@
       "pillar": "menu-truth",
       "audience": "diners",
       "format": "carousel",
-      "caption": "Expectation vs reality, the MENVA version. Spoiler: they are the same picture.\n\nThat is the whole point of seeing a real scan before you order.\n\nUmeed aur haqeeqat, aik hi plate.",
+      "caption": "Expectation vs reality, MENVA edition. Twist: it's the same photo.\n\nThat's the whole point of a real scan before you order, no gap between the ad and the plate.\n\nUmeed aur haqeeqat, dono aik hi plate.",
       "hashtags": [
         "#menva",
         "#lahorefood",
         "#lahorefoodies",
         "#expectationvsreality"
       ],
-      "alt": "Expectation vs reality: the same real dish twice.",
+      "alt": "Expectation vs reality: the trio, shown twice, exactly the same both times.",
       "slides": [
         {
           "layout": "hero",
@@ -356,8 +385,8 @@
           "n": "2/2",
           "dish": "chicken-fajita-wrap",
           "crop": "board",
-          "h": "Reality. *Same plate.*",
-          "b": "Umeed aur haqeeqat, aik hi plate."
+          "h": "Reality. *Plot twist: also this.*",
+          "b": "Umeed aur haqeeqat, is baar dono aik hi plate hain."
         }
       ]
     },
@@ -371,21 +400,21 @@
       "pillar": "relatable",
       "audience": "diners",
       "format": "single",
-      "caption": "Every dessert place in Lahore has a Dubai chocolate bar now. Some are thick, some are thin, and you only find out which after you pay.\n\nDessert menus deserve a sight test too. Restaurants: imagine your version on the guest's table, at true size, before they order. DM \"PILOT\".\n\nPehle dekho, phir cut karo.",
+      "caption": "Every dessert counter in Lahore is suddenly an expert in kunafa chocolate. Some bars are properly thick. Some are... optimistic.\n\nYou only find out which one you got after you've already paid and cut into it.\n\nDessert menus deserve a sight test too. Restaurants: think about letting guests see the actual bar at true size before they order. DM \"PILOT\".\n\nPehle dekho, phir cut karo.",
       "hashtags": [
         "#menva",
         "#lahorefood",
         "#lahorefoodies",
         "#dubaichocolate"
       ],
-      "alt": "Text post about the Dubai chocolate trend.",
+      "alt": "Text post about the Dubai chocolate trend and sight-testing dessert menus.",
       "slides": [
         {
           "layout": "statement",
           "bg": "ink",
-          "over": "Trend check",
-          "h": "Every café has a Dubai chocolate bar. *Which one is actually thick?*",
-          "ru": "Pehle dekho, phir cut karo."
+          "over": "Every bakery, right now",
+          "h": "Suddenly, everyone sells *Dubai chocolate.*",
+          "ru": "Pehle dekho, phir cut karo, warna regret guaranteed."
         }
       ]
     },
@@ -399,21 +428,21 @@
       "pillar": "relatable",
       "audience": "diners",
       "format": "single",
-      "caption": "Every bakery in Lahore says theirs is the real three milk cake. Soaked, glossy, perfect slice. On the menu they all sound the same.\n\nNext time, see the slice on your table before you order it.\n\nTeen doodh, aik sawal: kitna bara slice?",
+      "caption": "Every bakery in Lahore insists theirs is the original three milk cake. Soaked right, glossy, perfect slice, and on the menu they all sound identical.\n\nNext time, see the actual slice on your table before you order it. Let the cake defend itself.\n\nTeen doodh, ek sawal: kitna bara slice milega?",
       "hashtags": [
         "#menva",
         "#lahorefood",
         "#lahorefoodies",
         "#threemilkcake"
       ],
-      "alt": "Text post about three milk cake.",
+      "alt": "Text post about the three milk cake trend and bakery claims.",
       "slides": [
         {
           "layout": "statement",
           "bg": "sand",
-          "over": "Dessert debate",
-          "h": "Everyone has the *real* three milk cake.",
-          "ru": "Teen doodh, aik sawal: kitna bara slice?"
+          "over": "The dessert wars",
+          "h": "The *\"original\"* three milk cake, again?",
+          "ru": "Teen doodh, ek hi sawal, slice kitna bara milega?"
         }
       ]
     },
@@ -427,25 +456,51 @@
       "pillar": "menu-truth",
       "audience": "diners",
       "format": "single",
-      "caption": "Single, double, triple smash. The menu gives you three words and a price. The size difference is the one thing you actually want to know.\n\nThis is what a 3D menu is for.\n\nDouble lein ya triple? Dekh ke batao.",
+      "caption": "Single, double, triple smash. The menu gives you three words and lets your imagination do the rest.\n\nThe size jump between \"double\" and \"triple\" is the one thing you actually want to know before you commit, not after the food coma.\n\nSend this to the friend who always orders triple and never learns.\n\nDouble lein ya triple? Dekh ke faisla karo.",
       "hashtags": [
         "#menva",
         "#lahorefood",
         "#lahorefoodies",
         "#smashburger"
       ],
-      "alt": "Text post about smash burger sizes.",
+      "alt": "A joke receipt comparing single, double and triple smash burger regret levels.",
       "slides": [
         {
-          "layout": "list",
+          "layout": "receipt",
           "over": "Burger maths",
-          "h": "Single, double, triple. *What's the difference?*",
-          "items": [
-            "Single: \"should be enough\"",
-            "Double: \"safe choice\"",
-            "Triple: \"I have made a mistake\"",
-            "The answer: see it first"
-          ]
+          "h": "Single, double, triple. *Pick your regret level.*",
+          "title": "Smash burger receipt",
+          "lines": [
+            [
+              "Single",
+              "should be enough"
+            ],
+            [
+              "Double",
+              "the safe pick"
+            ],
+            [
+              "Triple",
+              "a lifestyle choice"
+            ],
+            [
+              "Regret",
+              "1 (large)"
+            ],
+            [
+              "Napkins used",
+              "x4"
+            ],
+            [
+              "Confidence",
+              "gone"
+            ]
+          ],
+          "total": [
+            "What we actually needed",
+            "to see it first"
+          ],
+          "footer": "MENVA, see it before the damage is done."
         }
       ]
     },
@@ -459,7 +514,7 @@
       "pillar": "relatable",
       "audience": "diners",
       "format": "single",
-      "caption": "Match night at a restaurant: the whole table watches the screen and nobody reads the menu.\n\nOrder the platter before the toss. See it on the table first so there are no surprises at the drinks break.\n\nToss se pehle order. Baqi sab match ke baad.",
+      "caption": "Match night at a restaurant: every eye is on the screen and the menu is basically decoration.\n\nOrder the platter before the toss so nobody's flagging down the waiter during the powerplay. Priorities.\n\nToss se pehle order, baqi sab match ke baad.",
       "hashtags": [
         "#menva",
         "#lahorefood",
@@ -471,9 +526,9 @@
         {
           "layout": "statement",
           "bg": "chili",
-          "over": "Match night",
-          "h": "Order before the toss. *Watch in peace.*",
-          "ru": "Toss se pehle order. Baqi sab match ke baad."
+          "over": "Match night rules",
+          "h": "Order before the toss. *Argue after.*",
+          "ru": "Toss se pehle order kar lo, baqi drama match ke baad."
         }
       ]
     },
@@ -487,22 +542,28 @@
       "pillar": "relatable",
       "audience": "diners",
       "format": "single",
-      "caption": "Ammi at home: \"Ghar pe khana hai.\"\nAmmi at the restaurant: \"Yeh 'aioli' kya hota hai?\"\n\nDon't explain it. Show her. Tap the dish, put it on the table, done.\n\nTag the friend who has to translate the menu for their parents.",
+      "caption": "Ammi at home: \"ghar pe khana hai, bahar kyun jana hai.\"\nAmmi at the table: \"yeh 'aioli' kya hota hai, beta?\"\n\nStop translating the menu word by word. Tap the dish, put it on the table, let her see it herself.\n\nTag the friend who's the designated menu-translator at every family dinner.",
       "hashtags": [
         "#menva",
         "#lahorefood",
         "#lahorefoodies",
         "#desiparents"
       ],
-      "alt": "Text post: desi parents reading an English menu.",
+      "alt": "A phone notes screenshot about explaining a menu to parents at dinner.",
       "slides": [
         {
-          "layout": "note",
+          "layout": "notes",
           "bg": "paper",
           "over": "Family dinner",
-          "h": "\"Yeh aioli *kya hota hai?*\"",
-          "ru": "Samjhao mat. Dikha do.",
-          "by": "Every family dinner, ever"
+          "h": "Things I explained to my parents tonight",
+          "title": "Friday, 8:47 pm",
+          "items": [
+            "~~what 'aioli' means~~",
+            "~~why the menu is in English~~",
+            "~~no it's not too spicy, Abbu~~",
+            "just showed him the AR instead",
+            "he approved. loudly."
+          ]
         }
       ]
     },
@@ -516,20 +577,20 @@
       "pillar": "relatable",
       "audience": "diners",
       "format": "single",
-      "caption": "Family dinner out: twelve people, three generations, one person ordering for everyone.\n\nShow Nani the plate before it arrives, and there will be no \"yeh kya mangwa liya\" at the table.\n\nNani ko pehle dikha do. Phir koi shikayat nahi.",
+      "caption": "Family dinner out: twelve people, three generations, and one person who's been silently elected to order for the whole table.\n\nShow Nani the plate before it lands and you skip the entire \"yeh kya mangwa liya\" routine.\n\nTag the one who always orders for the whole table.\n\nNani ko pehle dikha do. Phir koi shikayat nahi.",
       "hashtags": [
         "#menva",
         "#lahorefood",
         "#lahorefoodies",
         "#familydinner"
       ],
-      "alt": "Text post about ordering for a big family dinner.",
+      "alt": "Text post about ordering for a big family dinner with multiple generations.",
       "slides": [
         {
           "layout": "statement",
           "bg": "sand",
-          "over": "Family dinner",
-          "h": "Twelve people. Three generations. *One order.*",
+          "over": "The family dawat",
+          "h": "Twelve people, three generations, *one designated orderer.*",
           "ru": "Nani ko pehle dikha do. Phir koi shikayat nahi."
         }
       ]
@@ -544,7 +605,7 @@
       "pillar": "relatable",
       "audience": "diners",
       "format": "single",
-      "caption": "Tell me you are from Lahore without telling me.\n\nWe will start: you judge a restaurant by the portion before the taste.\n\nYour turn in the comments.",
+      "caption": "Tell me you're from Lahore without telling me.\n\nWe'll go first: you judge a restaurant by the portion before you've even tasted anything.\n\nYour turn, drop yours in the comments.",
       "hashtags": [
         "#menva",
         "#lahorefood",
@@ -558,7 +619,7 @@
           "bg": "ink",
           "over": "Lahore check",
           "h": "Tell me you're from Lahore *without telling me.*",
-          "b": "We'll start: you judge the portion before the taste."
+          "b": "We'll start: portion size gets judged before taste does."
         }
       ]
     },
@@ -572,21 +633,21 @@
       "pillar": "menu-truth",
       "audience": "diners",
       "format": "single",
-      "caption": "Student budget rule one: never pay for a surprise.\n\nIf you are spending the week's budget on one dinner, see exactly what you are getting before you order it.\n\nBudget tight hai? Pehle dekh lo, phir kharcha karo.\n\nSend this to your hostel group.",
+      "caption": "Student budget rule one: you do not gamble the week's food money on a dish you've never seen.\n\nIf one dinner is eating half your allowance, at least see exactly what's coming before you commit.\n\nBudget tight hai? Pehle dekh lo, phir kharcha karo.",
       "hashtags": [
         "#menva",
         "#lahorefood",
         "#lahorefoodies",
         "#studentlife"
       ],
-      "alt": "Text post: student budget rule one, never pay for a surprise.",
+      "alt": "Text post: student budget rule one, see the dish before you spend on it.",
       "slides": [
         {
           "layout": "statement",
           "bg": "chili",
-          "over": "Student budget, rule 1",
-          "h": "Never pay for *a surprise.*",
-          "ru": "Budget tight hai? Pehle dekh lo, phir kharcha karo."
+          "over": "Student budget, rule one",
+          "h": "Never pay full price for *a surprise.*",
+          "ru": "Budget tight hai? Pehle dekh lo, phir paisa kharcha karo."
         }
       ]
     },
@@ -600,21 +661,21 @@
       "pillar": "see-it-first",
       "audience": "diners",
       "format": "single",
-      "caption": "Lahore has rooftops, neon signs and flower walls for photos. We think the best photo spot is your own table, with the dish on it before it even arrives.\n\nPlace it, screenshot it, post it. Camera pehle khata hai.",
+      "caption": "Lahore's got rooftops, neon signs, flower walls, a whole industry built around the photo-worthy spot.\n\nWe think the best photo right now is your own table, dish already floating on it before the food's even out of the kitchen.\n\nPlace it, screenshot it, post it. Camera pehle khaata hai, this time literally.",
       "hashtags": [
         "#menva",
         "#lahorefood",
         "#lahorefoodies",
         "#foodphotography"
       ],
-      "alt": "A phone showing a real dish placed on a table in AR.",
+      "alt": "A phone showing the green plate placed on a table in AR, before the real dish arrives.",
       "slides": [
         {
           "layout": "phone",
-          "over": "New photo spot",
+          "over": "New photo spot, zero rooftop required",
           "dish": "garlic-prawn-skewers",
-          "h": "The best photo spot is *your own table.*",
-          "b": "Place it. Screenshot it. Post it."
+          "h": "Forget the rooftop. *Table's the spot now.*",
+          "b": "Place it, screenshot it, post it before the food even arrives."
         }
       ]
     },
@@ -628,21 +689,21 @@
       "pillar": "for-restaurants",
       "audience": "restaurants",
       "format": "single",
-      "caption": "Restaurant owners: opening-week hype fades. The queue goes, the reels stop, and the menu is left doing the selling on a quiet Tuesday.\n\nGive it the plate to sell with: your real dishes, in 3D, at true size, on every table.\n\nDM \"PILOT\". Lahore pilot: PKR 25,000.",
+      "caption": "Opening week hype fades fast: the queue photos stop, the reels slow down, and by week six your menu is doing the selling on a normal Tuesday night.\n\nGive it the real plate to work with: true-size 3D scans, on every table, every night, not just launch week.\n\nDM \"PILOT\". Lahore pilot: PKR 25,000.",
       "hashtags": [
         "#menva",
         "#lahorerestaurants",
         "#restaurantmarketing",
         "#hospitalitypk"
       ],
-      "alt": "Text post for restaurants: hype fades, the menu stays.",
+      "alt": "Text post for restaurant owners: opening-week hype fades, but the menu keeps selling.",
       "slides": [
         {
           "layout": "note",
           "bg": "ink",
-          "over": "For restaurants",
-          "h": "Opening-week hype fades. *Your menu stays.*",
-          "by": "Make it the real plate."
+          "over": "For owners",
+          "h": "Opening week ends. *Your menu is what's left.*",
+          "by": "Give it something real to sell with."
         }
       ]
     },
@@ -656,21 +717,21 @@
       "pillar": "for-restaurants",
       "audience": "restaurants",
       "format": "single",
-      "caption": "In Lahore, a food vlogger's verdict travels further than your own posts. But a vlogger visits once. Your guests visit every night.\n\nMENVA lets every guest do their own review before they order: the real dish, on their table, true size.\n\nDM \"PILOT\" for the Lahore pilot.",
+      "caption": "A food vlogger's verdict travels further than anything you post yourself, fair. But they show up once, film for twenty minutes, and leave.\n\nYour guests are there every night, deciding off a menu that's mostly adjectives. Let every one of them run their own sight test: the real dish, true size, before they say yes.\n\nDM \"PILOT\" for the Lahore pilot.",
       "hashtags": [
         "#menva",
         "#lahorerestaurants",
         "#restaurantmarketing",
         "#foodbloggers"
       ],
-      "alt": "Text post for restaurants about food vloggers and guests.",
+      "alt": "Text post for restaurants: let every guest run their own verdict before ordering.",
       "slides": [
         {
           "layout": "statement",
           "bg": "sand",
-          "over": "For restaurants",
-          "h": "A vlogger visits once. *Your guests visit every night.*",
-          "b": "Let every guest see the plate before they order."
+          "over": "For owners",
+          "h": "A vlogger visits once. *Your regulars, every week.*",
+          "b": "Let every one of them see the plate before they order."
         }
       ]
     },
@@ -684,7 +745,7 @@
       "pillar": "see-it-first",
       "audience": "diners",
       "format": "single",
-      "caption": "Our whole idea fits in three words: pehle dekho, phir order.\n\nSee it first. Then order it. Say it to the friend who always regrets their order.",
+      "caption": "Our whole pitch fits in four words: pehle dekho, phir order.\n\nSee it first. Then order it. Simple enough to tattoo, dramatic enough that we might.\n\nSay it to the one friend who orders on vibes alone.",
       "hashtags": [
         "#menva",
         "#lahorefood",
@@ -694,11 +755,10 @@
       "alt": "Text post with the line: pehle dekho, phir order.",
       "slides": [
         {
-          "layout": "statement",
+          "layout": "shout",
           "bg": "chili",
-          "over": "Three words",
-          "size": "xl",
-          "h": "Pehle dekho, *phir order.*",
+          "over": "The whole idea, in four words",
+          "h": "PEHLE DEKHO.\nPHIR ORDER.",
           "b": "See it first. Then order it."
         }
       ]

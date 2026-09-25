@@ -1,9 +1,72 @@
 [
-  { "tall": true, "layout": "hero", "over": "Monday", "dish": "steak-main", "crop": "board", "h": "Photo first, *always.*", "b": "The dish shows instantly; the 3D follows, even on slow wifi." },
-  { "tall": true, "layout": "closeup", "over": "Tuesday", "dish": "steak-sandwich", "crop": "close", "h": "Real scan. *Not a render, not AI.*" },
-  { "tall": true, "layout": "phone", "over": "Wednesday", "dish": "steak-main", "crop": "board", "h": "True size, *right on the table.*", "b": "It can't be pinched bigger." },
-  { "tall": true, "layout": "statement", "bg": "ink", "over": "Thursday · FAQ", "h": "Does it need an app? *No.*", "b": "It opens straight in Safari or Chrome, from the table QR." },
-  { "tall": true, "layout": "note", "over": "Friday", "h": "Building MENVA, *one week at a time.*", "ru": "Har hafte thora behtar." },
-  { "tall": true, "layout": "hero", "bg": "sand", "over": "Saturday", "dish": "chicken-fajita-wrap", "crop": "board", "h": "This week's *dish spotlight.*", "b": "Full video on Instagram." },
-  { "tall": true, "layout": "cta", "bg": "chili", "over": "Sunday", "h": "Own a restaurant in Lahore? *Message me.*", "b": "A 10-minute demo, on your own table.", "actions": ["Reply \"DEMO\""] }
+  {
+    "tall": true,
+    "layout": "hero",
+    "over": "Monday",
+    "dish": "steak-main",
+    "crop": "board",
+    "h": "Photo first. *Always.*",
+    "b": "The dish loads instantly. The 3D catches up, even on patchy restaurant wifi."
+  },
+  {
+    "tall": true,
+    "layout": "closeup",
+    "over": "Tuesday",
+    "dish": "steak-sandwich",
+    "crop": "close",
+    "h": "Real scan. *Not AI, not a render.*",
+    "stamp": "No AI, ever"
+  },
+  {
+    "tall": true,
+    "layout": "phone",
+    "over": "Wednesday",
+    "dish": "steak-main",
+    "crop": "board",
+    "h": "True size. *Right on your table.*",
+    "b": "You can't pinch it bigger. What you see is what's coming."
+  },
+  {
+    "tall": true,
+    "layout": "statement",
+    "bg": "ink",
+    "over": "Thursday · FAQ",
+    "h": "Do you need an app? *No.*",
+    "b": "Straight in Safari or Chrome, scan the table QR and go."
+  },
+  {
+    "tall": true,
+    "layout": "notes",
+    "over": "Friday",
+    "h": "Still true this week",
+    "title": "Friday notes",
+    "items": [
+      "dish photo shows first, even on slow wifi",
+      "true size, locked in AR",
+      "~~pinch to resize~~ (not in AR, on purpose)",
+      "no app. still.",
+      "har hafte thora behtar"
+    ]
+  },
+  {
+    "tall": true,
+    "layout": "hero",
+    "bg": "sand",
+    "over": "Saturday",
+    "dish": "chicken-fajita-wrap",
+    "crop": "board",
+    "h": "Saturday spotlight: *the trio.*",
+    "b": "Full video's up on Instagram now."
+  },
+  {
+    "tall": true,
+    "layout": "cta",
+    "bg": "chili",
+    "over": "Sunday",
+    "h": "Run a restaurant in Lahore? *Let's talk.*",
+    "b": "A 10-minute demo, on your own table, no obligation.",
+    "actions": [
+      "Reply \"DEMO\""
+    ]
+  }
 ]

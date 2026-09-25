@@ -223,3 +223,8 @@ html.tall .l-phone .screen { border-radius: 56px; }
 .bg-chili .shout em { color: var(--ink); }
 .l-shout .body { margin-top: 44px; }
 .l-shout .roman { margin-top: 24px; }
+/* the chat, receipt and notes cards are always light, so keep their text dark on chili/ink slides */
+.bg-chili .chat, .bg-ink .chat, .bg-chili .receipt, .bg-ink .receipt, .bg-chili .notes, .bg-ink .notes { color: var(--ink); }
+.bg-chili .chat .muted, .bg-ink .chat .muted, .bg-chili .notes .muted, .bg-ink .notes .muted { color: var(--muted); }
+.bg-chili .msg.me, .bg-ink .msg.me { color: var(--cream); }
+.bg-chili .notes em, .bg-ink .notes em, .bg-chili .receipt em, .bg-ink .receipt em { color: var(--chili); }
