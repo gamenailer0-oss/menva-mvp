@@ -16,7 +16,7 @@
       "audience": "diners",
       "format": "carousel",
       "note": "Launch of season two",
-      "caption": "Season two starts today, same rule as day one: dekho pehle, phir order karo.\n\nScan the table QR, tap a dish, watch the real plate land on your table at true size, before the waiter even asks.\n\nNaya season, purani aadat.\n\nTag the friend who missed season one.",
+      "caption": "Season two, same rule, zero patience for a menu that lies.\n\nScan the table QR, tap the dish, real plate lands full size before the waiter's even back with water.\n\nNaya season, purani aadat, purana attitude bhi.\n\nTag the friend who missed season one and pretended they didn't care.",
       "hashtags": [
         "#menva",
         "#lahorefood",
@@ -31,15 +31,15 @@
           "n": "1/4",
           "dish": "steak-main",
           "crop": "board",
-          "h": "Season two. *Same rule.*",
-          "b": "Real plates. True size. Before you order."
+          "h": "Season two. *Zero patience.*",
+          "b": "Real plates. True size. No convincing needed."
         },
         {
           "layout": "phone",
           "over": "How it works",
           "n": "2/4",
           "dish": "steak-sandwich",
-          "h": "Scan. Tap. *Point at the table.*",
+          "h": "Scan. Tap. *Yeh raha plate.*",
           "b": "No app. Opens straight in Safari or Chrome."
         },
         {
@@ -72,7 +72,7 @@
       "pillar": "relatable",
       "audience": "diners",
       "format": "single",
-      "caption": "Every table has one. Hamza films the plate for four minutes before anyone's allowed to touch a fork.\n\nBy the time he's happy with the angle, the fries are cold aur ammi ghar pe wait kar rahi hai for a video that still hasn't been posted.\n\nTag your table's director.",
+      "caption": "POV: food arrives and Hamza is not one bit interested in eating it.\n\nFour minutes, six angles, ek dafa bhi fork nahi utha. Fries are basically room temperature history by the time he's happy.\n\nTag your table's director, no mercy.",
       "hashtags": [
         "#menva",
         "#lahorefood",
@@ -85,7 +85,7 @@
           "layout": "chat",
           "bg": "paper",
           "over": "Types of people at dinner · 7",
-          "h": "The director. *One more video.*",
+          "h": "POV: dinner's ready. *He's still filming.*",
           "title": "Dinner, finally",
           "members": "You, Hamza, Sana +2",
           "msgs": [
@@ -95,7 +95,7 @@
             },
             {
               "me": true,
-              "t": "khana thanda ho raha hai"
+              "t": "khana thanda ho gaya bhai"
             },
             {
               "from": "Sana",
@@ -103,7 +103,7 @@
             },
             {
               "from": "Hamza",
-              "t": "one more angle"
+              "t": "one more angle, chill"
             },
             {
               "me": true,
@@ -111,9 +111,10 @@
             },
             {
               "from": "Hamza",
-              "t": "posted. ab kha lo"
+              "t": "posted. ab kha lo, chalo"
             }
-          ]
+          ],
+          "stamp": "Bas kar"
         }
       ]
     },
@@ -126,7 +127,7 @@
       "pillar": "see-it-first",
       "audience": "diners",
       "format": "single",
-      "caption": "Zoom in. That sauce line, that char, that stack, it's a scan of the actual plate that left the kitchen, not a photo somebody brightened later.\n\nHar layer asli hai, touch-up zero.\n\nSave this for the next menu photo that lies to you.",
+      "caption": "Zoom in, kyunke menu photos lie and this doesn't.\n\nThat sauce line, that char, that stack, seedha kitchen se scan hai, kisi ne baad mein brighten nahi kiya.\n\nHar layer asli hai, touch-up zero, uff kitna sukoon hai.\n\nSave this for the next menu photo that lied to you.",
       "hashtags": [
         "#menva",
         "#lahorefood",
@@ -140,7 +141,7 @@
           "dish": "chicken-fajita-wrap",
           "crop": "close",
           "over": "Zoom in",
-          "h": "Every layer. *Exactly where it landed.*",
+          "h": "Zero touch-up. *Zero apologies.*",
           "stamp": "Asli plate"
         }
       ]
@@ -154,7 +155,7 @@
       "pillar": "see-it-first",
       "audience": "diners",
       "format": "carousel",
-      "caption": "Dish drop, week five: the steak board is back, and it's taking up the whole frame again.\n\nSwipe for the side view, this is not a solo-dinner portion, tell your face.\n\nComment: sharing, or are we lying to ourselves tonight?",
+      "caption": "Dish drop, week five: the steak board is back and it's still eating the whole frame, no shame.\n\nSwipe for the side view, yeh solo-dinner portion nahi hai, apne aap se jhooth mat bolo.\n\nComment: sharing, or lying to ourselves tonight? No judgment either way.",
       "hashtags": [
         "#menva",
         "#lahorefood",
@@ -169,7 +170,7 @@
           "n": "1/2",
           "dish": "steak-main",
           "crop": "board",
-          "h": "Back on *the table.*",
+          "h": "Back. *Still huge.*",
           "b": "Real scan. True size. No pinching it smaller."
         },
         {
@@ -192,7 +193,7 @@
       "pillar": "for-restaurants",
       "audience": "restaurants",
       "format": "carousel",
-      "caption": "Owners: the next ten weeks are the busiest stretch on the Lahore calendar, match nights, iftar, Eid dawats, then patio season, back to back.\n\nGet the menu ready before the first rush hits: real dishes, in 3D, straight off the table QR.\n\nDM \"PILOT.\"",
+      "caption": "Owners: the next ten weeks don't slow down, match nights straight into iftar, straight into Eid dawats, straight into patio season.\n\nGet the menu ready before the first rush hits, real dishes, in 3D, straight off the table QR.\n\nDM \"PILOT.\"",
       "hashtags": [
         "#menva",
         "#lahorerestaurants",
@@ -207,7 +208,7 @@
           "over": "For restaurants",
           "n": "1/4",
           "size": "l",
-          "h": "The next ten weeks are *your busiest.*"
+          "h": "The next ten weeks *don't stop.*"
         },
         {
           "layout": "list",
@@ -215,9 +216,9 @@
           "n": "2/4",
           "h": "Match nights. Iftar. Eid. *Then spring.*",
           "items": [
-            "Match nights where the table wants to order before the toss",
+            "Match nights where the table orders before the toss",
             "Iftar covers racing the azaan",
-            "Eid dawats with three generations at one table",
+            "Eid dawats, three generations, one table",
             "Patio season, the second the weather turns"
           ]
         },
@@ -252,7 +253,7 @@
       "pillar": "relatable",
       "audience": "diners",
       "format": "single",
-      "caption": "Round four. One plate, no negotiating.\n\nA: the green plate\nB: the trio\n\nComment A or B, and tag the friend who'd order both and regret nothing.",
+      "caption": "Round four. One plate, no negotiating, no \"we'll share.\"\n\nA: the green plate\nB: the trio\n\nComment A or B, tag the friend who'd order both and regret nothing, full confidence.",
       "hashtags": [
         "#menva",
         "#lahorefood",
@@ -264,7 +265,7 @@
         {
           "layout": "duo",
           "over": "This or that · Round 4",
-          "h": "You get *one.*",
+          "h": "One plate. *Zero mercy.*",
           "dishes": [
             "garlic-prawn-skewers",
             "chicken-fajita-wrap"
@@ -286,7 +287,7 @@
       "pillar": "menu-truth",
       "audience": "diners",
       "format": "carousel",
-      "caption": "Sight test, round three. Menu says \"steak board, served with sides.\" Picture the plate in your head before you swipe, most people are off by a mile.\n\nPehle andaza, phir haqeeqat.\n\nComment \"close\" or \"way off.\"",
+      "caption": "Sight test, round three. Menu says \"steak board, served with sides.\" Picture it before you swipe, most people are off by a mile, full confidence, zero accuracy.\n\nPehle andaza, phir haqeeqat, aur haqeeqat hamesha bara nikalta hai.\n\nComment \"close\" or \"way off.\"",
       "hashtags": [
         "#menva",
         "#lahorefood",
@@ -313,7 +314,7 @@
           "n": "2/2",
           "dish": "steak-main",
           "crop": "board",
-          "h": "Real size. *Told you.*"
+          "h": "Real size. *Called it.*"
         }
       ]
     },
@@ -326,7 +327,7 @@
       "pillar": "relatable",
       "audience": "diners",
       "format": "single",
-      "caption": "PSL season turns every group chat into eleven commentators and zero people who've actually decided what to eat.\n\nToss se pehle order karo, phir match dekho aaram se.\n\nTag your match-night crew before the toss.",
+      "caption": "PSL season turns every group chat into eleven commentators and exactly zero people who've decided what to eat.\n\nToss se pehle order karo bhai, phir aaram se match dekho, commentary muft hai lekin bhook nahi.\n\nTag your match-night crew before the toss, they need this.",
       "hashtags": [
         "#menva",
         "#lahorefood",
@@ -339,7 +340,7 @@
           "layout": "chat",
           "bg": "sand",
           "over": "PSL season",
-          "h": "Eleven commentators. *One kitchen.*",
+          "h": "POV: eleven experts, *zero orders placed.*",
           "title": "Match night crew",
           "members": "6 members",
           "msgs": [
@@ -353,7 +354,7 @@
             },
             {
               "from": "Bilal",
-              "t": "commentary is FREE tonight"
+              "t": "commentary is FREE tonight, bhai"
             },
             {
               "from": "Ayesha",
@@ -380,7 +381,7 @@
       "pillar": "see-it-first",
       "audience": "diners",
       "format": "single",
-      "caption": "A rule for the new season: true size actually means true size. No pinching it bigger before your friends see it, no shrinking it after the bill.\n\nJitna dikhe, utna hi aayega.\n\nTry it on your own table, link in bio.",
+      "caption": "A rule for season two: true size means true size, no pinching it bigger before your friends see it, no shrinking it after the bill lands, full stop.\n\nJitna dikhe utna hi aayega, warna scene kharab.\n\nTry it on your own table, link in bio.",
       "hashtags": [
         "#menva",
         "#lahorefood",
@@ -394,7 +395,7 @@
           "over": "True size",
           "dish": "steak-main",
           "crop": "sides",
-          "h": "No zoom. No tricks. *True size.*",
+          "h": "No zoom. No lies. *True size, full stop.*",
           "b": "What lands on your table is exactly the portion in AR.",
           "stamp": "True size"
         }
@@ -409,7 +410,7 @@
       "pillar": "for-restaurants",
       "audience": "restaurants",
       "format": "carousel",
-      "caption": "New followers, quick recap. Three things owners assume about a 3D menu that just aren't true.\n\nIt doesn't need an app. It doesn't slow the floor down. And guests don't need convincing to scan a QR that's already on the table.\n\nDM \"PILOT\" to see it on your own table.",
+      "caption": "New followers, quick recap. Three things owners assume about a 3D menu that just aren't true.\n\nIt doesn't need an app. It doesn't slow the floor down. And guests don't need convincing to scan a QR that's already sitting on the table.\n\nDM \"PILOT\" to see it on your own table.",
       "hashtags": [
         "#menva",
         "#lahorerestaurants",
@@ -424,7 +425,7 @@
           "over": "Myth check",
           "n": "1/3",
           "size": "l",
-          "h": "Three things owners *assume, wrongly.*"
+          "h": "Three things owners *get wrong.*"
         },
         {
           "layout": "list",
@@ -458,7 +459,7 @@
       "pillar": "relatable",
       "audience": "diners",
       "format": "single",
-      "caption": "There's one at every table who negotiates the split down to the last bite of naan.\n\n\"Maine toh sirf half khaya tha\", bhai it's been 22 minutes, the table is closing.\n\nTag your table's accountant.",
+      "caption": "There's one at every table who negotiates the split down to the last bite of naan, every single time.\n\n\"Maine toh sirf half khaya tha\" bhai it's been 22 minutes, the table is closing, bas kar.\n\nTag your table's accountant, tag them with love.",
       "hashtags": [
         "#menva",
         "#lahorefood",
@@ -471,7 +472,7 @@
           "layout": "receipt",
           "bg": "sand",
           "over": "Types of people at dinner · 8",
-          "h": "Down to *the last bite.*",
+          "h": "Down to *the last bite.* Every time.",
           "title": "Table 6",
           "lines": [
             [
@@ -497,9 +498,10 @@
           ],
           "total": [
             "Verdict",
-            "pay equal, chalo"
+            "pay equal, chalo yaar"
           ],
-          "footer": "no calculators were harmed"
+          "footer": "no calculator survived this",
+          "stamp": "Bas kar"
         }
       ]
     },
@@ -512,7 +514,7 @@
       "pillar": "see-it-first",
       "audience": "diners",
       "format": "single",
-      "caption": "Dish drop, week six: the steak sandwich, stacked exactly this tall on your actual table.\n\nComment your honest read, lunch for one, or a starter you're pretending is for two?",
+      "caption": "Dish drop, week six: the steak sandwich, stacked exactly this tall on your actual table, no menu photo angle tricks.\n\nComment your honest read: lunch for one, or a starter you're pretending is for two?",
       "hashtags": [
         "#menva",
         "#lahorefood",
@@ -526,7 +528,7 @@
           "bg": "sand",
           "over": "Dish drop · Week 6",
           "dish": "steak-sandwich",
-          "h": "Lunch for one, or *starter for two?*",
+          "h": "Lunch for one, *or the audacity of sharing?*",
           "b": "Real scan. True size. Your call."
         }
       ]
@@ -540,7 +542,7 @@
       "pillar": "menu-truth",
       "audience": "diners",
       "format": "carousel",
-      "caption": "Ordering for a big table, part two of the rules nobody follows.\n\nOne person holds the phone. See the size before you commit. Order one extra, never five. One list, straight to the waiter.\n\nAik banda menu sambhale, baqi sab chup.",
+      "caption": "Ordering for a big table, part two of the rules literally nobody follows.\n\nOne person holds the phone. See the size before you commit. Order one extra, never five. One list, straight to the waiter, bas.\n\nAik banda menu sambhale, baqi sab chup, warna scene ban jata hai.",
       "hashtags": [
         "#menva",
         "#lahorefood",
@@ -554,20 +556,22 @@
           "over": "Group order guide",
           "n": "1/2",
           "size": "l",
-          "h": "Big table? *Four rules.*",
+          "h": "Big table. *Everyone breaks these.*",
           "ru": "Aik banda menu sambhale, baqi sab chup."
         },
         {
-          "layout": "list",
+          "layout": "notes",
           "over": "The rules",
           "n": "2/2",
-          "h": "Keep it *tight*",
+          "h": "The rules, *allegedly.*",
           "items": [
-            "One person holds the menu.",
-            "See the portion before you order.",
-            "One extra, never five.",
-            "One list. Straight to the waiter."
-          ]
+            "~~everyone orders separately~~",
+            "one phone holds the menu",
+            "see the size before you commit",
+            "one extra, never five",
+            "one list, straight to waiter"
+          ],
+          "title": "Group order rules"
         }
       ]
     },
@@ -580,7 +584,7 @@
       "pillar": "relatable",
       "audience": "diners",
       "format": "single",
-      "caption": "Round five. Saturday night at 9, one plate, your call.\n\nA: the steak board\nB: the green plate\n\nComment A or B before the table votes for you.",
+      "caption": "Round five. Saturday night, 9 pm, one plate, your call, table's watching.\n\nA: the steak board\nB: the green plate\n\nComment A or B before the table votes for you, full drama.",
       "hashtags": [
         "#menva",
         "#lahorefood",
@@ -618,7 +622,7 @@
       "pillar": "for-restaurants",
       "audience": "restaurants",
       "format": "single",
-      "caption": "Your best server shouldn't be reciting the same dish description at table 4, 9 and 14 on a Friday night.\n\nLet the menu show the plate. Let your floor staff actually host.\n\nDM \"PILOT\" for the Lahore pilot.",
+      "caption": "Hot take: your best server shouldn't be reciting the same dish description at table 4, 9 and 14 on a Friday night.\n\nLet the menu show the plate. Let your floor staff actually host.\n\nDM \"PILOT\" for the Lahore pilot.",
       "hashtags": [
         "#menva",
         "#lahorerestaurants",
@@ -645,7 +649,7 @@
       "audience": "diners",
       "format": "carousel",
       "note": "PSL season",
-      "caption": "PSL season is officially here, every restaurant with a screen and a decent sound system is at capacity by 7.\n\nIf the whole table's watching, at least order before the first over.\n\nToss se pehle order, phir match dekho aaram se.",
+      "caption": "PSL season is officially here, every restaurant with a screen and a decent sound system is at capacity by 7, no seats, no mercy.\n\nIf the whole table's watching, at least order before the first over.\n\nToss se pehle order, phir match dekho aaram se, warna half time pe bhi khali plate hogi.",
       "hashtags": [
         "#menva",
         "#lahorefood",
@@ -683,7 +687,7 @@
       "audience": "restaurants",
       "format": "single",
       "note": "PSL season",
-      "caption": "Match nights fill every table on the floor at once. The guest who can see the dish often decides in seconds; the one reading eleven lines about it decides never.\n\nDM \"PILOT\" before the next big match.",
+      "caption": "Hot take: match nights fill every table on the floor at once, and the guest reading eleven lines about a dish is the one still waving the waiter over at the second innings.\n\nDM \"PILOT\" before the next big match.",
       "hashtags": [
         "#menva",
         "#lahorerestaurants",
@@ -711,7 +715,7 @@
       "pillar": "see-it-first",
       "audience": "diners",
       "format": "single",
-      "caption": "Dish drop, week seven: the green plate, and that colour is doing all the work.\n\nRate it out of ten. No mercy ratings.",
+      "caption": "Dish drop, week seven: the green plate, and honestly that colour is doing all the work here.\n\nRate it out of ten. No mercy ratings, no participation trophies.",
       "hashtags": [
         "#menva",
         "#lahorefood",
@@ -1368,7 +1372,7 @@
       "pillar": "see-it-first",
       "audience": "diners",
       "format": "single",
-      "caption": "A menu photo never shows you the side of the plate. A 3D dish lets you spin it and actually check.\n\nGhoom ke dekho, phir faisla karo.\n\nTry it, link in bio.",
+      "caption": "A menu photo never shows you the side of the plate, convenient, no? A 3D dish lets you spin it and actually check.\n\nGhoom ke dekho, phir faisla karo, warna baad mein \"yeh kya tha\" mat bolna.\n\nTry it, link in bio.",
       "hashtags": [
         "#menva",
         "#lahorefood",
@@ -1382,7 +1386,7 @@
           "dish": "garlic-prawn-skewers",
           "crop": "close",
           "over": "One finger",
-          "h": "Spin it. *Then decide.*",
+          "h": "Spin it. *Catch it lying.*",
           "b": "See every side before you order."
         }
       ]
@@ -1648,7 +1652,7 @@
       "pillar": "menu-truth",
       "audience": "diners",
       "format": "single",
-      "caption": "A short list for trying somewhere new this spring.\n\nSee the portion before you order. Check what's actually on the plate. Ask about spice if you're unsure. Order one thing you've never had.\n\nSave it, use it this weekend.",
+      "caption": "A short list for trying somewhere new this spring, follow it or don't, we're not the police.\n\nSee the portion before you order. Check what's actually on the plate. Ask about spice if you're unsure. Order one thing you've never had.\n\nSave it, use it this weekend.",
       "hashtags": [
         "#menva",
         "#lahorefood",
@@ -1658,15 +1662,17 @@
       "alt": "Checklist for trying a new restaurant.",
       "slides": [
         {
-          "layout": "list",
+          "layout": "notes",
           "over": "Save this",
-          "h": "New place? *Rules.*",
+          "h": "New place? *Rules, allegedly.*",
           "items": [
-            "See the portion before you order",
-            "Check what's actually on the plate",
-            "Ask about spice if you're unsure",
-            "Order one thing you've never had"
-          ]
+            "see the portion before you order",
+            "check what's actually on the plate",
+            "ask about spice if you're unsure",
+            "order one thing you've never had"
+          ],
+          "title": "New place checklist",
+          "stamp": "No mercy"
         }
       ]
     },
@@ -1680,7 +1686,7 @@
       "audience": "diners",
       "format": "single",
       "note": "Spring in Lahore",
-      "caption": "Spring's landed. Parks are green again, patios are full by 8, and everyone suddenly has three dinner plans for one weekend.\n\nBaharon ka mausam, aur khane ke plan bhi utne hi zyada.\n\nTag the friend you're finally taking outside again.",
+      "caption": "Spring's landed and suddenly everyone has three dinner plans for one weekend, scene set hai.\n\nParks are green again, patios are full by 8, aur group chat mein plan number four abhi bhi ban raha hai.\n\nBaharon ka mausam, aur khane ke plan bhi utne hi zyada.\n\nTag the friend you're finally taking outside again.",
       "hashtags": [
         "#menva",
         "#lahorefood",
@@ -1690,11 +1696,13 @@
       "alt": "Text post about spring arriving in Lahore.",
       "slides": [
         {
-          "layout": "statement",
+          "layout": "shout",
           "bg": "sand",
           "over": "Jashn-e-Baharan",
-          "h": "Spring is here. *So are the plans.*",
-          "ru": "Baharon ka mausam, aur khane ke plan bhi zyada."
+          "h": "PATIO SEASON IS BACK.",
+          "ru": "Baharon ka mausam, aur khane ke plan bhi zyada.",
+          "b": "Baharon ka mausam, plans double.",
+          "stamp": "Set hai"
         }
       ]
     },
@@ -1707,7 +1715,7 @@
       "pillar": "behind-the-scan",
       "audience": "both",
       "format": "carousel",
-      "caption": "A quick reminder of how a dish becomes a scan on MENVA.\n\nThe real plate gets photographed from every angle, rebuilt into 3D, cleaned up, and made light enough for restaurant wifi. Then it goes behind the table QR.\n\nNo AI food, ever.",
+      "caption": "A quick reminder of how a dish becomes a scan on MENVA, no shortcuts, no AI, no vibes-only rendering.\n\nThe real plate gets photographed from every angle, rebuilt into 3D, cleaned up, and made light enough for restaurant wifi. Then it goes behind the table QR.\n\nNo AI food, ever, bas asli.",
       "hashtags": [
         "#menva",
         "#lahorefood",
@@ -1748,7 +1756,7 @@
           "n": "4/4",
           "num": "03",
           "h": "Onto *your table*",
-          "b": "Behind the QR. No AI food, ever.",
+          "b": "Behind the QR. No AI food, kabhi nahi.",
           "dish": "chicken-fajita-wrap",
           "crop": "board"
         }
@@ -1764,7 +1772,7 @@
       "audience": "restaurants",
       "format": "carousel",
       "note": "Spring in Lahore",
-      "caption": "Spring means patio season in Lahore, new crowds, new guests, and a first impression that happens before anyone's sat down.\n\nMake that first impression the real plate, in 3D, straight off the table QR.\n\nDM \"PILOT.\"",
+      "caption": "Spring means patio season in Lahore, new crowds, new guests, and a first impression that happens before anyone's even sat down.\n\nMake that first impression the real plate, in 3D, straight off the table QR.\n\nDM \"PILOT.\"",
       "hashtags": [
         "#menva",
         "#lahorerestaurants",
@@ -1811,7 +1819,7 @@
       "audience": "diners",
       "format": "single",
       "note": "Spring in Lahore",
-      "caption": "Round eight. First outdoor dinner of spring, one plate, your call.\n\nA: the green plate\nB: the steak sandwich\n\nComment A or B.",
+      "caption": "Round eight. First outdoor dinner of spring, one plate, table's already picking sides.\n\nA: the green plate\nB: the steak sandwich\n\nComment A or B, no fence-sitting allowed.",
       "hashtags": [
         "#menva",
         "#lahorefood",
@@ -1845,7 +1853,7 @@
       "pillar": "menu-truth",
       "audience": "diners",
       "format": "single",
-      "caption": "Left: what a menu gives you. Right: what MENVA gives you.\n\nComment which one actually makes you hungry. Be honest.",
+      "caption": "Left: what a menu gives you. Right: what MENVA gives you. Tell me you can't tell the difference without telling me.\n\nComment which one actually makes you hungry. Be honest, we can take it.",
       "hashtags": [
         "#menva",
         "#lahorefood",
@@ -1903,7 +1911,7 @@
       "pillar": "see-it-first",
       "audience": "diners",
       "format": "single",
-      "caption": "Dish drop, week eight: the steak sandwich again, this time from directly above.\n\nComment your guess, bigger or smaller than it looks from here?",
+      "caption": "Dish drop, week eight: the steak sandwich again, this time straight from above, no hiding angles.\n\nComment your guess, bigger or smaller than it looked from the menu photo?",
       "hashtags": [
         "#menva",
         "#lahorefood",
@@ -1917,7 +1925,7 @@
           "over": "Dish drop · Week 8",
           "dish": "steak-sandwich",
           "crop": "full",
-          "h": "From *above.*",
+          "h": "From above. *No hiding.*",
           "b": "Comment your guess: bigger or smaller than it looks?"
         }
       ]
@@ -1931,7 +1939,7 @@
       "pillar": "for-restaurants",
       "audience": "restaurants",
       "format": "single",
-      "caption": "Five signs your menu might be costing you orders, spring edition.\n\nNo photos, or old ones. Guests asking what a dish looks like. Everyone ordering the same safe thing. Portion size surprising people. Your best dish buried on page three.\n\nTwo or more sound familiar? DM \"PILOT.\"",
+      "caption": "Hot take: five signs your menu might be quietly costing you orders, spring edition.\n\nNo photos, or old ones. Guests asking what a dish looks like. Everyone ordering the same safe thing. Portion size surprising people. Your best dish buried on page three.\n\nTwo or more sound familiar? DM \"PILOT.\"",
       "hashtags": [
         "#menva",
         "#lahorerestaurants",
@@ -1966,7 +1974,7 @@
       "audience": "diners",
       "format": "single",
       "note": "Spring in Lahore",
-      "caption": "The group chat finally agrees on a place for spring. Now somebody has to agree on what to order, that debate runs longer than the drive to Fort Road.\n\nBaharon mein jagah tay karna asaan hai, order karna mushkil.",
+      "caption": "The group chat finally agrees on a place for spring. Now somebody has to agree on what to order, that debate runs longer than the drive to Fort Road.\n\nBaharon mein jagah tay karna asaan hai, order karna mushkil, har dafa.\n\nTag the group chat that's still typing.",
       "hashtags": [
         "#menva",
         "#lahorefood",
@@ -1976,11 +1984,39 @@
       "alt": "Text post about planning a spring hangout with friends.",
       "slides": [
         {
-          "layout": "statement",
+          "layout": "chat",
           "bg": "chili",
           "over": "Spring plans",
           "h": "Picking the place: easy. *Picking the order: not.*",
-          "ru": "Baharon mein jagah tay karna asaan hai, order karna mushkil."
+          "ru": "Baharon mein jagah tay karna asaan hai, order karna mushkil.",
+          "title": "Spring plans, finally",
+          "members": "4 members",
+          "msgs": [
+            {
+              "from": "Ali",
+              "t": "jagah decide ho gayi finally"
+            },
+            {
+              "me": true,
+              "t": "ab order pe do ghante lagenge"
+            },
+            {
+              "from": "Mehak",
+              "t": "main kuch nahi khaungi"
+            },
+            {
+              "from": "Mehak",
+              "t": "*eats everyone's fries*"
+            },
+            {
+              "me": true,
+              "t": "classic mehak, full on"
+            },
+            {
+              "from": "Ali",
+              "t": "bas order kar do yaar"
+            }
+          ]
         }
       ]
     },
@@ -1993,7 +2029,7 @@
       "pillar": "for-restaurants",
       "audience": "restaurants",
       "format": "single",
-      "caption": "A guest who can see your food before they order it already trusts your kitchen.\n\nThat trust starts at the table, with the menu.\n\nDM \"PILOT\" for the Lahore pilot.",
+      "caption": "A guest who can see your food before they order it already trusts your kitchen, that's not marketing, that's just true.\n\nThat trust starts at the table, with the menu.\n\nDM \"PILOT\" for the Lahore pilot.",
       "hashtags": [
         "#menva",
         "#lahorerestaurants",
@@ -2020,7 +2056,7 @@
       "pillar": "relatable",
       "audience": "diners",
       "format": "single",
-      "caption": "Round nine. End of the month, one plate, your call.\n\nA: the steak board\nB: the trio\n\nComment A or B.",
+      "caption": "Round nine. End of the month, wallet's thin, one plate, your call.\n\nA: the steak board\nB: the trio\n\nComment A or B, no judgment either way.",
       "hashtags": [
         "#menva",
         "#lahorefood",
@@ -2058,7 +2094,7 @@
       "pillar": "see-it-first",
       "audience": "diners",
       "format": "single",
-      "caption": "Close enough to see exactly what's on the plate. Nothing added, nothing painted on for the photo.\n\nAsli plate, asli tafseel.\n\nSave this for the next menu photo that lets you down.",
+      "caption": "Close enough to see exactly what's on the plate, nothing added, nothing painted on for the photo, kya bakwas hai jo baaki menus karte hain.\n\nAsli plate, asli tafseel.\n\nSave this for the next menu photo that let you down.",
       "hashtags": [
         "#menva",
         "#lahorefood",
@@ -2086,7 +2122,7 @@
       "pillar": "menu-truth",
       "audience": "diners",
       "format": "carousel",
-      "caption": "Sight test, round four. Menu says \"green plate, served with greens.\" Guess the size, then swipe.\n\nPehle andaza, phir haqeeqat.\n\nComment \"close\" or \"way off.\"",
+      "caption": "Sight test, round four. Menu says \"green plate, served with greens.\" Guess the size, then swipe, most people are wildly off.\n\nPehle andaza, phir haqeeqat.\n\nComment \"close\" or \"way off.\"",
       "hashtags": [
         "#menva",
         "#lahorefood",
@@ -2127,7 +2163,7 @@
       "audience": "diners",
       "format": "single",
       "note": "Exam season",
-      "caption": "Exam season's back, every dinner out gets squeezed between two papers now.\n\nWhen you've got thirty minutes, see the dish first and order in one go.\n\nPapers ke beech thoda break, order fast rakho.",
+      "caption": "Day 1 of exam season: every dinner out gets squeezed between two papers, no exceptions.\n\nWhen you've got thirty minutes, see the dish first and order in one go, no scrolling the menu twice.\n\nPapers ke beech thoda break, order fast rakho, waqt nahi hai bhai.",
       "hashtags": [
         "#menva",
         "#lahorefood",
@@ -2155,7 +2191,7 @@
       "audience": "restaurants",
       "format": "carousel",
       "note": "Exam season",
-      "caption": "For restaurants near campus: exam season means guests in a hurry who want to decide fast, not read.\n\nA menu they can actually see can get them ordering in seconds.\n\nDM \"PILOT.\"",
+      "caption": "For restaurants near campus: exam season means guests in a hurry who want to decide fast, not read a novel.\n\nA menu they can actually see can get them ordering in seconds.\n\nDM \"PILOT.\"",
       "hashtags": [
         "#menva",
         "#lahorerestaurants",
@@ -2205,7 +2241,7 @@
       "audience": "diners",
       "format": "single",
       "note": "Exam season",
-      "caption": "Study break dinner rule: decide before you leave the house, or the entire break disappears into scrolling a menu.\n\nGhar se nikalne se pehle order soch lo.",
+      "caption": "Study break dinner rule: decide before you leave the house, or the entire break disappears into scrolling a menu, full on disaster.\n\nGhar se nikalne se pehle order soch lo, warna break khatam, khana abhi bhi nahi socha.",
       "hashtags": [
         "#menva",
         "#lahorefood",
@@ -2233,7 +2269,7 @@
       "audience": "diners",
       "format": "single",
       "note": "Exam season",
-      "caption": "Dish drop, week nine: the trio, three of them, side by side, real size.\n\nEnough for a quick study-break dinner for two? Comment your answer.",
+      "caption": "Dish drop, week nine: the trio, three of them, side by side, real size, no exaggeration.\n\nEnough for a quick study-break dinner for two? Comment your honest answer.",
       "hashtags": [
         "#menva",
         "#lahorefood",
@@ -2263,7 +2299,7 @@
       "audience": "diners",
       "format": "single",
       "note": "Exam season",
-      "caption": "Exam season rule: never pay for a surprise. See exactly what's landing before the week's last few rupees go on dinner.\n\nBudget tight hai? Pehle dekh lo, phir kharcha karo.",
+      "caption": "Exam season rule: never pay for a surprise. See exactly what's landing before the week's last few rupees go on dinner.\n\nBudget tight hai? Pehle dekh lo, phir kharcha karo, warna Friday se pehle hi cash khatam.",
       "hashtags": [
         "#menva",
         "#lahorefood",
@@ -2273,11 +2309,39 @@
       "alt": "Text post: exam season budget rule, never pay for a surprise.",
       "slides": [
         {
-          "layout": "statement",
+          "layout": "receipt",
           "bg": "sand",
           "over": "Exam season, rule 1",
           "h": "Never pay for *a surprise.*",
-          "ru": "Budget tight hai? Pehle dekh lo, phir kharcha karo."
+          "ru": "Budget tight hai? Pehle dekh lo, phir kharcha karo.",
+          "title": "Exam week budget",
+          "lines": [
+            [
+              "Motivation",
+              "running low"
+            ],
+            [
+              "Study hours",
+              "questionable"
+            ],
+            [
+              "Dinner plans",
+              "non-negotiable"
+            ],
+            [
+              "Surprises",
+              "not today"
+            ],
+            [
+              "Portion check",
+              "done before ordering"
+            ]
+          ],
+          "total": [
+            "Verdict",
+            "worth it, barely"
+          ],
+          "footer": "no rupees harmed in this post"
         }
       ]
     },
@@ -2291,7 +2355,7 @@
       "audience": "diners",
       "format": "single",
       "note": "Exam season",
-      "caption": "Round ten. Weekend after a brutal week of papers, one plate, your call.\n\nA: the steak sandwich\nB: the green plate\n\nComment A or B.",
+      "caption": "Round ten. Weekend after a brutal week of papers, one plate, zero decisions left in the tank.\n\nA: the steak sandwich\nB: the green plate\n\nComment A or B.",
       "hashtags": [
         "#menva",
         "#lahorefood",
@@ -2325,7 +2389,7 @@
       "pillar": "behind-the-scan",
       "audience": "both",
       "format": "single",
-      "caption": "A short note from the team.\n\nStill scanning the same four dishes, still refusing to fake a photo, still building this one habit at a time: see it, then order it.\n\nOrder se pehle dekh lo. Wahi baat hai.",
+      "caption": "A short note from the team, no brochure talk, promise.\n\nStill scanning the same four dishes, still refusing to fake a photo, still building this one habit at a time: see it, then order it.\n\nOrder se pehle dekh lo. Wahi baat hai, hamesha.",
       "hashtags": [
         "#menva",
         "#lahorefood",
@@ -2353,7 +2417,7 @@
       "audience": "diners",
       "format": "single",
       "note": "End of exam season",
-      "caption": "Papers are done. First proper dinner out in weeks, and this time nobody's watching the time.\n\nPapers khatam, ab khana aaram se.\n\nTag the friend you're finally celebrating with.",
+      "caption": "Papers are done. First proper dinner out in weeks, and this time nobody's watching the time, finally.\n\nPapers khatam, ab khana aaram se, koi jaldi nahi.\n\nTag the friend you're finally celebrating with.",
       "hashtags": [
         "#menva",
         "#lahorefood",
@@ -2393,7 +2457,8 @@
           "total": [
             "Vibe",
             "immaculate"
-          ]
+          ],
+          "stamp": "Set hai"
         }
       ]
     },
@@ -2406,7 +2471,7 @@
       "pillar": "see-it-first",
       "audience": "diners",
       "format": "single",
-      "caption": "MENVA still doesn't take your order, the waiter does.\n\nAdd what you want, note what you don't, then turn your phone around.\n\nWaiter ko list dikhao, baat khatam.",
+      "caption": "MENVA still doesn't take your order, the waiter does, full stop, no shortcuts.\n\nAdd what you want, note what you don't, then turn your phone around.\n\nWaiter ko list dikhao, baat khatam, scene simple hai.",
       "hashtags": [
         "#menva",
         "#lahorefood",
@@ -2435,7 +2500,7 @@
       "pillar": "for-restaurants",
       "audience": "restaurants",
       "format": "carousel",
-      "caption": "A recap for new followers: how the pilot works for a restaurant.\n\nYour signature dishes get scanned in 3D. Your menu goes live behind a QR on every table. Guests see the dish, then order with your staff, and you see what they actually looked at.\n\nDM \"PILOT.\"",
+      "caption": "A recap for new followers: how the pilot works for a restaurant, no fluff.\n\nYour signature dishes get scanned in 3D. Your menu goes live behind a QR on every table. Guests see the dish, then order with your staff, and you see what they actually looked at.\n\nDM \"PILOT.\"",
       "hashtags": [
         "#menva",
         "#lahorerestaurants",
@@ -2490,7 +2555,7 @@
       "pillar": "relatable",
       "audience": "diners",
       "format": "single",
-      "caption": "Weekend plan: pick the place in two minutes, argue about the order for forty-five.\n\nMENVA only fixes the second part.\n\nPlan bana lo, plate hum pehle dikha denge.",
+      "caption": "Weekend plan: pick the place in two minutes, argue about the order for forty-five, every single time.\n\nMENVA only fixes the second part, we're not miracle workers.\n\nPlan bana lo, plate hum pehle dikha denge.",
       "hashtags": [
         "#menva",
         "#lahorefood",
@@ -2519,7 +2584,7 @@
       "pillar": "menu-truth",
       "audience": "diners",
       "format": "single",
-      "caption": "Three things a 3D dish tells you that a menu line never will: how big it really is, what's actually on the plate, and whether it's a share or a solo order.\n\nLook for the QR on your next table.",
+      "caption": "Three things a 3D dish tells you that a menu line never will: how big it really is, what's actually on the plate, and whether it's a share or a solo mission.\n\nLook for the QR on your next table, uff itna simple hai.",
       "hashtags": [
         "#menva",
         "#lahorefood",
@@ -2551,7 +2616,7 @@
       "pillar": "for-restaurants",
       "audience": "restaurants",
       "format": "single",
-      "caption": "Lahore restaurants: every guest tagging a friend under our posts this season is telling you something. They want to see the food before they order it.\n\nDM \"PILOT\" for the Lahore pilot: PKR 25,000.",
+      "caption": "Hot take: your guests already want to see the food before they order it. They just can't, yet.\n\nDM \"PILOT\" for the Lahore pilot: PKR 25,000.",
       "hashtags": [
         "#menva",
         "#lahorerestaurants",
@@ -2583,7 +2648,7 @@
       "audience": "both",
       "format": "carousel",
       "note": "Day 100 of season two (200 days of MENVA overall)",
-      "caption": "200 days of MENVA on Instagram, both seasons combined.\n\nSame idea, unchanged: see it on your table, then order it.\n\nDo sau din ho gaye. Idea wahi hai.\n\nRestaurants: DM \"PILOT.\" Everyone else: tag the place you want scanned next.",
+      "caption": "200 days of MENVA on Instagram, both seasons combined, zero AI food, zero shortcuts.\n\nSame idea, unchanged: see it on your table, then order it.\n\nDo sau din ho gaye. Idea wahi hai, bas hum thode zyada confident hain ab.\n\nRestaurants: DM \"PILOT.\" Everyone else: tag the place you want scanned next.",
       "hashtags": [
         "#menva",
         "#lahorefood",
