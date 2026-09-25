@@ -16,6 +16,11 @@
     for (let y = 0; y < n; y++) for (let x = 0; x < n; x++) if (!inFinder(x, y) && rnd() > 0.52) r += `<rect x="${x * c}" y="${y * c}" width="${c}" height="${c}" fill="#1A1714"/>`;
     return `<svg width="${size}" height="${size}" viewBox="0 0 ${size} ${size}">${r}${finder(0, 0)}${finder(n - 7, 0)}${finder(0, n - 7)}</svg>`;
   };
+  // A group chat whose messages pop in one by one (same look as the "chat" post layout).
+  const chat = (title, members, msgs, start = 0.5, step = 0.75) => `<div class="a chat" data-fx="rise" data-at="0.1" style="flex:none;margin-top:50px"><div class="chat-head"><span class="chat-av"></span><span><b>${title}</b><small>${members}</small></span></div>
+    <div class="chat-body">${msgs.map(([from, t], i) => `<div class="a msg${from ? '' : ' me'}" data-fx="pop" data-at="${start + i * step}">${from ? `<span class="from">${from}</span>` : ''}<p>${t}</p></div>`).join('')}</div></div>`;
+  const shout = (h, at = 0.1) => `<div class="a shout" data-fx="pop" data-at="${at}" style="margin:0">${h}</div>`;
+  const CAST = 'Hamza, Anum, Zain, Sara, Ali bhai, you';
   const wm = (at) => `<div class="a wm" data-fx="fade" data-at="${at}">menva<i>.</i></div>`;
 
   const REELS = {
@@ -77,6 +82,26 @@
       { t: [2.8, 5.4], bg: 'ink', cls: 'center', html: `<div class="a mid" data-fx="rise" data-at="0.1">Everyone watches the screen.</div><div class="a mid" data-fx="rise" data-at="0.9"><em>Nobody reads the menu.</em></div>` },
       { t: [5.4, 8.8], bg: 'stage', html: `<div class="a mid" data-fx="rise" data-at="0.1" style="position:relative;z-index:2">Order <em>before the toss.</em></div>${table('steak-sandwich-full', 760, 0.7)}<div class="a" data-fx="pop" data-at="1.8" style="position:absolute;left:0;right:0;top:1490px;text-align:center;z-index:3"><span class="tag">See it first. No surprises at the break.</span></div>` },
       { t: [8.8, 11], bg: 'paper', cls: 'center', html: `<div class="a mid" data-fx="rise" data-at="0.1">Toss se pehle order.</div><div class="a small muted" data-fx="rise" data-at="0.5" style="margin-top:30px">Baqi sab match ke baad.</div><div style="margin-top:70px">${wm(0.9)}</div>` },
+    ] },
+    'khana-kahan-ep1': { len: 12, scenes: [
+      { t: [0, 7.6], bg: 'paper', html: `<div class="a mid" data-fx="rise" data-at="0">Friday, <em>7:52 pm.</em></div>${chat('Khana kahan? (6)', CAST, [['Hamza', 'kahin bhi chalo yaar'], ['Anum', 'MM Alam?'], ['Hamza', 'nahi wahan nahi'], ['Zain', 'koi pic bhejo pehle'], ['Sara', 'jo tum log lo mera bhi wohi'], ['Ali bhai', 'main owner ko jaanta hoon']], 0.6, 1.0)}` },
+      { t: [7.6, 10.2], bg: 'chili', cls: 'center', html: shout('9:40 pm.<br><em>Still</em> in the<br>car park.') },
+      { t: [10.2, 12], bg: 'paper', cls: 'center', html: `<div class="a mid" data-fx="rise" data-at="0.1">Tag your <em>Hamza.</em></div><div class="a small muted" data-fx="rise" data-at="0.5" style="margin-top:30px">Khana kahan? Every week.</div><div style="margin-top:70px">${wm(0.8)}</div>` },
+    ] },
+    'portion-police': { len: 13, scenes: [
+      { t: [0, 5.6], bg: 'paper', html: `<div class="a mid" data-fx="rise" data-at="0">Anum has <em>questions.</em></div>${chat('Khana kahan? (6)', CAST, [['Anum', 'yeh board sharing hai ya single?'], ['Hamza', 'menu pe likha hai "generous"'], ['Anum', 'generous kiske liye?'], ['', 'ruko, table pe rakh ke dekhti hoon']], 0.6, 1.05)}` },
+      { t: [5.6, 10.2], bg: 'stage', html: `<div class="a mid" data-fx="rise" data-at="0.1" style="position:relative;z-index:2">This is <em>"generous."</em></div>${table('steak-main-board', 820, 0.7)}<div class="a" data-fx="pop" data-at="1.9" style="position:absolute;left:0;right:0;top:1490px;text-align:center;z-index:3"><span class="tag">Actual size, on the table</span></div>` },
+      { t: [10.2, 13], bg: 'chili', cls: 'center', html: `<div class="a mid" data-fx="rise" data-at="0.1">Sharing hai <em>ya single?</em></div><div class="a small" data-fx="rise" data-at="0.6" style="margin-top:36px">Comment your verdict.</div><div style="margin-top:80px">${wm(1)}</div>` },
+    ] },
+    'kal-se-diet': { len: 13, scenes: [
+      { t: [0, 6.4], bg: 'paper', html: `<div class="a mid" data-fx="rise" data-at="0">Hamza's <em>diet,</em> day 4.</div>${chat('Khana kahan? (6)', CAST, [['Hamza', 'main sirf salad lunga'], ['Anum', 'pakka?'], ['Hamza', 'pakka'], ['Hamza', 'waise yeh steak sandwich kitna bara hai'], ['Zain', 'table pe rakh ke dekh lo']], 0.6, 0.95)}` },
+      { t: [6.4, 10.6], bg: 'stage', html: `<div class="a mid" data-fx="rise" data-at="0.1" style="position:relative;z-index:2">The salad. <em>(Hamza's version.)</em></div>${table('steak-sandwich-full', 760, 0.7)}<div class="a" data-fx="pop" data-at="1.8" style="position:absolute;left:0;right:0;top:1490px;text-align:center;z-index:3"><span class="tag">Kal se diet</span></div>` },
+      { t: [10.6, 13], bg: 'ink', cls: 'center', html: `<div class="a mid" data-fx="rise" data-at="0.1">At least he <em>saw it first.</em></div><div style="margin-top:80px">${wm(0.7)}</div>` },
+    ] },
+    'mama-joined': { len: 13, scenes: [
+      { t: [0, 6.4], bg: 'paper', html: `<div class="a mid" data-fx="rise" data-at="0">Mama has <em>joined the chat.</em></div>${chat('Family (4)', 'Mama, Hamza, Anum, you', [['Mama', 'beta itna sab kyun mangwaya'], ['Hamza', 'mama sharing hai'], ['Mama', 'itna bara? photo mein chota tha'], ['', 'mama photo nahi, asli size dekho']], 0.6, 1.1)}` },
+      { t: [6.4, 10.4], bg: 'stage', html: `<div class="a mid" data-fx="rise" data-at="0.1" style="position:relative;z-index:2">Asli size. <em>Asli plate.</em></div>${table('steak-main-board', 820, 0.7)}` },
+      { t: [10.4, 13], bg: 'paper', html: `${chat('Family (4)', 'Mama, Hamza, Anum, you', [['Mama', 'achha. phir theek hai.'], ['Mama', 'aur naan?']], 0.3, 0.8)}<div style="margin-top:auto;text-align:center">${wm(1.6)}</div>` },
     ] },
   };
 

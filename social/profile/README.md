@@ -23,6 +23,20 @@ Instagram search matches the **Name** field as well as the username. Pick one:
    `Scan the table QR, see the real dish at true size.`
    `Lahore restaurants: DM "PILOT"`
 
+Spicier options (see `marketing/voice-spice.md`):
+
+4. `Pehle dekho, phir order.`
+   `The real plate, true size, on your table. No app.`
+   `Lahore restaurants: DM "PILOT"`
+5. `For the friend who needs to see it first.`
+   `Real dishes in 3D at your table, before you order. Lahore.`
+   `Restaurants: DM "PILOT"`
+6. `Menu photo 2019 ki hai. Plate aaj ki.`
+   `See the real dish on your table before you order.`
+   `Lahore · DM "PILOT"`
+
+Recommended: **4**, because it's the brand line and says the product in one breath.
+
 **Category:** "Software" or "Product/service". **Contact button:** WhatsApp (needs a number). **Link:** the demo site. Point it at the custom domain once it's live.
 
 ## Highlights (what to put in each)
