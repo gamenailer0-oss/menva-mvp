@@ -207,6 +207,12 @@ Use when you can talk to the owner or GM directly, in person, during the slow ho
 
 ---
 
+## 4b. Outside evidence you may cite (checked 25 Sep)
+
+> "There's a peer-reviewed field study: in a restaurant, 41.2% of diners ordered dessert when they saw it in AR on their table, against 18% with a normal digital menu. That's not our number, it's one restaurant abroad, but it's the direction we're testing in Lahore."
+
+Source: Fritz, Hadi and Stephen (2023), *From tablet to table: How augmented reality influences food desirability*, Journal of the Academy of Marketing Science 51, 503–529 (101 diners). Always say it's outside research and one study. Never present it as a MENVA result or promise it.
+
 ## 5. Objection handling
 
 Honest answers only — nothing here promises results MENVA hasn't measured yet.
