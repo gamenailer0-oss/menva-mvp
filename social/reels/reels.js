@@ -66,6 +66,18 @@
       { t: [6.4, 9.4], bg: 'paper', html: `<div class="a mid" data-fx="rise" data-at="0.1">Every <em>angle.</em></div><div class="a" data-fx="pop" data-at="0.5" style="margin-top:60px;background:var(--stage);border-radius:40px;height:820px;display:flex;align-items:center;justify-content:center"><img src="../print/.cache/steak-main-steak.png" style="width:760px"></div>` },
       { t: [9.4, 12], bg: 'paper', cls: 'center', html: `<div class="a mid" data-fx="rise" data-at="0.1">Share it, or <em>keep it?</em></div><div class="a small muted" data-fx="rise" data-at="0.6" style="margin-top:30px">Comment A (share) or B (mine).</div><div style="margin-top:70px">${wm(1)}</div>` },
     ] },
+    'iftar-table': { len: 12, scenes: [
+      { t: [0, 3], bg: 'ink', cls: 'center', html: `<div class="a over" data-fx="fade" data-at="0" style="font-size:34px;color:rgba(255,255,255,.8)">Ramadan Mubarak, Lahore</div><div class="a mid" data-fx="rise" data-at="0.3" style="margin-top:36px">The table fills up <em>fast at iftar.</em></div>` },
+      { t: [3, 7], bg: 'stage', html: `<div class="a mid" data-fx="rise" data-at="0.1" style="position:relative;z-index:2">Decide before <em>you sit down.</em></div>${table('steak-main-board', 820, 0.8)}<div class="a" data-fx="pop" data-at="2.0" style="position:absolute;left:0;right:0;top:1490px;text-align:center;z-index:3"><span class="tag">Enough for the whole table?</span></div>` },
+      { t: [7, 9.8], bg: 'paper', cls: 'center', html: `<div class="a mid" data-fx="rise" data-at="0.1">Aik list,</div><div class="a mid" data-fx="rise" data-at="0.7"><em>sab ka khayal.</em></div><div class="a small muted" data-fx="rise" data-at="1.3" style="margin-top:40px">Show the waiter one list. Order once.</div>` },
+      { t: [9.8, 12], bg: 'chili', cls: 'center', html: `<div class="a mid" data-fx="rise" data-at="0.1">Pehle dekho, <em>phir order.</em></div><div style="margin-top:70px">${wm(0.6)}</div>` },
+    ] },
+    'order-before-the-toss': { len: 11, scenes: [
+      { t: [0, 2.8], bg: 'chili', cls: 'center', html: `<div class="a over" data-fx="fade" data-at="0" style="font-size:34px;color:rgba(255,255,255,.85)">PSL season</div><div class="a big" data-fx="rise" data-at="0.3" style="margin-top:30px">Match night.</div>` },
+      { t: [2.8, 5.4], bg: 'ink', cls: 'center', html: `<div class="a mid" data-fx="rise" data-at="0.1">Everyone watches the screen.</div><div class="a mid" data-fx="rise" data-at="0.9"><em>Nobody reads the menu.</em></div>` },
+      { t: [5.4, 8.8], bg: 'stage', html: `<div class="a mid" data-fx="rise" data-at="0.1" style="position:relative;z-index:2">Order <em>before the toss.</em></div>${table('steak-sandwich-full', 760, 0.7)}<div class="a" data-fx="pop" data-at="1.8" style="position:absolute;left:0;right:0;top:1490px;text-align:center;z-index:3"><span class="tag">See it first. No surprises at the break.</span></div>` },
+      { t: [8.8, 11], bg: 'paper', cls: 'center', html: `<div class="a mid" data-fx="rise" data-at="0.1">Toss se pehle order.</div><div class="a small muted" data-fx="rise" data-at="0.5" style="margin-top:30px">Baqi sab match ke baad.</div><div style="margin-top:70px">${wm(0.9)}</div>` },
+    ] },
   };
 
   const name = new URLSearchParams(location.search).get('reel') || 'pehle-dekho';
