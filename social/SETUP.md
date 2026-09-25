@@ -1,6 +1,6 @@
 # Setting up the MENVA autoposter
 
-When you finish, a small free server posts one MENVA Instagram post at **8:30 pm Pakistan time** on 5 days a week for 100 days. You don't need to approve or touch anything. You get a phone alert if something goes wrong.
+When you finish, a small free server posts one MENVA Instagram post, plus a Story that points to it, at **8:30 pm Pakistan time** on 5 days a week for 200 days (during Ramadan, some posts go out at 4:30 pm, before iftar). You don't need to approve or touch anything. You get a phone alert if something goes wrong.
 
 **Time needed:** about 1 hour, once.
 **Cost:** PKR 0 a month. Oracle's "Always Free" server is free. Captions are already written, so there is no AI bill. A domain is optional.
@@ -150,6 +150,8 @@ nano .env
 - Set `DRY_RUN=false`.
 - Set `START_DATE=` to the day post #1 should go out, for example `START_DATE=2026-10-05`. It should be a **Monday**, because the calendar is built on a Monday start (rest days are Monday and Wednesday after launch).
 - Optional: `POST_TIME=20:30` is the posting time. Change it if you like.
+
+- Optional: `STORIES=false` if you don't want the automatic Story teaser for each post.
 
 Save, then run `sudo docker compose up -d`. You're done. From the start date on, it posts by itself at 8:30 pm on each posting day.
 
