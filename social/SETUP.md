@@ -1,6 +1,6 @@
 # Setting up the MENVA autoposter
 
-When you finish, a small free server posts one MENVA Instagram post, plus a Story that points to it, at **8:30 pm Pakistan time** on 5 days a week for 200 days (during Ramadan, some posts go out at 4:30 pm, before iftar). You don't need to approve or touch anything. You get a phone alert if something goes wrong.
+When you finish, a small free server posts one MENVA Instagram post, plus a Story that points to it, at **8:30 pm Pakistan time** on 5 days a week for 300 days (during Ramadan, some posts go out at 4:30 pm, before iftar; nothing posts on Ashura). You don't need to approve or touch anything. You get a phone alert if something goes wrong.
 
 **Time needed:** about 1 hour, once.
 **Cost:** PKR 0 a month. Oracle's "Always Free" server is free. Captions are already written, so there is no AI bill. A domain is optional.

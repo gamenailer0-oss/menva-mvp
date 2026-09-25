@@ -29,6 +29,7 @@ Diner attention is what makes restaurants listen, and restaurant pilots are what
 |---|---|---|
 | 72 feed posts over 100 days, auto-posted at 20:30 PKT, Tue/Thu/Fri/Sat/Sun | [../content/calendar.json](../content/calendar.json), [../content/plan.md](../content/plan.md) | Ready: needs the server set up (SETUP.md) |
 | Next 100 days (PSL, Ramadan with 16:30 pre-iftar posts, Eid, Pakistan Day, spring, exams) | [../content/calendar-2.json](../content/calendar-2.json), [plan-2.md](../content/plan-2.md) | Ready: picked up automatically on day 101 (tested) |
+| Days 201–300 (Eid ul Azha, summer, mango season, monsoon, Muharram with no post on Ashura) | [../content/calendar-3.json](../content/calendar-3.json), [plan-3.md](../content/plan-3.md) | Ready: picked up automatically on day 201 (tested) |
 | A Story teaser for every post | ../templates/story.html | Built and tested |
 | 22 trend posts to swap in (Dish drop, Sight test, worth-the-hype…) | [../content/trend-bank.json](../content/trend-bank.json) | Ready |
 | Print: table tent, menu stickers, A4 one-pager, 10-slide pitch deck | [../print/out/](../print/out/) | Ready once the domain and contacts are filled in |
