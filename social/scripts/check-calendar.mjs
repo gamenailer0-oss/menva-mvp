@@ -26,7 +26,9 @@ for (const id of Object.keys(CROPS)) {
 
 const problems = [];
 const bad = (p, msg) => problems.push(`#${p.n ?? '?'} ${p.id ?? ''}: ${msg}`);
-const PILOT_PRICE = /^(PKR|Rs\.?)\s?25,?000$/i;
+// The only real prices: the PKR 25,000 restaurant pilot, and the diner plans MENVA Plus (PKR 99/month)
+// and MENVA Black (PKR 599/month). Dish prices never appear.
+const PILOT_PRICE = /^(PKR|Rs\.?)\s?(25,?000|99|599)$/i;
 const EMOJI = /\p{Extended_Pictographic}/u;
 // Dish names not confirmed yet: the renders in these folders may not match their folder names.
 const UNCONFIRMED = /\b(prawns?|skewers?|fajitas?|wraps?)\b/i;
@@ -61,7 +63,7 @@ cal.posts.forEach((p, i) => {
   if (/\{\{[A-Z_]+\}\}|\[(fill in|restaurant|pilot restaurant|name)[^\]]*\]/i.test(allText)) bad(p, 'has an unfilled placeholder like {{RESTAURANT}} or [pilot restaurant]');
   if (UNCONFIRMED.test(allText)) bad(p, 'names a dish that isn\'t confirmed yet (prawn / skewer / fajita / wrap)');
   if (/\d\s?cm\b/i.test(allText)) bad(p, 'mentions a size in cm — plate sizes are not confirmed');
-  for (const m of allText.matchAll(/\b(PKR|Rs\.?)\s?\d[\d,]*/gi)) if (!PILOT_PRICE.test(m[0])) bad(p, `price "${m[0]}" — the only real price we have is the PKR 25,000 pilot`);
+  for (const m of allText.matchAll(/\b(PKR|Rs\.?)\s?\d[\d,]*/gi)) if (!PILOT_PRICE.test(m[0])) bad(p, `price "${m[0]}" — the only real prices are the PKR 25,000 pilot and the PKR 99 / 599 diner plans`);
 
   slides.forEach((s, j) => {
     const at = `slide ${j + 1}`;

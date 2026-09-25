@@ -1,39 +1,39 @@
-# Diner subscriptions: marketing plan (draft, needs 5 answers)
+# Diner plans: MENVA Plus and MENVA Black
 
-From Abdullah, 25 Sep evening: diners can now subscribe.
+Decided with Abdullah on 25 Sep:
 
-| Tier | Price | What it gives (as told to us) |
+| Plan | Price | What it gives |
 |---|---|---|
-| Free | PKR 0 | (to confirm: the menu with dish photos?) |
-| 3D + AR | PKR 99 | The 3D and AR experience |
-| VIP ("vio" in the message; assumed VIP) | PKR 599 | A VIP badge, a place on a global spend-based ranking, plus discounts and special treatment at restaurants |
+| **Free** | PKR 0 | 3D and AR at partner restaurant tables through the table QR. Free at the table, always (the restaurant's pilot covers it). |
+| **MENVA Plus** | PKR 99/month | 3D and AR anywhere: from home, in the car, before you pick a place. |
+| **MENVA Black** | PKR 599/month | The black badge, tiers earned **by visits** (Regular → Known → Top Table → Legend), and perks at partner restaurants **as they join**. |
 
-Also: **MENVA is its own brand. Don't lean on Gauchos.** The content already never names Gauchos. From now on, every post, ad and pitch talks about MENVA as a consumer brand that diners join and restaurants plug into, not as one restaurant's menu tool.
+**Ranking rules:** tiers come from visits to partner tables, never rupees. The leaderboard is opt-in, shows first names or handles only and never shows amounts. That keeps the "status" feeling without the safety risk or the flaunting backlash.
 
-## The 5 answers that change the content
+**Brand:** MENVA is its own brand. Gauchos is never named, and posts say "a partner restaurant". The carved logo appearing in 3D demos or filming is acceptable.
 
-1. **Is 3D and AR at a partner restaurant's table still free for the guest?** Every one of the 251 scheduled posts says "scan the table QR, see the real dish in 3D, on your table". If that now needs PKR 99, those posts would mislead, and the calendar has to change before 5 October. Two readings:
-   - **(a)** It's free at partner tables (the restaurant pays through the pilot), and PKR 99 unlocks 3D and AR anywhere, such as browsing from home before you go. The current content stays true; we add the subscription on top. *Recommended:* it keeps the table experience frictionless, which is the whole pitch to restaurants.
-   - **(b)** Free shows photos, and PKR 99 is needed for 3D and AR even at the table. Then about 180 posts need a line such as "3D and AR with MENVA Plus, PKR 99", and the restaurant pitch changes.
-2. **Per month, per year, or once?** Ads can't say "PKR 99" without it.
-3. **The name of the 599 tier.** "VIP" is what we assumed. Brand-ier options: *MENVA Black*, *Top Table*, *Regular*.
-4. **How the spend ranking works.** MENVA has no ordering or payment, so how is "spend" counted: the restaurant confirms the bill, the diner uploads a receipt, or something else? Is it public?
-5. **Which restaurants give the discounts and special treatment, and what exactly?** We can't advertise a perk no restaurant has agreed to. Until then the copy can only say "perks at partner restaurants, as they join".
+## What's ready
+- `content/subscriptions-launch.json`: 8 launch posts, previewed in `previews/subscriptions-launch-sheet-1.jpg`:
+  - "MENVA has levels now" carousel
+  - Plus "sized up from your bed"
+  - "Not everyone gets the black badge" + the tier ladder
+  - Ali bhai gets the badge (a *Khana kahan?* bonus)
+  - FAQ, including "Is the table 3D still free? Yes."
+  - "See it anywhere, or be seen?"
+  - Founding-partner pitch for restaurants
+  - Plus pizza cover
+- The rule checker now allows PKR 99 and PKR 599 as well as PKR 25,000. Dish prices are still refused.
 
-## How to market it (once answered)
+## Why they aren't scheduled yet
+The app on `main` has no subscribe or checkout page yet, so an automatic post saying "PKR 99, link in bio" would lead nowhere. When checkout is live:
+1. Swap the 8 posts into the calendar (week of launch: carousel on day 1, FAQ on day 2, Plus and Black on the next posting days), or turn the file into `series-subscriptions.json` with real days.
+2. Add the checkout link to the bio.
+3. Pin the "levels" carousel.
 
-**The idea: status, not savings.** Lahore dining runs on being seen: the table by the window, the owner saying salaam, the Story from the right place. VIP sells that feeling. The discount is a bonus, not the headline.
+## Still needed before paid plans are advertised
+- A checkout (JazzCash / Easypaisa / card), terms and a refund or cancel policy page.
+- Written perk agreements with each restaurant before naming a perk. Until then the copy stays "perks as partner restaurants join".
+- A visit count the ranking can trust (for example a check-in when the table QR is scanned with the account signed in).
 
-- **Line for PKR 99:** "See every dish before you go." (under reading a) or "Unlock the table view." (under b).
-- **Line for VIP:** "The table knows your name." (Only once "special treatment" is real and agreed.)
-- **Ranking, done safely:** show *tiers and badges*, never rupee amounts. Publishing who spends the most invites trolling, envy posts and safety problems (being a known big spender isn't always safe). It could also read as flaunting, which can backfire in Pakistan. Suggested tiers: *Regular → Known → Top Table → Legend*, earned by visits or spend, with the leaderboard **opt-in**. Monthly "Top Table" Stories use first names or handles only, with the person's OK.
-- **Launch sequence (2 weeks):** a teaser in *Khana kahan?* (Ali bhai finally gets a badge and claims he "knows the owner" for real), then a carousel explaining the tiers, a Reel of the badge being revealed, and a Story poll ("Would you flex the badge or keep it low-key?"). After that, one subscription post a week, no more (the feed must not turn into an ad).
-- **Restaurants:** VIP is a reason for restaurants to join, because MENVA sends them diners who already spend. That's a line for the sales kit once the perk terms are set.
-
-## Needs Abdullah before anything goes out
-- The 5 answers above.
-- Payment method and refund policy (Pakistani payment gateways, JazzCash/Easypaisa, card): the terms page must exist before the first paid ad.
-- Written perk agreements with each restaurant that offers a discount.
-- An opt-in and privacy note for the ranking.
-
-Nothing about subscriptions has been added to the automatic calendar yet. The rule checker still allows only the PKR 25,000 pilot price, so no post can mention PKR 99 or 599 by accident until this plan is confirmed.
+## Restaurant angle (founding partners)
+Pilot framing is **founding partner**. The pitch: MENVA Black members climb tiers by visiting partner tables, and founding partners choose their own perk for them and are listed first. See `outreach-spiced.md`.

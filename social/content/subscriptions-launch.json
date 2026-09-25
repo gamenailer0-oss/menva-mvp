@@ -1,0 +1,329 @@
+{
+  "version": 1,
+  "about": "MENVA Plus (PKR 99/month) and MENVA Black (PKR 599/month) launch posts. NOT scheduled: the app has no subscribe/checkout page yet. When it's live, swap these into a calendar like trend-bank posts (keep that post's n, day, date, weekday), or turn this file into a series-*.json with real days. Table 3D at partner restaurants stays free. Tiers are earned by visits, opt-in, never rupee amounts. Perks only as restaurants agree.",
+  "defaultStart": "2026-10-05",
+  "handle": "@eatmenva",
+  "posts": [
+    {
+      "n": 1,
+      "day": 1,
+      "id": "subs-launch-levels",
+      "series": "MENVA Plus and Black launch",
+      "pillar": "see-it-first",
+      "audience": "diners",
+      "format": "carousel",
+      "caption": "MENVA has levels now.\n\nFree: scan the QR at a partner table and the 3D is on us, same as always.\nMENVA Plus, PKR 99/month: 3D and AR anywhere. Sofa, car park, the queue, 1 am \"kal kahan chalein\" research.\nMENVA Black, PKR 599/month: the black badge, tiers you earn by showing up, and perks at partner restaurants as they join.\n\nKaunsa level ho tum? Link in bio.",
+      "hashtags": [
+        "#menva",
+        "#lahorefood",
+        "#lahorefoodies",
+        "#eatmenva"
+      ],
+      "alt": "A carousel introducing MENVA Free, MENVA Plus at PKR 99 a month and MENVA Black at PKR 599 a month.",
+      "slides": [
+        {
+          "layout": "shout",
+          "bg": "ink",
+          "over": "New",
+          "n": "1/4",
+          "h": "MENVA has\n*levels* now."
+        },
+        {
+          "layout": "list",
+          "over": "Pick yours",
+          "n": "2/4",
+          "h": "Three ways to *eat with MENVA*",
+          "items": [
+            "**Free**: 3D at partner tables. Still free. Always.",
+            "**Plus**, PKR 99/month: 3D and AR anywhere, before you even leave the house",
+            "**Black**, PKR 599/month: the black badge, earned tiers, perks as restaurants join"
+          ]
+        },
+        {
+          "layout": "hero",
+          "over": "MENVA Plus",
+          "n": "3/4",
+          "dish": "bz-chicken-pizza",
+          "crop": "full",
+          "h": "Decide *from the sofa.*",
+          "b": "PKR 99/month. See it at true size before you book the table."
+        },
+        {
+          "layout": "cta",
+          "bg": "chili",
+          "over": "4/4",
+          "h": "Kaunsa level *ho tum?*",
+          "b": "Plus or Black. Link in bio.",
+          "actions": [
+            "Link in bio",
+            "Tag your group"
+          ]
+        }
+      ]
+    },
+    {
+      "n": 2,
+      "day": 2,
+      "id": "subs-plus-sofa",
+      "series": "MENVA Plus and Black launch",
+      "pillar": "see-it-first",
+      "audience": "diners",
+      "format": "single",
+      "caption": "Friday, 6 pm, still in bed, already arguing about dinner.\n\nWith MENVA Plus the argument ends before you leave: open the dish, put it on your own table at home, true size. PKR 99/month.\n\nKhana ghar pe decide, plate bahar pe enjoy.",
+      "hashtags": [
+        "#menva",
+        "#lahorefood",
+        "#lahorefoodies",
+        "#eatmenva"
+      ],
+      "alt": "The real steak board, promoting MENVA Plus at PKR 99 a month.",
+      "slides": [
+        {
+          "layout": "hero",
+          "over": "MENVA Plus",
+          "dish": "steak-main",
+          "crop": "board",
+          "h": "Sized up *from your bed.*",
+          "b": "3D and AR anywhere. PKR 99/month.",
+          "stamp": "Plus"
+        }
+      ]
+    },
+    {
+      "n": 3,
+      "day": 3,
+      "id": "subs-black-badge",
+      "series": "MENVA Plus and Black launch",
+      "pillar": "see-it-first",
+      "audience": "diners",
+      "format": "carousel",
+      "caption": "Not everyone gets the black badge.\n\nMENVA Black, PKR 599/month. You climb the tiers by showing up at partner tables, not by flexing a bill: Regular, Known, Top Table, Legend. Leaderboard is opt-in, first names only, no amounts. Ever.\n\nPerks at partner restaurants roll in as they join.",
+      "hashtags": [
+        "#menva",
+        "#lahorefood",
+        "#lahorefoodies",
+        "#eatmenva"
+      ],
+      "alt": "Two slides introducing MENVA Black at PKR 599 a month and its visit-based tiers.",
+      "slides": [
+        {
+          "layout": "shout",
+          "bg": "ink",
+          "over": "MENVA Black",
+          "n": "1/2",
+          "h": "Not everyone gets\nthe *black badge.*"
+        },
+        {
+          "layout": "notes",
+          "over": "MENVA Black",
+          "n": "2/2",
+          "title": "Tiers, earned by visits",
+          "h": "How you *climb*",
+          "items": [
+            "**Regular**: you showed up",
+            "**Known**: you keep showing up",
+            "**Top Table**: the group chat asks you where to go",
+            "**Legend**: you are the group chat",
+            "~~ranked by rupees~~ never. visits only, opt-in"
+          ]
+        }
+      ]
+    },
+    {
+      "n": 4,
+      "day": 4,
+      "id": "subs-ali-bhai-badge",
+      "series": "MENVA Plus and Black launch",
+      "pillar": "relatable",
+      "audience": "diners",
+      "format": "single",
+      "caption": "Ali bhai got MENVA Black. The group chat has not recovered.\n\nTiers come from visits, not bills, so no, bhai, ordering the whole menu doesn't make you Legend.",
+      "hashtags": [
+        "#menva",
+        "#lahorefood",
+        "#lahorefoodies",
+        "#eatmenva"
+      ],
+      "alt": "A group chat where a friend gets the MENVA Black badge.",
+      "slides": [
+        {
+          "layout": "chat",
+          "over": "Khana kahan? Bonus",
+          "h": "Ali bhai got *the badge.*",
+          "title": "Khana kahan? (6)",
+          "members": "Hamza, Anum, Zain, Sara, Ali bhai, you",
+          "msgs": [
+            {
+              "from": "Ali bhai",
+              "t": "MENVA Black le liya"
+            },
+            {
+              "from": "Zain",
+              "t": "ab kya, owner ko sach mein jaante ho?"
+            },
+            {
+              "from": "Ali bhai",
+              "t": "abhi Regular hoon. Legend banunga"
+            },
+            {
+              "from": "Anum",
+              "t": "visits se banta hai bhai, bill se nahi"
+            },
+            {
+              "from": "Ali bhai",
+              "t": "toh roz chalte hain"
+            },
+            {
+              "from": "Hamza",
+              "t": "finally ek acha plan"
+            }
+          ]
+        }
+      ]
+    },
+    {
+      "n": 5,
+      "day": 5,
+      "id": "subs-faq",
+      "series": "MENVA Plus and Black launch",
+      "pillar": "see-it-first",
+      "audience": "diners",
+      "format": "carousel",
+      "caption": "Quick answers before you pick a level.\n\nTable 3D at a partner restaurant: free, same as always. Plus (PKR 99/month): 3D and AR anywhere. Black (PKR 599/month): badge, visit-based tiers, perks as partner restaurants join. Ordering still happens with your waiter.\n\nAur sawal? Comments mein.",
+      "hashtags": [
+        "#menva",
+        "#lahorefood",
+        "#lahorefoodies",
+        "#eatmenva"
+      ],
+      "alt": "An FAQ carousel about MENVA Free, Plus and Black.",
+      "slides": [
+        {
+          "layout": "statement",
+          "over": "Plus and Black",
+          "n": "1/4",
+          "size": "l",
+          "h": "Before you *pick a level.*"
+        },
+        {
+          "layout": "statement",
+          "over": "Is the table 3D still free?",
+          "n": "2/4",
+          "size": "m",
+          "h": "Yes. *At partner tables, always.*",
+          "b": "Scan the QR, see the real dish, true size. Nothing to pay."
+        },
+        {
+          "layout": "statement",
+          "over": "So what's Plus?",
+          "n": "3/4",
+          "size": "m",
+          "h": "3D and AR *anywhere.*",
+          "b": "From home, in the car, before you book. PKR 99/month."
+        },
+        {
+          "layout": "statement",
+          "over": "And Black?",
+          "n": "4/4",
+          "size": "m",
+          "h": "Badge, tiers, *perks.*",
+          "b": "PKR 599/month. Tiers are earned by visits. Perks arrive as partner restaurants join."
+        }
+      ]
+    },
+    {
+      "n": 6,
+      "day": 6,
+      "id": "subs-plus-vs-black",
+      "series": "MENVA Plus and Black launch",
+      "pillar": "relatable",
+      "audience": "diners",
+      "format": "single",
+      "caption": "Honest question. PKR 99 to see it anywhere, or PKR 599 to be seen?\n\nComment Plus or Black. Explain yourself.",
+      "hashtags": [
+        "#menva",
+        "#lahorefood",
+        "#lahorefoodies",
+        "#eatmenva"
+      ],
+      "alt": "A text post asking followers to choose between MENVA Plus and MENVA Black.",
+      "slides": [
+        {
+          "layout": "statement",
+          "bg": "chili",
+          "over": "This or that",
+          "size": "l",
+          "h": "See it anywhere, *or be seen?*",
+          "b": "Plus or Black. Comment below."
+        }
+      ]
+    },
+    {
+      "n": 7,
+      "day": 7,
+      "id": "subs-founding-partner",
+      "series": "MENVA Plus and Black launch",
+      "pillar": "for-restaurants",
+      "audience": "restaurants",
+      "format": "carousel",
+      "caption": "For restaurant owners in Lahore.\n\nMENVA Black members climb tiers by visiting partner tables. Founding partner restaurants decide their own perk for them, a welcome drink, a better table, whatever fits the floor, and get listed first.\n\nBecome a founding partner: Lahore pilot, PKR 25,000. DM \"PILOT\".",
+      "hashtags": [
+        "#menva",
+        "#lahorerestaurants",
+        "#restaurantmarketing",
+        "#eatmenva"
+      ],
+      "alt": "Two slides inviting restaurants to become MENVA founding partners.",
+      "slides": [
+        {
+          "layout": "statement",
+          "bg": "ink",
+          "over": "For restaurants",
+          "n": "1/2",
+          "size": "l",
+          "h": "Your regulars, *wearing a badge.*"
+        },
+        {
+          "layout": "list",
+          "over": "Founding partners",
+          "n": "2/2",
+          "h": "What *founding partners* get",
+          "items": [
+            "Your real dishes in 3D on every table",
+            "Your own perk for MENVA Black members, on your terms",
+            "Listed first as MENVA grows",
+            "DM \"PILOT\": Lahore pilot, PKR 25,000"
+          ]
+        }
+      ]
+    },
+    {
+      "n": 8,
+      "day": 8,
+      "id": "subs-reel-cover",
+      "series": "MENVA Plus and Black launch",
+      "pillar": "see-it-first",
+      "audience": "diners",
+      "format": "single",
+      "caption": "PKR 99. The pizza on your own coffee table, true size, before you've even picked a restaurant.\n\nMENVA Plus. Link in bio.",
+      "hashtags": [
+        "#menva",
+        "#lahorefood",
+        "#lahorefoodies",
+        "#eatmenva"
+      ],
+      "alt": "The real chicken pizza, promoting MENVA Plus at PKR 99 a month.",
+      "slides": [
+        {
+          "layout": "hero",
+          "over": "MENVA Plus",
+          "dish": "bz-chicken-pizza",
+          "crop": "pizza",
+          "h": "On your coffee table. *True size.*",
+          "b": "PKR 99/month.",
+          "stamp": "Plus"
+        }
+      ]
+    }
+  ]
+}

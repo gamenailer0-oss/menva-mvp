@@ -85,3 +85,8 @@ Reply within the first hour. Match the commenter's language. Never argue, never 
 | Tags a friend | "@friend you've been summoned." (Only when it fits the post.) |
 | Something negative about a restaurant | Don't reply publicly beyond "Sorry to hear that." Never pile on. |
 | "Lahore mein kahan?" | Coming to tables soon. Turn on post notifications, pehle tumhein pata chalega. |
+
+## Founding partner line (pilot framing, decided 25 Sep)
+
+Add this to any opener once they reply:
+> We're picking a few founding partner restaurants in Lahore. Founding partners get their dishes in 3D on every table, choose their own perk for MENVA Black members (our regulars' badge), and are listed first as MENVA grows. The pilot is PKR 25,000.

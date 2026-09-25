@@ -2,7 +2,17 @@
 
 Everything that needs your permission, money, login or a real person was saved here instead of being done. Sorted by what unblocks the most.
 
-## A. Decisions (answer these first, 20 minutes)
+## A. Decisions
+
+**Answered on 25 Sep (10 pm):**
+- Table 3D is free at partner tables. MENVA Plus is PKR 99/month (3D anywhere) and MENVA Black is PKR 599/month (badge, tiers earned by visits, opt-in, never amounts, and perks "as they join").
+- Gauchos is never named; MENVA is its own brand. The handle is @eatmenva and WhatsApp is 0312 5352111.
+- Keep the netlify.app address for now. The pilot stays vague and is framed as "founding partner". The dish nicknames stay.
+- Keep all 37 sitcom episodes. The voice goes even spicier. Ad budget is PKR 0, and only Abdullah posts.
+- The link-preview fix is not needed: main already has a fuller version. Stay on restaurants, and keep the Chili look.
+- Use the spin renders and the pizza plus open-source scans for variety. Cite the AR study as outside research. The carved logo is fine to show.
+
+The table below is the original list, kept for reference.
 
 *Evening update, 25 Sep:* after "feels AI generic", every post was rewritten in a sharper voice, and a weekly sitcom series was added. Decisions 16 and 17 below cover that.
 
