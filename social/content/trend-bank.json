@@ -276,20 +276,20 @@
       "pillar": "relatable",
       "audience": "diners",
       "format": "single",
-      "caption": "New place, queue around the block, and nobody in line actually knows what they're ordering yet.\n\nAt least make the wait productive. Scan while you stand there, know your order before you're at the counter.\n\nLine mein khade ho? Order toh pakka kar lo.",
+      "caption": "New place, queue around the block, 45 minutes of waiting, and then everyone decides in 30 seconds because the waiter is standing right there.\n\nThe wait was never the problem. The panic order at the table is.\n\nTable milte hi QR scan karo, plate dekho, phir order. Line ka badla aise lo.",
       "hashtags": [
         "#menva",
         "#lahorefood",
         "#lahorefoodies",
         "#lahoreeats"
       ],
-      "alt": "A group chat about waiting in a restaurant queue and scanning the menu while they wait.",
+      "alt": "A group chat about waiting in a restaurant queue and then panic-ordering at the table.",
       "slides": [
         {
           "layout": "chat",
           "bg": "paper",
           "over": "Opening week",
-          "h": "Same queue. *Zero guessing.*",
+          "h": "Long queue. *Panic order.*",
           "title": "Dinner plan",
           "members": "You, Hamza, Areeba, Bilal",
           "msgs": [
@@ -299,23 +299,23 @@
             },
             {
               "from": "Areeba",
-              "t": "ok but what are we even ordering"
-            },
-            {
-              "me": true,
-              "t": "scanned the QR, steak board looks unreal"
+              "t": "45 min wait they said"
             },
             {
               "from": "Bilal",
-              "t": "wait you can see it before we're even in?"
-            },
-            {
-              "me": true,
-              "t": "true size too, no lying angles"
+              "t": "table mil gayi!!"
             },
             {
               "from": "Hamza",
-              "t": "ok NOW the wait makes sense"
+              "t": "waiter aa gaya. kya order karein??"
+            },
+            {
+              "me": true,
+              "t": "ruko QR scan kar raha hoon, size dekh lo pehle"
+            },
+            {
+              "from": "Areeba",
+              "t": "ok THAT'S how we do it"
             }
           ]
         }
