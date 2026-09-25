@@ -28,8 +28,14 @@
       close:  { x: 400, y: 540, w: 370, h: 300, fade: 'all' },
       full:   { x: 205, y: 225, w: 880, h: 645, brand: true },
     },
+    // Chicken pizza (second partner restaurant): no branding on the board or paper.
+    'bz-chicken-pizza': {
+      full:   { x: 110, y: 270, w: 880, h: 520 },
+      pizza:  { x: 150, y: 310, w: 700, h: 420, fade: 'all' },
+      close:  { x: 300, y: 360, w: 460, h: 300, fade: 'all' },
+    },
   };
-  const DEFAULT_CROP = { 'steak-main': 'board', 'steak-sandwich': 'full', 'garlic-prawn-skewers': 'full', 'chicken-fajita-wrap': 'board' };
+  const DEFAULT_CROP = { 'steak-main': 'board', 'steak-sandwich': 'full', 'garlic-prawn-skewers': 'full', 'chicken-fajita-wrap': 'board', 'bz-chicken-pizza': 'full' };
 
   const AR_ICON = '<svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M12 3 20 7.5v9L12 21l-8-4.5v-9z"/><path d="m4 7.5 8 4.5 8-4.5M12 12v9"/></svg>';
 

@@ -2069,8 +2069,8 @@
       "slides": [
         {
           "layout": "closeup",
-          "dish": "steak-sandwich",
-          "crop": "close",
+          "dish": "bz-chicken-pizza",
+          "crop": "pizza",
           "over": "Zoom in",
           "h": "Nothing added. *Nothing painted on.*",
           "stamp": "No filter"
@@ -2503,9 +2503,10 @@
           "layout": "hero",
           "bg": "sand",
           "over": "Saturday",
-          "dish": "steak-sandwich",
+          "dish": "bz-chicken-pizza",
           "h": "Weekend plans, *sorted.*",
-          "b": "Where to go: two minutes. What to order: see it first."
+          "b": "Where to go: two minutes. What to order: see it first.",
+          "crop": "full"
         }
       ]
     },

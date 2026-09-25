@@ -14,7 +14,7 @@
 | `size` | headline size: `xl`, `l`, `m`, `s` (each layout has its own default) |
 | `b` | body text |
 | `ru` | Roman Urdu line (shown under the body, muted) |
-| `dish` | `steak-main`, `steak-sandwich`, `garlic-prawn-skewers`, `chicken-fajita-wrap` |
+| `dish` | `steak-main`, `steak-sandwich`, `garlic-prawn-skewers`, `chicken-fajita-wrap`, `bz-chicken-pizza` (the chicken pizza) |
 | `crop` | named crop of that dish (see `CROPS` in `post.js`). The default is the dish's widest logo-free crop |
 | `dishes`, `crops`, `labels` | `duo` only: two of each |
 | `items` | `list` and `notes`: the rows |

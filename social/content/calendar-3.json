@@ -344,8 +344,8 @@
         {
           "layout": "hero",
           "over": "For restaurants",
-          "dish": "steak-main",
-          "crop": "steak",
+          "dish": "bz-chicken-pizza",
+          "crop": "full",
           "h": "Summer moves guests *indoors, not away.*",
           "b": "They're still deciding what to order, just from a cooler table now."
         }
@@ -838,8 +838,8 @@
         {
           "layout": "hero",
           "over": "For restaurants",
-          "dish": "steak-main",
-          "crop": "board",
+          "dish": "bz-chicken-pizza",
+          "crop": "full",
           "h": "A menu that *shows, not just lists.*",
           "b": "The difference guests notice before they even order."
         }
@@ -1098,7 +1098,7 @@
         {
           "layout": "hero",
           "over": "Summer break",
-          "dish": "steak-sandwich",
+          "dish": "bz-chicken-pizza",
           "crop": "full",
           "h": "Summer break just *rearranged the group chat.*",
           "b": "Suddenly everyone has time, nobody has a plan."
@@ -1468,8 +1468,8 @@
         {
           "layout": "hero",
           "over": "For restaurants",
-          "dish": "steak-main",
-          "crop": "sides",
+          "dish": "bz-chicken-pizza",
+          "crop": "full",
           "h": "New mango specials. *Show the old dishes clearly too.*",
           "b": "A seasonal special shouldn't be the only dish guests can actually picture."
         }
@@ -1689,7 +1689,7 @@
         {
           "layout": "hero",
           "over": "Rainy day",
-          "dish": "steak-sandwich",
+          "dish": "bz-chicken-pizza",
           "crop": "full",
           "h": "Rain outside, *comfort order inside.*",
           "b": "The menu suddenly looks different when it's pouring."
@@ -1926,8 +1926,8 @@
         {
           "layout": "hero",
           "over": "Papers done",
-          "dish": "chicken-fajita-wrap",
-          "crop": "close",
+          "dish": "bz-chicken-pizza",
+          "crop": "full",
           "h": "Papers *done. Table booked.*",
           "b": "The first real dinner out in weeks."
         }
@@ -2268,8 +2268,8 @@
         {
           "layout": "hero",
           "over": "For restaurants",
-          "dish": "chicken-fajita-wrap",
-          "crop": "board",
+          "dish": "bz-chicken-pizza",
+          "crop": "full",
           "h": "The dish that *sells itself, if it's seen.*",
           "b": "A great plate loses nothing by being shown clearly."
         }

@@ -1,0 +1,71 @@
+{
+  "id": "bz-chicken-pizza",
+  "source": {
+    "folder": "bz-chicken-pizza",
+    "model": "bz-chicken-pizza/chicken-pizza.glb",
+    "photo": null
+  },
+  "sourceHash": "8ef5b30f1f2d",
+  "audit": "amber",
+  "dimensions_cm": {
+    "width": 50,
+    "height": 5.8,
+    "depth": 29.8
+  },
+  "scale": 0.5105,
+  "triangles": 21994,
+  "vertices": 17071,
+  "textures": {
+    "albedo": "2048px jpeg q84",
+    "normal": "1024px jpeg q85"
+  },
+  "roughness": 1,
+  "poster": "render",
+  "posterQuality": 82,
+  "spin": {
+    "frames": 36,
+    "frameWidth": 480,
+    "frameHeight": 360,
+    "columns": 6,
+    "rows": 6,
+    "quality": 40
+  },
+  "usdz": "model.usdz",
+  "usdzTextures": {
+    "size": 1024,
+    "quality": 84,
+    "normalMap": true
+  },
+  "files": {
+    "model.glb": {
+      "bytes": 953324,
+      "hash": "2f82f2f786cc"
+    },
+    "poster.webp": {
+      "bytes": 57622,
+      "hash": "872feb060e3d"
+    },
+    "poster-blur.webp": {
+      "bytes": 680,
+      "hash": "9c3717d51c81"
+    },
+    "spin.webp": {
+      "bytes": 292612,
+      "hash": "070290298cf5"
+    },
+    "model.usdz": {
+      "bytes": 1781172,
+      "hash": "de7f6fd14a40"
+    }
+  },
+  "before": {
+    "chicken-pizza.glb": 1539040
+  },
+  "warnings": [
+    "Scale factor 0.511 is outside 0.85–1.15 — check plate_length_cm (50 cm) against the scan (97.9 cm).",
+    "Unlit (model-sources.json): lighting comes from the texture; the USDZ uses a matte material.",
+    "GLB 931 KB is over the 800 KB target (within the hard budget).",
+    "USDZ (iPhone AR) uses 1024px textures q84 to fit 1.80 MB."
+  ],
+  "budgetErrors": []
+}

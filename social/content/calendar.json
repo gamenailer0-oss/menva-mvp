@@ -522,8 +522,8 @@
       "slides": [
         {
           "layout": "closeup",
-          "dish": "garlic-prawn-skewers",
-          "crop": "close",
+          "dish": "bz-chicken-pizza",
+          "crop": "pizza",
           "over": "One finger",
           "h": "Check the *other* side first.",
           "b": "Underneath the garnish, behind the sauce, every side, before you commit.",
@@ -2339,9 +2339,10 @@
           "layout": "hero",
           "bg": "sand",
           "over": "Resolution check",
-          "dish": "garlic-prawn-skewers",
+          "dish": "bz-chicken-pizza",
           "h": "New dish *no. 1*",
-          "b": "See it first. Then decide."
+          "b": "See it first. Then decide.",
+          "crop": "full"
         }
       ]
     },
