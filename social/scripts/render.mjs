@@ -1,7 +1,7 @@
 // Renders post slides to JPEG on your own computer — the same template the server uses,
 // so you can check posts before they go out.
 //
-//   node social/scripts/render.mjs                 every post in the calendar → social/previews/out/
+//   node social/scripts/render.mjs                 every post in the calendar → social/previews/out/calendar/
 //   node social/scripts/render.mjs 12 13           only posts #12 and #13
 //   node social/scripts/render.mjs --sheet         also build contact sheets (social/previews/sheet-*.jpg)
 //   node social/scripts/render.mjs --file x.json   render the slides in x.json ([{...slide}, ...])
@@ -18,7 +18,7 @@ import sharp from 'sharp';
 import { slideUrl } from './slide-url.mjs';
 
 const ROOT = path.resolve(path.dirname(fileURLToPath(import.meta.url)), '../..');
-const OUT = path.join(ROOT, 'social/previews/out');
+let OUT = path.join(ROOT, 'social/previews/out'); // one sub-folder per source, so two renders never clash
 const TYPES = { '.html': 'text/html', '.css': 'text/css', '.js': 'text/javascript', '.webp': 'image/webp', '.woff2': 'font/woff2', '.json': 'application/json' };
 
 const args = process.argv.slice(2);
@@ -39,6 +39,7 @@ if (fileArg) {
     p.slides.map((s, i) => ({ name: `${String(p.n).padStart(3, '0')}-${p.id}-${i + 1}`, slide: { handle: cal.handle, ...s } })));
 }
 
+OUT = path.join(OUT, sheetName === 'sheet' ? 'calendar' : sheetName.replace(/-sheet$/, ''));
 const server = http.createServer((req, res) => {
   const file = path.join(ROOT, decodeURIComponent(new URL(req.url, 'http://x').pathname));
   if (!file.startsWith(ROOT) || !fs.existsSync(file) || fs.statSync(file).isDirectory()) { res.writeHead(404).end(); return; }

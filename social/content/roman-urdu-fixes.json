@@ -1,0 +1,74 @@
+[
+  {
+    "file": "calendar.json",
+    "id": "the-photographer",
+    "field": "caption",
+    "old": "Camera khata pehle.",
+    "new": "Camera pehle khata hai.",
+    "why": "Word order calques the English \"camera eats first\" and drops the auxiliary verb, so it reads as a translation rather than something a Lahori would say. Correct SOV order is subject + adverb + verb+hai."
+  },
+  {
+    "file": "trend-bank.json",
+    "id": "the-table-is-the-photo-spot",
+    "field": "caption",
+    "old": "Camera khata pehle.",
+    "new": "Camera pehle khata hai.",
+    "why": "Same calqued word order as the equivalent line in calendar.json (\"the-photographer\") — fixing both keeps the recurring joke consistent and natural."
+  },
+  {
+    "file": "calendar.json",
+    "id": "wedding-season",
+    "field": "slides[0].h",
+    "old": "Shaadi ka khana *fixed hai.*",
+    "new": "Shaadi ka khana *fix hai.*",
+    "why": "The caption for this same post says \"fix hai\" (the natural code-switch — English loan verb + hai, no English past-tense ending). The headline says \"fixed hai,\" which sounds like an English grammar calque. Made them consistent with the more natural, shorter form."
+  },
+  {
+    "file": "calendar-2.json",
+    "id": "types-of-people-9-dessert-first",
+    "field": "caption",
+    "old": "baaki baad mein",
+    "new": "baqi baad mein",
+    "why": "\"Baqi\" (rest/remaining) is spelled \"baqi\" everywhere else in the calendar (e.g. \"baqi sab chup\", \"baqi log ruko\"). This is the one place it's spelled \"baaki\" — standardised to match."
+  },
+  {
+    "file": "calendar-2.json",
+    "id": "types-of-people-9-dessert-first",
+    "field": "slides[0].ru",
+    "old": "baaki baad mein",
+    "new": "baqi baad mein",
+    "why": "Same spelling-consistency fix as the caption of this post, applied to the slide's ru line."
+  },
+  {
+    "file": "calendar-2.json",
+    "id": "types-of-people-iftar-ready-early",
+    "field": "slides[0].ru",
+    "old": "Respect, honestly.",
+    "new": "Itne time ke pakke ho? Yaar, salute hai.",
+    "why": "This \"ru\" field currently just repeats the caption's English punchline verbatim — there's no actual Roman Urdu in it, which looks like a copy-paste slip. Replaced with a natural Lahori line that carries the same warm, joking respect for someone who's always early."
+  },
+  {
+    "file": "trend-bank.json",
+    "id": "dish-drop-1-steak-board",
+    "field": "caption",
+    "old": "Share karo ge ya akele?",
+    "new": "Share karoge ya akele?",
+    "why": "\"Karoge\" (future tense) is a single word; splitting it into \"karo ge\" reads as a typo rather than intentional styling, and it's the only place in the calendar this verb form is split."
+  },
+  {
+    "file": "trend-bank.json",
+    "id": "queue-culture",
+    "field": "caption",
+    "old": "Kam az kam",
+    "new": "Kam se kam",
+    "why": "\"Kam az kam\" is the formal/literary register for \"at least\" — not how an 18-30 year old in Lahore would text this. \"Kam se kam\" is the everyday spoken form and matches the brand's casual, texting-friend voice."
+  },
+  {
+    "file": "trend-bank.json",
+    "id": "queue-culture",
+    "field": "slides[0].ru",
+    "old": "Kam az kam",
+    "new": "Kam se kam",
+    "why": "Same naturalness fix as the caption of this post, applied to the slide's ru line so both stay consistent."
+  }
+]

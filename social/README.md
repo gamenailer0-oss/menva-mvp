@@ -56,7 +56,7 @@ social/
 ```bash
 npm install                                    # once (repo root)
 node social/scripts/check-calendar.mjs         # after editing calendar.json
-node social/scripts/render.mjs 12 13 --sheet   # preview posts 12 and 13 → social/previews/out/
+node social/scripts/render.mjs 12 13 --sheet   # preview posts 12 and 13 → social/previews/out/calendar/
 node social/scripts/build-workflow.mjs         # after editing social/n8n/src/*.js
 ```
 Then commit, and on the server run `social/server/update.sh`.
