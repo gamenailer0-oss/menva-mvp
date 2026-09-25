@@ -409,7 +409,7 @@
       "pillar": "for-restaurants",
       "audience": "restaurants",
       "format": "carousel",
-      "caption": "New followers, quick recap. Three things owners assume about a 3D menu that just aren't true.\n\nIt doesn't need an app. It doesn't slow the floor down. And guests scan the table code faster than they'd open a laminated one.\n\nDM \"PILOT\" to see it on your own table.",
+      "caption": "New followers, quick recap. Three things owners assume about a 3D menu that just aren't true.\n\nIt doesn't need an app. It doesn't slow the floor down. And guests don't need convincing to scan a QR that's already on the table.\n\nDM \"PILOT\" to see it on your own table.",
       "hashtags": [
         "#menva",
         "#lahorerestaurants",
@@ -1412,7 +1412,7 @@
           "over": "Ahead of Eid",
           "size": "l",
           "h": "Eid week fills *every table.*",
-          "b": "Guests who can see the dish decide faster."
+          "b": "Let guests see the dish before the table fills up."
         }
       ]
     },
@@ -2176,7 +2176,7 @@
           "layout": "list",
           "over": "What helps",
           "n": "2/3",
-          "h": "Faster *decisions*",
+          "h": "Fewer *guesses*",
           "items": [
             "A menu guests can see, not just read",
             "Fewer questions for your staff to answer",
@@ -2187,7 +2187,7 @@
           "layout": "cta",
           "bg": "chili",
           "over": "3/3",
-          "h": "Get them ordering *in seconds.*",
+          "h": "Less guessing *at the table.*",
           "b": "Lahore pilot: PKR 25,000.",
           "actions": [
             "DM \"PILOT\""
