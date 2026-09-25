@@ -29,6 +29,7 @@ const only = args.filter((a) => /^\d+$/.test(a)).map(Number);
 let jobs;
 let sheetName = 'sheet';
 if (fileArg) {
+  sheetName = path.basename(fileArg, '.json') + '-sheet';
   jobs = JSON.parse(fs.readFileSync(fileArg, 'utf8')).map((s, i) => ({ name: `slide-${String(i + 1).padStart(2, '0')}`, slide: s }));
 } else {
   const calArg = args.includes('--calendar') ? args[args.indexOf('--calendar') + 1] : 'social/content/calendar.json';
@@ -53,6 +54,7 @@ const browser = await chromium.launch(process.env.CHROMIUM_PATH ? { executablePa
 const page = await browser.newPage({ viewport: { width: 1080, height: 1350 } });
 const errors = [];
 for (const job of jobs) {
+  await page.setViewportSize({ width: 1080, height: job.slide.tall ? 1920 : 1350 });
   await page.goto(slideUrl(base, job.slide));
   await page.waitForFunction(() => window.__ready === true || window.__error, null, { timeout: 15000 });
   const err = await page.evaluate(() => window.__error);
@@ -66,7 +68,7 @@ console.log(`Rendered ${jobs.length} slides → ${path.relative(ROOT, OUT)}/`);
 
 if (sheet) {
   const files = fs.readdirSync(OUT).filter((f) => f.endsWith('.jpg')).sort();
-  const per = 24, cols = 6, tw = 270, th = 338;
+  const per = 24, cols = 6, tw = 270, th = jobs.some((j) => j.slide.tall) ? 480 : 338;
   for (let s = 0; s * per < files.length; s++) {
     const chunk = files.slice(s * per, (s + 1) * per);
     const rows = Math.ceil(chunk.length / cols);

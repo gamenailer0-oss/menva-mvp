@@ -1,0 +1,10 @@
+[
+  { "tall": true, "layout": "hero", "over": "For restaurants in Lahore", "dish": "steak-main", "crop": "board", "h": "Let guests see the dish *before they order.*", "b": "Real 3D scans, on their table, true size.", "cta": "DM \"PILOT\"" },
+  { "tall": true, "layout": "statement", "bg": "ink", "over": "For restaurants", "size": "l", "h": "Your menu is your quietest *salesperson.*", "b": "Give it the real plate to sell with. Lahore pilot: PKR 25,000.", "cta": "DM \"PILOT\"" },
+  { "tall": true, "layout": "list", "over": "For restaurants", "h": "Five signs your menu is *costing you orders*", "items": ["No photos, or old ones", "Guests ask what a dish looks like", "Everyone orders the same safe dish", "Portion size surprises people", "Your best dish is invisible on page 3"], "cta": "DM \"PILOT\"" },
+  { "tall": true, "layout": "phone", "over": "True size", "dish": "steak-sandwich", "h": "No zoom. No tricks. *True size.*", "b": "Scan the table QR. No app." },
+  { "tall": true, "layout": "hero", "over": "Hello, Lahore", "dish": "garlic-prawn-skewers", "h": "See it before you *order it.*", "b": "Real dishes, scanned in 3D.", "cta": "Try the demo" },
+  { "tall": true, "layout": "statement", "bg": "chili", "over": "Three words", "size": "xl", "h": "Pehle dekho, *phir order.*", "b": "See it first. Then order it.", "cta": "Try the demo" },
+  { "tall": true, "layout": "closeup", "dish": "steak-sandwich", "crop": "close", "over": "Zoom in", "h": "This is a *scan*, not a photo.", "b": "Every angle is real. No AI food." },
+  { "tall": true, "layout": "split", "over": "The sight test", "h": "How big is *this?*", "menuLine": "Steak sandwich", "menuDesc": "Sliced steak, greens, aioli.", "dish": "steak-sandwich", "leftLabel": "The menu says", "rightLabel": "MENVA shows" }
+]

@@ -70,6 +70,7 @@ cal.posts.forEach((p, i) => {
       else if (CROPS[d][crop].brand && !(s.brandOk && p.brandOk)) bad(p, `${at}: crop "${crop}" of ${d} shows the restaurant's logo`);
     });
     if (!s.h) bad(p, `${at}: needs a headline (h)`);
+    if (s.tall) bad(p, `${at}: tall (9:16) slides can't go in the feed; use them for Stories and ads`);
   });
 });
 

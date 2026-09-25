@@ -157,3 +157,11 @@ h1, .body, .roman { position: relative; z-index: 1; }
 .l-cta h1 { margin-top: auto; }
 .l-cta .body { margin-top: 36px; }
 .l-cta .actions { display: flex; gap: 20px; margin-top: 56px; flex-wrap: wrap; }
+
+/* tall (9:16): same layouts, with ~250 px kept clear at the top and ~320 px at the bottom for
+   Instagram's Story/Reel interface */
+html.tall, html.tall body { height: 1920px; }
+html.tall .slide { height: 1920px; padding-top: 250px; padding-bottom: 320px; }
+html.tall .l-phone .phone-wrap { margin-bottom: 0; align-items: center; }
+html.tall .l-phone .phone { border-radius: 76px; height: 900px; }
+html.tall .l-phone .screen { border-radius: 56px; }

@@ -141,6 +141,8 @@
 
   const d = readData();
   const layout = LAYOUTS[d.layout] ? d.layout : (fail('Unknown layout "' + d.layout + '"'), 'statement');
+  // tall: 1080×1920 for Stories/Reels covers/9:16 ads, with Instagram's top/bottom UI kept clear.
+  if (d.tall) document.documentElement.classList.add('tall');
   const el = document.getElementById('slide');
   el.className = `slide l-${layout} bg-${d.bg || 'paper'}`;
   el.innerHTML = LAYOUTS[layout](d);
