@@ -1041,7 +1041,7 @@
       "pillar": "menu-truth",
       "audience": "diners",
       "format": "single",
-      "caption": "Left: what a printed menu gives you. Right: what MENVA gives you. Same dish, same kitchen.\n\nBe honest, which one's making you order more?",
+      "caption": "Left: what a printed menu gives you. Right: what MENVA gives you. Same dish, same kitchen.\n\nBe honest, which one's making you hungrier?",
       "hashtags": [
         "#menva",
         "#lahorefood",
@@ -2400,7 +2400,7 @@
       "pillar": "relatable",
       "audience": "diners",
       "format": "single",
-      "caption": "Types of people at dinner, part six: the one who sends it back. Fewer surprises with a scan means fewer plates going back, though we can't promise fewer opinions.\n\nTag someone. Or don't, we won't tell.",
+      "caption": "Types of people at dinner, part six: the one who sends it back. Fewer surprises with a scan can mean fewer plates going back, though we can't promise fewer opinions.\n\nTag someone. Or don't, we won't tell.",
       "hashtags": [
         "#menva",
         "#lahorefood",
@@ -2447,7 +2447,7 @@
           "layout": "split",
           "over": "Same dish, two menus",
           "h": "Tell me, or *show me?*",
-          "menuLine": "Ribeye steak",
+          "menuLine": "Steak board",
           "menuDesc": "Grilled. Served with sides.",
           "dish": "steak-main",
           "crop": "sides",

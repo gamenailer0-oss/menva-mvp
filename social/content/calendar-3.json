@@ -1194,24 +1194,25 @@
       "pillar": "relatable",
       "audience": "diners",
       "format": "single",
-      "caption": "Every other order gets debated at the table, extra ice kabhi nahi. Whatever you order, you can see it before it lands.",
+      "caption": "A quiet week. If you do eat out, the real dish is there to see before you order.",
       "hashtags": [
         "#menva",
         "#lahorefood",
         "#lahorefoodies",
         "#summerinlahore"
       ],
-      "alt": "A real dish scanned in 3D, paired with a note about always asking for extra ice in summer.",
+      "alt": "A real steak sandwich, scanned in 3D.",
       "slides": [
         {
           "layout": "hero",
-          "over": "Summer orders",
+          "over": "This week",
           "dish": "steak-sandwich",
           "crop": "close",
-          "h": "Extra ice. *No real debate.*",
-          "b": "One request nobody argues with this time of year."
+          "h": "See it *before you order.*",
+          "b": "The real plate, true size, on your table."
         }
-      ]
+      ],
+      "note": "Inside 1 to 10 Muharram: kept plain and quiet."
     },
     {
       "n": 37,
