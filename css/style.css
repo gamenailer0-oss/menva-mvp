@@ -171,6 +171,75 @@
   color: color-mix(in srgb, var(--cover-ink) 88%, transparent);
 }
 
+/* ═══ Restaurant brand band (e.g. Baraza) — full-width, sits above the padded page ═══ */
+.restaurant-band {
+  background: var(--brand-band);
+  color: var(--brand-band-ink);
+  position: relative;
+  overflow: hidden;
+}
+.restaurant-band::before {
+  content: '';
+  position: absolute;
+  inset: 0;
+  opacity: 0.06;
+  pointer-events: none;
+  background-image: url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' width='40' height='40'%3E%3Cpath d='M0 20 L20 0 L40 20 L20 40 Z' fill='none' stroke='%23000000' stroke-width='1'/%3E%3C/svg%3E");
+}
+.band-inner {
+  position: relative;
+  z-index: 1;
+  max-width: 1120px;
+  margin: 0 auto;
+  padding: 20px 20px 22px;
+  display: flex;
+  align-items: center;
+  gap: 16px;
+}
+.band-logo {
+  flex: none;
+  width: 112px;
+  height: 112px;
+  border-radius: 50%;
+  object-fit: cover;
+  background: #fff;
+  box-shadow: var(--shadow);
+}
+.band-copy { min-width: 0; }
+.band-tagline {
+  font-family: var(--font-display);
+  font-style: italic;
+  font-size: var(--text-base);
+  line-height: 1.4;
+  color: var(--brand-band-ink);
+}
+.band-pills {
+  display: flex;
+  flex-wrap: wrap;
+  align-items: center;
+  gap: 8px;
+  margin-top: 10px;
+}
+.band-pills .pill {
+  display: inline-flex;
+  align-items: center;
+  min-height: 26px;
+  padding: 3px 11px;
+  border: 1px solid color-mix(in srgb, var(--brand-band-ink) 35%, transparent);
+  border-radius: var(--radius-pill);
+  font-size: var(--text-xs);
+  font-weight: 500;
+  color: var(--brand-band-ink);
+}
+.band-pills .table-chip {
+  border-color: color-mix(in srgb, var(--brand-band-ink) 55%, transparent);
+  color: var(--brand-band-ink);
+}
+@media (max-width: 480px) {
+  .band-inner { flex-direction: column; text-align: center; }
+  .band-pills { justify-content: center; }
+}
+
 /* One quiet line about the restaurant, then straight to the food */
 .menu-intro {
   max-width: 56ch;
@@ -210,6 +279,13 @@
   text-transform: uppercase;
   color: var(--accent);
   padding-bottom: 14px;
+}
+/* Baraza: condensed caps category headings (self-hosted Barlow Condensed 600) */
+.theme-baraza .menu-category > h3 {
+  font-family: var(--font-condensed);
+  font-size: 20px;
+  font-weight: 600;
+  letter-spacing: 0.05em;
 }
 .dish-grid {
   display: grid;
@@ -348,7 +424,35 @@ html.js-motion .see-mark.in-view::after {
 }
 
 /* ═══ Gauchos accent dividers ═══ */
-.gauchos-page .menu-heading h2 { color: var(--accent); }
+.theme-gauchos .menu-heading h2 { color: var(--accent); }
+
+/* ═══ Category note — one muted line under a category heading, when the restaurant provides one ═══ */
+.category-note {
+  font-size: var(--text-xs);
+  color: var(--muted);
+  margin-top: -8px;
+  padding-bottom: 14px;
+  max-width: 56ch;
+}
+
+/* ═══ Serve tag ("Hot" / "Iced") — next to a dish name, on cards and on the sheet ═══ */
+.serve-tag {
+  display: inline-flex;
+  align-items: center;
+  margin-left: 8px;
+  padding: 2px 9px;
+  min-height: 0;
+  vertical-align: middle;
+  font-family: var(--font-body);
+  font-size: 10px;
+  font-weight: 600;
+  letter-spacing: 0.04em;
+  text-transform: uppercase;
+  color: var(--muted);
+  background: var(--surface-2);
+  border-radius: var(--radius-pill);
+}
+.dish-detail h2 .serve-tag { font-size: 11px; }
 
 /* ═══ Dish Modal (native <dialog>) — bottom sheet on phones ═══ */
 .modal-open { overflow: hidden; }
@@ -624,6 +728,18 @@ details.nutrition[open] summary::after { transform: rotate(45deg); }
 }
 .fact-note { font-size: var(--text-xs); color: var(--muted); margin: 10px 0 4px; font-style: italic; }
 
+/* ═══ Bean card (coffee dishes: origin / tasting notes / brew method) ═══ */
+.bean-facts {
+  margin: -4px 0 20px;
+  padding: 14px 16px;
+  border: 1px solid var(--line);
+  border-radius: var(--radius);
+  background: var(--surface-2);
+}
+.bean-facts .fact { border-bottom: 0; padding: 6px 0; }
+.bean-facts .fact:first-child { padding-top: 0; }
+.bean-facts .fact:last-child { padding-bottom: 0; }
+
 /* ═══ "Add to my table" (CLAUDE.md Phase 7) ═══ */
 .tray-add {
   display: grid;
@@ -674,6 +790,25 @@ details.nutrition[open] summary::after { transform: rotate(45deg); }
   font-family: var(--font-body);
 }
 .tray-note::placeholder { color: var(--faint); }
+.quick-notes {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 8px;
+  margin-top: -4px;
+}
+.quick-note-chip {
+  min-height: 36px;
+  padding: 0 14px;
+  border: 1px solid var(--line);
+  border-radius: var(--radius-pill);
+  background: var(--surface-2);
+  color: var(--ink);
+  font-size: var(--text-xs);
+  font-weight: 500;
+  transition: background var(--ease-fast), transform var(--dur-fast) var(--ease-out);
+}
+.quick-note-chip:hover { background: var(--surface); }
+.quick-note-chip:active { transform: scale(0.96); }
 .tray-add-btn {
   display: flex;
   align-items: center;
@@ -959,6 +1094,13 @@ footer small {
   border-top: 1px solid var(--line);
 }
 .home-pilot > .overline { margin-bottom: 14px; }
+.restaurant-row {
+  display: grid;
+  gap: 28px;
+}
+@media (min-width: 700px) {
+  .restaurant-row { grid-template-columns: repeat(2, minmax(0, 1fr)); align-items: start; }
+}
 .pilot-card {
   display: flex;
   align-items: center;
@@ -1167,3 +1309,6 @@ html.js-motion .menu-heading.is-in {
     transform: perspective(800px) rotateX(var(--tilt-x, 0deg)) rotateY(var(--tilt-y, 0deg));
   }
 }
+
+/* Unpriced rows: a short, quiet line; the dish sheet carries the full "please confirm" wording */
+.dish-line .price-ask { color: var(--muted); font-size: var(--text-sm); white-space: nowrap; }

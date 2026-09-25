@@ -42,6 +42,7 @@
   --shadow-lg: 0 8px 30px rgba(30, 26, 22, 0.12);
   --font-display: 'Instrument Serif', Georgia, 'Times New Roman', serif;
   --font-body: 'DM Sans', system-ui, -apple-system, 'Segoe UI', Roboto, 'Helvetica Neue', Arial, sans-serif;
+  --font-condensed: 'Barlow Condensed', 'Arial Narrow', sans-serif;
 
   /* Motion */
   --ease-out: cubic-bezier(.2, .8, .2, 1);
@@ -54,6 +55,23 @@
 /* Restaurant pages keep their own accent — never MENVA's on a restaurant screen */
 [data-theme="gauchos"] {
   --accent: #7C2A1C;
+}
+
+/* Baraza Coffee — cream & deep olive, a calm specialty-coffee register */
+[data-theme="baraza"] {
+  --paper: #FAF5EC;
+  --surface: #FFFFFF;
+  --surface-2: #EFE8D8;
+  --surface-offset: #EFE8D8;
+  --line: #E2D9C6;
+  --ink: #10150F;
+  --muted: #6B6552;
+  --faint: #A89A88;
+  --accent: #4B5A2B;
+  --accent-ink: #FAF5EC;
+  --stage: #EFE8D8;
+  --brand-band: #8A9060;
+  --brand-band-ink: #10150F;
 }
 
 /* ═══ DARK MODE — same quiet confidence, warm near-black ═══ */
@@ -79,6 +97,22 @@ html[data-mode="dark"] body {
 }
 html[data-mode="dark"] [data-theme="gauchos"] {
   --accent: #E2896D;
+}
+/* Baraza — "espresso by night" */
+html[data-mode="dark"] [data-theme="baraza"] {
+  --paper: #10150F;
+  --surface: #171D15;
+  --surface-2: #1F261C;
+  --surface-offset: #1F261C;
+  --line: #2C3427;
+  --ink: #FAF5EC;
+  --muted: #B9B39E;
+  --faint: #6E6455;
+  --accent: #A9B07A;
+  --accent-ink: #10150F;
+  --stage: #171D15;
+  --brand-band: #4B5A2B;
+  --brand-band-ink: #FAF5EC;
 }
 
 /* ═══ Type Scale ═══ */

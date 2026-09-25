@@ -279,7 +279,7 @@ Goal: from tapping "See it on your table" to a grounded, life-size dish in under
 
 ## 9. Out of scope — do not build
 
-Online ordering, payments, POS integration, user accounts, reviews, a multi-restaurant directory, KTX2 textures, native apps, AI-generated food imagery of any kind.
+Online ordering, payments, POS integration, user accounts, reviews, a searchable multi-restaurant directory (a small row of partner restaurants on the home page is fine), KTX2 textures, native apps, AI-generated food imagery of any kind.
 
 ## 10. Working rules
 

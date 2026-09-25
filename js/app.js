@@ -26,10 +26,16 @@
 
   // ─── Formatting ───────────────────────────────────────────────
   const CONFIRM = 'Please confirm with your server';
+  const MAX_NOTE = 80; // matches .tray-note[maxlength] and MenvaTray's own clamp
   const esc = (s) => String(s).replace(/[&<>"']/g, (c) => ({ '&': '&amp;', '<': '&lt;', '>': '&gt;', '"': '&quot;', "'": '&#39;' }[c]));
   const formatPrice = (value) => (value == null ? CONFIRM : `PKR ${new Intl.NumberFormat('en-PK').format(value)}`);
   const cap = (s) => s.charAt(0).toUpperCase() + s.slice(1);
   const SPICE = ['Not spicy', 'Mild', 'Medium', 'Hot'];
+  const SERVE_LABEL = { hot: 'Hot', iced: 'Iced' };
+  const serveTag = (s) => (s && SERVE_LABEL[s] ? `<span class="serve-tag">${SERVE_LABEL[s]}</span>` : '');
+  // Theme goes on <html> too (not just <body>) so root-level rules that read it — e.g. the accent
+  // scrollbar in css/base.css — pick up the restaurant's own colour instead of MENVA's default.
+  const setTheme = (t) => { document.documentElement.dataset.theme = t; document.body.dataset.theme = t; };
 
   // ─── Data ─────────────────────────────────────────────────────
   async function loadData() {
@@ -154,16 +160,45 @@
     });
   }
 
+  // A restaurant card for the home page's "Our restaurants" row: logo/name, up to 3 dish photos,
+  // and a link to its menu. Used for every restaurant with `listed: true` (pilot first).
+  function restaurantRowItem(r) {
+    const rslug = esc(r.slug);
+    const rname = esc(r.displayName || r.name);
+    const rdishes = (r.dishes || []).filter(d => d.has3d).slice(0, 3);
+    return `<div class="restaurant-row-item">
+      <a class="pilot-card" href="/${rslug}" data-link>
+        ${r.logo ? `<img src="${esc(r.logo)}" alt="${rname}" width="200" height="80" class="pilot-logo">` : `<span class="pilot-name">${rname}</span>`}
+        <span class="pilot-where">${esc(r.area || 'Gulberg III')} · ${esc(r.location || 'Lahore')}</span>
+      </a>
+      ${rdishes.length ? `<ul class="pilot-dishes">${rdishes.map(d => `
+        <li><a href="/${rslug}?dish=${esc(d.id)}" data-link>
+          <span class="pilot-dish-photo" style="background-image:url('${d.assets.blur}')"><img src="${esc(d.assets.poster)}" alt="" width="1200" height="900" loading="lazy" decoding="async"></span>
+          <span class="pilot-dish-name">${esc(d.name)}</span>
+        </a></li>`).join('')}
+      </ul>` : ''}
+      <a class="pilot-more" href="/${rslug}" data-link>See the full menu ${arrow}</a>
+    </div>`;
+  }
+
   // ─── Brand page (/) — no 3D ───────────────────────────────────
   function brandPage() {
     document.title = 'MENVA — See it before you order it';
-    document.body.dataset.theme = 'default';
+    setTheme('default');
     // The pilot's link never depends on the menu data loading: /g is the Gauchos menu.
     const pilot = data?.restaurants.find(r => r.pilot);
     const slug = esc(pilot?.slug || 'g');
     const name = esc(pilot?.name || 'Gauchos');
     const dishes = (pilot?.dishes || []).filter(d => d.has3d).slice(0, 3);
     const hero = dishes[0];
+
+    // A small row of partner restaurants (not a searchable directory, CLAUDE.md §9) — every
+    // `listed: true` restaurant, pilot first. Today only Gauchos is listed, so this renders exactly
+    // one card. If the menu data hasn't loaded, fall back to the pilot's known defaults.
+    const listed = (data?.restaurants || []).filter(r => r.listed).sort((a, b) => (a.pilot === b.pilot ? 0 : a.pilot ? -1 : 1));
+    const restaurantRows = listed.length
+      ? listed.map(restaurantRowItem).join('')
+      : restaurantRowItem({ slug: 'g', name: 'Gauchos', displayName: 'Gauchos', area: 'Gulberg III', location: 'Lahore' });
 
     app.innerHTML = header() + `<main class="home">
       <section class="home-hero">
@@ -178,18 +213,8 @@
       </section>
 
       <section class="home-pilot" aria-labelledby="pilot-heading">
-        <p class="overline" id="pilot-heading">Now at</p>
-        <a class="pilot-card" href="/${slug}" data-link>
-          ${pilot?.logo ? `<img src="${esc(pilot.logo)}" alt="${name}" width="200" height="80" class="pilot-logo">` : `<span class="pilot-name">${name}</span>`}
-          <span class="pilot-where">${esc(pilot?.area || 'Gulberg III')} · ${esc(pilot?.location || 'Lahore')}</span>
-        </a>
-        ${dishes.length ? `<ul class="pilot-dishes">${dishes.map(d => `
-          <li><a href="/${slug}?dish=${esc(d.id)}" data-link>
-            <span class="pilot-dish-photo" style="background-image:url('${d.assets.blur}')"><img src="${esc(d.assets.poster)}" alt="" width="1200" height="900" loading="lazy" decoding="async"></span>
-            <span class="pilot-dish-name">${esc(d.name)}</span>
-          </a></li>`).join('')}
-        </ul>` : ''}
-        <a class="pilot-more" href="/${slug}" data-link>See the full menu ${arrow}</a>
+        <p class="overline" id="pilot-heading">Our restaurants</p>
+        <div class="restaurant-row">${restaurantRows}</div>
       </section>
 
       <section class="home-how" aria-labelledby="how-heading">
@@ -211,13 +236,13 @@
     activeRestaurant = r;
     currentTable = table;
     document.title = `${r.name} — MENVA`;
-    document.body.dataset.theme = r.theme || 'default';
+    setTheme(r.theme || 'default');
 
     // Categories in CSV order. Dishes with 3D get a poster card; others a clean text row.
     const catId = (cat, i) => `cat-${i}-${cat.toLowerCase().replace(/[^a-z0-9]+/g, '-').replace(/^-|-$/g, '') || 'x'}`;
     const menuHTML = r.categories.map((cat, i) => {
       const dishes = r.dishes.filter(d => d.category === cat).map(d => {
-        const line = `<div class="dish-line"><h4>${esc(d.name)}</h4><span>${esc(formatPrice(d.price_pkr))}</span></div>`;
+        const line = `<div class="dish-line"><h4>${esc(d.name)}${serveTag(d.serve)}</h4>${d.price_pkr == null ? '<span class="price-ask">Ask for price</span>' : `<span>${esc(formatPrice(d.price_pkr))}</span>`}</div>`; // the sheet gives the full "please confirm" line
         const desc = d.description ? `<p>${esc(d.description)}</p>` : '';
         if (d.has3d) {
           return `<button class="dish-card" data-preview="true" data-dish="${esc(d.id)}" aria-label="${esc(d.name)} — see it on your table">
@@ -230,19 +255,36 @@
         }
         return `<button class="dish-row" data-preview="false" data-dish="${esc(d.id)}" aria-label="${esc(d.name)}">${line}${desc}</button>`;
       }).join('');
-      return `<section class="menu-category" id="${catId(cat, i)}"><h3>${esc(cat)}</h3><div class="dish-grid">${dishes}</div></section>`;
+      const note = r.categoryNotes?.[cat] ? `<p class="category-note">${esc(r.categoryNotes[cat])}</p>` : '';
+      return `<section class="menu-category" id="${catId(cat, i)}"><h3>${esc(cat)}</h3>${note}<div class="dish-grid">${dishes}</div></section>`;
     }).join('');
     const catNav = r.categories.length > 1 ? `<nav class="cat-nav" aria-label="Menu categories"><div class="cat-nav-scroll"><div class="cat-nav-indicator" aria-hidden="true"></div>${r.categories.map((cat, i) => `<a href="#${catId(cat, i)}" class="cat-link">${esc(cat)}</a>`).join('')}</div></nav>` : '';
 
     // One identity block: the restaurant's own logo is the page heading (no name repeated four times),
     // the table number sits with it, and the first dish is in view sooner.
-    const isGauchos = r.id === 'gauchos';
+    // Restaurants with an `hours` field (e.g. Baraza) get a full-width brand band with a round logo
+    // and pills instead of the printed cover card — Gauchos has no `hours` and keeps its card unchanged.
+    const themeClass = `theme-${esc(r.theme || 'default')}`;
+    const hasBand = !!r.hours;
     const name = esc(r.displayName || r.name);
     const heading = r.logo ? `<img src="${esc(r.logo)}" alt="${name}" class="restaurant-logo-svg" width="200" height="80">` : name;
     const subtitle = r.showCheffy ? cheffy('wave', esc(r.menuSubtitle)) : `<span>${esc(r.menuSubtitle || '')}</span>`;
 
-    app.innerHTML = header() + `<main class="restaurant-page${isGauchos ? ' gauchos-page' : ''}">
-      <section class="restaurant-cover${isGauchos ? ' gauchos-cover' : ''}">
+    const bandHTML = hasBand ? `<section class="restaurant-band ${themeClass}">
+      <div class="band-inner">
+        ${r.logoRound ? `<img src="${esc(r.logoRound)}" alt="${name}" class="band-logo" width="88" height="88">` : ''}
+        <div class="band-copy">
+          <h1 class="sr-only">${name}</h1>
+          ${r.tagline ? `<p class="band-tagline">${esc(r.tagline)}</p>` : ''}
+          <div class="band-pills">
+            ${r.hours ? `<span class="pill">${esc(r.hours)}</span>` : ''}
+            ${r.area ? `<span class="pill">${esc(r.area)}</span>` : ''}
+            ${table ? `<span class="table-chip">Table ${esc(table)}</span>` : ''}
+          </div>
+        </div>
+      </div>
+    </section>` : '';
+    const coverHTML = hasBand ? '' : `<section class="restaurant-cover">
         <div class="cover-card">
           <h1 class="cover-heading">${heading}</h1>
           <div class="cover-copy">
@@ -253,8 +295,11 @@
             <p>${esc(r.tagline)}</p>
           </div>
         </div>
-      </section>
-      <p class="menu-intro">${esc(r.description)}</p>
+      </section>`;
+
+    app.innerHTML = header() + bandHTML + `<main class="restaurant-page ${themeClass}">
+      ${coverHTML}
+      ${r.description ? `<p class="menu-intro">${esc(r.description)}</p>` : ''}
       ${catNav}
       <section class="menu-section">
         <div class="menu-heading"><h2>${esc(r.menuTitle || 'Menu')}</h2>${subtitle}</div>
@@ -454,6 +499,17 @@
       ${d.confirmed_by ? `<p class="fact-note">Details confirmed by ${esc(d.confirmed_by)}</p>` : ''}`;
   }
 
+  // Coffee dishes only: a compact "Origin · Tasting notes · Brew" card, showing only the fields
+  // that exist. Never a placeholder — an absent field just doesn't get a row.
+  function beanFacts(d) {
+    if (d.origin == null && d.tasting_notes == null && d.brew_method == null) return '';
+    const rows = [];
+    if (d.origin) rows.push(fact('Origin', esc(d.origin)));
+    if (d.tasting_notes?.length) rows.push(fact('Tasting notes', d.tasting_notes.map(esc).join(', ')));
+    if (d.brew_method) rows.push(fact('Brew', esc(cap(d.brew_method))));
+    return rows.length ? `<dl class="facts bean-facts">${rows.join('')}</dl>` : '';
+  }
+
   // "Add to my table" row: stepper + optional note. Pre-fills from the tray if the dish is
   // already on the table, and swaps its own label to "Update my table".
   function initTrayAdd(content, dish) {
@@ -475,6 +531,20 @@
       step.addEventListener('click', () => {
         qty = Math.min(20, Math.max(1, qty + Number(step.dataset.step)));
         qtyEl.textContent = String(qty);
+      });
+    });
+
+    // Quick-note chips: tap appends the restaurant's suggested note (comma-separated), respecting
+    // the 80-char limit and skipping anything already in the note. noteEl.value is plain text —
+    // never innerHTML — so this is safe even if the chip's own text came from untrusted data.
+    content.querySelectorAll('.quick-note-chip').forEach((chip) => {
+      chip.addEventListener('click', () => {
+        const note = chip.dataset.note;
+        const parts = noteEl.value.split(',').map((s) => s.trim()).filter(Boolean);
+        if (!note || parts.includes(note)) return;
+        const joined = [...parts, note].join(', ');
+        if (joined.length > MAX_NOTE) return;
+        noteEl.value = joined;
       });
     });
 
@@ -510,7 +580,7 @@
           </model-viewer>` : '';
 
     content.innerHTML = `
-      ${dish.has3d ? `<div class="dish-stage">
+      ${dish.has3d ? `<div class="dish-stage${dish.serve === 'iced' ? ' iced' : ''}">
           ${MenvaLoader.markup(dish, modelViewer)}
           <button id="reset-view" class="reset-view" hidden aria-label="Reset the view">${resetIcon}</button>
           <div class="stage-actions">
@@ -521,9 +591,10 @@
         </div>` : ''}
       <section class="dish-detail">
         <p class="overline">${esc(activeRestaurant.name)} / ${esc(dish.category)}</p>
-        <h2 id="dish-title">${esc(dish.name)}</h2>
+        <h2 id="dish-title">${esc(dish.name)}${serveTag(dish.serve)}</h2>
         <p class="detail-price${dish.price_pkr == null ? ' fact-unconfirmed' : ''}">${esc(formatPrice(dish.price_pkr))}</p>
         ${dish.description ? `<p>${esc(dish.description)}</p>` : ''}
+        ${beanFacts(dish)}
         ${dishFacts(dish)}
         <div class="tray-add">
           <div class="tray-stepper">
@@ -532,6 +603,7 @@
             <button type="button" class="tray-step" data-step="1" aria-label="More">+</button>
           </div>
           <input type="text" class="tray-note" placeholder="Note for the kitchen (optional)" maxlength="80" aria-label="Note for the kitchen (optional)">
+          ${activeRestaurant.quickNotes?.length ? `<div class="quick-notes">${activeRestaurant.quickNotes.map(n => `<button type="button" class="quick-note-chip" data-note="${esc(n)}">${esc(n)}</button>`).join('')}</div>` : ''}
           <button type="button" class="tray-add-btn">Add to my table</button>
           <p class="tray-add-status" role="status" aria-live="polite"></p>
         </div>
@@ -769,7 +841,7 @@
 
   function notFound(msg) {
     document.title = 'Not found — MENVA';
-    document.body.dataset.theme = 'default';
+    setTheme('default');
     app.innerHTML = header() + `<main class="brand-page">
       <h1>${esc(msg)}</h1>
       <p>Scan the code on your table again, or ask your server for the menu link.</p>
@@ -780,7 +852,7 @@
   // Menu data could not be fetched (offline on first visit, or a server problem).
   function dataUnavailable() {
     document.title = 'MENVA';
-    document.body.dataset.theme = 'default';
+    setTheme('default');
     app.innerHTML = header() + `<main class="brand-page">
       <h1>The menu didn't load.</h1>
       <p>This usually means the connection dropped. Check the wifi or mobile data, then try again.</p>

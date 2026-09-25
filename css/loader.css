@@ -81,6 +81,8 @@
   to { stroke-dashoffset: -0.45; transform: translateY(-8px); opacity: 0; }
 }
 .pass:not([data-state="loading"]) .pass-steam { opacity: 0; }
+/* Iced dishes (js/app.js sets .iced on .dish-stage): no steam wisps rising off a cold drink */
+.dish-stage.iced .pass-steam { display: none; }
 
 /* Served → live 3D */
 .pass model-viewer {

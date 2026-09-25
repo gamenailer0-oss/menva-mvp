@@ -30,8 +30,10 @@ const files = {
   'fonts/dm-sans-600.woff2': '@fontsource/dm-sans/files/dm-sans-latin-600-normal.woff2',
   'fonts/instrument-serif-400.woff2': '@fontsource/instrument-serif/files/instrument-serif-latin-400-normal.woff2',
   'fonts/instrument-serif-400-italic.woff2': '@fontsource/instrument-serif/files/instrument-serif-latin-400-italic.woff2',
+  'fonts/barlow-condensed-600.woff2': '@fontsource/barlow-condensed/files/barlow-condensed-latin-600-normal.woff2',
   'fonts/LICENSE-dm-sans.txt': '@fontsource/dm-sans/LICENSE',
   'fonts/LICENSE-instrument-serif.txt': '@fontsource/instrument-serif/LICENSE',
+  'fonts/LICENSE-barlow-condensed.txt': '@fontsource/barlow-condensed/LICENSE',
 };
 
 fs.rmSync(VENDOR, { recursive: true, force: true });
@@ -48,6 +50,7 @@ const versions = {
   three: pkg('three'),
   '@fontsource/dm-sans': pkg('@fontsource/dm-sans'),
   '@fontsource/instrument-serif': pkg('@fontsource/instrument-serif'),
+  '@fontsource/barlow-condensed': pkg('@fontsource/barlow-condensed'),
 };
 fs.writeFileSync(path.join(VENDOR, 'versions.json'), JSON.stringify(versions, null, 2) + '\n');
 
