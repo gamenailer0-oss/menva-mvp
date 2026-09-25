@@ -22,6 +22,8 @@ Everything that needs your permission, money, login or a real person was saved h
 | 13 | **Merge the link-preview fix to the live site** (OG tags, share image, `/stats` out of search; on the `social-automation` branch) | Links shared on WhatsApp currently unfurl blank | Review the `index.html` + `robots.txt` diff, then merge |
 | 14 | **Next segment**: banquet halls/weddings or custom-cake bakeries | Both fit "see it before you commit"; banquets need 6–8 scans per deal | segments.md |
 
+| 15 | **Filming and demos show the carved "Gauchos" on two boards** (the 3D models themselves, not our crops) | Affects AR screen recordings, Reels, and demos to other restaurants | Until naming is OK'd, film and demo with the steak sandwich and the green plate |
+
 ## B. Setup (in this order, about 4 hours total)
 
 1. **Server + Instagram autoposting**: follow [../SETUP.md](../SETUP.md) steps 1–9 (about 1 hour). Start with `DRY_RUN=true`.

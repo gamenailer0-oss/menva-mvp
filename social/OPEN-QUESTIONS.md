@@ -44,3 +44,10 @@ Each item says what's blocked, what I did for now, and what's needed from Abdull
 13. **Google Sheet log.** The original plan mentioned logging posts to a Google Sheet. That needs a Google Cloud OAuth app, which is a lot of setup for a non-technical owner. Instead the server writes `files/log/posts.csv`, and the ntfy alert includes each post's link. A Sheets node can be added in n8n later.
 
 14. **Plate sizes.** All four dishes still have `plate_length_cm = TO_CONFIRM`, so no post quotes a size in cm (the checker blocks it). Once the sizes are measured, "true size: 42 cm" style posts become possible.
+
+## Added overnight (25 Sep)
+
+15. **The 3D models themselves show the "Gauchos" carving** on the steak board and the trio board. The social templates crop it out of the still renders, but any AR screen recording, live demo or Reel filmed with those two dishes will show it. Until naming is OK'd, film and demo with the steak sandwich and the green plate, or ask whether showing it is fine. The same applies when demoing MENVA to *other* restaurants: they'll see the pilot's name on the board.
+16. **Calendar part 2** (`content/calendar-2.json`, days 101–200) is written and picked up automatically. Ramadan and Eid dates in it are moon-sighting estimates: check them in January.
+17. **The link-preview fix for the live site** (OG tags, share image, `/stats` out of search) is on this branch only. The live site stays unchanged until it's merged to `main`.
+18. **All marketing playbooks** are in `social/marketing/`. Decisions for the morning are in `social/marketing/MORNING.md`.
