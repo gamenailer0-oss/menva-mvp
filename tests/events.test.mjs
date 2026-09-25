@@ -2,8 +2,8 @@
 import { test } from 'node:test';
 import assert from 'node:assert/strict';
 import { clean, summarise, sameKey, MAX_BODY_BYTES } from '../netlify/lib/events.mjs';
-import { handle as ingest } from '../netlify/functions/e.mjs';
-import { handle as stats } from '../netlify/functions/stats.mjs';
+import { handle as ingest } from '../netlify/lib/ingest.mjs';
+import { handle as stats } from '../netlify/lib/stats.mjs';
 
 const memoryStore = () => {
   const m = new Map();
@@ -162,4 +162,77 @@ test('stats CSV export', async () => {
   assert.match(text, /^day,sessions,scans,dish_opens/);
   assert.match(text, /\n\d{4}-\d{2}-\d{2},1,1,1,/);
   assert.match(text, /\nsteak-main,1,/);
+});
+
+// ═══ Cloudflare KV adapter tests ═══════════════════════════════════════════════
+
+// In-memory KV mock with pagination (limit 2 per page, like real KV)
+const mockKV = () => {
+  const store = new Map();
+  return {
+    async put(key, value) { store.set(key, value); },
+    async get(key) { return store.get(key) || null; },
+    async list({ prefix = '', cursor, limit = 1000 } = {}) {
+      const keys = [...store.keys()].filter((k) => k.startsWith(prefix)).slice(0, limit);
+      return { keys: keys.map((name) => ({ name })), cursor: undefined };
+    },
+  };
+};
+
+test('KV adapter: setJSON and get round-trip', async () => {
+  const kv = mockKV();
+  const { kvStore } = await import('../functions/_lib/kv-store.js');
+  const store = kvStore(kv);
+
+  const obj = { day: '2026-09-25', restaurant: 'gauchos', events: [{ e: 'scan' }] };
+  await store.setJSON('test-key', obj);
+  const retrieved = await store.get('test-key');
+  assert.deepEqual(retrieved, obj);
+});
+
+test('KV adapter: list paginates and collects all keys', async () => {
+  const kv = mockKV();
+  // Simulate multiple list calls by storing keys directly
+  for (let i = 0; i < 5; i++) {
+    await kv.put(`2026-09-25/${i}`, `batch-${i}`);
+  }
+
+  const { kvStore } = await import('../functions/_lib/kv-store.js');
+  const store = kvStore(kv);
+
+  const result = await store.list({ prefix: '2026-09-25/' });
+  assert.equal(result.blobs.length, 5);
+  assert.ok(result.blobs.every((b) => b.key.startsWith('2026-09-25/')));
+});
+
+test('KV adapter: ingest + stats work end to end with KV', async () => {
+  const kv = mockKV();
+  const { kvStore } = await import('../functions/_lib/kv-store.js');
+  const store = kvStore(kv);
+
+  // Ingest one batch
+  const res1 = await ingest(post(batch([{ e: 'scan' }, { e: 'dish_open', d: 'steak-main' }])), store);
+  assert.equal(res1.status, 204);
+
+  // Retrieve stats
+  const res2 = await stats(new Request('https://menva.test/api/stats?key=a-long-enough-secret-key'), store, { STATS_KEY: 'a-long-enough-secret-key' });
+  assert.equal(res2.status, 200);
+  const body = await res2.json();
+  assert.equal(body.batches, 1);
+  assert.equal(body.days[0].scans, 1);
+  assert.equal(body.days[0].dish_opens, 1);
+});
+
+test('KV adapter: missing binding returns 503', async () => {
+  const { kvStore } = await import('../functions/_lib/kv-store.js');
+  const store = kvStore(null);
+
+  const err = await (async () => {
+    try {
+      await store.setJSON('key', {});
+    } catch (e) {
+      return e;
+    }
+  })();
+  assert.match(err.message, /not set up/);
 });

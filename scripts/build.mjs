@@ -58,12 +58,13 @@ const { restaurants } = JSON.parse(fs.readFileSync(dishesPath, 'utf8'));
 // run JavaScript, so every URL must return its own title/description/OG/canonical in the raw HTML.
 
 // Site origin for absolute URLs: data/site.json's `domain` once the custom domain is live, else
-// Netlify's own URL env var on a deploy, else the known Netlify subdomain for local builds.
+// SITE_URL env var (Cloudflare or explicit), else Netlify's URL env var, else the known fallback.
 const site = JSON.parse(fs.readFileSync(path.join(ROOT, 'data', 'site.json'), 'utf8'));
 let origin, originSource;
 if (site.domain) { origin = `https://${site.domain}`; originSource = 'data/site.json domain'; }
+else if (process.env.SITE_URL) { origin = process.env.SITE_URL.replace(/\/+$/, ''); originSource = 'process.env.SITE_URL'; }
 else if (process.env.URL) { origin = process.env.URL.replace(/\/+$/, ''); originSource = 'process.env.URL'; }
-else { origin = 'https://menva-ar.netlify.app'; originSource = 'default fallback'; }
+else { origin = 'https://menva-ar.netlify.app'; originSource = 'https://menva-ar.netlify.app'; }
 console.log(`SEO: site origin ${origin} (source: ${originSource})`);
 
 const THEME_PAPER = { default: '#EFEBE2', gauchos: '#EFEBE2', baraza: '#FAF5EC' };
