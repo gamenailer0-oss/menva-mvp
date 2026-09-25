@@ -51,7 +51,6 @@ services:
       - ../..:/repo:ro
     depends_on:
       - gotenberg
-      - caddy
 
   gotenberg:
     image: gotenberg/gotenberg:8.37.0

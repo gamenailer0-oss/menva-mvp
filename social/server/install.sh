@@ -45,23 +45,44 @@ mkdir -p files/media files/log
 sudo chown -R 1000:1000 files
 
 # 5. Start everything
-say "Starting n8n, Gotenberg and Caddy (first time downloads ~1.5 GB)"
-$DOCKER compose up -d
+say "Starting n8n and Gotenberg (first time downloads ~1.5 GB)"
+# Caddy (the public web address) starts only after your n8n login exists.
+$DOCKER compose up -d n8n gotenberg
 
 say "Waiting for n8n to start"
 for _ in $(seq 1 60); do
-  if $DOCKER compose exec -T n8n wget -qO- http://localhost:5678/healthz >/dev/null 2>&1; then break; fi
+  if $DOCKER compose exec -T n8n wget -qO- http://localhost:5678/healthz >/dev/null 2>&1 </dev/null; then break; fi
   sleep 3
 done
 
-# 6. Load the workflows and switch them on
+# 6. Create your n8n login now, so nobody else can claim the dashboard first
+# (captured first: with pipefail, "wget | grep -q" can read as false when grep exits early)
+SETTINGS=$($DOCKER compose exec -T n8n wget -qO- http://localhost:5678/rest/settings 2>/dev/null </dev/null || true)
+if [[ $SETTINGS == *'"showSetupOnFirstLoad":true'* ]]; then
+  say "Create your n8n login (you'll use it at https://<your address>)"
+  N8N_EMAIL=$(ask 'Login email')
+  while :; do
+    read -r -s -p "Password (8+ characters, with a number and a capital letter): " N8N_PASS; echo
+    [[ ${#N8N_PASS} -ge 8 && $N8N_PASS =~ [0-9] && $N8N_PASS =~ [A-Z] ]] && break
+    echo "That password is too weak for n8n. Try again."
+  done
+  $DOCKER compose exec -T -e E="$N8N_EMAIL" -e P="$N8N_PASS" n8n node -e "
+    fetch('http://localhost:5678/rest/owner/setup', { method: 'POST', headers: { 'content-type': 'application/json' },
+      body: JSON.stringify({ email: process.env.E, firstName: 'MENVA', lastName: 'Owner', password: process.env.P }) })
+      .then(async (r) => { if (!r.ok) { console.error('Could not create the login:', r.status, await r.text()); process.exit(1); } console.log('Login created.'); })" </dev/null \
+    || echo "Couldn't create the login automatically. Open the dashboard right away and create it there."
+  unset N8N_PASS
+fi
+
+# 7. Go public (HTTPS), then load the workflows and switch them on
+$DOCKER compose up -d
 ./update.sh --no-pull
 
 DOMAIN=$(grep '^DOMAIN=' .env | cut -d= -f2)
 say "Done."
 cat <<EOF
 
-  Open https://$DOMAIN in your browser and create your n8n login.
+  Open https://$DOMAIN in your browser and sign in with the login you just created.
   (If the page doesn't load yet, wait a minute: the HTTPS certificate is being issued.)
 
   Next: SETUP.md step 6 (Instagram token).

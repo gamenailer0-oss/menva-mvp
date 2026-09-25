@@ -88,8 +88,9 @@ cd menva-mvp/social/server
 The installer asks for:
 - **Address:** press Enter to accept the sslip.io address, or type your own from step 3.
 - **Your email:** used only for the free HTTPS certificate.
+- **An n8n login:** an email and a password (8+ characters, with a number and a capital letter). Save it in your password manager. The installer creates the account itself, so nobody else can claim the dashboard first.
 
-It takes about 5 minutes. When it prints **Done.**, open **https://your-address** in your browser. You'll see the n8n sign-up page. Create your login (email and a strong password) and save it.
+It takes about 5 minutes. When it prints **Done.**, open **https://your-address** in your browser and sign in with that login.
 
 ## Step 6: Get the Instagram key (15 min)
 
