@@ -5,7 +5,7 @@
 //   node social/print/print.mjs --whatsapp "0300 0000000" --instagram "@menva.pk" --email "hi@menva.net"
 //   node social/print/print.mjs --restaurant "Name"      table tent for one partner restaurant
 //
-// Documents: table-tent, menu-stickers, restaurant-one-pager, pitch-deck, window-sticker (partner door/window).
+// Documents: table-tent, menu-stickers, restaurant-one-pager, pitch-deck, window-sticker (partner door/window), staff-card (waiter briefing).
 //
 // Output: social/print/out/*.pdf + *-preview.png. Dish images are real renders, cropped with the
 // same logo-free crops as the Instagram template (social/templates/post.js).
@@ -198,8 +198,34 @@ async function windowSticker() {
   </section>`);
 }
 
+// ── 6. Staff briefing card (A6, 105 × 148 mm, front + back) for partner-restaurant waiters ──
+async function staffCard() {
+  const line = (en, ru) => `<div style="margin-top:3.2mm"><div style="font-size:9pt;font-weight:600;line-height:1.35">${en}</div><div style="font-size:8.5pt;line-height:1.35" class="muted">${ru}</div></div>`;
+  return page('105mm', '148mm', `
+  <section class="page bg-paper" style="padding:9mm 8mm">
+    <div style="display:flex;justify-content:space-between;align-items:baseline"><span class="over">For the team</span><span class="wordmark" style="font-size:13pt">menva<i>.</i></span></div>
+    <h1 style="font-size:21pt;margin-top:4mm">Tell guests in <em>10 seconds.</em></h1>
+    ${line('"Scan the code on your table and you can see the dishes in 3D, even on your own table, before you order."', '"Table pe code scan karein, dish 3D mein dikhegi, apni table pe bhi, order se pehle."')}
+    ${line('"No app needed. It opens in your phone\'s camera or browser."', '"Koi app nahi chahiye. Camera ya browser mein khul jata hai."')}
+    ${line('"Add what you like to your list, then just show me."', '"Jo pasand aaye list mein daal dein, phir mujhe dikha dein."')}
+    <div style="margin-top:auto;background:#fff;border-radius:3mm;padding:3.5mm 4mm;font-size:8pt;line-height:1.45">
+      <strong>Best moment to mention it:</strong> when you hand over the menu, or when a guest asks "what does it look like?" or "is it enough for two?"</div>
+  </section>
+  <section class="page bg-ink" style="padding:9mm 8mm">
+    <span class="over">If something doesn't work</span>
+    <div style="display:flex;flex-direction:column;gap:3.6mm;margin-top:4mm;font-size:8.5pt;line-height:1.42">
+      <div><strong>The code opens inside Instagram.</strong><br>Tap the three dots, then "Open in external browser". The table view needs Safari or Chrome.</div>
+      <div><strong>"See it on your table" doesn't appear.</strong><br>Some phones can't do AR. The guest can still turn the dish around in 3D, and the photo is always there.</div>
+      <div><strong>It's slow.</strong><br>The dish photo shows first; the 3D follows in a few seconds on the restaurant wifi.</div>
+      <div><strong>Taking the order.</strong><br>Nothing changes. Guests show you a list with notes like "no onions". You take the order as usual; nothing is sent anywhere.</div>
+      <div><strong>A guest asks about allergens or halal.</strong><br>If the menu says "Please confirm with your server", answer from the kitchen, never from the app.</div>
+    </div>
+    <div style="margin-top:auto;display:flex;justify-content:space-between;align-items:baseline;font-size:8pt"><span>Questions: ${contactLine()}</span><span class="wordmark" style="font-size:13pt">menva<i>.</i></span></div>
+  </section>`);
+}
+
 // ── Render ──
-const docs = { 'table-tent': tent, 'menu-stickers': stickers, 'restaurant-one-pager': onePager, 'pitch-deck': deck, 'window-sticker': windowSticker };
+const docs = { 'table-tent': tent, 'menu-stickers': stickers, 'restaurant-one-pager': onePager, 'pitch-deck': deck, 'window-sticker': windowSticker, 'staff-card': staffCard };
 fs.mkdirSync(OUT, { recursive: true });
 const TYPES = { '.html': 'text/html', '.css': 'text/css', '.png': 'image/png', '.webp': 'image/webp', '.woff2': 'font/woff2' };
 const server = http.createServer((req, res) => {
