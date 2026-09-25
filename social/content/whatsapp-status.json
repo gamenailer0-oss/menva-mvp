@@ -1,0 +1,9 @@
+[
+  { "tall": true, "layout": "hero", "over": "Monday", "dish": "steak-main", "crop": "board", "h": "Photo first, *always.*", "b": "The dish shows instantly; the 3D follows, even on slow wifi." },
+  { "tall": true, "layout": "closeup", "over": "Tuesday", "dish": "steak-sandwich", "crop": "close", "h": "Real scan. *Not a render, not AI.*" },
+  { "tall": true, "layout": "phone", "over": "Wednesday", "dish": "steak-main", "crop": "board", "h": "True size, *right on the table.*", "b": "It can't be pinched bigger." },
+  { "tall": true, "layout": "statement", "bg": "ink", "over": "Thursday · FAQ", "h": "Does it need an app? *No.*", "b": "It opens straight in Safari or Chrome, from the table QR." },
+  { "tall": true, "layout": "note", "over": "Friday", "h": "Building MENVA, *one week at a time.*", "ru": "Har hafte thora behtar." },
+  { "tall": true, "layout": "hero", "bg": "sand", "over": "Saturday", "dish": "chicken-fajita-wrap", "crop": "board", "h": "This week's *dish spotlight.*", "b": "Full video on Instagram." },
+  { "tall": true, "layout": "cta", "bg": "chili", "over": "Sunday", "h": "Own a restaurant in Lahore? *Message me.*", "b": "A 10-minute demo, on your own table.", "actions": ["Reply \"DEMO\""] }
+]

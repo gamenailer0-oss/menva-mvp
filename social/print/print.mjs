@@ -5,6 +5,8 @@
 //   node social/print/print.mjs --whatsapp "0300 0000000" --instagram "@menva.pk" --email "hi@menva.net"
 //   node social/print/print.mjs --restaurant "Name"      table tent for one partner restaurant
 //
+// Documents: table-tent, menu-stickers, restaurant-one-pager, pitch-deck, window-sticker (partner door/window).
+//
 // Output: social/print/out/*.pdf + *-preview.png. Dish images are real renders, cropped with the
 // same logo-free crops as the Instagram template (social/templates/post.js).
 import fs from 'node:fs';
@@ -186,8 +188,18 @@ async function deck() {
   return page('254mm', '142.9mm', slides.join(''));
 }
 
+// ── 5. Window / door sticker for partner restaurants (150 × 150 mm) ──
+async function windowSticker() {
+  return page('150mm', '150mm', `<section class="page bg-chili" style="border-radius:0;padding:14mm;align-items:center;justify-content:center;text-align:center">
+    <span class="over" style="color:rgba(255,255,255,.85)">Our menu is in 3D</span>
+    <h1 style="font-size:40pt;margin-top:5mm;line-height:.98">See it on your table <em>before you order.</em></h1>
+    <p style="font-size:10pt;margin-top:6mm;opacity:.92">Scan the QR on your table. No app needed.</p>
+    <span class="wordmark" style="font-size:22pt;margin-top:8mm">menva<i>.</i></span>
+  </section>`);
+}
+
 // ── Render ──
-const docs = { 'table-tent': tent, 'menu-stickers': stickers, 'restaurant-one-pager': onePager, 'pitch-deck': deck };
+const docs = { 'table-tent': tent, 'menu-stickers': stickers, 'restaurant-one-pager': onePager, 'pitch-deck': deck, 'window-sticker': windowSticker };
 fs.mkdirSync(OUT, { recursive: true });
 const TYPES = { '.html': 'text/html', '.css': 'text/css', '.png': 'image/png', '.webp': 'image/webp', '.woff2': 'font/woff2' };
 const server = http.createServer((req, res) => {
