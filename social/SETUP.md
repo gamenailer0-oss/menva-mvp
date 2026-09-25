@@ -51,14 +51,9 @@ Pick **one**:
 - **A) Free, nothing to set up:** your address is your IP with dashes plus `.sslip.io`. For IP `140.238.10.20` that's **`140-238-10-20.sslip.io`**. The installer suggests it for you.
 - **B) Your own domain:** at the company where you bought your `.net` domain, open **DNS settings** and add a record: **Type** `A`, **Name/Host** `social`, **Value** your server IP. Your address is then **`social.yourdomain.net`**. It can take up to an hour to start working.
 
-## Step 4: A GitHub key so the server can download MENVA's files (3 min)
+## Step 4: GitHub key (not needed now)
 
-The repository is private, so the server needs a read-only key.
-1. On github.com, click your photo → **Settings → Developer settings → Personal access tokens → Fine-grained tokens → Generate new token**.
-2. **Name:** `menva-social-server`. **Expiration:** 1 year.
-3. **Repository access:** *Only select repositories* → **menva-mvp**.
-4. **Permissions → Repository permissions → Contents: Read-only**.
-5. Click **Generate token** and copy it (it starts with `github_pat_`).
+The repository is public, so the server downloads it without a key. If you ever make it private, create a read-only fine-grained token (GitHub → Settings → Developer settings → Fine-grained tokens, repository **menva-mvp**, Contents: Read-only), and use it as the password when the server asks.
 
 ## Step 5: Connect to the server and install (10 min)
 
@@ -74,16 +69,9 @@ ssh -i ~/Downloads/ssh-key-2026-10-01.key ubuntu@140.238.10.20
 - If it asks "Are you sure you want to continue connecting?", type `yes`.
 - You're in when the line starts with `ubuntu@menva-social`.
 
-**Download MENVA and run the installer.** Paste these lines one at a time:
+**Download MENVA and run the installer: one paste.**
 ```
-git config --global credential.helper store
-git clone -b social-automation https://github.com/gamenailer0-oss/menva-mvp.git
-```
-When it asks: **Username** `gamenailer0-oss`. **Password** paste the GitHub token from step 4. The characters don't show while you paste; that's normal. Press Enter.
-
-```
-cd menva-mvp/social/server
-./install.sh
+curl -fsSL https://raw.githubusercontent.com/gamenailer0-oss/menva-mvp/social-automation/social/server/bootstrap.sh | bash
 ```
 The installer asks for:
 - **Address:** press Enter to accept the sslip.io address, or type your own from step 3.
@@ -128,13 +116,13 @@ sudo docker compose up -d
 ```
 The token lasts 60 days, and the server renews it every week by itself. You only repeat this step if an alert tells you the token has expired.
 
-## Step 7: Phone alerts (3 min, recommended)
+## Step 7: Phone alerts (2 min, needed for trend posts)
 
+The installer already made a private alert topic and printed its name at the end (it starts with `menva-`). To see it again, run `grep NTFY_TOPIC .env` on the server.
 1. Install the free **ntfy** app (App Store or Play Store).
-2. Make up a long, private topic name, for example `menva-k3v9q2x7p`. **Subscribe to topic** with that name in the app.
-3. On the server, run `nano .env`, set `NTFY_TOPIC=menva-k3v9q2x7p`, save, then run `sudo docker compose up -d`.
+2. Tap **+** and **Subscribe to topic** with that exact name.
 
-You'll get a notification each time a post goes out, and one if anything fails.
+You'll get a notification each time a post goes out, whenever something fails, and a **Stop it / Post now** alert before each trend post.
 
 ## Step 8: Test it without posting (5 min)
 

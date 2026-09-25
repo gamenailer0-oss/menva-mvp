@@ -43,6 +43,10 @@ if ! grep -q '^DOMAIN=.\+' .env; then
 fi
 if ! grep -q '^ACME_EMAIL=.\+' .env; then setenv ACME_EMAIL "$(ask 'Your email (for the HTTPS certificate)')"; fi
 if ! grep -q '^N8N_ENCRYPTION_KEY=.\+' .env; then setenv N8N_ENCRYPTION_KEY "$(openssl rand -hex 24)"; fi
+# Phone alerts: a private, random ntfy topic (subscribe to it in the free ntfy app).
+if ! grep -q '^NTFY_TOPIC=.\+' .env; then setenv NTFY_TOPIC "menva-$(openssl rand -hex 6)"; fi
+# The Stop button for trend posts lives on the phone, so trend posts are on from the start.
+grep -q '^TRENDS=' .env || echo "TRENDS=true" >> .env
 chmod 600 .env
 
 # 4. Folders n8n writes to (n8n runs as user 1000 inside its container)
@@ -98,6 +102,10 @@ cat <<EOF
 
   Open https://$DOMAIN in your browser and sign in with the login you just created.
   (If the page doesn't load yet, wait a minute: the HTTPS certificate is being issued.)
+
+  Phone alerts: install the free "ntfy" app, tap +, and subscribe to this topic:
+
+      $(grep '^NTFY_TOPIC=' .env | cut -d= -f2)
 
   Next: SETUP.md step 6 (Instagram token).
   (To use plain \`docker\` without sudo, log out and back in once.)
