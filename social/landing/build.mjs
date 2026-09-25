@@ -30,6 +30,8 @@ const links = {
 // Dish crops: same logo-free crops as everything else (built by social/print/print.mjs's cache logic).
 const tpl = fs.readFileSync(path.join(ROOT, 'social/templates/post.js'), 'utf8');
 const CROPS = new Function(tpl.match(/const CROPS = (\{[\s\S]*?\n {2}\});/)[0] + '; return CROPS;')();
+// Published file names must not carry the two unconfirmed dish names (their folder ids).
+const PUBLIC_NAME = { 'garlic-prawn-skewers-full': 'green-plate', 'chicken-fajita-wrap-board': 'trio' };
 async function crop(id, name) {
   const c = CROPS[id][name];
   if (c.brand) throw new Error('branded crop');
@@ -41,7 +43,7 @@ async function crop(id, name) {
       all: '<radialGradient id="g"><stop offset=".62" stop-color="#000" stop-opacity="1"/><stop offset="1" stop-color="#000" stop-opacity="0"/></radialGradient>' }[c.fade];
     img = sharp(await img.png().toBuffer()).composite([{ input: Buffer.from(`<svg xmlns="http://www.w3.org/2000/svg" width="${w}" height="${h}"><defs>${g}</defs><rect width="${w}" height="${h}" fill="url(#g)"/></svg>`), blend: 'dest-in' }]);
   }
-  await img.resize({ width: Math.min(w, 800) }).png({ compressionLevel: 9, palette: true, quality: 90 }).toFile(path.join(DIST, 'img', `${id}-${name}.png`));
+  await img.resize({ width: Math.min(w, 800) }).png({ compressionLevel: 9, palette: true, quality: 90 }).toFile(path.join(DIST, 'img', `${PUBLIC_NAME[`${id}-${name}`] || `${id}-${name}`}.png`));
 }
 
 fs.rmSync(DIST, { recursive: true, force: true });

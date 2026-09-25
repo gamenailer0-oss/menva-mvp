@@ -1,7 +1,7 @@
 # MENVA on Instagram: season two (days 1-100, from 13 Jan 2027)
 
 **What this is:** the strategy behind `calendar-2.json` (72 posts, same 5-a-week-plus-launch cadence as
-`calendar.json`, continuing straight after it). Posting days stay Tue/Thu/Fri/Sat/Sun at 20:30 PKT; Monday
+`calendar.json`, continuing straight after it). Posting days stay Tue/Thu/Fri/Sat/Sun at 20:30 PKT, except the 15 Ramadan posts (#21–#35, days 28–47), which carry `"time": "16:30"`: before iftar, when people decide where to eat (a judgment call; change the `time` field to move them). Monday
 and Wednesday are rest days. Day 1 (13 Jan 2027) is a Wednesday and is the one exception, posted as the
 season-two launch.
 

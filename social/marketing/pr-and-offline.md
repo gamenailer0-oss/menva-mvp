@@ -137,7 +137,7 @@ All three use placeholders; fill in before sending, and get Abdullah's sign-off 
 
 ---
 
-## 6. Guerrilla and offline ideas (15+)
+## 6. Guerrilla and offline ideas (17)
 
 Cost levels: **Free/near-free** (design + printing only), **Low** (small print/material run, under a few thousand PKR), **Medium** (needs a stand, staff time, or a paid slot).
 
