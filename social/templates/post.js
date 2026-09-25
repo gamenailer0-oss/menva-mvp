@@ -134,6 +134,29 @@
     list: (d) => `${top(d)}<h1 class="${size(d, 's')}">${rich(d.h)}</h1>
       <ol class="list">${(d.items || []).map((it, i) => `<li><span class="n">${i + 1}</span><span>${rich(it)}</span></li>`).join('')}</ol>${foot(d)}`,
 
+    // chat: a group-chat screenshot drawn from scratch (no app's branding). msgs: [{ from, t }] or [{ me: true, t }]
+    chat: (d) => `${top(d)}<h1 class="${size(d, 's')}">${rich(d.h)}</h1>
+      <div class="chat"><div class="chat-head"><span class="chat-av"></span><span><b>${esc(d.title || 'Dinner plan')}</b><small>${esc(d.members || '')}</small></span></div>
+      <div class="chat-body">${(d.msgs || []).map((m) => m.me
+        ? `<div class="msg me"><p>${rich(m.t)}</p></div>`
+        : `<div class="msg"><span class="from">${esc(m.from || '')}</span><p>${rich(m.t)}</p></div>`).join('')}</div></div>
+      ${bodyHtml(d)}${foot(d)}`,
+
+    // receipt: a till slip. lines: [["item", "amount"]], total: ["Total", "amount"]. Never real prices.
+    receipt: (d) => `${top(d)}<h1 class="${size(d, 's')}">${rich(d.h)}</h1>
+      <div class="receipt"><div class="r-head">${esc(d.title || 'Table 7')}</div>
+      ${(d.lines || []).map(([a, b]) => `<div class="r-line"><span>${rich(a)}</span><span>${rich(b || '')}</span></div>`).join('')}
+      ${d.total ? `<div class="r-total"><span>${rich(d.total[0])}</span><span>${rich(d.total[1] || '')}</span></div>` : ''}
+      ${d.footer ? `<div class="r-foot">${rich(d.footer)}</div>` : ''}</div>${bodyHtml(d)}${foot(d)}`,
+
+    // notes: a phone notes page. items with ~~text~~ are struck through.
+    notes: (d) => `${top(d)}<div class="notes"><div class="n-date">${esc(d.title || '')}</div><h2>${rich(d.h)}</h2>
+      <ul>${(d.items || []).map((it) => `<li>${rich(it).replace(/~~(.+?)~~/g, '<s>$1</s>')}</li>`).join('')}</ul></div>
+      ${bodyHtml(d)}${foot(d)}`,
+
+    // shout: huge, heavy, stacked sans. For punchlines only.
+    shout: (d) => `${top(d)}<h1 class="shout">${rich(d.h)}</h1>${bodyHtml(d)}${foot(d)}`,
+
     cta: (d) => `${top(d)}<h1 class="${size(d, 'l')}">${rich(d.h)}</h1>${bodyHtml(d)}
       <div class="actions">${(d.actions || ['Link in bio']).map((a, i) => `<span class="pill ${i ? 'pill-line' : (d.bg === 'chili' ? 'pill-white' : 'pill-chili')}">${esc(a)}</span>`).join('')}</div>
       <div class="foot"><span class="wordmark">menva<i>.</i></span><span class="handle ${d.bg === 'chili' || d.bg === 'ink' ? '' : 'muted'}">${esc(d.handle || '')}</span></div>`,
@@ -145,7 +168,7 @@
   if (d.tall) document.documentElement.classList.add('tall');
   const el = document.getElementById('slide');
   el.className = `slide l-${layout} bg-${d.bg || 'paper'}`;
-  el.innerHTML = LAYOUTS[layout](d);
+  el.innerHTML = LAYOUTS[layout](d) + (d.stamp ? `<div class="stamp">${esc(d.stamp)}</div>` : '');
 
   // Fill each stage with its dish, as big as the stage allows (the phone screen gets a fixed box).
   function fillStages() {

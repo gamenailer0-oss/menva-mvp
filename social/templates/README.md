@@ -6,7 +6,7 @@
 
 | Field | Meaning |
 |---|---|
-| `layout` (required) | `hero`, `statement`, `phone`, `step`, `split`, `duo`, `note`, `closeup`, `list`, `cta` |
+| `layout` (required) | `hero`, `statement`, `phone`, `step`, `split`, `duo`, `note`, `closeup`, `list`, `cta`, `chat`, `receipt`, `notes`, `shout` |
 | `bg` | `paper` (default), `sand`, `white`, `chili`, `ink` |
 | `over` | overline, top left (small caps) |
 | `n` | slide counter, top right, e.g. `2/5` |
@@ -17,12 +17,16 @@
 | `dish` | `steak-main`, `steak-sandwich`, `garlic-prawn-skewers`, `chicken-fajita-wrap` |
 | `crop` | named crop of that dish (see `CROPS` in `post.js`). The default is the dish's widest logo-free crop |
 | `dishes`, `crops`, `labels` | `duo` only: two of each |
-| `items` | `list` only: the rows |
+| `items` | `list` and `notes`: the rows |
 | `num` | `step` only: the big number, e.g. `01` |
 | `menuLine`, `menuDesc`, `leftLabel`, `rightLabel` | `split` only |
 | `pill` | `phone` only: the button text on the screen (default "See it on your table") |
 | `by` | `note` only: the signature |
 | `actions` | `cta` only: pill buttons, e.g. `["DM \"PILOT\"", "Link in bio"]` |
+| `title`, `members`, `msgs` | `chat`: group name, the grey line under it, and messages `[{ "from": "Hamza", "t": "..." }, { "me": true, "t": "..." }]` (up to 6). Made-up first names only, never a real person |
+| `title`, `lines`, `total`, `footer` | `receipt`: header, rows `[["item", "amount"]]`, the total row, the small line at the bottom. Amounts are jokes (minutes, regrets), never prices |
+| `title`, `items` | `notes`: the date line and the rows. `~~text~~` strikes a row through. `h` is the note title |
+| `stamp` | any layout: a small rotated rubber stamp, e.g. `"True size"`, `"No filter"`. Two or three words |
 | `cta` | any layout: a pill in the footer instead of the handle |
 | `handle` | the footer handle (the server fills it from `IG_HANDLE`) |
 | `brandOk` | allows crops that show the restaurant's logo. Only with Abdullah's OK |
