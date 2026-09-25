@@ -1,6 +1,6 @@
 {
   "version": 1,
-  "about": "Khana kahan?: a weekly sitcom told in group-chat screenshots, with the same six made-up friends. A series file: the server posts it automatically on Wednesdays (a rest day for the main calendar), episode 1 on day 17 (Wed 21 Oct 2026 with the default start); season 2 (episodes 13 to 24) runs from day 108 to day 185, with the Ramadan episodes at 16:30 and nothing on Eid day. Days are counted from START_DATE across the whole 300 days, not per 100-day block. Every name is invented; never use a real person.",
+  "about": "Khana kahan?: a weekly sitcom told in group-chat screenshots, with the same six made-up friends. A series file: the server posts it automatically on Wednesdays (a rest day for the main calendar), episode 1 on day 17 (Wed 21 Oct 2026 with the default start); season 2 (episodes 13 to 24) runs from day 108 to day 185, with the Ramadan episodes at 16:30 and nothing on Eid day; season 3 (episodes 25 to 37) runs from day 199 to day 297 and skips the two Wednesdays in the first ten days of Muharram. Days are counted from START_DATE across the whole 300 days, not per 100-day block. Every name is invented; never use a real person.",
   "defaultStart": "2026-10-05",
   "handle": "",
   "posts": [
@@ -1411,6 +1411,774 @@
           "n": "2/2",
           "h": "Khana kahan?\n*Khana yahan.*",
           "b": "Scan the table QR. See the real plate, true size. Then order."
+        }
+      ]
+    },
+    {
+      "n": 25,
+      "day": 199,
+      "date": "2027-04-21",
+      "weekday": "Wed",
+      "id": "saga-25-ac-table",
+      "series": "Khana kahan? (the group chat)",
+      "pillar": "relatable",
+      "audience": "diners",
+      "format": "carousel",
+      "caption": "Season 3. Lahore is 44 degrees and the group chat has one agenda item.",
+      "hashtags": [
+        "#menva",
+        "#lahorefood",
+        "#lahorefoodies",
+        "#khanakahan"
+      ],
+      "alt": "A group chat arguing about the air-conditioned table, then the real steak sandwich.",
+      "slides": [
+        {
+          "layout": "chat",
+          "over": "Khana kahan? Ep. 25",
+          "n": "1/2",
+          "h": "Season 3. *44 degrees.*",
+          "title": "Khana kahan? (6)",
+          "members": "Hamza, Anum, Zain, Sara, Ali bhai, you",
+          "msgs": [
+            {
+              "from": "Anum",
+              "t": "AC wali table. non-negotiable"
+            },
+            {
+              "from": "Zain",
+              "t": "vent ke neeche wali"
+            },
+            {
+              "from": "Hamza",
+              "t": "main window ke paas"
+            },
+            {
+              "from": "Anum",
+              "t": "HAMZA it's May"
+            },
+            {
+              "from": "Sara",
+              "t": "jahan AC ho wahan mera bhi"
+            }
+          ]
+        },
+        {
+          "layout": "hero",
+          "over": "Khana kahan? Ep. 25",
+          "n": "2/2",
+          "dish": "steak-sandwich",
+          "crop": "full",
+          "h": "AC table secured. *Now the plate.*",
+          "b": "Real scan, true size, before you order."
+        }
+      ]
+    },
+    {
+      "n": 26,
+      "day": 206,
+      "date": "2027-04-28",
+      "weekday": "Wed",
+      "id": "saga-26-first-salary",
+      "series": "Khana kahan? (the group chat)",
+      "pillar": "relatable",
+      "audience": "diners",
+      "format": "carousel",
+      "caption": "Zain got his first salary and announced a treat. Then he saw everyone's order.\n\nTag the friend who owes you a first-salary dinner.",
+      "hashtags": [
+        "#menva",
+        "#lahorefood",
+        "#lahorefoodies",
+        "#khanakahan"
+      ],
+      "alt": "A chat where a friend offers a first-salary treat and then gets nervous, then a big headline.",
+      "slides": [
+        {
+          "layout": "chat",
+          "over": "Khana kahan? Ep. 26",
+          "n": "1/2",
+          "h": "Zain's *first salary.*",
+          "title": "Khana kahan? (6)",
+          "members": "Hamza, Anum, Zain, Sara, Ali bhai, you",
+          "msgs": [
+            {
+              "from": "Zain",
+              "t": "treat meri taraf. jo marzi order karo"
+            },
+            {
+              "from": "Ali bhai",
+              "t": "jo marzi?"
+            },
+            {
+              "from": "Zain",
+              "t": "...within reason"
+            },
+            {
+              "from": "Anum",
+              "t": "board sharing ke liye kaafi hai? dekh lete hain"
+            },
+            {
+              "from": "Zain",
+              "t": "haan pehle dekh lo please"
+            }
+          ]
+        },
+        {
+          "layout": "shout",
+          "bg": "chili",
+          "over": "Khana kahan? Ep. 26",
+          "n": "2/2",
+          "h": "Treat meri taraf.\n*(Within reason.)*",
+          "ru": "Pehle dekh lo, phir order. Zain ki request."
+        }
+      ]
+    },
+    {
+      "n": 27,
+      "day": 213,
+      "date": "2027-05-05",
+      "weekday": "Wed",
+      "id": "saga-27-cousin-abroad",
+      "series": "Khana kahan? (the group chat)",
+      "pillar": "relatable",
+      "audience": "diners",
+      "format": "carousel",
+      "caption": "Anum's cousin is visiting from abroad and has opinions about Lahori portions.\n\nWe had to show him.",
+      "hashtags": [
+        "#menva",
+        "#lahorefood",
+        "#lahorefoodies",
+        "#khanakahan"
+      ],
+      "alt": "A chat with a visiting cousin surprised by portion sizes, then the real steak board.",
+      "slides": [
+        {
+          "layout": "chat",
+          "over": "Khana kahan? Ep. 27",
+          "n": "1/2",
+          "h": "The cousin *has opinions.*",
+          "title": "Anum + cousin (3)",
+          "members": "Anum, cousin, you",
+          "msgs": [
+            {
+              "from": "Cousin (visiting)",
+              "t": "yahan portions itne bare kyun hain"
+            },
+            {
+              "from": "Anum",
+              "t": "Lahore hai bhai"
+            },
+            {
+              "from": "Cousin (visiting)",
+              "t": "main ek hi le raha hoon"
+            },
+            {
+              "me": true,
+              "t": "pehle table pe dekh lo"
+            },
+            {
+              "from": "Cousin (visiting)",
+              "t": "...ok hum share karenge"
+            }
+          ]
+        },
+        {
+          "layout": "hero",
+          "over": "Khana kahan? Ep. 27",
+          "n": "2/2",
+          "dish": "steak-main",
+          "crop": "board",
+          "h": "Welcome to Lahore. *Here's the board.*",
+          "stamp": "True size"
+        }
+      ]
+    },
+    {
+      "n": 28,
+      "day": 220,
+      "date": "2027-05-12",
+      "weekday": "Wed",
+      "id": "saga-28-before-eid",
+      "series": "Khana kahan? (the group chat)",
+      "pillar": "relatable",
+      "audience": "diners",
+      "format": "single",
+      "caption": "Eid ul Azha is next week, the family has plans, and the group chat dinner is officially postponed.\n\nEid ke baad milte hain.",
+      "hashtags": [
+        "#menva",
+        "#lahorefood",
+        "#eid",
+        "#khanakahan"
+      ],
+      "alt": "A group chat postponing dinner until after Eid.",
+      "slides": [
+        {
+          "layout": "chat",
+          "over": "Khana kahan? Ep. 28",
+          "n": "1/1",
+          "h": "Dinner *postponed.*",
+          "title": "Khana kahan? (6)",
+          "members": "Hamza, Anum, Zain, Sara, Ali bhai, you",
+          "msgs": [
+            {
+              "from": "Hamza",
+              "t": "is hafte dinner?"
+            },
+            {
+              "from": "Anum",
+              "t": "Eid hai agle hafte, ghar pe sab busy"
+            },
+            {
+              "from": "Sara",
+              "t": "Eid ke baad?"
+            },
+            {
+              "from": "Zain",
+              "t": "Eid ke baad. pakka"
+            },
+            {
+              "from": "Ali bhai",
+              "t": "main jagah dhoond leta hoon"
+            },
+            {
+              "from": "Anum",
+              "t": "NO"
+            }
+          ]
+        }
+      ],
+      "note": "Week before Eid ul Azha (expected around 16 May 2027, subject to moon sighting)."
+    },
+    {
+      "n": 29,
+      "day": 227,
+      "date": "2027-05-19",
+      "weekday": "Wed",
+      "id": "saga-29-after-eid",
+      "series": "Khana kahan? (the group chat)",
+      "pillar": "relatable",
+      "audience": "diners",
+      "format": "carousel",
+      "caption": "Eid week. Three dawats down. Everyone wants \"something light\" and nobody knows what that means.\n\nEid Mubarak from all six of us.",
+      "hashtags": [
+        "#menva",
+        "#lahorefood",
+        "#eid",
+        "#khanakahan"
+      ],
+      "alt": "A chat after Eid about ordering something light, then the real steak sandwich.",
+      "slides": [
+        {
+          "layout": "chat",
+          "over": "Khana kahan? Ep. 29",
+          "n": "1/2",
+          "h": "\"Kuch *light* khaate hain.\"",
+          "title": "Khana kahan? (6)",
+          "members": "Hamza, Anum, Zain, Sara, Ali bhai, you",
+          "msgs": [
+            {
+              "from": "Hamza",
+              "t": "kuch light khaate hain"
+            },
+            {
+              "from": "Anum",
+              "t": "light matlab?"
+            },
+            {
+              "from": "Hamza",
+              "t": "mujhe kya pata"
+            },
+            {
+              "from": "Zain",
+              "t": "sandwich light hai?"
+            },
+            {
+              "me": true,
+              "t": "table pe dekh lo, phir faisla"
+            }
+          ]
+        },
+        {
+          "layout": "hero",
+          "over": "Khana kahan? Ep. 29",
+          "n": "2/2",
+          "dish": "steak-sandwich",
+          "crop": "full",
+          "h": "\"Light.\" *You decide.*",
+          "b": "Eid Mubarak from the group chat."
+        }
+      ],
+      "note": "Eid ul Azha week (subject to moon sighting). Food-focused only."
+    },
+    {
+      "n": 30,
+      "day": 234,
+      "date": "2027-05-26",
+      "weekday": "Wed",
+      "id": "saga-30-hamza-tries",
+      "series": "Khana kahan? (the group chat)",
+      "pillar": "relatable",
+      "audience": "diners",
+      "format": "carousel",
+      "caption": "Hamza ordered something new. We're as shocked as you are.",
+      "hashtags": [
+        "#menva",
+        "#lahorefood",
+        "#lahorefoodies",
+        "#khanakahan"
+      ],
+      "alt": "A chat where the friend who always orders the same thing tries something new, then the real trio.",
+      "slides": [
+        {
+          "layout": "chat",
+          "over": "Khana kahan? Ep. 30",
+          "n": "1/2",
+          "h": "Hamza. *Something new.*",
+          "title": "Khana kahan? (6)",
+          "members": "Hamza, Anum, Zain, Sara, Ali bhai, you",
+          "msgs": [
+            {
+              "from": "Hamza",
+              "t": "aaj kuch naya"
+            },
+            {
+              "from": "Anum",
+              "t": "screenshot"
+            },
+            {
+              "from": "Zain",
+              "t": "who is this"
+            },
+            {
+              "from": "Hamza",
+              "t": "the trio. table pe dekh liya, set hai"
+            },
+            {
+              "from": "Sara",
+              "t": "mera bhi wohi"
+            }
+          ]
+        },
+        {
+          "layout": "hero",
+          "over": "Khana kahan? Ep. 30",
+          "n": "2/2",
+          "dish": "chicken-fajita-wrap",
+          "crop": "board",
+          "h": "The trio. *Hamza's new era.*"
+        }
+      ]
+    },
+    {
+      "n": 31,
+      "day": 241,
+      "date": "2027-06-02",
+      "weekday": "Wed",
+      "id": "saga-31-mango-debate",
+      "series": "Khana kahan? (the group chat)",
+      "pillar": "relatable",
+      "audience": "diners",
+      "format": "single",
+      "caption": "The group chat has been arguing about mangoes for three days. No resolution. No dinner plan either.\n\nChaunsa ya Sindhri? Comments mein faisla.",
+      "hashtags": [
+        "#menva",
+        "#lahorefood",
+        "#mangoseason",
+        "#khanakahan"
+      ],
+      "alt": "A group chat arguing about the best mango instead of planning dinner.",
+      "slides": [
+        {
+          "layout": "chat",
+          "over": "Khana kahan? Ep. 31",
+          "n": "1/1",
+          "h": "The *mango* debate.",
+          "title": "Khana kahan? (6)",
+          "members": "Hamza, Anum, Zain, Sara, Ali bhai, you",
+          "msgs": [
+            {
+              "from": "Anum",
+              "t": "Chaunsa. end of discussion"
+            },
+            {
+              "from": "Zain",
+              "t": "Sindhri gang"
+            },
+            {
+              "from": "Hamza",
+              "t": "Anwar Ratol ka koi naam nahi le raha"
+            },
+            {
+              "from": "Sara",
+              "t": "jo sab kahein"
+            },
+            {
+              "from": "Ali bhai",
+              "t": "dinner ka plan kidhar gaya?"
+            },
+            {
+              "from": "Anum",
+              "t": "pehle mango settle karo"
+            }
+          ]
+        }
+      ]
+    },
+    {
+      "n": 32,
+      "day": 262,
+      "date": "2027-06-23",
+      "weekday": "Wed",
+      "id": "saga-32-catch-up",
+      "series": "Khana kahan? (the group chat)",
+      "pillar": "relatable",
+      "audience": "diners",
+      "format": "single",
+      "caption": "A quiet catch-up dinner after a quiet couple of weeks. Just the six of us, a table and good food.",
+      "hashtags": [
+        "#menva",
+        "#lahorefood",
+        "#lahorefoodies",
+        "#khanakahan"
+      ],
+      "alt": "A gentle group chat planning a quiet catch-up dinner.",
+      "slides": [
+        {
+          "layout": "chat",
+          "over": "Khana kahan? Ep. 32",
+          "n": "1/1",
+          "h": "Just *catching up.*",
+          "title": "Khana kahan? (6)",
+          "members": "Hamza, Anum, Zain, Sara, Ali bhai, you",
+          "msgs": [
+            {
+              "from": "Anum",
+              "t": "sab kaise ho?"
+            },
+            {
+              "from": "Zain",
+              "t": "theek. dinner is hafte?"
+            },
+            {
+              "from": "Sara",
+              "t": "haan, kahin aaram se"
+            },
+            {
+              "from": "Hamza",
+              "t": "main jaldi decide karunga, promise"
+            },
+            {
+              "from": "Anum",
+              "t": "dekhte hain"
+            }
+          ]
+        }
+      ],
+      "note": "After Muharram's first ten days: gentle tone, no jokes about the period."
+    },
+    {
+      "n": 33,
+      "day": 269,
+      "date": "2027-06-30",
+      "weekday": "Wed",
+      "id": "saga-33-light-gayi",
+      "series": "Khana kahan? (the group chat)",
+      "pillar": "relatable",
+      "audience": "diners",
+      "format": "carousel",
+      "caption": "The light went, the heat stayed, and suddenly everyone was free for dinner.",
+      "hashtags": [
+        "#menva",
+        "#lahorefood",
+        "#lahorefoodies",
+        "#khanakahan"
+      ],
+      "alt": "A chat about a power cut turning into a dinner plan, then a notes list of summer rules.",
+      "slides": [
+        {
+          "layout": "chat",
+          "over": "Khana kahan? Ep. 33",
+          "n": "1/2",
+          "h": "Light *gayi.*",
+          "title": "Khana kahan? (6)",
+          "members": "Hamza, Anum, Zain, Sara, Ali bhai, you",
+          "msgs": [
+            {
+              "from": "Hamza",
+              "t": "light chali gayi"
+            },
+            {
+              "from": "Zain",
+              "t": "yahan bhi"
+            },
+            {
+              "from": "Anum",
+              "t": "chalo bahar, AC wali jagah"
+            },
+            {
+              "from": "Sara",
+              "t": "10 minute mein ready"
+            },
+            {
+              "from": "Ali bhai",
+              "t": "main table dhoondta hoon"
+            }
+          ]
+        },
+        {
+          "layout": "notes",
+          "over": "Khana kahan? Ep. 33",
+          "n": "2/2",
+          "title": "June, 9:40 pm",
+          "h": "Summer *rules*",
+          "items": [
+            "AC table first",
+            "cold drink before the menu",
+            "see the plate, then order",
+            "~~\"sab kuch mangwa lo\"~~",
+            "back home before the light comes back"
+          ]
+        }
+      ]
+    },
+    {
+      "n": 34,
+      "day": 276,
+      "date": "2027-07-07",
+      "weekday": "Wed",
+      "id": "saga-34-sara-birthday",
+      "series": "Khana kahan? (the group chat)",
+      "pillar": "relatable",
+      "audience": "diners",
+      "format": "carousel",
+      "caption": "It's Sara's birthday, which means Sara has to order first. For herself. By herself.\n\nHappy birthday Sara (fictional, but we love her).",
+      "hashtags": [
+        "#menva",
+        "#lahorefood",
+        "#lahorefoodies",
+        "#khanakahan"
+      ],
+      "alt": "A birthday chat where the friend who copies orders chooses first, then the real green plate.",
+      "slides": [
+        {
+          "layout": "chat",
+          "over": "Khana kahan? Ep. 34",
+          "n": "1/2",
+          "h": "Birthday rule: *Sara orders first.*",
+          "title": "Khana kahan? (6)",
+          "members": "Hamza, Anum, Zain, Sara, Ali bhai, you",
+          "msgs": [
+            {
+              "from": "Anum",
+              "t": "birthday girl pehle order karegi"
+            },
+            {
+              "from": "Sara",
+              "t": "...zaroori hai?"
+            },
+            {
+              "from": "Zain",
+              "t": "haan"
+            },
+            {
+              "from": "Sara",
+              "t": "ok table pe dekh ke bata rahi hoon"
+            },
+            {
+              "from": "Sara",
+              "t": "the green plate. aur tum log mera bhi wohi mat lena"
+            }
+          ]
+        },
+        {
+          "layout": "hero",
+          "over": "Khana kahan? Ep. 34",
+          "n": "2/2",
+          "dish": "garlic-prawn-skewers",
+          "crop": "full",
+          "h": "Sara's pick. *Her own.*",
+          "stamp": "Birthday"
+        }
+      ]
+    },
+    {
+      "n": 35,
+      "day": 283,
+      "date": "2027-07-14",
+      "weekday": "Wed",
+      "id": "saga-35-barish",
+      "series": "Khana kahan? (the group chat)",
+      "pillar": "relatable",
+      "audience": "diners",
+      "format": "single",
+      "caption": "First proper rain of the monsoon. Half the group wants pakoray at home, half want to go out. The receipt below is how that went.",
+      "hashtags": [
+        "#menva",
+        "#lahorefood",
+        "#monsoon",
+        "#khanakahan"
+      ],
+      "alt": "A joke receipt of a rainy-night dinner plan, with no prices.",
+      "slides": [
+        {
+          "layout": "receipt",
+          "over": "Khana kahan? Ep. 35",
+          "n": "1/1",
+          "h": "Rain plan. *As it happened.*",
+          "title": "Monsoon, 8:10 pm",
+          "lines": [
+            [
+              "Votes for pakoray at home",
+              "3"
+            ],
+            [
+              "Votes to go out",
+              "3"
+            ],
+            [
+              "Tie-breaker",
+              "Ali bhai (lost)"
+            ],
+            [
+              "Minutes stuck on Canal Road",
+              "40"
+            ],
+            [
+              "Plates seen before ordering",
+              "all"
+            ]
+          ],
+          "total": [
+            "Result",
+            "went out, got wet, worth it"
+          ],
+          "footer": "Barish mubarak"
+        }
+      ]
+    },
+    {
+      "n": 36,
+      "day": 290,
+      "date": "2027-07-21",
+      "weekday": "Wed",
+      "id": "saga-36-ali-confesses",
+      "series": "Khana kahan? (the group chat)",
+      "pillar": "relatable",
+      "audience": "diners",
+      "format": "carousel",
+      "caption": "After 36 episodes, Ali bhai has something to tell the group.",
+      "hashtags": [
+        "#menva",
+        "#lahorefood",
+        "#lahorefoodies",
+        "#khanakahan"
+      ],
+      "alt": "A chat where one friend admits he never knew the owner, then a big headline.",
+      "slides": [
+        {
+          "layout": "chat",
+          "over": "Khana kahan? Ep. 36",
+          "n": "1/2",
+          "h": "Ali bhai has *a confession.*",
+          "title": "Khana kahan? (6)",
+          "members": "Hamza, Anum, Zain, Sara, Ali bhai, you",
+          "msgs": [
+            {
+              "from": "Ali bhai",
+              "t": "ek baat bataun"
+            },
+            {
+              "from": "Anum",
+              "t": "bolo"
+            },
+            {
+              "from": "Ali bhai",
+              "t": "main owner ko nahi jaanta"
+            },
+            {
+              "from": "Zain",
+              "t": "KISI ko bhi?"
+            },
+            {
+              "from": "Ali bhai",
+              "t": "kisi ko bhi nahi"
+            },
+            {
+              "from": "Hamza",
+              "t": "trust me wala scene?"
+            }
+          ]
+        },
+        {
+          "layout": "shout",
+          "bg": "chili",
+          "over": "Khana kahan? Ep. 36",
+          "n": "2/2",
+          "h": "Ali bhai doesn't\nknow *the owner.*",
+          "ru": "36 episode. Finally sach."
+        }
+      ]
+    },
+    {
+      "n": 37,
+      "day": 297,
+      "date": "2027-07-28",
+      "weekday": "Wed",
+      "id": "saga-37-finale",
+      "series": "Khana kahan? (the group chat)",
+      "pillar": "relatable",
+      "audience": "diners",
+      "format": "carousel",
+      "caption": "Season 3 finale. 37 episodes, six made-up friends, one idea: see it before you order it.\n\nThank you for tagging your Hamzas. Kaun sa character tum ho? Comments mein batao.",
+      "hashtags": [
+        "#menva",
+        "#lahorefood",
+        "#lahorefoodies",
+        "#khanakahan"
+      ],
+      "alt": "The series finale group chat, then the brand line.",
+      "slides": [
+        {
+          "layout": "chat",
+          "over": "Khana kahan? Ep. 37",
+          "n": "1/2",
+          "h": "Season finale. *Same six.*",
+          "title": "Khana kahan? (6)",
+          "members": "Hamza, Anum, Zain, Sara, Ali bhai, you",
+          "msgs": [
+            {
+              "from": "Hamza",
+              "t": "aaj bhi kahan chalein?"
+            },
+            {
+              "from": "Anum",
+              "t": "37 episode ho gaye"
+            },
+            {
+              "from": "Zain",
+              "t": "aur ab tum 2 minute mein decide karte ho"
+            },
+            {
+              "from": "Sara",
+              "t": "main pehle order karti hoon ab"
+            },
+            {
+              "from": "Ali bhai",
+              "t": "aur main sach bolta hoon"
+            },
+            {
+              "me": true,
+              "t": "khana yahan. plate dekh li. chalo"
+            }
+          ]
+        },
+        {
+          "layout": "shout",
+          "bg": "chili",
+          "over": "Khana kahan? Ep. 37",
+          "n": "2/2",
+          "h": "Pehle *dekho.*\nPhir order.",
+          "b": "Scan the table QR. The real plate, true size, before you order."
         }
       ]
     }
