@@ -47,7 +47,7 @@ npm run serve    # http://localhost:8080 — same headers and routing as netlify
 ## What's where
 
 ```
-index.html, sw.js, robots.txt   app shell, service worker
+index.html, sw.js               app shell, service worker (robots.txt, sitemap.xml, site.webmanifest and favicon.ico are generated fresh by scripts/build.mjs, not copied)
 css/  js/                       styles and app code (no framework, no bundler)
 assets/  models/                images and 3D models
 vendor/                         self-hosted model-viewer, decoders, fonts (from `npm run vendor`)

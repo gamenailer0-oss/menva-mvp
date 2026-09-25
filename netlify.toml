@@ -48,6 +48,16 @@
   [headers.values]
     Content-Type = "application/wasm"
 
+[[headers]]
+  for = "/favicon.ico"
+  [headers.values]
+    Content-Type = "image/x-icon"
+
+[[headers]]
+  for = "/site.webmanifest"
+  [headers.values]
+    Content-Type = "application/manifest+json"
+
 # ── Caching ───────────────────────────────────────────────────
 # Immutable: these URLs must change whenever their content changes.
 [[headers]]
@@ -77,7 +87,19 @@
     Cache-Control = "public, max-age=0, must-revalidate"
 
 # ── Routing ───────────────────────────────────────────────────
-# Path routing (/g, /g/12): every unknown path serves the app shell.
+# Path routing (/g, /g/12): every unknown path serves the app shell. Restaurant pages have their
+# own static SEO tags per restaurant (scripts/build.mjs writes dist/<slug>/index.html), so those
+# must resolve before the generic catch-all below — order matters.
+[[redirects]]
+  from = "/g/*"
+  to = "/g/index.html"
+  status = 200
+
+[[redirects]]
+  from = "/baraza/*"
+  to = "/baraza/index.html"
+  status = 200
+
 [[redirects]]
   from = "/*"
   to = "/index.html"

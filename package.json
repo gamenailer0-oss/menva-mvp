@@ -11,6 +11,7 @@
     "pipeline": "node scripts/pipeline.mjs",
     "usdz-validate": "node scripts/usdz-validate.mjs",
     "build-data": "node scripts/build-data.mjs",
+    "social": "node scripts/make-social.mjs",
     "test": "playwright test",
     "test:unit": "node --test tests/*.test.mjs",
     "qr": "node scripts/make-qr.mjs"

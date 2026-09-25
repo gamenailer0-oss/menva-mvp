@@ -18,6 +18,7 @@ const TYPES = {
   '.jpg': 'image/jpeg', '.jpeg': 'image/jpeg', '.png': 'image/png', '.webp': 'image/webp',
   '.woff2': 'font/woff2', '.txt': 'text/plain; charset=utf-8', '.wasm': 'application/octet-stream',
   '.glb': 'application/octet-stream', '.usdz': 'application/octet-stream', // overridden by netlify.toml, as on Netlify
+  '.ico': 'image/x-icon', '.webmanifest': 'application/manifest+json', '.xml': 'application/xml',
 };
 
 const toPattern = (glob) => new RegExp('^' + glob.replace(/[.+?^${}()|[\]\\]/g, '\\$&').replace(/\*/g, '.*') + '$');
@@ -56,6 +57,14 @@ function headersFileRules() {
 
 const rules = [...headerRules(), ...headersFileRules()];
 
+// Restaurant slugs, so /<slug>/<table> falls back to that restaurant's own stamped HTML (its own
+// SEO tags) instead of the generic app shell — mirrors the /<slug>/* rules in netlify.toml.
+let restaurantSlugs = [];
+const menuPath = path.join(DIST, 'data', 'menu.json');
+if (fs.existsSync(menuPath)) {
+  try { restaurantSlugs = JSON.parse(fs.readFileSync(menuPath, 'utf8')).restaurants.map((r) => r.slug); } catch {}
+}
+
 // Netlify Functions, locally: same handlers, in-memory blob store, a dev-only stats key.
 const memory = new Map();
 const store = {
@@ -91,7 +100,12 @@ http.createServer((req, res) => {
   let file = path.join(DIST, urlPath);
   if (!file.startsWith(DIST)) { res.writeHead(403).end(); return; }
   if (fs.existsSync(file) && fs.statSync(file).isDirectory()) file = path.join(file, 'index.html');
-  if (!fs.existsSync(file)) file = path.join(DIST, 'index.html'); // SPA fallback
+  if (!fs.existsSync(file)) {
+    // SPA fallback: an unknown /<slug>/<table> path gets that restaurant's own index.html (its
+    // own SEO tags), everything else gets the generic app shell.
+    const slug = urlPath.split('/').filter(Boolean)[0];
+    file = restaurantSlugs.includes(slug) ? path.join(DIST, slug, 'index.html') : path.join(DIST, 'index.html');
+  }
 
   const headers = { 'Content-Type': TYPES[path.extname(file)] || 'application/octet-stream' };
   // Netlify matches header rules against the requested path.
