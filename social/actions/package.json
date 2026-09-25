@@ -1,0 +1,10 @@
+{
+  "name": "menva-social-actions",
+  "private": true,
+  "type": "module",
+  "description": "MENVA's Instagram autoposter as GitHub Actions scripts (no server). See social/actions/README.md.",
+  "dependencies": {
+    "@anthropic-ai/sdk": "0.128.0",
+    "@playwright/test": "1.63.0"
+  }
+}
