@@ -219,7 +219,7 @@ From `design/MENVA.DESIGN.md` — this book doesn't repeat the full design syste
 | Paper (background) | `#EFEBE2` — warm cream |
 | Ink (text/icons) | `#1A1714` |
 | Accent — Ember (MENVA) | `#B5371F` — chili red. Buttons, prices, active states only. Never a large fill. |
-| Accent — oxblood (a restaurant's own theme, e.g. Gauchos) | `#7C2A1C` — used only on that restaurant's own pages, never on MENVA's own pages. |
+| Accent — oxblood (a restaurant's own theme, e.g. [pilot restaurant]) | `#7C2A1C` — used only on that restaurant's own pages, never on MENVA's own pages. |
 | Surface / sand panel | `#FFFFFF` surface, `#E3DCCF` sand panel |
 | Display type | Instrument Serif 400 — headlines, dish names, section titles. Italic for the one emphasised word only. |
 | UI / body type | DM Sans 400/500/600 |
