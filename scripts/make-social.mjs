@@ -69,6 +69,21 @@ async function fitJpeg(sharpImg, maxBytes, background, qualities = [90, 86, 82, 
   return last;
 }
 
+// Dish cut-outs trimmed to their visible pixels, so the food (the point of MENVA) fills its stage.
+const dishCache = {};
+async function prepareDish(id) {
+  const out = path.join(TMP, `dish-${id}.png`);
+  await sharp(path.join(ROOT, 'assets', 'dishes', id, 'poster.webp')).trim({ threshold: 1 }).png().toFile(out);
+  dishCache[id] = 'file:///' + out.split(path.sep).join('/');
+}
+const dishUrl = (id) => dishCache[id];
+// A dish sitting on its own contact shadow (the shadow hugs the bottom of the dish, never floats).
+const PLATE_CSS = `
+    .plate { position:relative; }
+    .plate img { display:block; width:100%; position:relative; z-index:1; }
+    .plate::after { content:''; position:absolute; left:8%; right:8%; bottom:-5%; height:16%; border-radius:50%;
+      background:radial-gradient(ellipse at center, rgba(26,23,20,.32), rgba(26,23,20,0) 70%); }`;
+
 function page(bg, body) {
   return `<!DOCTYPE html><html><head><meta charset="utf-8"><style>
     * { margin:0; padding:0; box-sizing:border-box; }
@@ -87,8 +102,7 @@ function ogMenvaHtml() {
     .headline em { font-style:italic; color:${MENVA_ACCENT}; }
     .sub { font-family:'DM Sans'; font-weight:500; font-size:28px; line-height:1.5; color:${MUTED}; max-width:460px; }
     .stage { position:absolute; right:72px; top:64px; width:400px; height:502px; border-radius:24px; background:${STAGE}; display:flex; align-items:center; justify-content:center; }
-    .shadow { position:absolute; bottom:56px; width:250px; height:36px; border-radius:50%; background:radial-gradient(ellipse at center, rgba(26,23,20,.34), rgba(26,23,20,0) 72%); }
-    .dish { position:relative; width:84%; object-fit:contain; }
+    ${PLATE_CSS}
   </style>
   <div class="left">
     <div class="wordmark">menva.</div>
@@ -96,8 +110,7 @@ function ogMenvaHtml() {
     <p class="sub">Real dishes in 3D and AR — scan the QR on your table.</p>
   </div>
   <div class="stage">
-    <div class="shadow"></div>
-    <img class="dish" src="${fileUrl('assets/dishes/steak-main/poster.webp')}">
+    <div class="plate" style="width:92%"><img src="${dishUrl('steak-main')}"></div>
   </div>`);
 }
 
@@ -110,8 +123,7 @@ function ogGauchosHtml() {
     .tagline { position:absolute; left:72px; top:352px; width:460px; font-family:'DM Sans'; font-weight:600; font-size:32px; line-height:1.42; color:${GAUCHOS_ACCENT}; }
     .credit { position:absolute; left:72px; bottom:44px; font-family:'Instrument Serif'; font-size:23px; color:${MUTED}; }
     .stage { position:absolute; right:72px; top:64px; width:400px; height:502px; border-radius:24px; background:${GAUCHOS_STAGE}; display:flex; align-items:center; justify-content:center; }
-    .shadow { position:absolute; bottom:56px; width:250px; height:36px; border-radius:50%; background:radial-gradient(ellipse at center, rgba(26,23,20,.34), rgba(26,23,20,0) 72%); }
-    .dish { position:relative; width:84%; object-fit:contain; }
+    ${PLATE_CSS}
   </style>
   <img class="logo" src="${fileUrl('assets/restaurant/gauchos-logo.svg')}">
   <div class="name">Gauchos Steakhouse</div>
@@ -119,8 +131,7 @@ function ogGauchosHtml() {
   <div class="tagline">See the dishes on your table — the menu in 3D</div>
   <div class="credit">menva.</div>
   <div class="stage">
-    <div class="shadow"></div>
-    <img class="dish" src="${fileUrl('assets/dishes/steak-main/poster.webp')}">
+    <div class="plate" style="width:92%"><img src="${dishUrl('steak-main')}"></div>
   </div>`);
 }
 
@@ -132,12 +143,11 @@ function ogBarazaHtml() {
     .band { position:absolute; left:0; top:0; width:360px; height:630px; background:${BARAZA_SAGE}; display:flex; flex-direction:column; align-items:center; justify-content:center; gap:30px; }
     .round-logo { width:196px; height:196px; border-radius:50%; object-fit:cover; box-shadow:0 10px 28px rgba(16,21,15,.28); }
     .brand-name { font-family:'Instrument Serif'; font-weight:400; font-size:33px; color:${BARAZA_ESPRESSO}; }
-    .tagline { position:absolute; left:416px; top:50px; width:740px; font-family:'Instrument Serif'; font-weight:400; font-size:66px; line-height:1.14; color:${BARAZA_OLIVE}; }
-    .hours { position:absolute; left:416px; top:298px; font-family:'DM Sans'; font-weight:500; font-size:26px; color:${BARAZA_ESPRESSO}; opacity:.72; }
-    .credit { position:absolute; left:416px; bottom:40px; font-family:'Instrument Serif'; font-size:23px; color:${BARAZA_ESPRESSO}; opacity:.65; }
-    .stage { position:absolute; right:56px; top:368px; width:280px; height:200px; border-radius:24px; background:${BARAZA_STAGE}; display:flex; align-items:center; justify-content:center; }
-    .shadow { position:absolute; bottom:26px; width:180px; height:24px; border-radius:50%; background:radial-gradient(ellipse at center, rgba(16,21,15,.30), rgba(16,21,15,0) 72%); }
-    .dish { position:relative; width:86%; object-fit:contain; }
+    .tagline { position:absolute; left:416px; top:52px; width:740px; font-family:'Instrument Serif'; font-weight:400; font-size:60px; line-height:1.1; color:${BARAZA_OLIVE}; }
+    .hours { position:absolute; left:418px; top:206px; font-family:'DM Sans'; font-weight:500; font-size:25px; color:${BARAZA_ESPRESSO}; opacity:.72; }
+    .credit { position:absolute; left:0; width:360px; bottom:34px; text-align:center; font-family:'Instrument Serif'; font-size:23px; color:${BARAZA_ESPRESSO}; opacity:.7; }
+    .stage { position:absolute; left:416px; top:266px; width:728px; height:318px; border-radius:24px; background:${BARAZA_STAGE}; display:flex; align-items:center; justify-content:center; }
+    ${PLATE_CSS}
   </style>
   <div class="band">
     <img class="round-logo" src="${fileUrl('assets/restaurant/baraza-logo.webp')}">
@@ -147,8 +157,7 @@ function ogBarazaHtml() {
   <div class="hours">Open 24/7 · Gulberg III, Lahore</div>
   <div class="credit">menva.</div>
   <div class="stage">
-    <div class="shadow"></div>
-    <img class="dish" src="${fileUrl('assets/dishes/bz-chicken-pizza/poster.webp')}">
+    <div class="plate" style="width:70%;margin-top:-18px"><img src="${dishUrl('bz-chicken-pizza')}"></div>
   </div>`);
 }
 
@@ -202,6 +211,7 @@ const FAVICON_SVG = `<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 100 10
 </svg>`;
 
 // ─── Run ─────────────────────────────────────────────────────────────────
+await Promise.all(['steak-main', 'bz-chicken-pizza'].map(prepareDish));
 const browser = await chromium.launch({ channel: 'chrome' });
 
 console.log('Rendering Open Graph images...');
