@@ -19,6 +19,9 @@ Everything that needs your permission, money, login or a real person was saved h
 | 11 | **Budget**: ads (PKR 10k / 30k / 75k a month), print, ambassadors | Nothing has been spent | paid-ads.md §3, pr-and-offline.md |
 | 12 | **OK to use the 360° spin renders for Reels** | Reels without filming | OPEN-QUESTIONS.md #12 |
 
+| 13 | **Merge the link-preview fix to the live site** (OG tags, share image, `/stats` out of search; on the `social-automation` branch) | Links shared on WhatsApp currently unfurl blank | Review the `index.html` + `robots.txt` diff, then merge |
+| 14 | **Next segment**: banquet halls/weddings or custom-cake bakeries | Both fit "see it before you commit"; banquets need 6–8 scans per deal | segments.md |
+
 ## B. Setup (in this order, about 4 hours total)
 
 1. **Server + Instagram autoposting**: follow [../SETUP.md](../SETUP.md) steps 1–9 (about 1 hour). Start with `DRY_RUN=true`.
@@ -27,7 +30,8 @@ Everything that needs your permission, money, login or a real person was saved h
 4. **Landing page**: `node social/landing/build.mjs --whatsapp 92XXXXXXXXXX --instagram yourhandle`, then drag `social/landing/dist/` onto Netlify as a new site. Don't put it on the main site's `main` branch without checking it.
 5. **Print files**: `node social/print/print.mjs --domain yourdomain --whatsapp "…" --instagram "@…"`, then send `social/print/out/*.pdf` to a printer (pr-and-offline.md lists Lahore printers).
 6. **Instagram auto-replies** for "PILOT" ([community.md](community.md) §2).
-7. **CRM sheet**: copy the columns from [sales-kit.md](sales-kit.md) §8 into a Google Sheet.
+7. **Tracker**: open [menva-marketing-tracker.xlsx](menva-marketing-tracker.xlsx) (or upload it to Google Sheets). It holds the CRM, weekly KPIs and a log of all 72 posts.
+8. **Reels**: post the 4 motion Reels from [../reels/](../reels/) by hand with a trending sound (Mon/Wed/Sun 13:00).
 
 ## C. Outreach only you can do
 

@@ -28,12 +28,17 @@ Diner attention is what makes restaurants listen, and restaurant pilots are what
 | Asset | File | Status |
 |---|---|---|
 | 72 feed posts over 100 days, auto-posted at 20:30 PKT, Tue/Thu/Fri/Sat/Sun | [../content/calendar.json](../content/calendar.json), [../content/plan.md](../content/plan.md) | Ready: needs the server set up (SETUP.md) |
-| Next 100 days (Ramadan, Eid, PSL season) | ../content/calendar-2.json, plan-2.md | Being written, picked up automatically after day 100 |
+| Next 100 days (PSL, Ramadan with 16:30 pre-iftar posts, Eid, Pakistan Day, spring, exams) | [../content/calendar-2.json](../content/calendar-2.json), [plan-2.md](../content/plan-2.md) | Ready: picked up automatically on day 101 (tested) |
 | A Story teaser for every post | ../templates/story.html | Built and tested |
 | 22 trend posts to swap in (Dish drop, Sight test, worth-the-hype…) | [../content/trend-bank.json](../content/trend-bank.json) | Ready |
 | Print: table tent, menu stickers, A4 one-pager, 10-slide pitch deck | [../print/out/](../print/out/) | Ready once the domain and contacts are filled in |
 | "For restaurants" landing page | [../landing/](../landing/) | Ready: needs the WhatsApp number, then a Netlify drag-and-drop |
 | Instagram profile picture, highlight covers, bio options | [../profile/](../profile/) | Ready to upload |
+| 4 motion Reels (MP4, no filming) with captions | [../reels/](../reels/) | Ready: post by hand with a trending sound |
+| 8 ready 9:16 creatives for Stories and ads | [../content/ads-9x16.json](../content/ads-9x16.json), [preview](../previews/ads-9x16-sheet-1.jpg) | Ready |
+| Pilot results report (the /stats CSV → a 2-page PDF) | [../print/pilot-report.mjs](../print/pilot-report.mjs) | Ready for the first pilot review |
+| Marketing tracker (KPIs, content log, CRM, influencers, campaigns) | [menva-marketing-tracker.xlsx](menva-marketing-tracker.xlsx) | Ready: open it in Excel or Google Sheets |
+| Link previews for the site (OG tags + share image), `/stats` kept out of search | `index.html`, `robots.txt`, `assets/og.jpg` on this branch | Needs merging to main (Abdullah's call) |
 
 ## The manual layer (what a person does)
 
@@ -47,14 +52,18 @@ Diner attention is what makes restaurants listen, and restaurant pilots are what
 | [paid-ads.md](paid-ads.md) | Meta ads at PKR 10k / 30k / 75k a month, 12 ad creatives from existing posts, click-to-WhatsApp, measurement, the Punjab ad-tax gotcha |
 | [pr-and-offline.md](pr-and-offline.md) | 8 PR angles, a press release, a media list, events (Lahore Eat…), 17 guerrilla ideas, partnerships, an ambassador programme, awards |
 | [research/](research/) | Trends (Crumble and friends), Gen Z culture and slang, influencers, competitors and evidence |
-| brand-book.md, segments.md | Voice and messaging rules; next segments (banquets, hotels, bakeries…), both being written |
+| [brand-book.md](brand-book.md) | Voice, messaging per audience, Roman Urdu spelling, word list, claims policy, a pre-publish checklist |
+| [segments.md](segments.md) | Next markets: **banquet halls/weddings** and **custom-cake bakeries** first, then hotels; cloud kitchens ranked low (no ordering) |
+| [website.md](website.md) | Home-page audit, before/after copy, SEO keywords, link-in-bio |
+| [video-scripts.md](video-scripts.md) | Brand film, explainer, restaurant demo video, founder story prompts, cutdowns |
+| [LAUNCH-30.md](LAUNCH-30.md) | The first 30 days, day by day |
 
 ## The first 12 weeks
 
 | Weeks | Diners | Restaurants | Founder time |
 |---|---|---|---|
 | 0 (setup) | Server live in dry run, profile set up, highlights uploaded | Landing page live, WhatsApp Business set up, deck and one-pager filled in | ~4 hours once |
-| 1–2 | Calendar starts (launch post #1). Stories run automatically. 2 no-filming Reels a week (reels.md NF1–NF5) | Build a list of 30 target restaurants (sales-kit.md §1). 10 cold DMs + 5 walk-ins a week | 30 min/day |
+| 1–2 | Calendar starts (launch post #1). Stories run automatically. The 4 ready motion Reels (../reels/), Mon/Wed/Sun 13:00 | Build a list of 30 target restaurants (sales-kit.md §1). 10 cold DMs + 5 walk-ins a week | 30 min/day |
 | 3–4 | **Sight test** campaign (posts #25 plus Reels). Reply bank in use | First demos. **Founding tables** framing if Abdullah picks it | 45 min/day |
 | 5–8 | **Dish drop** weekly series (swap in trend-bank posts). First filmed Reels with friends | Pilot #2–#3. First LinkedIn build-in-public posts | 45 min/day |
 | 9–12 | **Menu photos lie** (honest version). **First reactions** once a partner agrees to filming | Pilot results report for the first restaurant (sales-kit.md §9) → case study → PR push (pr-and-offline.md) | 45 min/day |
