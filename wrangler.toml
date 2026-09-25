@@ -1,5 +1,5 @@
-# Cloudflare Pages config (source of truth for bindings and plain variables; the STATS_KEY secret
-# is set in the dashboard: Settings → Variables and secrets). Netlify ignores this file.
+# Cloudflare Pages config (source of truth for bindings and plain variables; the STATS_KEY and
+# CODES_ADMIN_KEY secrets are set in the dashboard: Settings → Variables and secrets). Netlify ignores this file.
 name = "menva"
 pages_build_output_dir = "dist"
 compatibility_date = "2026-09-01"
@@ -12,3 +12,11 @@ SITE_URL = "https://menva.pages.dev"
 [[kv_namespaces]]
 binding = "MENVA_EVENTS"
 id = "fc6a63797ed940dc948ef571daa3ebb8"
+
+# MENVA Plus / Black unlock codes (functions/api/unlock.js, functions/api/codes.js). Its own
+# namespace so analytics code can never touch who has paid. Create it once, then paste the id:
+#   npx wrangler kv namespace create MENVA_CODES
+# Until it is bound, /unlock answers "Codes can't be checked right now" and table QR menus are unaffected.
+# [[kv_namespaces]]
+# binding = "MENVA_CODES"
+# id = "<id printed by the command above>"

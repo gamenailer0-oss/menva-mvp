@@ -29,6 +29,7 @@ export const EVENTS = {
   ar_failed: {},
   tray_add: {},
   waiter_view: {},
+  plus_prompt: {}, // a 3D dish opened away from a table without MENVA Plus: the photo and the Plus line
 };
 
 const ID = /^[a-z0-9]+(-[a-z0-9]+)*$/;

@@ -1,18 +1,10 @@
 // Adapter for Cloudflare KV namespace to match Netlify Blobs interface.
 // Expected interface: setJSON(key, value), get(key), list({ prefix })
-export function kvStore(kv) {
+// binding: the namespace's binding name, for the "not set up" error only.
+export function kvStore(kv, binding = 'MENVA_EVENTS') {
   if (!kv) {
-    return {
-      async setJSON(key, value) {
-        throw new Error('Analytics storage is not set up (bind KV namespace MENVA_EVENTS)');
-      },
-      async get(key) {
-        throw new Error('Analytics storage is not set up (bind KV namespace MENVA_EVENTS)');
-      },
-      async list() {
-        throw new Error('Analytics storage is not set up (bind KV namespace MENVA_EVENTS)');
-      },
-    };
+    const missing = () => { throw new Error(`Storage is not set up (bind KV namespace ${binding})`); };
+    return { async setJSON() { missing(); }, async get() { missing(); }, async list() { missing(); } };
   }
 
   return {

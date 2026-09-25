@@ -65,17 +65,32 @@ if (fs.existsSync(menuPath)) {
   try { restaurantSlugs = JSON.parse(fs.readFileSync(menuPath, 'utf8')).restaurants.map((r) => r.slug); } catch {}
 }
 
-// Netlify Functions, locally: same handlers, in-memory blob store, a dev-only stats key.
+// Functions, locally: same handlers, in-memory stores, dev-only keys.
 const memory = new Map();
 const store = {
   async setJSON(key, value) { memory.set(key, JSON.stringify(value)); },
   async get(key) { return memory.has(key) ? JSON.parse(memory.get(key)) : null; },
   async list({ prefix = '' } = {}) { return { blobs: [...memory.keys()].filter((k) => k.startsWith(prefix)).map((key) => ({ key })) }; },
 };
-const LOCAL_ENV = { STATS_KEY: process.env.STATS_KEY || 'local-dev-stats-key' };
+// Plan codes get their own store, as on Cloudflare (KV MENVA_CODES, separate from the events).
+const memoryStore = () => {
+  const m = new Map();
+  return {
+    async setJSON(key, value) { m.set(key, JSON.stringify(value)); },
+    async get(key) { return m.has(key) ? JSON.parse(m.get(key)) : null; },
+    async list({ prefix = '' } = {}) { return { blobs: [...m.keys()].filter((k) => k.startsWith(prefix)).map((key) => ({ key })) }; },
+  };
+};
+const codes = memoryStore();
+const LOCAL_ENV = {
+  STATS_KEY: process.env.STATS_KEY || 'local-dev-stats-key',
+  CODES_ADMIN_KEY: process.env.CODES_ADMIN_KEY || 'local-dev-codes-admin-key',
+};
 const functions = {
-  '/api/e': (req) => import('../netlify/functions/e.mjs').then((m) => m.handle(req, store)),
-  '/api/stats': (req) => import('../netlify/functions/stats.mjs').then((m) => m.handle(req, store, LOCAL_ENV)),
+  '/api/e': (req) => import('../netlify/lib/ingest.mjs').then((m) => m.handle(req, store)),
+  '/api/stats': (req) => import('../netlify/lib/stats.mjs').then((m) => m.handle(req, store, LOCAL_ENV)),
+  '/api/unlock': (req) => import('../netlify/lib/codes.mjs').then((m) => m.handleUnlock(req, codes)),
+  '/api/codes': (req) => import('../netlify/lib/codes.mjs').then((m) => m.handleAdmin(req, codes, LOCAL_ENV)),
 };
 
 async function runFunction(fn, req, res) {

@@ -86,6 +86,12 @@
   [headers.values]
     Cache-Control = "public, max-age=0, must-revalidate"
 
+# The code entry page is for people who've paid, not for search results.
+[[headers]]
+  for = "/unlock"
+  [headers.values]
+    X-Robots-Tag = "noindex"
+
 # ── Routing ───────────────────────────────────────────────────
 # Path routing (/g, /g/12): every unknown path serves the app shell. Restaurant pages have their
 # own static SEO tags per restaurant (scripts/build.mjs writes dist/<slug>/index.html), so those

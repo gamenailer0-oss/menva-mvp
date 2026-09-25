@@ -1,6 +1,6 @@
 /**
  * MENVA — Main Application
- * Path-routed SPA (History API): /  ·  /g  ·  /g/:table  ·  /:restaurant/:table
+ * Path-routed SPA (History API): /  ·  /g  ·  /g/:table  ·  /:restaurant/:table  ·  /unlock
  * Menu data comes only from /data/menu.json (built from data/dishes.csv).
  * Native <dialog> for the dish sheet. model-viewer is loaded lazily from /vendor (js/viewer.js).
  * touch-action: pan-y on all model-viewer elements.
@@ -23,6 +23,7 @@
   let lastTrigger = null;
   let lastWaiterTrigger = null;
   let trayUnsubscribe = null;
+  let planUnsubscribe = null;
 
   // ─── Formatting ───────────────────────────────────────────────
   const CONFIRM = 'Please confirm with your server';
@@ -51,13 +52,30 @@
   };
 
   // ─── Footer ──────────────────────────────────────────────────
-  const footer = `<footer><span>menva<span class="wordmark-dot">.</span></span><p>See it before you order it.</p><small>3D scans provided by restaurants</small></footer>`;
+  const footer = `<footer><span>menva<span class="wordmark-dot">.</span></span><p>See it before you order it.</p><small>3D scans provided by restaurants</small><a class="footer-code" href="/unlock" data-link>Have a MENVA code?</a></footer>`;
 
   // ─── Header ──────────────────────────────────────────────────
   // No directory to go back to: on a restaurant page the diner stays on that menu.
   function header() {
     const wordmark = `<a class="wordmark" href="/" data-link aria-label="MENVA home">menva<span class="wordmark-dot">.</span></a>`;
-    return `<header class="topbar">${wordmark}<nav><div class="theme-toggle-wrap"><button data-mode-toggle aria-label="Switch theme"><span class="toggle-icon"><svg class="icon-sun" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round"><circle cx="12" cy="12" r="4"/><path d="M12 2v2m0 16v2M2 12h2m16 0h2M5 5l1.5 1.5m11 11L19 19M5 19l1.5-1.5m11-11L19 5"/></svg><svg class="icon-moon" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round"><path d="M20.5 14A8.5 8.5 0 0 1 10 3.5 8.5 8.5 0 1 0 20.5 14Z"/></svg></span></button></div></nav></header>`;
+    return `<header class="topbar">${wordmark}<nav>${planBadge()}<div class="theme-toggle-wrap"><button data-mode-toggle aria-label="Switch theme"><span class="toggle-icon"><svg class="icon-sun" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round"><circle cx="12" cy="12" r="4"/><path d="M12 2v2m0 16v2M2 12h2m16 0h2M5 5l1.5 1.5m11 11L19 19M5 19l1.5-1.5m11-11L19 5"/></svg><svg class="icon-moon" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round"><path d="M20.5 14A8.5 8.5 0 0 1 10 3.5 8.5 8.5 0 1 0 20.5 14Z"/></svg></span></button></div></nav></header>`;
+  }
+
+  // ─── MENVA Black badge (js/plan.js) ─────────────────────────────
+  // Shown while Black is active on this phone, with the visit tier when the diner counts visits.
+  // Tapping it opens /unlock, which shows the end date (what a partner restaurant checks for a perk).
+  function planBadge() {
+    if (!window.MenvaPlan?.isBlack()) return '';
+    const v = MenvaPlan.visits();
+    const tier = v.on && v.tier ? v.tier : '';
+    return `<a class="plan-badge" href="/unlock" data-link aria-label="MENVA Black${tier ? `, ${esc(tier)}` : ''}: your plan">`
+      + `<span class="plan-badge-mark">MENVA Black</span>${tier ? `<span class="plan-badge-tier">${esc(tier)}</span>` : ''}</a>`;
+  }
+  function refreshBadge() {
+    const nav = app.querySelector('.topbar nav');
+    if (!nav) return;
+    nav.querySelector('.plan-badge')?.remove();
+    nav.insertAdjacentHTML('afterbegin', planBadge());
   }
 
   // ─── Cheffy cameo (only when the restaurant config enables it) ─
@@ -369,9 +387,12 @@
     dialog.addEventListener('click', e => {
       if (e.target === dialog) dialog.close();
     });
+    // The sheet's own content, not a fresh lookup: "I have a code" closes the sheet and routes to
+    // /unlock, and the close event only fires after the page has been replaced.
+    const dishContent = dialog.querySelector('#dish-content');
     dialog.addEventListener('close', () => {
       document.body.classList.remove('modal-open');
-      app.querySelector('#dish-content').innerHTML = '';
+      dishContent.innerHTML = '';
       lastTrigger?.focus();
     });
 
@@ -583,10 +604,14 @@
     const content = app.querySelector('#dish-content');
     const a = dish.assets;
     MenvaTrack('dish_open', { dish: dish.id });
+    // Free at a partner table (the table QR, remembered for this tab); anywhere else, 3D and AR come
+    // with MENVA Plus. Without it the diner gets the dish photo — the always-first paint — and one
+    // calm line, and nothing 3D is downloaded.
+    const plusOnly = dish.has3d && !currentTable && !MenvaPlan.anywhere();
 
     // The Pass: blur-up poster paints instantly (inline base64, zero network), then focuses as the GLB loads.
     // model-viewer's own AR button is replaced by an empty slot; ours sits below the stage (thumb reach).
-    const modelViewer = dish.has3d ? `<model-viewer id="dish-viewer" camera-controls touch-action="pan-y" camera-orbit="-25deg 55deg 85%" shadow-intensity="1" shadow-softness="0.6" environment-image="neutral" interaction-prompt="auto" alt="${esc(dish.name)} — 3D scan">
+    const modelViewer = dish.has3d && !plusOnly ? `<model-viewer id="dish-viewer" camera-controls touch-action="pan-y" camera-orbit="-25deg 55deg 85%" shadow-intensity="1" shadow-softness="0.6" environment-image="neutral" interaction-prompt="auto" alt="${esc(dish.name)} — 3D scan">
             <span slot="ar-button" hidden></span>
             <div slot="ar-prompt" class="ar-prompt">
               <svg viewBox="0 0 120 80" aria-hidden="true"><ellipse cx="60" cy="62" rx="44" ry="12"/><g class="ar-prompt-phone"><rect x="50" y="8" width="20" height="34" rx="4"/><line x1="57" y1="13" x2="63" y2="13"/></g></svg>
@@ -595,7 +620,14 @@
           </model-viewer>` : '';
 
     content.innerHTML = `
-      ${dish.has3d ? `<div class="dish-stage${dish.serve === 'iced' ? ' iced' : ''}">
+      ${plusOnly ? `<div class="dish-stage${dish.serve === 'iced' ? ' iced' : ''}" data-gate="plus">
+          ${MenvaLoader.markup(dish, '')}
+          <div class="stage-actions">
+            <p class="plus-note">3D and AR are free at the restaurant: scan the code on your table. Anywhere else, they come with MENVA Plus, PKR 99 a month.</p>
+            <a class="plus-link" href="/unlock?next=${encodeURIComponent(`/${activeRestaurant.slug}?dish=${dish.id}`)}" data-link>I have a code ${arrow}</a>
+          </div>
+        </div>` : ''}
+      ${dish.has3d && !plusOnly ? `<div class="dish-stage${dish.serve === 'iced' ? ' iced' : ''}">
           ${MenvaLoader.markup(dish, modelViewer)}
           <button id="reset-view" class="reset-view" hidden aria-label="Reset the view">${resetIcon}</button>
           <div class="stage-actions">
@@ -628,10 +660,17 @@
 
     content.querySelector('.back-menu').addEventListener('click', () => dialog.close());
     content.querySelector('.copy-link')?.addEventListener('click', copyLink);
+    // "I have a code" navigates away: close the sheet first so the router starts clean.
+    content.querySelector('.plus-link')?.addEventListener('click', () => dialog.close());
     initTrayAdd(content, dish);
     document.body.classList.add('modal-open');
     dialog.showModal();
 
+    if (plusOnly) {
+      MenvaLoader.start(content, document.createElement('div'), { lines: activeRestaurant.loaderLines }).fallback(5);
+      MenvaTrack('plus_prompt', { dish: dish.id });
+      return;
+    }
     if (!dish.has3d) return;
 
     const viewer = document.getElementById('dish-viewer');
@@ -809,6 +848,8 @@
 
     if (parts.length === 0) {
       brandPage();
+    } else if (parts[0] === 'unlock' && parts.length === 1) {
+      unlockPage();
     } else if (!data) {
       dataUnavailable();
     } else {
@@ -824,7 +865,10 @@
         if (tablePart) rememberTable(r.id, tablePart);
         const table = tablePart || storedTable(r.id);
         MenvaTrack.setContext(r.id, table);
-        if (firstRoute && tablePart) MenvaTrack('scan'); // arrived from a table QR code
+        if (firstRoute && tablePart) { // arrived from a table QR code
+          MenvaTrack('scan');
+          MenvaPlan.recordVisit(); // MENVA Black visit tiers: opt-in, counted on this phone only
+        }
         MenvaTrack('menu_view');
         restaurantPage(r, table);
         openLinkedDish(r);
@@ -852,6 +896,113 @@
     if (path === location.pathname) return;
     history.pushState(null, '', path);
     route();
+  }
+
+  // ─── /unlock — enter a MENVA Plus / Black code (js/plan.js) ────
+  // Payments are manual: MENVA sends the code on WhatsApp after the transfer. ?next=/g?dish=<id>
+  // returns the diner to the dish they were looking at (own paths only, never another site).
+  const longDate = (day) => new Date(`${day}T00:00:00Z`).toLocaleDateString('en-GB', { day: 'numeric', month: 'long', year: 'numeric', timeZone: 'UTC' });
+  const safeNext = (n) => (/^\/[a-z0-9-]+(\?dish=[a-z0-9-]+)?$/.test(n || '') ? n : null);
+  const UNLOCK_ERRORS = {
+    invalid: 'A MENVA code has 12 letters and numbers, like 7K3M-Q9TD-2XHV. Dashes and spaces are optional.',
+    unknown: 'That code didn’t match. Check it against the WhatsApp message from MENVA and try again.',
+    offline: 'The code couldn’t be checked: there’s no connection. Check the wifi or mobile data, then try again.',
+    unavailable: 'Codes can’t be checked right now. Try again in a few minutes.',
+  };
+
+  function unlockPage() {
+    document.title = 'Enter your code — MENVA';
+    setTheme('default');
+    const next = safeNext(new URLSearchParams(location.search).get('next'));
+    let removeArmed = false;
+
+    function planCard() {
+      const p = MenvaPlan.info();
+      if (!p) return '';
+      if (!p.active) {
+        return `<section class="plan-card plan-card-ended" aria-labelledby="plan-card-title">
+          <h2 id="plan-card-title">${esc(p.name)} ${p.revoked ? 'is switched off' : `ended on ${esc(longDate(p.expires))}`}</h2>
+          <p>Table QR menus at partner restaurants stay free. To carry on, message MENVA on WhatsApp for a new code and enter it above.</p>
+          <button type="button" class="plan-remove">Remove from this phone</button>
+        </section>`;
+      }
+      const v = MenvaPlan.visits();
+      const black = p.plan === 'black' ? `
+          <div class="plan-visits">
+            <label class="plan-toggle"><input type="checkbox" class="plan-count"${v.on ? ' checked' : ''}> Count my visits</label>
+            <p class="plan-fine">Each day you scan the QR at a partner table counts once. Your visits stay on this phone; MENVA never sees them.</p>
+            ${v.on ? `<p class="plan-tier">${v.tier ? `<strong>${esc(v.tier)}</strong> · ` : ''}${v.count} ${v.count === 1 ? 'visit' : 'visits'}${v.next ? ` · ${v.next.in} more to ${esc(v.next.name)}` : ''}</p>` : ''}
+          </div>` : '';
+      return `<section class="plan-card${p.plan === 'black' ? ' plan-card-black' : ''}" aria-labelledby="plan-card-title">
+          <h2 id="plan-card-title">${esc(p.name)} is on</h2>
+          <p class="plan-until">Active until ${esc(longDate(p.expires))}</p>
+          <p>${p.plan === 'black' ? 'The badge, visit tiers, and 3D and AR anywhere.' : '3D and AR anywhere: open any partner menu, at home or on the way, and see the dish on your own table.'}</p>
+          ${black}
+          <button type="button" class="plan-remove">Remove from this phone</button>
+        </section>`;
+    }
+
+    app.innerHTML = header() + `<main class="brand-page unlock-page">
+      <p class="overline">MENVA Plus · MENVA Black</p>
+      <h1>Enter your code</h1>
+      <p>Paid by bank transfer, JazzCash or Easypaisa? Type the code MENVA sent you on WhatsApp.</p>
+      <form class="unlock-form" novalidate>
+        <label for="unlock-code">Your code</label>
+        <input id="unlock-code" name="code" type="text" inputmode="text" autocomplete="off" autocapitalize="characters" spellcheck="false" maxlength="24" placeholder="XXXX-XXXX-XXXX" required>
+        <button type="submit" class="product-action">Unlock ${arrow}</button>
+        <p class="unlock-status" role="status" aria-live="polite"></p>
+      </form>
+      <div class="plan-slot">${planCard()}</div>
+      ${next ? `<a class="product-action unlock-back" href="${esc(next)}" data-link>Back to the menu ${arrow}</a>` : ''}
+      <section class="unlock-plans" aria-labelledby="plans-title">
+        <h2 id="plans-title">What each plan gives</h2>
+        <dl>
+          <div><dt>Free</dt><dd>3D and AR at partner restaurant tables, from the QR on the table. Always free.</dd></div>
+          <div><dt>MENVA Plus · PKR 99 a month</dt><dd>3D and AR anywhere: at home, on the way, before you pick a place.</dd></div>
+          <div><dt>MENVA Black · PKR 599 a month</dt><dd>Everything in Plus, the MENVA Black badge, and visit tiers you earn at partner tables: Regular, Known, Top Table, Legend. Visits only, never what you spend.</dd></div>
+        </dl>
+      </section>
+    </main>` + footer;
+
+    const form = app.querySelector('.unlock-form');
+    const input = form.querySelector('input');
+    const button = form.querySelector('button');
+    const status = form.querySelector('.unlock-status');
+    const slot = app.querySelector('.plan-slot');
+
+    function wireCard() {
+      removeArmed = false;
+      slot.innerHTML = planCard();
+      slot.querySelector('.plan-count')?.addEventListener('change', (e) => MenvaPlan.setCounting(e.target.checked));
+      slot.querySelector('.plan-remove')?.addEventListener('click', (e) => {
+        if (!removeArmed) { removeArmed = true; e.currentTarget.textContent = 'Tap again to remove'; return; }
+        MenvaPlan.forget();
+        status.textContent = '';
+      });
+    }
+    wireCard();
+    planUnsubscribe?.();
+    planUnsubscribe = MenvaPlan.onChange(() => { if (slot.isConnected) wireCard(); });
+
+    form.addEventListener('submit', async (e) => {
+      e.preventDefault();
+      status.classList.remove('is-error');
+      status.textContent = 'Checking your code…';
+      button.disabled = true;
+      const result = await MenvaPlan.redeem(input.value);
+      button.disabled = false;
+      if (!status.isConnected) return;
+      if (result.ok) {
+        input.value = '';
+        status.textContent = `${MenvaPlan.NAMES[result.plan]} is on until ${longDate(result.expires)}.`;
+        app.querySelector('.unlock-back')?.focus();
+        return;
+      }
+      status.classList.add('is-error');
+      status.textContent = result.reason === 'expired' || result.reason === 'revoked'
+        ? `That code ${result.reason === 'expired' ? `ended on ${longDate(result.expires)}` : 'has been switched off'}. Table QR menus stay free; message MENVA on WhatsApp for a new code.`
+        : UNLOCK_ERRORS[result.reason] || UNLOCK_ERRORS.unavailable;
+    });
   }
 
   function notFound(msg) {
@@ -884,12 +1035,15 @@
     navigate(link.getAttribute('href'));
   });
   window.addEventListener('popstate', route);
+  MenvaPlan.onChange(refreshBadge);
 
   async function start() {
     try { await loadData(); } catch { data = null; }
     const legacy = legacyHashPath();
     if (legacy) history.replaceState(null, '', legacy);
     route();
+    // A plan unlocked on this phone is re-checked with MENVA at most once a day, in the background.
+    MenvaPlan.recheck();
     // Probe WebGL while the diner reads the menu, so opening a dish never waits for it.
     (window.requestIdleCallback || setTimeout)(() => MenvaCaps.webgl());
   }

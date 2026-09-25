@@ -233,7 +233,7 @@ fs.writeFileSync(path.join(DIST, 'site.webmanifest'), JSON.stringify({
 }, null, 2) + '\n');
 
 fs.writeFileSync(path.join(DIST, 'robots.txt'),
-  'User-agent: *\nAllow: /\nDisallow: /stats\nDisallow: /api/\n\n' +
+  'User-agent: *\nAllow: /\nDisallow: /stats\nDisallow: /api/\nDisallow: /unlock\n\n' +
   `Sitemap: ${origin}/sitemap.xml\n`);
 
 const lastmod = new Date().toISOString().slice(0, 10);

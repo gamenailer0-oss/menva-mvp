@@ -14,7 +14,8 @@
     "social": "node scripts/make-social.mjs",
     "test": "playwright test",
     "test:unit": "node --test tests/*.test.mjs",
-    "qr": "node scripts/make-qr.mjs"
+    "qr": "node scripts/make-qr.mjs",
+    "code": "node scripts/make-code.mjs"
   },
   "devDependencies": {
     "@fontsource/barlow-condensed": "5.3.0",
