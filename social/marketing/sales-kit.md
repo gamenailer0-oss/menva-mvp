@@ -113,6 +113,8 @@ In a small or mid-size restaurant, the owner is often also the GM — lead with 
 
 ## 4. Outreach scripts — ready to paste
 
+**Use `outreach-spiced.md` first.** It has shorter, more human versions of these. The ones below are kept for reference.
+
 All scripts avoid naming the pilot restaurant. Replace `[Restaurant]`, `[Name]`, `[dish]` before sending.
 
 ### Instagram DM — cold
