@@ -54,6 +54,7 @@ cal.posts.forEach((p, i) => {
   const allText = JSON.stringify([p.caption, p.hashtags, p.alt, slides.map(({ dish, dishes, crop, crops, layout, bg, size, ...text }) => text)]);
   if (/gaucho/i.test(allText) && !p.brandOk) bad(p, 'names Gauchos — only with Abdullah\'s OK (then set "brandOk": true)');
   if (EMOJI.test(allText)) bad(p, 'no emoji (brand rule)');
+  if (/\{\{[A-Z_]+\}\}|\[(fill in|restaurant|pilot restaurant|name)[^\]]*\]/i.test(allText)) bad(p, 'has an unfilled placeholder like {{RESTAURANT}} or [pilot restaurant]');
   if (UNCONFIRMED.test(allText)) bad(p, 'names a dish that isn\'t confirmed yet (prawn / skewer / fajita / wrap)');
   if (/\d\s?cm\b/i.test(allText)) bad(p, 'mentions a size in cm — plate sizes are not confirmed');
   for (const m of allText.matchAll(/\b(PKR|Rs\.?)\s?\d[\d,]*/gi)) if (!PILOT_PRICE.test(m[0])) bad(p, `price "${m[0]}" — the only real price we have is the PKR 25,000 pilot`);
