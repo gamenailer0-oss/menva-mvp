@@ -1,15 +1,14 @@
 {
   "version": 1,
-  "about": "Khana kahan?: a weekly sitcom told in group-chat screenshots, with the same six made-up friends. Swap episodes into a calendar like trend-bank posts (keep the calendar post's n, day, date, weekday). Every name is invented; never use a real person.",
+  "about": "Khana kahan?: a weekly sitcom told in group-chat screenshots, with the same six made-up friends. A series file: the server posts it automatically on Wednesdays (a rest day for the main calendar), episode 1 on day 17 (Wed 21 Oct 2026 with the default start). Days are counted from START_DATE across the whole 300 days, not per 100-day block. Every name is invented; never use a real person.",
   "defaultStart": "2026-10-05",
   "handle": "",
   "posts": [
     {
       "n": 1,
-      "day": 1,
+      "day": 17,
       "id": "saga-01-pilot-episode",
       "series": "Khana kahan? (the group chat)",
-      "when": "evergreen",
       "pillar": "relatable",
       "audience": "diners",
       "format": "carousel",
@@ -64,14 +63,15 @@
           "h": "9:40 pm.\n*Still* in the car park.",
           "ru": "Har Friday ki kahani."
         }
-      ]
+      ],
+      "date": "2026-10-21",
+      "weekday": "Wed"
     },
     {
       "n": 2,
-      "day": 2,
+      "day": 24,
       "id": "saga-02-portion-police",
       "series": "Khana kahan? (the group chat)",
-      "when": "evergreen",
       "pillar": "relatable",
       "audience": "diners",
       "format": "carousel",
@@ -123,14 +123,15 @@
           "h": "This is \"generous.\" *Actual size.*",
           "stamp": "True size"
         }
-      ]
+      ],
+      "date": "2026-10-28",
+      "weekday": "Wed"
     },
     {
       "n": 3,
-      "day": 3,
+      "day": 31,
       "id": "saga-03-pic-bhejo",
       "series": "Khana kahan? (the group chat)",
-      "when": "evergreen",
       "pillar": "relatable",
       "audience": "diners",
       "format": "carousel",
@@ -182,14 +183,15 @@
           "h": "The plate, *tonight's version.*",
           "b": "A real 3D scan. Turn it around before you order."
         }
-      ]
+      ],
+      "date": "2026-11-04",
+      "weekday": "Wed"
     },
     {
       "n": 4,
-      "day": 4,
+      "day": 38,
       "id": "saga-04-sara-orders-last",
       "series": "Khana kahan? (the group chat)",
-      "when": "evergreen",
       "pillar": "relatable",
       "audience": "diners",
       "format": "single",
@@ -237,14 +239,15 @@
           ],
           "stamp": "Mera bhi wohi"
         }
-      ]
+      ],
+      "date": "2026-11-11",
+      "weekday": "Wed"
     },
     {
       "n": 5,
-      "day": 5,
+      "day": 45,
       "id": "saga-05-ali-bhai-orders",
       "series": "Khana kahan? (the group chat)",
-      "when": "evergreen",
       "pillar": "relatable",
       "audience": "diners",
       "format": "carousel",
@@ -296,14 +299,15 @@
           "h": "The trio. *Seen before it landed.*",
           "b": "Next time, show the table first."
         }
-      ]
+      ],
+      "date": "2026-11-18",
+      "weekday": "Wed"
     },
     {
       "n": 6,
-      "day": 6,
+      "day": 52,
       "id": "saga-06-kal-se-diet",
       "series": "Khana kahan? (the group chat)",
-      "when": "evergreen",
       "pillar": "relatable",
       "audience": "diners",
       "format": "carousel",
@@ -359,14 +363,15 @@
           "h": "The salad.\n*(Hamza's version.)*",
           "stamp": "Kal se diet"
         }
-      ]
+      ],
+      "date": "2026-11-25",
+      "weekday": "Wed"
     },
     {
       "n": 7,
-      "day": 7,
+      "day": 59,
       "id": "saga-07-the-bill",
       "series": "Khana kahan? (the group chat)",
-      "when": "evergreen",
       "pillar": "relatable",
       "audience": "diners",
       "format": "single",
@@ -414,14 +419,15 @@
           "footer": "See it first next time",
           "ru": "Hisaab baad mein. Pehle plate dekho."
         }
-      ]
+      ],
+      "date": "2026-12-02",
+      "weekday": "Wed"
     },
     {
       "n": 8,
-      "day": 8,
+      "day": 66,
       "id": "saga-08-birthday-for-11",
       "series": "Khana kahan? (the group chat)",
-      "when": "evergreen",
       "pillar": "relatable",
       "audience": "diners",
       "format": "carousel",
@@ -457,14 +463,15 @@
           "h": "Rule 5: *one list.* Show the waiter.",
           "pill": "Show the waiter"
         }
-      ]
+      ],
+      "date": "2026-12-09",
+      "weekday": "Wed"
     },
     {
       "n": 9,
-      "day": 9,
+      "day": 73,
       "id": "saga-09-mama-joins",
       "series": "Khana kahan? (the group chat)",
-      "when": "evergreen",
       "pillar": "relatable",
       "audience": "diners",
       "format": "single",
@@ -507,14 +514,15 @@
             }
           ]
         }
-      ]
+      ],
+      "date": "2026-12-16",
+      "weekday": "Wed"
     },
     {
       "n": 10,
-      "day": 10,
+      "day": 80,
       "id": "saga-10-budget-week",
       "series": "Khana kahan? (the group chat)",
-      "when": "evergreen",
       "pillar": "relatable",
       "audience": "diners",
       "format": "carousel",
@@ -568,14 +576,15 @@
           ],
           "b": "Comment A or B."
         }
-      ]
+      ],
+      "date": "2026-12-23",
+      "weekday": "Wed"
     },
     {
       "n": 11,
-      "day": 11,
+      "day": 87,
       "id": "saga-11-hamza-decides",
       "series": "Khana kahan? (the group chat)",
-      "when": "evergreen",
       "pillar": "relatable",
       "audience": "diners",
       "format": "carousel",
@@ -630,14 +639,15 @@
           "h": "Pehle *dekho.*\nPhir order.",
           "b": "Scan the table QR. No app. The real plate, true size, before you order."
         }
-      ]
+      ],
+      "date": "2026-12-30",
+      "weekday": "Wed"
     },
     {
       "n": 12,
-      "day": 12,
+      "day": 94,
       "id": "saga-12-the-other-group-chat",
       "series": "Khana kahan? (the group chat)",
-      "when": "evergreen",
       "pillar": "for-restaurants",
       "audience": "restaurants",
       "format": "single",
@@ -684,7 +694,9 @@
             }
           ]
         }
-      ]
+      ],
+      "date": "2027-01-06",
+      "weekday": "Wed"
     }
   ]
 }

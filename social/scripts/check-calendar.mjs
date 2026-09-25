@@ -3,6 +3,7 @@
 //
 //   node social/scripts/check-calendar.mjs                  (the calendar)
 //   node social/scripts/check-calendar.mjs social/content/trend-bank.json
+//   node social/scripts/check-calendar.mjs social/content/series-khana-kahan.json   (a series file)
 //
 // Run it after every edit to calendar.json. It stops with a clear list of problems.
 import fs from 'node:fs';
@@ -30,12 +31,15 @@ const EMOJI = /\p{Extended_Pictographic}/u;
 // Dish names not confirmed yet: the renders in these folders may not match their folder names.
 const UNCONFIRMED = /\b(prawns?|skewers?|fajitas?|wraps?)\b/i;
 
+// series-*.json: posts with their own absolute day (1–300 from START_DATE), on days the calendars leave free.
+const SERIES = /^series-[a-z0-9-]+$/.test(NAME);
+const MAX_DAY = SERIES ? 300 : 100;
 const seenIds = new Set(), seenDays = new Set();
 cal.posts.forEach((p, i) => {
   if (p.n !== i + 1) bad(p, `n should be ${i + 1}`);
   if (!/^[a-z0-9-]+$/.test(p.id || '')) bad(p, 'id must be lowercase letters, digits and dashes');
   if (seenIds.has(p.id)) bad(p, 'duplicate id'); seenIds.add(p.id);
-  if (!(p.day >= 1 && p.day <= 100)) bad(p, 'day must be 1–100');
+  if (!(p.day >= 1 && p.day <= MAX_DAY)) bad(p, `day must be 1–${MAX_DAY}`);
   if (seenDays.has(p.day)) bad(p, `two posts on day ${p.day}`); seenDays.add(p.day);
   if (i && p.day <= cal.posts[i - 1].day) bad(p, 'days must go up');
 
@@ -76,11 +80,19 @@ cal.posts.forEach((p, i) => {
   });
 });
 
-// Post ids must be unique across every calendar file: the server's "already posted" record uses them.
-if (/^calendar(-\d+)?$/.test(NAME)) {
-  for (const f of fs.readdirSync(path.dirname(CAL)).filter((x) => /^calendar(-\d+)?\.json$/.test(x) && x !== NAME + '.json')) {
+// Post ids must be unique across every calendar and series file: the server's "already posted" record
+// uses them. A series post must also land on a day no calendar posts on (one post a day).
+const LIVE = /^(calendar(-\d+)?|series-[a-z0-9-]+)\.json$/;
+if (LIVE.test(NAME + '.json')) {
+  const absDay = (f, d) => { const m = f.match(/^calendar-(\d+)\.json$/); return d + (m ? (Number(m[1]) - 1) * 100 : 0); };
+  const myDays = new Map(cal.posts.map((p) => [absDay(NAME + '.json', p.day), p.id]));
+  for (const f of fs.readdirSync(path.dirname(CAL)).filter((x) => LIVE.test(x) && x !== NAME + '.json')) {
     const other = JSON.parse(fs.readFileSync(path.join(path.dirname(CAL), f), 'utf8'));
-    for (const q of other.posts || []) if (seenIds.has(q.id)) problems.push(`${q.id}: id also used in ${f} (ids must be unique across calendar files)`);
+    for (const q of other.posts || []) {
+      if (seenIds.has(q.id)) problems.push(`${q.id}: id also used in ${f} (ids must be unique across calendar and series files)`);
+      const clash = myDays.get(absDay(f, q.day));
+      if (clash && (SERIES || f.startsWith('series-'))) problems.push(`${clash}: same day as ${q.id} in ${f} (one post a day)`);
+    }
   }
 }
 

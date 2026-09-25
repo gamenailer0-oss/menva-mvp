@@ -18,7 +18,7 @@ const dateOf = (p) => start.plus({ days: p.day - 1 }).toISODate();
 if (STATE_PROBLEM) { logLine(['', '', 'state-recovered', STATE_PROBLEM]); await notify(this.helpers, 'MENVA: posting history was reset', STATE_PROBLEM); }
 
 // Once, when the last calendar day has passed: say so, instead of going quiet forever.
-const last = cal.posts[cal.posts.length - 1];
+const last = cal.posts.filter((p) => p.part > 0).pop(); // the main calendar's end, not a series'
 if (!manual && last && today > dateOf(last) && !state.endedAlerted) {
   state.endedAlerted = today; writeState(state);
   logLine(['', '', 'calendar-ended', 'last post was ' + dateOf(last)]);

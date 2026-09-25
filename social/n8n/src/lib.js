@@ -13,6 +13,13 @@ function readCalendars() {
     const offset = (num - 1) * 100; // each file is a 100-day block, placed by its number, not its position
     for (const p of cal.posts) posts.push(Object.assign({}, p, { day: p.day + offset, part: num }));
   });
+  // series-*.json: extra runs (e.g. the Khana kahan? sitcom) whose posts carry their own absolute
+  // day and land on days the calendar leaves free (check-calendar.mjs refuses clashes).
+  fs.readdirSync(CALENDAR_DIR).filter((f) => /^series-[a-z0-9-]+\.json$/.test(f)).forEach((f) => {
+    const ser = JSON.parse(fs.readFileSync(CALENDAR_DIR + '/' + f, 'utf8'));
+    for (const p of ser.posts) posts.push(Object.assign({}, p, { part: 0, series: f }));
+  });
+  posts.sort((a, b) => a.day - b.day);
   return { defaultStart: first.defaultStart, posts };
 }
 const STATE = '/files/state.json';   // what has been posted, the current Instagram token
