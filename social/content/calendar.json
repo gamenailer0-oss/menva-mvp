@@ -568,7 +568,7 @@
       "pillar": "relatable",
       "audience": "diners",
       "format": "single",
-      "caption": "Weekend math: deciding where to go takes two minutes. Deciding what to order takes forty-five, and still ends in \"tum order karo, main wohi le lunga.\"\n\nWe can only fix the second half.\n\nPlan bana lo, order hum sambhal lenge.",
+      "caption": "Weekend math: deciding where to go takes two minutes. Deciding what to order takes forty-five, and still ends in \"tum order karo, main wohi le lunga.\"\n\nWe can only fix the second half.\n\nPlan tum bana lo, plate hum pehle dikha denge.",
       "hashtags": [
         "#menva",
         "#lahorefood",
@@ -582,7 +582,7 @@
           "over": "Saturday, 8:15 pm",
           "dish": "steak-sandwich",
           "h": "Where to go: *2 minutes.* What to order: 45.",
-          "b": "Order hum sambhal lenge."
+          "b": "Plate pehle dekh lo, faisla do minute ka."
         }
       ]
     },
@@ -1018,7 +1018,7 @@
           "over": "Owners ask",
           "n": "4/5",
           "h": "What does *the pilot* cost?",
-          "b": "PKR 25,000 for a Lahore pilot, for now."
+          "b": "PKR 25,000 for a Lahore pilot."
         },
         {
           "layout": "cta",
