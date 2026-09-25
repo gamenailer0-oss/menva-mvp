@@ -1,0 +1,690 @@
+{
+  "version": 1,
+  "about": "Khana kahan?: a weekly sitcom told in group-chat screenshots, with the same six made-up friends. Swap episodes into a calendar like trend-bank posts (keep the calendar post's n, day, date, weekday). Every name is invented; never use a real person.",
+  "defaultStart": "2026-10-05",
+  "handle": "",
+  "posts": [
+    {
+      "n": 1,
+      "day": 1,
+      "id": "saga-01-pilot-episode",
+      "series": "Khana kahan? (the group chat)",
+      "when": "evergreen",
+      "pillar": "relatable",
+      "audience": "diners",
+      "format": "carousel",
+      "caption": "Episode 1. Six people, one group chat, zero decisions.\n\nHamza will say \"kahin bhi\" and then reject everything. Anum wants to know the portion. Zain needs a pic. Sara orders last and copies you. Ali bhai knows the owner (he doesn't).\n\nKhana kahan? New episode every week. Tag your Hamza.",
+      "hashtags": [
+        "#menva",
+        "#lahorefood",
+        "#lahorefoodies",
+        "#khanakahan"
+      ],
+      "alt": "A made-up group chat where six friends can't decide where to eat.",
+      "slides": [
+        {
+          "layout": "chat",
+          "over": "Khana kahan? Ep. 1",
+          "n": "1/2",
+          "h": "Friday, *7:52 pm.*",
+          "title": "Khana kahan? (6)",
+          "members": "Hamza, Anum, Zain, Sara, Ali bhai, you",
+          "msgs": [
+            {
+              "from": "Hamza",
+              "t": "kahin bhi chalo yaar"
+            },
+            {
+              "from": "Anum",
+              "t": "MM Alam?"
+            },
+            {
+              "from": "Hamza",
+              "t": "nahi wahan nahi"
+            },
+            {
+              "from": "Zain",
+              "t": "koi pic bhejo pehle"
+            },
+            {
+              "from": "Sara",
+              "t": "jo tum log lo mera bhi wohi"
+            },
+            {
+              "from": "Ali bhai",
+              "t": "main owner ko jaanta hoon"
+            }
+          ]
+        },
+        {
+          "layout": "shout",
+          "bg": "chili",
+          "over": "Khana kahan? Ep. 1",
+          "n": "2/2",
+          "h": "9:40 pm.\n*Still* in the car park.",
+          "ru": "Har Friday ki kahani."
+        }
+      ]
+    },
+    {
+      "n": 2,
+      "day": 2,
+      "id": "saga-02-portion-police",
+      "series": "Khana kahan? (the group chat)",
+      "when": "evergreen",
+      "pillar": "relatable",
+      "audience": "diners",
+      "format": "carousel",
+      "caption": "Anum is the portion police and honestly she has a point.\n\n\"Sharing platter\" can mean anything from four fries to a whole wooden board. On a MENVA menu she just places it on the table and checks.\n\nSlide 2 is the actual board, at true size. Sharing hai ya single? You decide.",
+      "hashtags": [
+        "#menva",
+        "#lahorefood",
+        "#lahorefoodies",
+        "#khanakahan"
+      ],
+      "alt": "A chat about whether a board is for sharing, then the real steak board scan.",
+      "slides": [
+        {
+          "layout": "chat",
+          "over": "Khana kahan? Ep. 2",
+          "n": "1/2",
+          "h": "Anum has *questions.*",
+          "title": "Khana kahan? (6)",
+          "members": "Hamza, Anum, Zain, Sara, Ali bhai, you",
+          "msgs": [
+            {
+              "from": "Anum",
+              "t": "yeh board sharing hai ya single?"
+            },
+            {
+              "from": "Hamza",
+              "t": "menu pe likha hai \"generous\""
+            },
+            {
+              "from": "Anum",
+              "t": "generous kiske liye? mere liye ya tumhare liye"
+            },
+            {
+              "from": "Zain",
+              "t": "lol"
+            },
+            {
+              "me": true,
+              "t": "ruko, table pe rakh ke dekhti hoon"
+            }
+          ]
+        },
+        {
+          "layout": "hero",
+          "over": "Khana kahan? Ep. 2",
+          "n": "2/2",
+          "dish": "steak-main",
+          "crop": "board",
+          "h": "This is \"generous.\" *Actual size.*",
+          "stamp": "True size"
+        }
+      ]
+    },
+    {
+      "n": 3,
+      "day": 3,
+      "id": "saga-03-pic-bhejo",
+      "series": "Khana kahan? (the group chat)",
+      "when": "evergreen",
+      "pillar": "relatable",
+      "audience": "diners",
+      "format": "carousel",
+      "caption": "Zain's whole personality is \"pic bhejo\".\n\nThe problem: the pic is from 2019, taken by someone's cousin, under a tube light. The plate you'll get tonight has never met that photo.\n\nPic pe mat jao. Plate dekho.",
+      "hashtags": [
+        "#menva",
+        "#lahorefood",
+        "#lahorefoodies",
+        "#khanakahan"
+      ],
+      "alt": "A chat about an old menu photo, then a real scan of the steak sandwich.",
+      "slides": [
+        {
+          "layout": "chat",
+          "over": "Khana kahan? Ep. 3",
+          "n": "1/2",
+          "h": "Zain wants *proof.*",
+          "title": "Khana kahan? (6)",
+          "members": "Hamza, Anum, Zain, Sara, Ali bhai, you",
+          "msgs": [
+            {
+              "from": "Zain",
+              "t": "order se pehle pic bhejo"
+            },
+            {
+              "from": "Hamza",
+              "t": "yeh lo menu wali"
+            },
+            {
+              "from": "Zain",
+              "t": "yeh 2019 ki hai bhai"
+            },
+            {
+              "from": "Hamza",
+              "t": "khana wohi hai"
+            },
+            {
+              "from": "Zain",
+              "t": "khana wohi hai, plate nahi"
+            }
+          ]
+        },
+        {
+          "layout": "closeup",
+          "over": "Khana kahan? Ep. 3",
+          "n": "2/2",
+          "dish": "steak-sandwich",
+          "crop": "full",
+          "h": "The plate, *tonight's version.*",
+          "b": "A real 3D scan. Turn it around before you order."
+        }
+      ]
+    },
+    {
+      "n": 4,
+      "day": 4,
+      "id": "saga-04-sara-orders-last",
+      "series": "Khana kahan? (the group chat)",
+      "when": "evergreen",
+      "pillar": "relatable",
+      "audience": "diners",
+      "format": "single",
+      "caption": "Sara has never ordered first. Not once. Not since 2017.\n\nShe waits, watches, then says \"mera bhi wohi\". Which is a strategy, actually. But imagine if she could see the plate herself.\n\nTag the Sara in your group. She'll reply last.",
+      "hashtags": [
+        "#menva",
+        "#lahorefood",
+        "#lahorefoodies",
+        "#khanakahan"
+      ],
+      "alt": "A chat where one friend always copies everyone else's order.",
+      "slides": [
+        {
+          "layout": "chat",
+          "over": "Khana kahan? Ep. 4",
+          "n": "1/1",
+          "h": "Sara, *as always.*",
+          "title": "Khana kahan? (6)",
+          "members": "Hamza, Anum, Zain, Sara, Ali bhai, you",
+          "msgs": [
+            {
+              "from": "Waiter (IRL)",
+              "t": "ma'am aap?"
+            },
+            {
+              "from": "Sara",
+              "t": "ek minute"
+            },
+            {
+              "from": "Sara",
+              "t": "inhon ne kya liya?"
+            },
+            {
+              "from": "Hamza",
+              "t": "steak board"
+            },
+            {
+              "from": "Sara",
+              "t": "mera bhi wohi"
+            },
+            {
+              "from": "Anum",
+              "t": "SARA it's a sharing board"
+            }
+          ],
+          "stamp": "Mera bhi wohi"
+        }
+      ]
+    },
+    {
+      "n": 5,
+      "day": 5,
+      "id": "saga-05-ali-bhai-orders",
+      "series": "Khana kahan? (the group chat)",
+      "when": "evergreen",
+      "pillar": "relatable",
+      "audience": "diners",
+      "format": "carousel",
+      "caption": "Every group has an Ali bhai. \"Trust me, main order karta hoon.\"\n\nThen three plates arrive and nobody at the table knows which is which. Next time, bhai, just show us first.\n\nKaun hai tumhare group ka Ali bhai? Comment mein naam likho (pyaar se).",
+      "hashtags": [
+        "#menva",
+        "#lahorefood",
+        "#lahorefoodies",
+        "#khanakahan"
+      ],
+      "alt": "A chat where one friend orders for everyone without saying what, then a real scan of the trio.",
+      "slides": [
+        {
+          "layout": "chat",
+          "over": "Khana kahan? Ep. 5",
+          "n": "1/2",
+          "h": "Ali bhai has *a plan.*",
+          "title": "Khana kahan? (6)",
+          "members": "Hamza, Anum, Zain, Sara, Ali bhai, you",
+          "msgs": [
+            {
+              "from": "Ali bhai",
+              "t": "menu band karo, main order karta hoon"
+            },
+            {
+              "from": "Anum",
+              "t": "kya order kar rahe ho?"
+            },
+            {
+              "from": "Ali bhai",
+              "t": "trust me"
+            },
+            {
+              "from": "Zain",
+              "t": "yeh teen cheezein kya hain"
+            },
+            {
+              "from": "Ali bhai",
+              "t": "trust me"
+            }
+          ]
+        },
+        {
+          "layout": "hero",
+          "over": "Khana kahan? Ep. 5",
+          "n": "2/2",
+          "dish": "chicken-fajita-wrap",
+          "crop": "board",
+          "h": "The trio. *Seen before it landed.*",
+          "b": "Next time, show the table first."
+        }
+      ]
+    },
+    {
+      "n": 6,
+      "day": 6,
+      "id": "saga-06-kal-se-diet",
+      "series": "Khana kahan? (the group chat)",
+      "when": "evergreen",
+      "pillar": "relatable",
+      "audience": "diners",
+      "format": "carousel",
+      "caption": "Hamza, Monday: \"kal se diet.\"\nHamza, Friday, 9:52 pm: this.\n\nWe're not judging. We're just saying he saw it on the table first, so at least it was an informed decision.",
+      "hashtags": [
+        "#menva",
+        "#lahorefood",
+        "#lahorefoodies",
+        "#khanakahan"
+      ],
+      "alt": "A chat where a friend on a diet orders the steak sandwich, then the real scan.",
+      "slides": [
+        {
+          "layout": "chat",
+          "over": "Khana kahan? Ep. 6",
+          "n": "1/2",
+          "h": "Hamza's *diet*, day 4.",
+          "title": "Khana kahan? (6)",
+          "members": "Hamza, Anum, Zain, Sara, Ali bhai, you",
+          "msgs": [
+            {
+              "from": "Hamza",
+              "t": "main sirf salad lunga"
+            },
+            {
+              "from": "Anum",
+              "t": "pakka?"
+            },
+            {
+              "from": "Hamza",
+              "t": "pakka"
+            },
+            {
+              "from": "Hamza",
+              "t": "waise yeh steak sandwich kitna bara hai"
+            },
+            {
+              "from": "Zain",
+              "t": "table pe rakh ke dekh lo"
+            },
+            {
+              "from": "Hamza",
+              "t": "...ok dekh liya. le raha hoon"
+            }
+          ]
+        },
+        {
+          "layout": "hero",
+          "over": "Khana kahan? Ep. 6",
+          "n": "2/2",
+          "dish": "steak-sandwich",
+          "crop": "full",
+          "h": "The salad.\n*(Hamza's version.)*",
+          "stamp": "Kal se diet"
+        }
+      ]
+    },
+    {
+      "n": 7,
+      "day": 7,
+      "id": "saga-07-the-bill",
+      "series": "Khana kahan? (the group chat)",
+      "when": "evergreen",
+      "pillar": "relatable",
+      "audience": "diners",
+      "format": "single",
+      "caption": "The friend with the bill spreadsheet deserves a medal and also a break.\n\nWe can't fix the split. We can fix the part before it: seeing what you're ordering, so nobody pays for a plate they didn't want.",
+      "hashtags": [
+        "#menva",
+        "#lahorefood",
+        "#lahorefoodies",
+        "#khanakahan"
+      ],
+      "alt": "A joke receipt of a chaotic group dinner, with no prices.",
+      "slides": [
+        {
+          "layout": "receipt",
+          "over": "Khana kahan? Ep. 7",
+          "n": "1/1",
+          "h": "Anum's *split sheet.*",
+          "title": "Friday / table for 6",
+          "lines": [
+            [
+              "Time spent deciding",
+              "47 min"
+            ],
+            [
+              "\"Yeh kya hai?\" to the waiter",
+              "x6"
+            ],
+            [
+              "Plates nobody wanted",
+              "1"
+            ],
+            [
+              "Sara's order",
+              "same as Hamza"
+            ],
+            [
+              "Ali bhai's \"trust me\"",
+              "x2"
+            ]
+          ],
+          "total": [
+            "Total",
+            "one group chat, still arguing"
+          ],
+          "footer": "See it first next time",
+          "ru": "Hisaab baad mein. Pehle plate dekho."
+        }
+      ]
+    },
+    {
+      "n": 8,
+      "day": 8,
+      "id": "saga-08-birthday-for-11",
+      "series": "Khana kahan? (the group chat)",
+      "when": "evergreen",
+      "pillar": "relatable",
+      "audience": "diners",
+      "format": "carousel",
+      "caption": "Birthday dinner for 11 people is not a dinner. It's an operation.\n\nAnum made a list. It's the most organised any of us has ever been. Save it for the next one.",
+      "hashtags": [
+        "#menva",
+        "#lahorefood",
+        "#lahorefoodies",
+        "#khanakahan"
+      ],
+      "alt": "A notes-app plan for a birthday dinner for 11, then the show-the-waiter list on a phone.",
+      "slides": [
+        {
+          "layout": "notes",
+          "over": "Khana kahan? Ep. 8",
+          "n": "1/2",
+          "title": "Saturday, 6:10 pm",
+          "h": "Sana's birthday. *The plan.*",
+          "items": [
+            "one person holds the menu. ONE.",
+            "~~everyone orders their own starter~~",
+            "sharing plates first, see the size first",
+            "~~Ali bhai orders for the table~~",
+            "one list. show the waiter. done."
+          ]
+        },
+        {
+          "layout": "phone",
+          "over": "Khana kahan? Ep. 8",
+          "n": "2/2",
+          "dish": "garlic-prawn-skewers",
+          "crop": "full",
+          "h": "Rule 5: *one list.* Show the waiter.",
+          "pill": "Show the waiter"
+        }
+      ]
+    },
+    {
+      "n": 9,
+      "day": 9,
+      "id": "saga-09-mama-joins",
+      "series": "Khana kahan? (the group chat)",
+      "when": "evergreen",
+      "pillar": "relatable",
+      "audience": "diners",
+      "format": "single",
+      "caption": "Plot twist: Mama is in the group now.\n\nShe has one question and it's the same question every Pakistani mother has asked since the dawn of restaurants.\n\nTag the friend whose mom would send this exact message.",
+      "hashtags": [
+        "#menva",
+        "#lahorefood",
+        "#lahorefoodies",
+        "#khanakahan"
+      ],
+      "alt": "A family chat where a mother asks why so much food was ordered.",
+      "slides": [
+        {
+          "layout": "chat",
+          "over": "Khana kahan? Ep. 9",
+          "n": "1/1",
+          "h": "Mama has *joined the chat.*",
+          "title": "Family (4)",
+          "members": "Mama, Hamza, Anum, you",
+          "msgs": [
+            {
+              "from": "Mama",
+              "t": "beta itna sab kyun mangwaya"
+            },
+            {
+              "from": "Hamza",
+              "t": "mama sharing hai"
+            },
+            {
+              "from": "Mama",
+              "t": "itna bara? photo mein chota tha"
+            },
+            {
+              "me": true,
+              "t": "mama photo nahi, asli size dekho"
+            },
+            {
+              "from": "Mama",
+              "t": "achha. phir theek hai. aur naan?"
+            }
+          ]
+        }
+      ]
+    },
+    {
+      "n": 10,
+      "day": 10,
+      "id": "saga-10-budget-week",
+      "series": "Khana kahan? (the group chat)",
+      "when": "evergreen",
+      "pillar": "relatable",
+      "audience": "diners",
+      "format": "carousel",
+      "caption": "Exam season. Zain's budget is one main course and a prayer.\n\nWhich one fills you up? Don't guess. Look at them side by side at true size, then pick.\n\nComment A or B. Zain is reading.",
+      "hashtags": [
+        "#menva",
+        "#lahorefood",
+        "#lahorefoodies",
+        "#khanakahan"
+      ],
+      "alt": "A chat about a student budget, then two real dishes side by side.",
+      "slides": [
+        {
+          "layout": "chat",
+          "over": "Khana kahan? Ep. 10",
+          "n": "1/2",
+          "h": "Zain's *budget* week.",
+          "title": "Khana kahan? (6)",
+          "members": "Hamza, Anum, Zain, Sara, Ali bhai, you",
+          "msgs": [
+            {
+              "from": "Zain",
+              "t": "mera budget sirf ek main ka hai"
+            },
+            {
+              "from": "Zain",
+              "t": "konsa zyada hai?"
+            },
+            {
+              "from": "Anum",
+              "t": "dono table pe rakh ke dekho"
+            },
+            {
+              "from": "Zain",
+              "t": "ok ruko"
+            }
+          ]
+        },
+        {
+          "layout": "duo",
+          "over": "Khana kahan? Ep. 10",
+          "n": "2/2",
+          "h": "One main. *Which one?*",
+          "dishes": [
+            "steak-sandwich",
+            "chicken-fajita-wrap"
+          ],
+          "labels": [
+            "The steak sandwich",
+            "The trio"
+          ],
+          "b": "Comment A or B."
+        }
+      ]
+    },
+    {
+      "n": 11,
+      "day": 11,
+      "id": "saga-11-hamza-decides",
+      "series": "Khana kahan? (the group chat)",
+      "when": "evergreen",
+      "pillar": "relatable",
+      "audience": "diners",
+      "format": "carousel",
+      "caption": "Eleven episodes. Hamza finally decided in under a minute.\n\nWhat changed? He saw it on the table first. That's it. That's the whole twist.\n\nPehle dekho, phir order.",
+      "hashtags": [
+        "#menva",
+        "#lahorefood",
+        "#lahorefoodies",
+        "#khanakahan"
+      ],
+      "alt": "A chat where the indecisive friend orders in a minute, then the brand line.",
+      "slides": [
+        {
+          "layout": "chat",
+          "over": "Khana kahan? Ep. 11",
+          "n": "1/2",
+          "h": "Something *changed.*",
+          "title": "Khana kahan? (6)",
+          "members": "Hamza, Anum, Zain, Sara, Ali bhai, you",
+          "msgs": [
+            {
+              "from": "Hamza",
+              "t": "done. steak board."
+            },
+            {
+              "from": "Anum",
+              "t": "itni jaldi??"
+            },
+            {
+              "from": "Zain",
+              "t": "who are you"
+            },
+            {
+              "from": "Hamza",
+              "t": "table pe dekh liya, sahi size hai"
+            },
+            {
+              "from": "Sara",
+              "t": "mera bhi wohi"
+            },
+            {
+              "from": "Anum",
+              "t": "SARA"
+            }
+          ]
+        },
+        {
+          "layout": "shout",
+          "bg": "chili",
+          "over": "Khana kahan? Ep. 11",
+          "n": "2/2",
+          "h": "Pehle *dekho.*\nPhir order.",
+          "b": "Scan the table QR. No app. The real plate, true size, before you order."
+        }
+      ]
+    },
+    {
+      "n": 12,
+      "day": 12,
+      "id": "saga-12-the-other-group-chat",
+      "series": "Khana kahan? (the group chat)",
+      "when": "evergreen",
+      "pillar": "for-restaurants",
+      "audience": "restaurants",
+      "format": "single",
+      "caption": "Meanwhile, in a group chat you're not in.\n\nRestaurant owners and managers: if your team explains the same platter all night, a 3D menu at the table does the explaining. They get to host.\n\nLahore pilot, PKR 25,000. DM \"PILOT\".",
+      "hashtags": [
+        "#menva",
+        "#lahorerestaurants",
+        "#restaurantmarketing",
+        "#lahore"
+      ],
+      "alt": "A made-up restaurant staff chat about guests asking about portion size.",
+      "slides": [
+        {
+          "layout": "chat",
+          "over": "The other group chat",
+          "n": "1/1",
+          "h": "Meanwhile, *the floor team.*",
+          "title": "Floor team (5)",
+          "members": "Floor manager, Chef, 3 waiters",
+          "msgs": [
+            {
+              "from": "Floor manager",
+              "t": "table 7 phir pooch rahi hai platter kitna bara hai"
+            },
+            {
+              "from": "Waiter",
+              "t": "haath se dikha diya"
+            },
+            {
+              "from": "Floor manager",
+              "t": "table 4 bhi"
+            },
+            {
+              "from": "Waiter",
+              "t": "haath thak gaye"
+            },
+            {
+              "from": "Chef",
+              "t": "photo dikhao"
+            },
+            {
+              "from": "Waiter",
+              "t": "photo 2019 ki hai"
+            }
+          ]
+        }
+      ]
+    }
+  ]
+}

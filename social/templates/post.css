@@ -170,6 +170,7 @@ html.tall .l-phone .screen { border-radius: 56px; }
 
 /* stamp: a rubber-stamp aside on any slide, e.g. "true size" */
 .stamp { position: absolute; bottom: 190px; right: 76px; transform: rotate(8deg); border: 5px solid var(--chili); color: var(--chili); border-radius: 18px; padding: 14px 26px; font-size: 34px; font-weight: 600; letter-spacing: .12em; text-transform: uppercase; background: rgba(255,255,255,.35); z-index: 3; }
+.l-hero .stamp, .l-closeup .stamp, .l-step .stamp, .l-duo .stamp { top: 150px; bottom: auto; }
 .bg-chili .stamp, .bg-ink .stamp { border-color: var(--cream); color: var(--cream); background: transparent; }
 
 /* chat: group chat screenshot */
@@ -184,6 +185,10 @@ html.tall .l-phone .screen { border-radius: 56px; }
 .msg.me { align-self: flex-end; background: var(--ink); color: var(--cream); border-radius: 30px 8px 30px 30px; }
 .msg .from { display: block; font-size: 22px; font-weight: 600; color: var(--chili); margin-bottom: 4px; }
 .msg p { font-size: 32px; line-height: 1.3; }
+.chat.many .chat-body { gap: 12px; padding: 22px 28px; }
+.chat.many .msg { padding: 12px 24px 14px; }
+.chat.many .msg p { font-size: 29px; }
+.chat.many .msg .from { font-size: 20px; margin-bottom: 2px; }
 .msg em { color: inherit; font-style: italic; }
 .l-chat .body, .l-chat .roman { margin-top: 26px; }
 

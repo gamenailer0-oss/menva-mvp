@@ -136,7 +136,7 @@
 
     // chat: a group-chat screenshot drawn from scratch (no app's branding). msgs: [{ from, t }] or [{ me: true, t }]
     chat: (d) => `${top(d)}<h1 class="${size(d, 's')}">${rich(d.h)}</h1>
-      <div class="chat"><div class="chat-head"><span class="chat-av"></span><span><b>${esc(d.title || 'Dinner plan')}</b><small>${esc(d.members || '')}</small></span></div>
+      <div class="chat${(d.msgs || []).length > 5 ? ' many' : ''}"><div class="chat-head"><span class="chat-av"></span><span><b>${esc(d.title || 'Dinner plan')}</b><small>${esc(d.members || '')}</small></span></div>
       <div class="chat-body">${(d.msgs || []).map((m) => m.me
         ? `<div class="msg me"><p>${rich(m.t)}</p></div>`
         : `<div class="msg"><span class="from">${esc(m.from || '')}</span><p>${rich(m.t)}</p></div>`).join('')}</div></div>
