@@ -49,6 +49,12 @@ cal.posts.forEach((p, i) => {
   const slides = p.slides || [];
   if (!slides.length || slides.length > 10) bad(p, 'needs 1–10 slides');
   if ((slides.length > 1) !== (p.format === 'carousel')) bad(p, `format "${p.format}" doesn't match ${slides.length} slide(s)`);
+  // Reels: one "cover" slide (the grid thumbnail) plus the video file the server uploads.
+  if (p.format === 'reel') {
+    if (!/^social\/reels\/out\/[\w-]+\.mp4$/.test(p.video || '') || !fs.existsSync(path.join(ROOT, p.video))) bad(p, `reel video "${p.video}" not found (make it with social/reels/make.mjs)`);
+    if (!slides[0] || slides[0].layout !== 'cover') bad(p, 'a reel needs exactly one slide with layout "cover"');
+  } else if (slides.some((s) => s.layout === 'cover')) bad(p, 'layout "cover" is only for reels');
+  slides.filter((s) => s.layout === 'cover').forEach((s) => { if (!s.img || !fs.existsSync(path.join(ROOT, s.img))) bad(p, `cover image "${s.img}" not found`); });
 
   const caption = [p.caption, (p.hashtags || []).join(' ')].filter(Boolean).join('\n\n');
   if (!p.caption) bad(p, 'caption is empty');
@@ -57,7 +63,7 @@ cal.posts.forEach((p, i) => {
   (p.hashtags || []).forEach((h) => { if (!/^#[\p{L}\p{N}_]+$/u.test(h)) bad(p, `bad hashtag "${h}"`); });
 
   // Only what people will read (not dish ids like "garlic-prawn-skewers", which are folder names).
-  const allText = JSON.stringify([p.caption, p.hashtags, p.alt, slides.map(({ dish, dishes, crop, crops, layout, bg, size, ...text }) => text)]);
+  const allText = JSON.stringify([p.caption, p.hashtags, p.alt, slides.map(({ dish, dishes, crop, crops, layout, bg, size, img, ...text }) => text)]);
   if (/gaucho/i.test(allText) && !p.brandOk) bad(p, 'names Gauchos — only with Abdullah\'s OK (then set "brandOk": true)');
   if (EMOJI.test(allText)) bad(p, 'no emoji (brand rule)');
   if (/\{\{[A-Z_]+\}\}|\[(fill in|restaurant|pilot restaurant|name)[^\]]*\]/i.test(allText)) bad(p, 'has an unfilled placeholder like {{RESTAURANT}} or [pilot restaurant]');

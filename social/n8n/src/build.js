@@ -25,6 +25,17 @@ const weekAgo = DateTime.now().setZone('Asia/Karachi').minus({ days: 7 }).toISOD
 for (const k of Object.keys(state.attempts)) if ((k.split('@')[1] || '') < weekAgo) delete state.attempts[k];
 writeState(state);
 
+// A Reel: copy its video next to the images so Instagram can fetch it; the one "cover" slide is
+// rendered like any slide and becomes the Reel's cover.
+let video = null;
+if (p.format === 'reel') {
+  const src = '/repo/' + p.video;
+  if (!fs.existsSync(src)) throw new Error('Reel video missing on the server: ' + p.video + ' (run update.sh after adding it to the repo)');
+  const vfile = `${String(p.n).padStart(3, '0')}-${p.id}-${stamp}.mp4`;
+  fs.copyFileSync(src, '/files/media/' + vfile);
+  video = { videoPath: '/files/media/' + vfile, videoUrl: pub + '/media/' + vfile };
+}
+
 return p.slides.map((slide, i) => {
   const file = `${String(p.n).padStart(3, '0')}-${p.id}-${i + 1}-${stamp}.jpg`;
   return {
@@ -33,6 +44,7 @@ return p.slides.map((slide, i) => {
       renderUrl: base + '/social/templates/post.html?d=' + Buffer.from(JSON.stringify(slide), 'utf8').toString('base64url'),
       filePath: '/files/media/' + file,
       imageUrl: pub + '/media/' + file,
+      ...(i === 0 && video ? video : {}),
     },
   };
 });

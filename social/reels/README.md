@@ -27,3 +27,11 @@ Ten 1080×1920 Reels, 11–14 s, made from the brand design and the real dish re
 **Posting:** Instagram doesn't allow the API to add music, so post these by hand from the phone. Pick the cover from the `-cover.jpg` or choose a frame in the app.
 
 **Change or add a reel:** edit the scenes in `reels.js`, then run `node social/reels/make.mjs` (needs `npm install`, `node social/print/print.mjs` once for the dish crops, and an ffmpeg with H.264: `pip install imageio-ffmpeg`, or set `FFMPEG=`).
+
+## Automatic posting (Mondays)
+All 17 Reels are scheduled in `content/series-reels.json` and post themselves on Mondays (the Ramadan one at 4:30 pm). The server uploads the MP4 as an Instagram Reel, with the cover frame as its grid thumbnail, shared to the feed. To change the order or dates, edit that file and run `check-calendar.mjs` on it.
+
+## Sound
+Instagram's API can't attach sounds from Instagram's music library, so there are two choices:
+- **Built-in music:** put a track you have the rights to (e.g. Pixabay Music, or YouTube Audio Library tracks that allow commercial use) in `social/reels/audio/` as `default.mp3` (all Reels) or `<reel-name>.mp3` (one Reel). Then re-run `node social/reels/make.mjs`. It fades the track in and out and cuts it to the Reel's length.
+- **Trending sound:** set `REELS_MODE=notify` in the server's `.env`. On Mondays your phone gets the video and caption, and you post it in the app with the sound (about 1 minute).

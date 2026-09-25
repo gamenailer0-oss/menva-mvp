@@ -13,8 +13,14 @@ fi
 
 echo "▸ Loading the workflows into n8n"
 $DOCKER compose exec -T n8n n8n import:workflow --input=/repo/social/n8n/workflow.json
-$DOCKER compose exec -T n8n n8n publish:workflow --id=MenvaAlerts00001
-$DOCKER compose exec -T n8n n8n publish:workflow --id=MenvaAutopost001
+# (n8n's database can be briefly busy right after an import, so each publish is retried)
+for id in MenvaAlerts00001 MenvaAutopost001 MenvaTrends00001; do
+  for try in 1 2 3 4 5; do
+    $DOCKER compose exec -T n8n n8n publish:workflow --id=$id </dev/null && break
+    [ "$try" = 5 ] && { echo "Could not publish workflow $id. Run ./update.sh --no-pull again."; exit 1; }
+    sleep 5
+  done
+done
 
 # Don't restart in the middle of a publish (the lock in files/state.json lasts at most 30 minutes).
 for _ in $(seq 1 60); do

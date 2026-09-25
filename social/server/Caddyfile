@@ -27,7 +27,7 @@
 		root * /srv/media
 		file_server
 	}
-	@public path /social/templates/* /social/content/calendar.json /assets/dishes/*/poster.webp /vendor/fonts/*
+	@public path /social/templates/* /social/content/calendar.json /assets/dishes/*/poster.webp /social/reels/out/*.jpg /vendor/fonts/*
 	handle @public {
 		header Cache-Control "no-store"
 		file_server

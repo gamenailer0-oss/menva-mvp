@@ -27,6 +27,25 @@ if (!manual && last && today > dateOf(last) && !state.endedAlerted) {
 
 let post = cal.posts.find((p) => dateOf(p) === today);
 let test = false;
+
+// Trend posts (from the trend watcher) go out when their veto window has passed, on top of the
+// day's calendar post. One at a time: the calendar post waits its turn behind the lock.
+const trend = (state.trendQueue || []).find((t) => !t.stopped && !t.posted && (t.approved || DateTime.fromISO(t.due) <= now)
+  && !(state.posted && state.posted[t.post.id]));
+if (trend && !manual) {
+  const tp = trend.post;
+  const lockT = state.lock;
+  if (lockT && DateTime.fromISO(lockT.at).plus({ minutes: 30 }) > now) return [];
+  const att = ((state.attempts || {})[tp.id + '@' + today]) || 0;
+  if (att < MAX_ATTEMPTS) {
+    return [{ json: {
+      n: 0, id: tp.id, date: today, format: 'single', video: null, trend: true,
+      caption: [tp.caption, (tp.hashtags || []).join(' ')].filter(Boolean).join('\n\n'), alt: tp.alt || '',
+      slides: tp.slides.map((s) => Object.assign({ handle: $env.MENVA_IG_HANDLE || '' }, s)),
+      live: !dryRun(), test: false, manual: false, attempt: att + 1,
+    } }];
+  }
+}
 if (manual && !post) {
   post = cal.posts.find((p) => dateOf(p) > today);
   test = true;
@@ -65,7 +84,7 @@ if (!manual) {
 
 return [{
   json: {
-    n: post.n, id: post.id, date: dateOf(post), format: post.format,
+    n: post.n, id: post.id, date: dateOf(post), format: post.format, video: post.video || null,
     caption: [post.caption, (post.hashtags || []).join(' ')].filter(Boolean).join('\n\n'),
     alt: post.alt || '',
     slides: post.slides.map((s) => Object.assign({ handle: $env.MENVA_IG_HANDLE || '' }, s)),

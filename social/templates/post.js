@@ -160,6 +160,9 @@
       <ul>${(d.items || []).map((it) => `<li>${rich(it).replace(/~~(.+?)~~/g, '<s>$1</s>')}</li>`).join('')}</ul></div>
       ${bodyHtml(d)}${foot(d)}`,
 
+    // cover: a Reel's cover frame, full bleed (img = social/reels/out/<name>-cover.jpg). Reels only.
+    cover: (d) => /^social\/reels\/out\/[\w-]+\.jpg$/.test(d.img || '') ? `<img class="cover-img" src="../../${esc(d.img)}" alt="">` : (fail('cover needs img = social/reels/out/<name>-cover.jpg'), ''),
+
     // shout: huge, heavy, stacked sans. For punchlines only.
     shout: (d) => `${top(d)}<h1 class="shout">${rich(d.h)}</h1>${bodyHtml(d)}${foot(d)}`,
 

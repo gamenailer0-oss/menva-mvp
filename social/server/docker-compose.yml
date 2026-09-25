@@ -39,11 +39,19 @@ services:
       - MENVA_POST_TIME=${POST_TIME}
       - MENVA_DRY_RUN=${DRY_RUN}
       - MENVA_STORIES=${STORIES:-true}
+      - MENVA_REELS_MODE=${REELS_MODE:-auto}
       - MENVA_IG_HANDLE=${IG_HANDLE}
       - IG_ACCESS_TOKEN=${IG_ACCESS_TOKEN}
       - IG_USER_ID=${IG_USER_ID}
       - IG_GRAPH_URL=${IG_GRAPH_URL:-https://graph.instagram.com}
       - NTFY_TOPIC=${NTFY_TOPIC}
+      # Trend watch (see SETUP.md step 10)
+      - MENVA_TRENDS=${TRENDS:-false}
+      - TREND_FEEDS=${TREND_FEEDS:-}
+      - TREND_MAX_PER_WEEK=${TREND_MAX_PER_WEEK:-2}
+      - TREND_DELAY_MINUTES=${TREND_DELAY_MINUTES:-90}
+      - ANTHROPIC_API_KEY=${ANTHROPIC_API_KEY:-}
+      - ANTHROPIC_BASE_URL=${ANTHROPIC_BASE_URL:-}
     volumes:
       - n8n_data:/home/node/.n8n
       - ./files:/files

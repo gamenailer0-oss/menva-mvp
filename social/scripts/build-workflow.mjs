@@ -31,7 +31,7 @@ const main = {
     {
       id: 'b0c1a001-0000-4000-8000-000000000003', name: "Pick today's post", type: 'n8n-nodes-base.code', typeVersion: 2, position: [240, 100],
       parameters: { jsCode: code('pick.js') },
-      notes: 'Reads social/content/calendar.json. Posts after POST_TIME on calendar days; does nothing on rest days.',
+      notes: 'Reads the calendar and series files (incl. Monday Reels) and queued trend posts. Posts after POST_TIME on calendar days; does nothing on rest days.',
     },
     {
       id: 'b0c1a001-0000-4000-8000-000000000004', name: 'Build render requests', type: 'n8n-nodes-base.code', typeVersion: 2, position: [480, 100],
@@ -126,6 +126,33 @@ const main = {
   pinData: {},
 };
 
+const TREND_ID = 'MenvaTrends00001';
+const trends = {
+  id: TREND_ID,
+  name: 'MENVA – trend watch',
+  active: false,
+  settings: { executionOrder: 'v1', timezone: 'Asia/Karachi', errorWorkflow: ALERT_ID, saveManualExecutions: true },
+  nodes: [
+    { id: 'b0c1a003-0000-4000-8000-000000000001', name: 'Every 3 hours', type: 'n8n-nodes-base.scheduleTrigger', typeVersion: 1.2, position: [0, 0],
+      parameters: { rule: { interval: [{ field: 'hours', hoursInterval: 3 }] } } },
+    { id: 'b0c1a003-0000-4000-8000-000000000002', name: 'Check now (test)', type: 'n8n-nodes-base.manualTrigger', typeVersion: 1, position: [0, 200], parameters: {} },
+    { id: 'b0c1a003-0000-4000-8000-000000000003', name: 'Find trend, write post', type: 'n8n-nodes-base.code', typeVersion: 2, position: [240, 100],
+      parameters: { jsCode: code('trends.js') },
+      notes: 'TRENDS=true in .env switches this on. Queues at most TREND_MAX_PER_WEEK posts; each waits TREND_DELAY_MINUTES for a Stop tap.' },
+    { id: 'b0c1a003-0000-4000-8000-000000000004', name: 'Stop / Post now link', type: 'n8n-nodes-base.webhook', typeVersion: 2, position: [0, 400],
+      webhookId: '6b1e2f0a-7c3d-4e5f-8a9b-0c1d2e3f4a5b',
+      parameters: { httpMethod: 'GET', path: 'menva-trend', responseMode: 'lastNode', options: {} } },
+    { id: 'b0c1a003-0000-4000-8000-000000000005', name: 'Stop or approve', type: 'n8n-nodes-base.code', typeVersion: 2, position: [240, 400],
+      parameters: { jsCode: code('trend-control.js') } },
+  ],
+  connections: {
+    'Every 3 hours': { main: [[{ node: 'Find trend, write post', type: 'main', index: 0 }]] },
+    'Check now (test)': { main: [[{ node: 'Find trend, write post', type: 'main', index: 0 }]] },
+    'Stop / Post now link': { main: [[{ node: 'Stop or approve', type: 'main', index: 0 }]] },
+  },
+  pinData: {},
+};
+
 const alerts = {
   id: ALERT_ID,
   name: 'MENVA – alert on failure',
@@ -139,5 +166,5 @@ const alerts = {
   pinData: {},
 };
 
-fs.writeFileSync(path.join(DIR, 'workflow.json'), JSON.stringify([main, alerts], null, 2) + '\n');
-console.log('Wrote social/n8n/workflow.json (2 workflows)');
+fs.writeFileSync(path.join(DIR, 'workflow.json'), JSON.stringify([main, alerts, trends], null, 2) + '\n');
+console.log('Wrote social/n8n/workflow.json (3 workflows)');

@@ -41,8 +41,13 @@ for (const name of all.filter((n) => !only.length || only.includes(n))) {
   const len = await page.evaluate(() => window.REEL.length);
   const frames = Math.round(len * FPS);
   const file = path.join(OUT, name + '.mp4');
-  const ff = spawn(ffmpeg, ['-y', '-loglevel', 'error', '-f', 'image2pipe', '-framerate', String(FPS), '-c:v', 'mjpeg', '-i', '-',
-    '-c:v', 'libx264', '-pix_fmt', 'yuv420p', '-crf', '20', '-preset', 'medium', '-movflags', '+faststart', file], { stdio: ['pipe', 'inherit', 'inherit'] });
+  // Music: social/reels/audio/<reel>.mp3 (or audio/default.mp3) is mixed in, faded at both ends and cut
+  // to the reel's length. Only use tracks you have the rights to (see reels/README.md, "Sound").
+  const track = [path.join(OUT, '../audio', name + '.mp3'), path.join(OUT, '../audio', 'default.mp3')].find((f) => fs.existsSync(f));
+  const audioIn = track ? ['-i', track] : [];
+  const audioOut = track ? ['-map', '0:v', '-map', '1:a', '-c:a', 'aac', '-b:a', '160k', '-af', `afade=t=in:d=0.4,afade=t=out:st=${Math.max(0, len - 0.8)}:d=0.8`, '-shortest'] : [];
+  const ff = spawn(ffmpeg, ['-y', '-loglevel', 'error', '-f', 'image2pipe', '-framerate', String(FPS), '-c:v', 'mjpeg', '-i', '-', ...audioIn,
+    ...audioOut, '-c:v', 'libx264', '-pix_fmt', 'yuv420p', '-crf', '20', '-preset', 'medium', '-movflags', '+faststart', file], { stdio: ['pipe', 'inherit', 'inherit'] });
   for (let i = 0; i < frames; i++) {
     await page.evaluate((t) => window.render(t), i / FPS);
     const jpg = await page.screenshot({ type: 'jpeg', quality: 92 });

@@ -160,6 +160,24 @@ Save, then run `sudo docker compose up -d`. You're done. From the start date on,
 
 ---
 
+## Step 10: Reels and trend posts (5 min, optional but recommended)
+
+**Reels** post by themselves on Mondays (17 of them, from `content/series-reels.json`). Nothing to switch on. Two choices in `.env`:
+- `REELS_MODE=auto` (default): the server posts the Reel. It's silent, unless you put a music file in `social/reels/audio/` (see `social/reels/README.md`, "Sound").
+- `REELS_MODE=notify`: at posting time your phone gets the video and caption instead, so you can post it by hand with a trending Instagram sound. Instagram doesn't let any app attach its library sounds automatically, so this is the only way to use trending audio.
+
+**Trend posts.** Every 3 hours the server checks Google Trends for Pakistan and Google News for new food trends. If one fits MENVA, it writes a post, checks it against the content rules and queues it. Your phone then gets an alert with two buttons:
+- **Stop it**: the post never goes out.
+- **Post now**: it goes out within 15 minutes.
+
+If you do nothing, it goes out after 90 minutes, but only between 12:30 and 22:30. It never posts about news, politics, religion, accidents, people or brands, it never posts during the quiet dates in `content/trend-blackout.json`, and it posts at most 2 a week.
+
+1. On the server: `nano .env`
+2. Set `TRENDS=true`. Phone alerts (step 7) must be set up, because they're your Stop button.
+3. Optional, for good trend posts: create an API key at console.anthropic.com (add a card; each trend post costs a few US cents) and paste it after `ANTHROPIC_API_KEY=`. Without a key it only makes simple posts for plain food words like "kunafa" or "mango".
+4. Save, then run `sudo docker compose up -d && ./update.sh --no-pull`.
+5. Test it: in n8n open **MENVA – trend watch** and click **Test workflow**. It says either `newFoodTrends: 0` (nothing new right now) or `queued`.
+
 ## Everyday use
 
 | You want to… | Do this |
@@ -169,6 +187,8 @@ Save, then run `sudo docker compose up -d`. You're done. From the start date on,
 | Change a post's text | Edit `social/content/calendar.json` on GitHub (branch `social-automation`) and commit. Then on the server: `cd ~/menva-mvp/social/server && ./update.sh` |
 | See what was posted | `cat ~/menva-mvp/social/server/files/log/posts.csv`, or the **Executions** tab in n8n |
 | Post one right now | You can't post early: a test run of a future post is always a dry run. That's on purpose, so the calendar can't get out of order. |
+| Stop a trend post | Tap **Stop it** on the alert. Or, in `.env`, set `TRENDS=false` to switch trend posts off. |
+| Post Reels by hand with trending sounds | In `.env`, set `REELS_MODE=notify`, then `sudo docker compose up -d` |
 | Renew an expired token | Repeat step 6 (generate a token, paste it into `.env`, `sudo docker compose up -d`). |
 
 Reconnecting later: `ssh -i ~/Downloads/<your key file> ubuntu@<your IP>`, then `cd menva-mvp/social/server`.
@@ -186,7 +206,7 @@ Reconnecting later: `ssh -i ~/Downloads/<your key file> ubuntu@<your IP>`, then 
 
 ## What's running (for the curious)
 
-- **n8n** (`social/n8n/workflow.json`): checks every 15 minutes. At or after 8:30 pm on a posting day, it takes that day's post from `social/content/calendar.json`, asks Gotenberg to draw each slide, saves the JPEGs, and publishes them through Instagram's official API. It remembers what was posted, so nothing goes out twice.
+- **n8n** (`social/n8n/workflow.json`): checks every 15 minutes. At or after 8:30 pm on a posting day, it takes that day's post from the calendar files (and the Wednesday sitcom and Monday Reels series, plus any approved trend post), asks Gotenberg to draw each slide, saves the JPEGs, and publishes them through Instagram's official API. It remembers what was posted, so nothing goes out twice.
 - **Gotenberg**: a hidden Chrome that turns the post template (`social/templates/post.html`) into JPEG images, 1080×1350.
 - **Caddy**: gives the n8n page its HTTPS padlock and serves the finished images to Instagram.
 - All three are free, open-source, pinned to fixed versions, and run with Docker on your own server.

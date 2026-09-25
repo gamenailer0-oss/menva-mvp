@@ -1,0 +1,467 @@
+{
+  "version": 1,
+  "about": "Series file: the 17 motion Reels, posted automatically as Instagram Reels on Mondays (a rest day for the main calendar). Days count from START_DATE across the whole 300 days. Videos are silent unless a track was mixed in with make.mjs --audio; to use a trending Instagram sound, add it in the app after posting (the API can't attach library sounds).",
+  "defaultStart": "2026-10-05",
+  "handle": "@eatmenva",
+  "posts": [
+    {
+      "n": 1,
+      "day": 8,
+      "date": "2026-10-12",
+      "weekday": "Mon",
+      "id": "reel-pehle-dekho",
+      "pillar": "see-it-first",
+      "audience": "diners",
+      "format": "reel",
+      "video": "social/reels/out/pehle-dekho.mp4",
+      "caption": "Menu pe likha hai \"large\". Kitna large? Kisi ko nahi pata.\n\nPehle dekho, phir order. See the real dish on your table at true size before you order it. No app.\n\nSend this to the friend who always asks the waiter \"yeh kitna bara hota hai?\"",
+      "hashtags": [
+        "#menva",
+        "#lahorefood",
+        "#lahorefoodies",
+        "#3dmenu",
+        "#eatmenva"
+      ],
+      "alt": "MENVA Reel: pehle dekho.",
+      "slides": [
+        {
+          "layout": "cover",
+          "img": "social/reels/out/pehle-dekho-cover.jpg",
+          "h": "pehle dekho"
+        }
+      ]
+    },
+    {
+      "n": 2,
+      "day": 15,
+      "date": "2026-10-19",
+      "weekday": "Mon",
+      "id": "reel-menu-photos-lie",
+      "pillar": "see-it-first",
+      "audience": "diners",
+      "format": "reel",
+      "video": "social/reels/out/menu-photos-lie.mp4",
+      "caption": "Menu photos lie. Scans don't.\n\nEvery dish on MENVA is a 3D scan of a real plate: no stock photos, no AI food, ever. Asli plate, asli size.\n\nSave this for the next time a menu photo lets you down.",
+      "hashtags": [
+        "#menva",
+        "#lahorefood",
+        "#realfood",
+        "#lahorefoodies",
+        "#eatmenva"
+      ],
+      "alt": "MENVA Reel: menu photos lie.",
+      "slides": [
+        {
+          "layout": "cover",
+          "img": "social/reels/out/menu-photos-lie-cover.jpg",
+          "h": "menu photos lie"
+        }
+      ]
+    },
+    {
+      "n": 3,
+      "day": 22,
+      "date": "2026-10-26",
+      "weekday": "Mon",
+      "id": "reel-khana-kahan-ep1",
+      "pillar": "see-it-first",
+      "audience": "diners",
+      "format": "reel",
+      "video": "social/reels/out/khana-kahan-ep1.mp4",
+      "caption": "Six people, one group chat, zero decisions. Friday 7:52 pm, and at 9:40 pm we're still in the car park.\n\nKhana kahan? New episode every week. Tag your Hamza.",
+      "hashtags": [
+        "#menva",
+        "#lahorefood",
+        "#lahorefoodies",
+        "#khanakahan",
+        "#eatmenva"
+      ],
+      "alt": "MENVA Reel: khana kahan ep1.",
+      "slides": [
+        {
+          "layout": "cover",
+          "img": "social/reels/out/khana-kahan-ep1-cover.jpg",
+          "h": "khana kahan ep1"
+        }
+      ]
+    },
+    {
+      "n": 4,
+      "day": 29,
+      "date": "2026-11-02",
+      "weekday": "Mon",
+      "id": "reel-sight-test",
+      "pillar": "see-it-first",
+      "audience": "diners",
+      "format": "reel",
+      "video": "social/reels/out/sight-test.mp4",
+      "caption": "The sight test. Read the menu line, guess the size, then see the real plate.\n\nPehle andaza lagao, phir dekho. How close were you? Comment \"close\" or \"way off\".",
+      "hashtags": [
+        "#menva",
+        "#lahorefood",
+        "#sighttest",
+        "#lahoreeats",
+        "#eatmenva"
+      ],
+      "alt": "MENVA Reel: sight test.",
+      "slides": [
+        {
+          "layout": "cover",
+          "img": "social/reels/out/sight-test-cover.jpg",
+          "h": "sight test"
+        }
+      ]
+    },
+    {
+      "n": 5,
+      "day": 36,
+      "date": "2026-11-09",
+      "weekday": "Mon",
+      "id": "reel-no-app",
+      "pillar": "see-it-first",
+      "audience": "diners",
+      "format": "reel",
+      "video": "social/reels/out/no-app.mp4",
+      "caption": "No app. No download. Point your camera at the table QR and the menu opens in your browser: Safari on iPhone, Chrome on Android.\n\nKoi app nahi. Scan karo, dekho.",
+      "hashtags": [
+        "#menva",
+        "#lahorefood",
+        "#3dmenu",
+        "#lahorefoodies",
+        "#eatmenva"
+      ],
+      "alt": "MENVA Reel: no app.",
+      "slides": [
+        {
+          "layout": "cover",
+          "img": "social/reels/out/no-app-cover.jpg",
+          "h": "no app"
+        }
+      ]
+    },
+    {
+      "n": 6,
+      "day": 43,
+      "date": "2026-11-16",
+      "weekday": "Mon",
+      "id": "reel-every-side",
+      "pillar": "see-it-first",
+      "audience": "diners",
+      "format": "reel",
+      "video": "social/reels/out/every-side.mp4",
+      "caption": "Every side, every dish: the steak board, the chicken pizza and the steak sandwich turning 360°, from their real scans.\n\nReal scans, not photos. Turn it before you order it.",
+      "hashtags": [
+        "#menva",
+        "#lahorefood",
+        "#lahorefoodies",
+        "#eatmenva"
+      ],
+      "alt": "MENVA Reel: every side.",
+      "slides": [
+        {
+          "layout": "cover",
+          "img": "social/reels/out/every-side-cover.jpg",
+          "h": "every side"
+        }
+      ]
+    },
+    {
+      "n": 7,
+      "day": 50,
+      "date": "2026-11-23",
+      "weekday": "Mon",
+      "id": "reel-portion-police",
+      "pillar": "see-it-first",
+      "audience": "diners",
+      "format": "reel",
+      "video": "social/reels/out/portion-police.mp4",
+      "caption": "\"Generous\" according to whom? Anum placed it on the table to check. Sharing hai ya single?",
+      "hashtags": [
+        "#menva",
+        "#lahorefood",
+        "#lahorefoodies",
+        "#khanakahan",
+        "#eatmenva"
+      ],
+      "alt": "MENVA Reel: portion police.",
+      "slides": [
+        {
+          "layout": "cover",
+          "img": "social/reels/out/portion-police-cover.jpg",
+          "h": "portion police"
+        }
+      ]
+    },
+    {
+      "n": 8,
+      "day": 57,
+      "date": "2026-11-30",
+      "weekday": "Mon",
+      "id": "reel-the-over-orderer",
+      "pillar": "see-it-first",
+      "audience": "diners",
+      "format": "reel",
+      "video": "social/reels/out/the-over-orderer.mp4",
+      "caption": "Types of people at dinner: the over-orderer. \"Yeh bhi le lo, woh bhi le lo, bach gaya toh pack karwa lenge.\" It never gets packed.\n\nTag them. Next time, see the portion first.",
+      "hashtags": [
+        "#menva",
+        "#lahorefood",
+        "#lahoreeats",
+        "#foodiesoflahore",
+        "#eatmenva"
+      ],
+      "alt": "MENVA Reel: the over orderer.",
+      "slides": [
+        {
+          "layout": "cover",
+          "img": "social/reels/out/the-over-orderer-cover.jpg",
+          "h": "the over orderer"
+        }
+      ]
+    },
+    {
+      "n": 9,
+      "day": 64,
+      "date": "2026-12-07",
+      "weekday": "Mon",
+      "id": "reel-true-size",
+      "pillar": "see-it-first",
+      "audience": "diners",
+      "format": "reel",
+      "video": "social/reels/out/true-size.mp4",
+      "caption": "Pinch to make it bigger? Not here. In AR the dish sits at its true size, so what you see is the portion you get.\n\nJitna dikhe, utna hi aaye.",
+      "hashtags": [
+        "#menva",
+        "#lahorefood",
+        "#arfood",
+        "#lahoreeats",
+        "#eatmenva"
+      ],
+      "alt": "MENVA Reel: true size.",
+      "slides": [
+        {
+          "layout": "cover",
+          "img": "social/reels/out/true-size-cover.jpg",
+          "h": "true size"
+        }
+      ]
+    },
+    {
+      "n": 10,
+      "day": 71,
+      "date": "2026-12-14",
+      "weekday": "Mon",
+      "id": "reel-pizza-turn",
+      "pillar": "see-it-first",
+      "audience": "diners",
+      "format": "reel",
+      "video": "social/reels/out/pizza-turn.mp4",
+      "caption": "Pizza photos lie about the crust. So we scanned the whole thing.\n\nPehle dekho, phir order.",
+      "hashtags": [
+        "#menva",
+        "#lahorefood",
+        "#pizzalahore",
+        "#eatmenva"
+      ],
+      "alt": "MENVA Reel: pizza turn.",
+      "slides": [
+        {
+          "layout": "cover",
+          "img": "social/reels/out/pizza-turn-cover.jpg",
+          "h": "pizza turn"
+        }
+      ]
+    },
+    {
+      "n": 11,
+      "day": 78,
+      "date": "2026-12-21",
+      "weekday": "Mon",
+      "id": "reel-kal-se-diet",
+      "pillar": "see-it-first",
+      "audience": "diners",
+      "format": "reel",
+      "video": "social/reels/out/kal-se-diet.mp4",
+      "caption": "Hamza, Monday: kal se diet. Hamza, Friday: this. At least he saw it first.",
+      "hashtags": [
+        "#menva",
+        "#lahorefood",
+        "#lahorefoodies",
+        "#khanakahan",
+        "#eatmenva"
+      ],
+      "alt": "MENVA Reel: kal se diet.",
+      "slides": [
+        {
+          "layout": "cover",
+          "img": "social/reels/out/kal-se-diet-cover.jpg",
+          "h": "kal se diet"
+        }
+      ]
+    },
+    {
+      "n": 12,
+      "day": 85,
+      "date": "2026-12-28",
+      "weekday": "Mon",
+      "id": "reel-dish-drop-1",
+      "pillar": "see-it-first",
+      "audience": "diners",
+      "format": "reel",
+      "video": "social/reels/out/dish-drop-1.mp4",
+      "caption": "Dish drop, week 1: the steak board. Every angle, true size.\n\nShare it, or keep it? Comment A (share) or B (mine).",
+      "hashtags": [
+        "#menva",
+        "#lahorefood",
+        "#dishdrop",
+        "#steak",
+        "#eatmenva"
+      ],
+      "alt": "MENVA Reel: dish drop 1.",
+      "slides": [
+        {
+          "layout": "cover",
+          "img": "social/reels/out/dish-drop-1-cover.jpg",
+          "h": "dish drop 1"
+        }
+      ]
+    },
+    {
+      "n": 13,
+      "day": 92,
+      "date": "2027-01-04",
+      "weekday": "Mon",
+      "id": "reel-mama-joined",
+      "pillar": "see-it-first",
+      "audience": "diners",
+      "format": "reel",
+      "video": "social/reels/out/mama-joined.mp4",
+      "caption": "Mama has joined the chat. \"Itna bara? Photo mein chota tha.\" Asli size dekho, mama.\n\nTag the friend whose mom would send this.",
+      "hashtags": [
+        "#menva",
+        "#lahorefood",
+        "#lahorefoodies",
+        "#khanakahan",
+        "#eatmenva"
+      ],
+      "alt": "MENVA Reel: mama joined.",
+      "slides": [
+        {
+          "layout": "cover",
+          "img": "social/reels/out/mama-joined-cover.jpg",
+          "h": "mama joined"
+        }
+      ]
+    },
+    {
+      "n": 14,
+      "day": 99,
+      "date": "2027-01-11",
+      "weekday": "Mon",
+      "id": "reel-green-plate-turn",
+      "pillar": "see-it-first",
+      "audience": "diners",
+      "format": "reel",
+      "video": "social/reels/out/green-plate-turn.mp4",
+      "caption": "What's under the garnish? Turn it and see. The green plate, no secrets.",
+      "hashtags": [
+        "#menva",
+        "#lahorefood",
+        "#lahorefoodies",
+        "#eatmenva"
+      ],
+      "alt": "MENVA Reel: green plate turn.",
+      "slides": [
+        {
+          "layout": "cover",
+          "img": "social/reels/out/green-plate-turn-cover.jpg",
+          "h": "green plate turn"
+        }
+      ]
+    },
+    {
+      "n": 15,
+      "day": 106,
+      "date": "2027-01-18",
+      "weekday": "Mon",
+      "id": "reel-for-restaurants",
+      "pillar": "for-restaurants",
+      "audience": "restaurants",
+      "format": "reel",
+      "video": "social/reels/out/for-restaurants.mp4",
+      "caption": "Restaurant owners: your staff answers \"what does it look like?\" all night. Let the menu answer it at the table.\n\nReal 3D dishes on your tables, straight from the table QR. No app for guests, and your waiters stay in charge.\n\nLahore pilot: PKR 25,000. DM \"PILOT\".",
+      "hashtags": [
+        "#menva",
+        "#lahorerestaurants",
+        "#restaurantmarketing",
+        "#hospitalitypk",
+        "#eatmenva"
+      ],
+      "alt": "MENVA Reel: for restaurants.",
+      "slides": [
+        {
+          "layout": "cover",
+          "img": "social/reels/out/for-restaurants-cover.jpg",
+          "h": "for restaurants"
+        }
+      ]
+    },
+    {
+      "n": 16,
+      "day": 127,
+      "date": "2027-02-08",
+      "weekday": "Mon",
+      "id": "reel-order-before-the-toss",
+      "pillar": "see-it-first",
+      "audience": "diners",
+      "format": "reel",
+      "video": "social/reels/out/order-before-the-toss.mp4",
+      "caption": "Match night: everyone watches the screen and nobody reads the menu. Order before the toss, and see it first so there are no surprises at the break.\n\nToss se pehle order. Baqi sab match ke baad.",
+      "hashtags": [
+        "#menva",
+        "#lahorefood",
+        "#psl",
+        "#lahoreeats",
+        "#eatmenva"
+      ],
+      "alt": "MENVA Reel: order before the toss.",
+      "slides": [
+        {
+          "layout": "cover",
+          "img": "social/reels/out/order-before-the-toss-cover.jpg",
+          "h": "order before the toss"
+        }
+      ],
+      "note": "PSL season: check the fixture dates and move to a match day if needed."
+    },
+    {
+      "n": 17,
+      "day": 134,
+      "date": "2027-02-15",
+      "weekday": "Mon",
+      "id": "reel-iftar-table",
+      "pillar": "see-it-first",
+      "audience": "diners",
+      "format": "reel",
+      "video": "social/reels/out/iftar-table.mp4",
+      "caption": "The iftar table fills up fast. Decide before you sit down: see the dishes at true size, then show the waiter one list.\n\nAik list, sab ka khayal. Ramadan Mubarak, Lahore.",
+      "hashtags": [
+        "#menva",
+        "#lahorefood",
+        "#ramadan",
+        "#iftar",
+        "#eatmenva"
+      ],
+      "alt": "MENVA Reel: iftar table.",
+      "slides": [
+        {
+          "layout": "cover",
+          "img": "social/reels/out/iftar-table-cover.jpg",
+          "h": "iftar table"
+        }
+      ],
+      "time": "16:30",
+      "note": "Ramadan (expected to begin around 9 Feb 2027, subject to moon sighting)."
+    }
+  ]
+}

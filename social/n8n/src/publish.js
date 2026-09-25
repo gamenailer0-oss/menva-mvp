@@ -16,6 +16,20 @@ if (!p.live) {
   return [{ json: { dryRun: true, n: p.n, id: p.id, images, caption: p.caption } }];
 }
 
+// REELS_MODE=notify: don't post Reels automatically; send the video and caption to the phone at posting
+// time so they can go out by hand with a trending Instagram sound (the API can't attach library sounds).
+if (p.format === 'reel' && /^notify$/i.test(String($env.MENVA_REELS_MODE || 'auto').trim())) {
+  const v = $('Build render requests').first().json.videoUrl;
+  state.posted = state.posted || {};
+  state.posted[p.id] = { at: DateTime.now().toISO(), manual: true, video: v, n: p.n };
+  delete state.lock;
+  writeState(state);
+  logLine([p.n, p.id, 'reel-sent-to-phone', v]);
+  await notify(helpers, `MENVA: Reel ready to post (${p.id.replace(/^reel-/, '')})`,
+    `Open the link, save the video, post it as a Reel with a trending sound, and paste this caption:\n\n${p.caption}`, v);
+  return [{ json: { manualReel: true, video: v, caption: p.caption } }];
+}
+
 const G = ($env.IG_GRAPH_URL || 'https://graph.instagram.com').replace(/\/$/, '');
 const sleep = (ms) => new Promise((r) => setTimeout(r, ms));
 
@@ -71,19 +85,25 @@ if (already) {
 
 // Keep the publishing lock fresh while waiting, so a slow carousel never outlives it.
 function touchLock() { const st = readState(); st.lock = { id: p.id, at: DateTime.now().toISO() }; writeState(st); state.lock = st.lock; }
-async function waitReady(id) {
-  for (let i = 0; i < 20; i++) {
+async function waitReady(id, tries = 20, delay = 5000) {
+  for (let i = 0; i < tries; i++) {
     if (i % 4 === 0) touchLock();
     const s = await graph('GET', `/${id}`, { fields: 'status_code,status' });
     if (s.status_code === 'FINISHED') return;
-    if (s.status_code === 'ERROR' || s.status_code === 'EXPIRED') throw new Error(`Instagram could not process the image (${s.status_code}: ${s.status || ''}). Check that ${images[0]} opens in a browser.`);
-    await sleep(5000);
+    if (s.status_code === 'ERROR' || s.status_code === 'EXPIRED') throw new Error(`Instagram could not process the ${p.format === 'reel' ? 'video' : 'image'} (${s.status_code}: ${s.status || ''}). Check that ${p.format === 'reel' ? videoUrl : images[0]} opens in a browser.`);
+    await sleep(delay);
   }
-  throw new Error('Instagram took too long to process the image; it will be retried in 15 minutes.');
+  throw new Error('Instagram took too long to process the ' + (p.format === 'reel' ? 'video' : 'image') + '; it will be retried in 15 minutes.');
 }
 
 let creationId;
-if (images.length === 1) {
+const videoUrl = p.format === 'reel' ? $('Build render requests').first().json.videoUrl : null;
+if (p.format === 'reel') {
+  // Reels: Instagram downloads and transcodes the video, which can take a few minutes.
+  const c = await graph('POST', `/${userId}/media`, { media_type: 'REELS', video_url: videoUrl, cover_url: images[0], caption: p.caption, share_to_feed: 'true' });
+  creationId = c.id;
+  await waitReady(creationId, 60, 10000);
+} else if (images.length === 1) {
   const params = { image_url: images[0], caption: p.caption };
   let c;
   try {
@@ -113,5 +133,5 @@ state.posted[p.id] = { at: DateTime.now().toISO(), mediaId: published.id, permal
 delete state.lock;
 writeState(state);
 logLine([p.n, p.id, 'posted', permalink || published.id]);
-await notify(helpers, `MENVA posted #${p.n}`, permalink || 'Posted to Instagram.', permalink);
+await notify(helpers, p.trend ? 'MENVA posted the trend post' : `MENVA posted #${p.n}`, permalink || 'Posted to Instagram.', permalink);
 return [{ json: { posted: true, n: p.n, id: p.id, mediaId: published.id, permalink } }];

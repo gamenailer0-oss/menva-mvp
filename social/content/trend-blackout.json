@@ -1,0 +1,9 @@
+{
+  "about": "Dates when the trend watcher never queues a post (Lahore dates, inclusive). Keep calm periods here. Islamic dates move with the moon: check each year.",
+  "ranges": [
+    { "from": "2027-06-05", "to": "2027-06-17", "why": "1-10 Muharram and Ashura (expected, moon-dependent)" },
+    { "from": "2027-02-08", "to": "2027-02-10", "why": "Start of Ramadan (expected, moon-dependent)" },
+    { "from": "2027-03-08", "to": "2027-03-11", "why": "Eid ul Fitr (expected, moon-dependent)" },
+    { "from": "2027-05-15", "to": "2027-05-18", "why": "Eid ul Azha (expected, moon-dependent)" }
+  ]
+}

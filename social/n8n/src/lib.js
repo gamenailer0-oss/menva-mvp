@@ -68,14 +68,34 @@ async function graphCall(helpers, base, token, method, path, params) {
 }
 
 // Phone alert through ntfy.sh, only if NTFY_TOPIC is set. Never throws.
-async function notify(helpers, title, message, click) {
+async function notify(helpers, title, message, click, extra) {
   const topic = ($env.NTFY_TOPIC || '').trim();
   if (!topic) return;
   try {
     await helpers.httpRequest({
       method: 'POST', url: 'https://ntfy.sh/' + encodeURIComponent(topic), body: message,
-      headers: Object.assign({ Title: title, 'Content-Type': 'text/plain' }, click ? { Click: click } : {}),
+      headers: Object.assign({ Title: title, 'Content-Type': 'text/plain' }, click ? { Click: click } : {}, extra || {}),
     });
   } catch (e) { /* alerts are best-effort */ }
+}
+// The content rules from check-calendar.mjs, for posts the server writes itself (trend posts).
+// Returns a list of problems; empty means OK.
+const TREND_LAYOUTS = ['statement', 'shout', 'chat', 'notes', 'receipt', 'note', 'list'];
+function checkPostText(p) {
+  const probs = [];
+  const slides = p.slides || [];
+  const text = JSON.stringify([p.caption, p.hashtags, p.alt, slides.map(({ layout, bg, size, ...t }) => t)]);
+  if (!p.caption || p.caption.length > 2000) probs.push('caption missing or too long');
+  if ((p.hashtags || []).length > 5 || (p.hashtags || []).some((h) => !/^#[\p{L}\p{N}_]+$/u.test(h))) probs.push('bad hashtags');
+  if (/\p{Extended_Pictographic}/u.test(text)) probs.push('emoji');
+  if (/gaucho/i.test(text)) probs.push('names Gauchos');
+  if (/\b(prawns?|skewers?|fajitas?|wraps?)\b/i.test(text)) probs.push('unconfirmed dish name');
+  if (/\d\s?cm\b/i.test(text)) probs.push('size in cm');
+  if (/\b(PKR|Rs\.?)\s?\d/i.test(text)) probs.push('a price');
+  if (/\{\{|\[fill in/i.test(text)) probs.push('placeholder');
+  if (/—/.test(text)) probs.push('em dash');
+  if (slides.length !== 1 || !TREND_LAYOUTS.includes(slides[0].layout) || !slides[0].h) probs.push('needs one text slide with a headline');
+  if (slides[0] && (slides[0].dish || slides[0].dishes)) probs.push('trend posts are text-only');
+  return probs;
 }
 // ── end of shared helpers ──
