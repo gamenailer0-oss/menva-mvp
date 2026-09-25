@@ -51,3 +51,6 @@ Each item says what's blocked, what I did for now, and what's needed from Abdull
 16. **Calendar part 2** (`content/calendar-2.json`, days 101–200) is written and picked up automatically. Ramadan and Eid dates in it are moon-sighting estimates: check them in January.
 17. **The link-preview fix for the live site** (OG tags, share image, `/stats` out of search) is on this branch only. The live site stays unchanged until it's merged to `main`.
 18. **All marketing playbooks** are in `social/marketing/`. Decisions for the morning are in `social/marketing/MORNING.md`.
+
+## 19. Open-source food scans (25 Sep evening)
+You asked for free high-quality scans for variety. Sketchfab, Polycam, Poly Haven and CG Channel are all blocked from this container, so nothing was downloaded. The shortlist, licence rules and the "sample scan" labelling rule are in `social/marketing/open-source-scans.md`. The chicken pizza from main is already in 11 posts and 2 Reels.
