@@ -31,6 +31,11 @@ const live = !dryRun() && !test;
 const done = live ? state.posted && state.posted[post.id] : state.dry && state.dry[post.id];
 const attempts = ((state.attempts || {})[post.id + '@' + today]) || 0;
 
+// Another run is publishing right now (a slow carousel can outlast the 15-minute tick): wait.
+// The lock expires after 30 minutes, so a crashed run can't block the day.
+const lock = state.lock;
+if (lock && DateTime.fromISO(lock.at).plus({ minutes: 30 }) > now) return [];
+
 if (!manual) {
   if (now < postTime) return [];
   if (done) return [];

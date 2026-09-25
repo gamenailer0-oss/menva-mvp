@@ -8,6 +8,7 @@ const state = readState();
 if (!p.live) {
   state.dry = state.dry || {};
   state.dry[p.id] = { at: DateTime.now().toISO(), images };
+  delete state.lock;
   writeState(state);
   logLine([p.n, p.id, 'dry-run', images.join(' ')]);
   await notify(helpers, `MENVA test image ready (#${p.n})`, `Nothing was posted (dry run). Open to check:\n${images.join('\n')}`, images[0]);
@@ -58,6 +59,7 @@ const already = (recent.data || []).find((m) => (m.caption || '').slice(0, 80) =
 if (already) {
   state.posted = state.posted || {};
   state.posted[p.id] = { at: already.timestamp, mediaId: already.id, permalink: already.permalink, n: p.n };
+  delete state.lock;
   writeState(state);
   logLine([p.n, p.id, 'already-on-instagram', already.permalink]);
   return [{ json: { alreadyPosted: true, permalink: already.permalink } }];
@@ -101,6 +103,7 @@ try { permalink = (await graph('GET', `/${published.id}`, { fields: 'permalink' 
 
 state.posted = state.posted || {};
 state.posted[p.id] = { at: DateTime.now().toISO(), mediaId: published.id, permalink, n: p.n };
+delete state.lock;
 writeState(state);
 logLine([p.n, p.id, 'posted', permalink || published.id]);
 await notify(helpers, `MENVA posted #${p.n}`, permalink || 'Posted to Instagram.', permalink);

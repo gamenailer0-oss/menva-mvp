@@ -7,6 +7,7 @@ const state = readState();
 const key = p.id + '@' + DateTime.now().setZone('Asia/Karachi').toISODate();
 state.attempts = state.attempts || {};
 state.attempts[key] = (state.attempts[key] || 0) + 1;
+state.lock = { id: p.id, at: DateTime.now().toISO() }; // released by Publish (or after 30 min)
 writeState(state);
 
 const base = ($env.MENVA_RENDER_BASE || 'http://caddy:8081').replace(/\/$/, '');
