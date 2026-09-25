@@ -1,0 +1,184 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>MENVA for restaurants · Lahore</title>
+<meta name="description" content="Let guests see your real dishes in 3D, on their own table at true size, before they order. No app. Lahore pilot: PKR 25,000.">
+<meta property="og:title" content="MENVA for restaurants · See it on your table. Then order it.">
+<meta property="og:description" content="Real dishes, scanned in 3D, on the guest's table at true size, straight from the table QR. Lahore pilot: PKR 25,000.">
+<meta property="og:image" content="img/og.jpg">
+<link rel="icon" href="img/favicon.svg" type="image/svg+xml">
+<style>
+@font-face { font-family: 'DM Sans'; font-weight: 400; font-display: swap; src: url('fonts/dm-sans-400.woff2') format('woff2'); }
+@font-face { font-family: 'DM Sans'; font-weight: 600; font-display: swap; src: url('fonts/dm-sans-600.woff2') format('woff2'); }
+@font-face { font-family: 'Instrument Serif'; font-display: swap; src: url('fonts/instrument-serif-400.woff2') format('woff2'); }
+@font-face { font-family: 'Instrument Serif'; font-style: italic; font-display: swap; src: url('fonts/instrument-serif-400-italic.woff2') format('woff2'); }
+:root { --paper:#EFEBE2; --sand:#E3DCCF; --stage:#E9E3D7; --line:#DCD3C4; --ink:#1A1714; --muted:#5C5349; --chili:#B5371F; --cream:#F5EFE4;
+  --serif:'Instrument Serif', Georgia, serif; --sans:'DM Sans', system-ui, -apple-system, sans-serif; }
+* { box-sizing: border-box; margin: 0; padding: 0; }
+html { scroll-behavior: smooth; }
+body { background: var(--paper); color: var(--ink); font-family: var(--sans); font-size: 17px; line-height: 1.55; letter-spacing: -0.01em; -webkit-font-smoothing: antialiased; }
+img { max-width: 100%; display: block; }
+a { color: inherit; }
+.wrap { max-width: 1120px; margin: 0 auto; padding: 0 20px; }
+h1, h2, h3 { font-family: var(--serif); font-weight: 400; line-height: 1.02; letter-spacing: -0.015em; }
+h1 em, h2 em { color: var(--chili); }
+.over { font-size: 12px; font-weight: 600; letter-spacing: .14em; text-transform: uppercase; color: var(--muted); }
+.muted { color: var(--muted); }
+header { display: flex; justify-content: space-between; align-items: center; height: 64px; border-bottom: 1px solid var(--line); }
+.wordmark { font-family: var(--serif); font-size: 30px; text-decoration: none; letter-spacing: -0.02em; }
+.wordmark i { font-style: normal; color: var(--chili); }
+.btn { display: inline-flex; align-items: center; justify-content: center; gap: 10px; min-height: 52px; padding: 0 24px; border-radius: 999px; font-weight: 600; font-size: 16px; text-decoration: none; transition: transform .12s; }
+.btn:active { transform: scale(.97); }
+.btn-chili { background: var(--chili); color: #fff; }
+.btn-line { border: 1px solid var(--ink); }
+.btn-small { min-height: 44px; padding: 0 18px; font-size: 15px; }
+section { padding: 64px 0; }
+.hero { display: grid; gap: 36px; align-items: center; padding: 40px 0 56px; }
+.hero h1 { font-size: clamp(44px, 9vw, 84px); }
+.hero p.lead { font-size: 19px; margin-top: 18px; max-width: 34rem; }
+.hero .actions { display: flex; flex-wrap: wrap; gap: 12px; margin-top: 26px; }
+.hero .trust { font-size: 14px; margin-top: 14px; }
+.phone { justify-self: center; width: min(300px, 78vw); aspect-ratio: 9/18.5; border-radius: 44px; background: var(--ink); padding: 11px; box-shadow: 0 30px 70px rgba(26,23,20,.22); }
+.screen { position: relative; height: 100%; border-radius: 34px; background: var(--stage); overflow: hidden; }
+.screen .table { position: absolute; left: 0; right: 0; bottom: 0; height: 56%; background: var(--sand); border-top: 1px solid var(--line); }
+.screen .reticle { position: absolute; left: 50%; top: 58%; width: 78%; aspect-ratio: 3/1; transform: translate(-50%, -50%); border: 2px solid #fff; border-radius: 50%; }
+.screen img { position: absolute; left: 50%; top: 53%; width: 86%; transform: translate(-50%, -50%); animation: land 6s cubic-bezier(.2,.8,.2,1) infinite; }
+.screen .notch { position: absolute; top: 12px; left: 50%; transform: translateX(-50%); width: 34%; height: 24px; border-radius: 12px; background: var(--ink); }
+.screen .pill { position: absolute; left: 50%; bottom: 26px; transform: translateX(-50%); background: #fff; border-radius: 999px; padding: 10px 16px; font-size: 13px; font-weight: 600; white-space: nowrap; }
+@keyframes land { 0%, 12% { opacity: 0; transform: translate(-50%, -80%); } 26%, 88% { opacity: 1; transform: translate(-50%, -50%); } 100% { opacity: 0; transform: translate(-50%, -50%); } }
+@media (prefers-reduced-motion: reduce) { .screen img { animation: none; } html { scroll-behavior: auto; } }
+.questions { background: var(--ink); color: var(--cream); }
+.questions h2 { font-size: clamp(36px, 6vw, 56px); max-width: 16ch; }
+.questions h2 em { color: #E8876F; }
+.qgrid { display: grid; gap: 12px; margin-top: 32px; }
+.qgrid div { border: 1px solid rgba(255,255,255,.22); border-radius: 16px; padding: 20px; font-family: var(--serif); font-size: 24px; line-height: 1.15; }
+.questions p { margin-top: 24px; opacity: .85; max-width: 44rem; }
+h2.sec { font-size: clamp(34px, 5.5vw, 52px); max-width: 20ch; }
+.steps { display: grid; gap: 14px; margin-top: 32px; }
+.card { background: #fff; border-radius: 16px; padding: 22px; }
+.card .well { background: var(--stage); border-radius: 12px; height: 170px; display: flex; align-items: center; justify-content: center; margin-bottom: 16px; }
+.card .well img { max-height: 150px; object-fit: contain; }
+.card h3 { font-size: 26px; }
+.card p { font-size: 15px; margin-top: 6px; color: var(--muted); }
+.two { display: grid; gap: 28px; margin-top: 32px; }
+.two ul { list-style: none; margin-top: 12px; }
+.two li { padding: 12px 0; border-bottom: 1px solid var(--line); }
+.two h3 { font-size: 28px; }
+.real { background: var(--sand); }
+.real .inner { display: grid; gap: 28px; align-items: center; }
+.real img { max-height: 340px; margin: 0 auto; object-fit: contain; }
+.pilot { background: var(--chili); color: #fff; text-align: left; }
+.pilot .over { color: rgba(255,255,255,.85); }
+.pilot .price { font-family: var(--serif); font-size: clamp(64px, 14vw, 120px); line-height: 1; margin-top: 10px; }
+.pilot p { font-size: 19px; margin-top: 14px; max-width: 36rem; }
+.pilot .actions { display: flex; flex-wrap: wrap; gap: 12px; margin-top: 28px; }
+.pilot .btn-white { background: #fff; color: var(--ink); }
+.pilot .btn-line { border-color: #fff; }
+details { border-bottom: 1px solid var(--line); padding: 18px 0; }
+details summary { cursor: pointer; font-family: var(--serif); font-size: 24px; list-style: none; display: flex; justify-content: space-between; gap: 16px; }
+details summary::after { content: '+'; color: var(--chili); }
+details[open] summary::after { content: '–'; }
+details p { margin-top: 10px; color: var(--muted); max-width: 44rem; }
+.faq { max-width: 820px; }
+footer { padding: 36px 0 60px; border-top: 1px solid var(--line); font-size: 14px; }
+footer .row { display: flex; flex-wrap: wrap; justify-content: space-between; gap: 12px; align-items: baseline; }
+.sticky { position: fixed; left: 16px; right: 16px; bottom: 16px; z-index: 5; display: none; }
+.sticky .btn { width: 100%; box-shadow: 0 10px 30px rgba(26,23,20,.25); }
+:focus-visible { outline: 3px solid var(--chili); outline-offset: 3px; }
+@media (max-width: 719px) { .sticky.show { display: block; } footer { padding-bottom: 100px; } }
+@media (min-width: 720px) {
+  .hero { grid-template-columns: 1.15fr 1fr; padding: 72px 0 88px; }
+  .qgrid { grid-template-columns: repeat(4, 1fr); }
+  .steps { grid-template-columns: repeat(3, 1fr); }
+  .two { grid-template-columns: 1fr 1fr; gap: 56px; }
+  .real .inner { grid-template-columns: 1fr 1fr; }
+  section { padding: 96px 0; }
+}
+</style>
+</head>
+<body>
+<div class="wrap">
+  <header><a class="wordmark" href="#top">menva<i>.</i></a><a class="btn btn-chili btn-small" href="{{WA_LINK}}">Book a demo</a></header>
+  <div class="hero" id="top">
+    <div>
+      <p class="over">For restaurants in Lahore</p>
+      <h1 style="margin-top:14px">Let guests see the dish <em>before they order.</em></h1>
+      <p class="lead">Guests scan the QR on the table, and your real dishes, scanned in 3D, appear on their own table at true size. Then they order with your staff, as they always do.</p>
+      <div class="actions"><a class="btn btn-chili" href="{{WA_LINK}}">Book a 10-minute demo</a><a class="btn btn-line" href="{{DEMO_LINK}}">Try it on your table</a></div>
+      <p class="trust muted">No app for guests · Safari and Chrome · Built for restaurant wifi</p>
+    </div>
+    <div class="phone" role="img" aria-label="A phone pointed at a table, with a real steak sandwich placed on it in AR"><div class="screen"><div class="table"></div><div class="reticle"></div><img src="img/steak-sandwich-full.png" alt=""><div class="notch"></div><span class="pill">See it on your table</span></div></div>
+  </div>
+</div>
+
+<section class="questions"><div class="wrap">
+  <p class="over" style="color:rgba(255,255,255,.75)">What your staff hears every night</p>
+  <h2 style="margin-top:12px">Menus describe food. <em>Guests have to guess.</em></h2>
+  <div class="qgrid"><div>"What does it look like?"</div><div>"How big is it?"</div><div>"Is it enough for two?"</div><div>"Which one should I get?"</div></div>
+  <p>Every one of those questions is a guest who isn't sure yet. MENVA answers them at the table, in the guest's own hand, so your team can get on with hosting.</p>
+</div></section>
+
+<section><div class="wrap">
+  <p class="over">How it works</p>
+  <h2 class="sec" style="margin-top:12px">Three taps from the QR to <em>the dish on their table.</em></h2>
+  <div class="steps">
+    <div class="card"><div class="well"><img src="img/steak-sandwich-close.png" alt="A real steak sandwich, scanned in 3D"></div><h3>1 · Scan</h3><p>The QR on every table opens your menu in the browser. Nothing to download.</p></div>
+    <div class="card"><div class="well"><img src="img/garlic-prawn-skewers-full.png" alt="A real plated dish, scanned in 3D"></div><h3>2 · Tap a dish</h3><p>The real dish comes into focus. Guests turn it around with one finger.</p></div>
+    <div class="card"><div class="well"><img src="img/steak-main-board.png" alt="A real steak board, scanned in 3D"></div><h3>3 · See it on the table</h3><p>Placed in AR at its true size. Honest portions: it can't be pinched bigger.</p></div>
+  </div>
+</div></section>
+
+<section class="real"><div class="wrap inner">
+  <img src="img/steak-main-steak.png" alt="Close-up of a real grilled steak, scanned in 3D" loading="lazy">
+  <div><p class="over">Real scans, true size</p>
+    <h2 class="sec" style="margin-top:12px">Your real plating. <em>Not stock photos. Not AI.</em></h2>
+    <p style="margin-top:16px;max-width:32rem">Every dish is a 3D scan of a real plate from your kitchen. In AR it sits at its true size, so guests know exactly what's coming.</p></div>
+</div></section>
+
+<section><div class="wrap">
+  <div class="two">
+    <div><h3>What stays the same</h3><ul>
+      <li>Your waiters take the order. There's no online ordering or payment.</li>
+      <li>Guests build a "show the waiter" list, with notes like "no onions".</li>
+      <li>Works on your restaurant wifi. The dish photo shows first; the 3D follows.</li>
+      <li>No AR on a phone? Guests can still turn the dish in 3D.</li></ul></div>
+    <div><h3>What you get to see</h3><ul>
+      <li>How many tables scanned the QR</li>
+      <li>Which dishes guests opened</li>
+      <li>How often a dish was placed on the table in AR</li>
+      <li>How many lists were shown to your waiters</li></ul>
+      <p class="muted" style="margin-top:12px;font-size:15px">A private results page, per day and per dish.</p></div>
+  </div>
+</div></section>
+
+<section class="pilot" id="pilot"><div class="wrap">
+  <p class="over">Lahore pilot</p>
+  <div class="price">PKR 25,000</div>
+  <p>See your own dishes on your own tables, with real numbers from real guests. We'll show it to you on your own table first.</p>
+  <div class="actions"><a class="btn btn-white" href="{{WA_LINK}}">WhatsApp us "PILOT"</a><a class="btn btn-line" href="{{IG_LINK}}">DM on Instagram</a></div>
+</div></section>
+
+<section><div class="wrap faq">
+  <p class="over">Owners ask</p>
+  <h2 class="sec" style="margin-top:12px">Questions, <em>answered.</em></h2>
+  <div style="margin-top:24px">
+    <details><summary>Do guests need an app?</summary><p>No. The table QR opens the menu in Safari on iPhone or Chrome on Android.</p></details>
+    <details><summary>Does it replace my staff or my menu?</summary><p>No. There's no online ordering or payment. Guests look, build a list, and your waiter takes the order.</p></details>
+    <details><summary>Will it work on our wifi?</summary><p>It's built for slow restaurant wifi. The dish photo appears first, then the 3D arrives.</p></details>
+    <details><summary>What if a guest's phone doesn't support AR?</summary><p>They can still turn the dish around in 3D. Only the "on the table" view needs an AR-capable phone.</p></details>
+    <details><summary>Is it AI-generated?</summary><p>Never. Every dish is a scan of a real plate from your kitchen.</p></details>
+    <details><summary>What does the pilot include?</summary><p>Message us and we'll walk you through it, and show you a live demo on your own table.</p></details>
+  </div>
+</div></section>
+
+<div class="wrap"><footer><div class="row"><span class="wordmark" style="font-size:24px">menva<i>.</i></span><span class="muted">See it on your table. Then order it. · Lahore</span><span>{{CONTACT_LINE}}</span></div></footer></div>
+<div class="sticky" id="sticky"><a class="btn btn-chili" href="{{WA_LINK}}">Book a demo on WhatsApp</a></div>
+<script>
+  // Show the sticky demo button on phones once the hero's buttons have scrolled away.
+  const s = document.getElementById('sticky'), hero = document.querySelector('.hero .actions');
+  if ('IntersectionObserver' in window) new IntersectionObserver(([e]) => s.classList.toggle('show', !e.isIntersecting)).observe(hero);
+</script>
+</body>
+</html>
