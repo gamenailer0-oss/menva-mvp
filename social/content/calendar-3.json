@@ -15,7 +15,7 @@
       "pillar": "relatable",
       "audience": "diners",
       "format": "single",
-      "caption": "Sun's out for four minutes and the whole table's already fighting over the AC vent seat, patio wala table khaali reh gaya.\nWherever you land, the dish still shows up first.",
+      "caption": "The AC vent seat is now a full-contact sport, patio wala table pura khaali pada hai. Wherever you land, the dish still shows up first.",
       "hashtags": [
         "#menva",
         "#lahorefood",
@@ -29,8 +29,8 @@
           "over": "Summer seating",
           "dish": "steak-main",
           "crop": "board",
-          "h": "Everyone wants *the AC table* tonight.",
-          "b": "Patio's empty. The dish still turns up first, wherever you're sitting."
+          "h": "Nobody wants *the sun today.*",
+          "b": "Patio's empty, AC seat's a war zone. The dish still turns up first, wherever you're sitting."
         }
       ]
     },
@@ -43,7 +43,7 @@
       "pillar": "see-it-first",
       "audience": "diners",
       "format": "carousel",
-      "caption": "Week ten. Same board, same real scan, dus hafte baad bhi size wohi hai. Comment if you've been here since week one.",
+      "caption": "Ten weeks, zero shrinkage, dus hafte baad bhi size wohi hai bhai. Comment if you've been here since week one.",
       "hashtags": [
         "#menva",
         "#lahorefood",
@@ -58,7 +58,7 @@
           "n": "1/2",
           "dish": "steak-main",
           "crop": "board",
-          "h": "Ten weeks in. *Still the table.*",
+          "h": "Ten weeks in. *Not one gram smaller.*",
           "b": "Real scan. True size. Same as week one."
         },
         {
@@ -82,7 +82,7 @@
       "pillar": "menu-truth",
       "audience": "diners",
       "format": "carousel",
-      "caption": "Order se pehle, teen cheezein, thirty seconds. Save this for the next place you've never tried.",
+      "caption": "Tell me you skipped the checklist without telling me you skipped the checklist. Order se pehle teen cheezein, thirty seconds, bas itna sa scene hai. Save this for the next place you've never tried.",
       "hashtags": [
         "#menva",
         "#lahorefood",
@@ -96,7 +96,7 @@
           "bg": "ink",
           "n": "1/3",
           "size": "l",
-          "h": "Check three things *before you order.*"
+          "h": "Three things. *Thirty seconds.* Non-negotiable."
         },
         {
           "layout": "list",
@@ -131,7 +131,7 @@
       "pillar": "for-restaurants",
       "audience": "restaurants",
       "format": "single",
-      "caption": "A PDF menu turns every dish into the same blurry photo, agar photo hai bhi. Aapki plating deserves better. DM \"PILOT\" for the Lahore pilot, PKR 25,000.",
+      "caption": "Hot take: a PDF menu turns every dish into the same blurry rectangle, agar photo hai bhi. Your plating deserves more than that. DM \"PILOT\" for the Lahore pilot, PKR 25,000.",
       "hashtags": [
         "#menva",
         "#lahorerestaurants",
@@ -145,7 +145,7 @@
           "over": "For restaurants",
           "dish": "chicken-fajita-wrap",
           "crop": "board",
-          "h": "Your plating deserves *better than a PDF.*",
+          "h": "Hot take: *your plating deserves more than a PDF.*",
           "b": "A flat photo can't show what the kitchen actually built."
         }
       ]
@@ -159,7 +159,7 @@
       "pillar": "relatable",
       "audience": "diners",
       "format": "single",
-      "caption": "Some arguments aren't worth having. Vent ke neeche wali seat unhi mein se ek hai.",
+      "caption": "Red flag: trying to move him from the AC vent seat. Non-negotiable, full stop, koi behas nahi.",
       "hashtags": [
         "#menva",
         "#lahorefood",
@@ -171,7 +171,7 @@
         {
           "layout": "chat",
           "over": "Types of people at dinner · 11",
-          "h": "The AC guardian *won't move seats.*",
+          "h": "The AC guardian. *Immovable object.*",
           "title": "dinner tonight?",
           "members": "5 members",
           "msgs": [
@@ -212,7 +212,7 @@
       "pillar": "relatable",
       "audience": "diners",
       "format": "single",
-      "caption": "Round eleven, same rule: ek hi milega tonight. A: the sandwich, B: the green plate. Comment A or B.",
+      "caption": "Round eleven. Same rule, zero mercy: ek hi milega tonight. A: the sandwich, B: the green plate. Comment before you overthink it.",
       "hashtags": [
         "#menva",
         "#lahorefood",
@@ -224,7 +224,7 @@
         {
           "layout": "duo",
           "over": "This or that · Round 11",
-          "h": "Round eleven. *Pick one.*",
+          "h": "Round eleven. *No overthinking.*",
           "dishes": [
             "steak-sandwich",
             "garlic-prawn-skewers"
@@ -246,7 +246,7 @@
       "pillar": "relatable",
       "audience": "diners",
       "format": "single",
-      "caption": "Summer ka usool: dessert page pehle, mains baad mein, maybe. Save this for whoever orders dessert before appetizers.",
+      "caption": "Summer ka asool hai: dessert page pehle, mains ka to pata nahi. Tag whoever reads the dessert menu twice before the mains once.",
       "hashtags": [
         "#menva",
         "#lahorefood",
@@ -278,7 +278,7 @@
             "Decision time",
             "12 min"
           ],
-          "footer": "See the dish before it lands, whichever page you started on."
+          "footer": "See the dish before it lands, whichever page you started on. Dessert-first behaviour, zero judgment. Okay, some judgment."
         }
       ]
     },
@@ -291,7 +291,7 @@
       "pillar": "menu-truth",
       "audience": "diners",
       "format": "carousel",
-      "caption": "Grilled sandwich, toasted bread, a side. Andaza laga lo pehle, phir swipe karo. Close, or way off?",
+      "caption": "Grilled sandwich, toasted bread, a side, that's the whole menu description. Guess the size before you swipe. Rate your accuracy out of 10.",
       "hashtags": [
         "#menva",
         "#lahorefood",
@@ -318,7 +318,7 @@
           "n": "2/2",
           "dish": "steak-sandwich",
           "crop": "full",
-          "h": "Real size. *How close were you?*",
+          "h": "Real size. *Rate yourself out of 10.*",
           "stamp": "No guessing"
         }
       ]
@@ -332,7 +332,7 @@
       "pillar": "for-restaurants",
       "audience": "restaurants",
       "format": "single",
-      "caption": "Patio bookings slow down every summer, log bahar nikalna band nahi karte, bas AC wali table dhoond lete hain. DM \"PILOT\" for the Lahore pilot, PKR 25,000.",
+      "caption": "Patio bookings die every summer. Guests don't stop going out, wo bas AC wali table dhoond rahe hain. DM \"PILOT\" for the Lahore pilot, PKR 25,000.",
       "hashtags": [
         "#menva",
         "#lahorerestaurants",
@@ -360,7 +360,7 @@
       "pillar": "relatable",
       "audience": "diners",
       "format": "single",
-      "caption": "Him: \"aaj kuch naya try karte hain.\" Also him, two minutes later: orders the exact same sandwich, garmi ho ya barf pade. Tag your table's safe-order friend.",
+      "caption": "Tell me you're scared of the menu without telling me: him, every single time, \"aaj kuch naya try karte hain,\" then orders the exact same sandwich, garmi ho ya barf pade. Tag your table's safe-order friend.",
       "hashtags": [
         "#menva",
         "#lahorefood",
@@ -388,7 +388,7 @@
       "pillar": "see-it-first",
       "audience": "diners",
       "format": "single",
-      "caption": "AR na sahi, ghuma kar dekhna to phir bhi ban jaata hai. Try it tonight, whatever phone's in your hand.",
+      "caption": "No AR? Still full drama: ghuma kar dekhna to phir bhi ban jaata hai. Try it tonight, whatever phone's in your hand.",
       "hashtags": [
         "#menva",
         "#lahorefood",
@@ -416,20 +416,21 @@
       "pillar": "relatable",
       "audience": "diners",
       "format": "single",
-      "caption": "Weekend plan criteria, updated: good AC, non-negotiable, baaki sab discuss ho sakta hai. Tag your hangout group chat.",
+      "caption": "Unpopular opinion: the group chat cares more about the AC than the actual plan. Good AC, non-negotiable, baaki sab discuss ho sakta hai. Tag your hangout group chat.",
       "hashtags": [
         "#menva",
         "#lahorefood",
         "#lahorefoodies",
         "#summerinlahore"
       ],
-      "alt": "Text post about Lahore's Gen Z choosing hangout spots by air conditioning in summer.",
+      "alt": "Bold stacked text about Lahore's Gen Z choosing hangout spots by air conditioning in summer.",
       "slides": [
         {
-          "layout": "statement",
+          "layout": "shout",
           "over": "Weekend plans",
-          "h": "Weekend plan: *somewhere with good AC.*",
-          "b": "The group chat has new priorities this season."
+          "h": "GOOD AC OR *NO DEAL.*",
+          "b": "Everything else in the group chat is negotiable. This isn't.",
+          "stamp": "Set hai"
         }
       ]
     },
@@ -442,7 +443,7 @@
       "pillar": "for-restaurants",
       "audience": "restaurants",
       "format": "single",
-      "caption": "The pilot's not just a nicer menu, aap dekh sakte hain guests kya actually open karte hain before ordering. DM \"PILOT\" for the Lahore pilot, PKR 25,000.",
+      "caption": "The pilot isn't a nicer menu, full stop. Aap dekh sakte hain guests kya actually kholte hain before ordering. DM \"PILOT\" for the Lahore pilot, PKR 25,000.",
       "hashtags": [
         "#menva",
         "#lahorerestaurants",
@@ -470,7 +471,7 @@
       "pillar": "menu-truth",
       "audience": "diners",
       "format": "single",
-      "caption": "Jo pata nahi, hum seedha keh dete hain pata nahi, andaza nahi lagate.",
+      "caption": "Green flag: saying \"pata nahi\" instead of making something up. Jo pata nahi, hum seedha keh dete hain, andaza kabhi nahi lagate.",
       "hashtags": [
         "#menva",
         "#lahorefood",
@@ -502,7 +503,7 @@
       "pillar": "see-it-first",
       "audience": "diners",
       "format": "carousel",
-      "caption": "Week eleven: the sandwich, gyarahvan hafta, size wohi hai. Comment if this is your usual order.",
+      "caption": "Week eleven. The sandwich again, gyarahvan hafta, size zero change. Comment if this is your usual order, no judgment.",
       "hashtags": [
         "#menva",
         "#lahorefood",
@@ -766,7 +767,7 @@
       "pillar": "see-it-first",
       "audience": "diners",
       "format": "single",
-      "caption": "Jo plate mein hai, wohi dikhaya hai, sides included, kuch add nahi kiya camera ke liye.",
+      "caption": "What's on the plate is what's on the plate, sides included, kuch add nahi kiya camera ke liye. Full stop.",
       "hashtags": [
         "#menva",
         "#lahorefood",
@@ -796,7 +797,7 @@
       "audience": "diners",
       "format": "single",
       "note": "Eid week, general portion-planning content.",
-      "caption": "Big family dawat this week? Badi dawat se pehle, teen cheezein dekh lo, phir order karo. Save this for the next big order.",
+      "caption": "Day 1 of asking: kitne log actually aa rahe hain, not who RSVP'd. Badi dawat se pehle teen cheezein dekh lo, phir order karo.",
       "hashtags": [
         "#menva",
         "#lahorefood",
@@ -826,7 +827,7 @@
       "pillar": "for-restaurants",
       "audience": "restaurants",
       "format": "single",
-      "caption": "Dikhana aur likhna, dono alag baat hai, guests fark foran samajh jaate hain. DM \"PILOT\" for the Lahore pilot, PKR 25,000.",
+      "caption": "Hot take: describing a dish and showing a dish are not the same job. Guests fark foran samajh jaate hain. DM \"PILOT\" for the Lahore pilot, PKR 25,000.",
       "hashtags": [
         "#menva",
         "#lahorerestaurants",
@@ -854,7 +855,7 @@
       "pillar": "relatable",
       "audience": "diners",
       "format": "single",
-      "caption": "Round twelve, ek hi milega. A: the steak board, B: the trio. Comment A or B.",
+      "caption": "Round twelve. Ek hi milega, no cheating by ordering both. A: the steak board, B: the trio. Comment fast.",
       "hashtags": [
         "#menva",
         "#lahorefood",
@@ -888,7 +889,7 @@
       "pillar": "relatable",
       "audience": "diners",
       "format": "single",
-      "caption": "Third week of heat, garmi itni ke order karna bhi mushkil lagta hai, dimaag chalta hi nahi.",
+      "caption": "POV: it's week three of the heatwave aur menu padhne ki himmat bhi nahi hai. Dimaag chalta hi nahi.",
       "hashtags": [
         "#menva",
         "#lahorefood",
@@ -903,7 +904,8 @@
           "dish": "steak-sandwich",
           "crop": "close",
           "h": "Too hot to *decide anything.*",
-          "b": "Even ordering food takes effort in this weather."
+          "b": "Even ordering food takes effort in this weather.",
+          "stamp": "Zero decisions"
         }
       ]
     },
@@ -916,7 +918,7 @@
       "pillar": "see-it-first",
       "audience": "diners",
       "format": "single",
-      "caption": "List banao, phone dikhao, baaki waiter sambhal lega, seedhi si baat hai. Try it next time the group can't decide.",
+      "caption": "List banao, phone dikhao, khatam kahani, baaki waiter sambhal lega. Try it next time the group can't decide.",
       "hashtags": [
         "#menva",
         "#lahorefood",
@@ -931,7 +933,8 @@
           "dish": "steak-main",
           "crop": "steak",
           "h": "Add it to the list. *Waiter stays in charge.*",
-          "b": "No online ordering, no payment, just show the phone."
+          "b": "No online ordering, no payment, just show the phone.",
+          "stamp": "Waiter's call"
         }
       ]
     },
@@ -944,7 +947,7 @@
       "pillar": "for-restaurants",
       "audience": "restaurants",
       "format": "carousel",
-      "caption": "Still hearing these from owners. Teen aur galat fehmiyan, seedhi baat. DM \"PILOT\" if you want to see it on your own menu.",
+      "caption": "Hot takes owners keep sending us, unprompted. Teen aur galat fehmiyan, seedhi baat. DM \"PILOT\" if you want to see it on your own menu.",
       "hashtags": [
         "#menva",
         "#lahorerestaurants",
@@ -958,7 +961,7 @@
           "bg": "ink",
           "n": "1/3",
           "size": "l",
-          "h": "Three more things owners *assume, wrongly.*"
+          "h": "Three things owners *keep getting wrong.*"
         },
         {
           "layout": "notes",
@@ -994,20 +997,25 @@
       "audience": "diners",
       "format": "single",
       "note": "Mango season trend post, text-only, since MENVA has no mango scan.",
-      "caption": "Is it actually that good this year, ya bas har saal yehi kaha jaata hai?",
+      "caption": "Day 1 of asking if this year's mangoes are actually good, ya bas har saal yehi drama hota hai.",
       "hashtags": [
         "#menva",
         "#lahorefood",
         "#lahorefoodies",
         "#mangoseason"
       ],
-      "alt": "Text post about Pakistani mango-season doubt culture, with no dish image since MENVA has no mango scan.",
+      "alt": "A phone notes page about the yearly doubt over whether the mangoes are actually good this year, with no dish image since MENVA has no mango scan.",
       "slides": [
         {
-          "layout": "statement",
+          "layout": "notes",
           "over": "Mango season",
-          "h": "Every mango post asks *the same question.*",
-          "b": "\"Is it actually that sweet this year?\" Same doubt, every June."
+          "h": "Is it really *that good this year?*",
+          "title": "mango season, honestly",
+          "items": [
+            "\"Sabse zyada meetha hai is saal\" -> said every single year",
+            "\"Try karo, promise pasand aayega\" -> also said every year",
+            "The doubt never actually goes away"
+          ]
         }
       ]
     },
@@ -1020,7 +1028,7 @@
       "pillar": "behind-the-scan",
       "audience": "diners",
       "format": "single",
-      "caption": "Every dish here's a real 3D scan of an actual plate, AI ka isme koi kaam nahi, shuru se yehi tha. Save this if you've ever wondered.",
+      "caption": "Tell me you don't use AI food photos without telling me: every dish here is a real 3D scan of an actual plate, shuru se yehi tha, aage bhi yehi rahega.",
       "hashtags": [
         "#menva",
         "#lahorefood",
@@ -1048,7 +1056,7 @@
       "pillar": "see-it-first",
       "audience": "diners",
       "format": "carousel",
-      "caption": "Week twelve: the green plate, baarahvan hafta, size wohi. Comment if it's on your must-try list.",
+      "caption": "Week twelve. The green plate, baarahvan hafta, size still honest. Comment if it's on your must-try list, or your must-try-again list.",
       "hashtags": [
         "#menva",
         "#lahorefood",
@@ -1086,7 +1094,7 @@
       "pillar": "relatable",
       "audience": "diners",
       "format": "single",
-      "caption": "Chhuttiyan shuru, and the group chat goes from \"maybe next week\" to \"today, right now, where.\"",
+      "caption": "Chhuttiyan shuru hote hi group chat maybe-next-week se seedha today-right-now-where pe jump karta hai. Every single break.",
       "hashtags": [
         "#menva",
         "#lahorefood",
@@ -1251,7 +1259,7 @@
       "pillar": "see-it-first",
       "audience": "diners",
       "format": "carousel",
-      "caption": "Week thirteen: the trio, terahvan hafta, size wohi hai. Comment if you haven't tried this one yet.",
+      "caption": "Week thirteen. The trio, terahvan hafta, koi shrink nahi hua. Comment if you haven't tried this one yet, aur wait kis baat ka hai.",
       "hashtags": [
         "#menva",
         "#lahorefood",
@@ -1289,7 +1297,7 @@
       "pillar": "relatable",
       "audience": "diners",
       "format": "single",
-      "caption": "Him: \"main sab ke liye order kar deta hoon.\" Also him: doesn't ask anyone first, ever.",
+      "caption": "Red flag: \"main sab ke liye order kar deta hoon,\" bina poochay. Every. Single. Time.",
       "hashtags": [
         "#menva",
         "#lahorefood",
@@ -1329,7 +1337,8 @@
               "from": "Bilal",
               "t": "and you all liked it"
             }
-          ]
+          ],
+          "stamp": "No vote taken"
         }
       ]
     },
@@ -1342,7 +1351,7 @@
       "pillar": "menu-truth",
       "audience": "diners",
       "format": "carousel",
-      "caption": "The green plate, garlic and herbs, plated to share. Pehle andaza lagao, phir swipe karo. Close, or way off?",
+      "caption": "The green plate, garlic and herbs, plated to share. Guess first, swipe second. Rate yourself out of 10, honestly.",
       "hashtags": [
         "#menva",
         "#lahorefood",
@@ -1369,7 +1378,7 @@
           "n": "2/2",
           "dish": "garlic-prawn-skewers",
           "crop": "full",
-          "h": "Real size. *How close were you?*"
+          "h": "Real size. *Be honest.*"
         }
       ]
     },
@@ -1383,7 +1392,7 @@
       "audience": "diners",
       "format": "carousel",
       "note": "Mango season trend post, text-only, no MENVA mango scan exists.",
-      "caption": "Har dawat isi pe khatam hoti hai: aam ki plate beech mein, no menu needed. No scan for this one yet, just appreciation.",
+      "caption": "Every dawat ends the same way: aam ki plate beech mein, no menu needed, no order taken. Just straight-up mango chaos.",
       "hashtags": [
         "#menva",
         "#lahorefood",
@@ -1421,7 +1430,7 @@
       "pillar": "relatable",
       "audience": "diners",
       "format": "single",
-      "caption": "Round thirteen, ek hi milega, jaldi batao. A: the sandwich, B: the trio. Comment A or B.",
+      "caption": "Round thirteen. Ek hi milega, group chat, jaldi batao. A: the sandwich, B: the trio.",
       "hashtags": [
         "#menva",
         "#lahorefood",
@@ -1456,7 +1465,7 @@
       "audience": "restaurants",
       "format": "single",
       "note": "Mango season, general seasonal-menu pitch, no invented mango dish or scan.",
-      "caption": "Naye mango specials aayenge, purane dishes bhi utne hi saaf dikhne chahiye. DM \"PILOT\" for the Lahore pilot, PKR 25,000.",
+      "caption": "Hot take: your regular menu shouldn't look worse than the mango special. Purane dishes bhi utne hi saaf dikhne chahiye. DM \"PILOT\" for the Lahore pilot, PKR 25,000.",
       "hashtags": [
         "#menva",
         "#lahorerestaurants",
@@ -1484,7 +1493,7 @@
       "pillar": "relatable",
       "audience": "diners",
       "format": "single",
-      "caption": "Every AR placement has one person recording the whole thing, \"ruk jao, main record kar raha hoon,\" and the dish just sits there waiting.",
+      "caption": "Every AR placement has one main character recording the whole thing, \"ruk jao, main record kar raha hoon,\" while the dish just sits there, waiting, judging.",
       "hashtags": [
         "#menva",
         "#lahorefood",
@@ -1509,7 +1518,7 @@
       "pillar": "for-restaurants",
       "audience": "restaurants",
       "format": "single",
-      "caption": "Tables move indoors for summer, guests already compare menus before walking in, andar baithne ka season faisle ka bhi season hai. DM \"PILOT\" for the Lahore pilot, PKR 25,000.",
+      "caption": "Tables move indoors for summer, guests are comparing menus before they've even walked in. Andar baithne ka season, faisle ka bhi season hai. DM \"PILOT\" for the Lahore pilot, PKR 25,000.",
       "hashtags": [
         "#menva",
         "#lahorerestaurants",
@@ -1537,7 +1546,7 @@
       "pillar": "relatable",
       "audience": "diners",
       "format": "single",
-      "caption": "Some people negotiate with the waiter. Yeh sirf barf ke liye negotiate karta hai, har baar, har jagah.",
+      "caption": "Rate this out of 10: negotiating with the waiter over ice, three times, at every single restaurant, forever.",
       "hashtags": [
         "#menva",
         "#lahorefood",
@@ -1582,7 +1591,7 @@
       "pillar": "for-restaurants",
       "audience": "restaurants",
       "format": "single",
-      "caption": "Fewer table-side \"yeh kaisi dikhti hai\" questions, aksar, once guests have already seen the dish before ordering. DM \"PILOT\" for the Lahore pilot, PKR 25,000.",
+      "caption": "Fewer \"yeh kaisi dikhti hai\" questions at the table, aksar, once guests have already seen the dish first. DM \"PILOT\" for the Lahore pilot, PKR 25,000.",
       "hashtags": [
         "#menva",
         "#lahorerestaurants",
@@ -1610,7 +1619,7 @@
       "pillar": "relatable",
       "audience": "diners",
       "format": "single",
-      "caption": "First real rain, and the whole city has the same instinct: garam khana, chatt ke neeche, abhi. Tag your rainy-day dinner partner.",
+      "caption": "First real rain and the entire city has the exact same instinct: garam khana, chhat ke neeche, abhi, no discussion needed. Tag your rainy-day dinner partner.",
       "hashtags": [
         "#menva",
         "#lahorefood",
@@ -1638,7 +1647,7 @@
       "pillar": "see-it-first",
       "audience": "diners",
       "format": "carousel",
-      "caption": "Week fourteen: the steak board, sides and all, poori plate poora size. Comment which half you'd finish first.",
+      "caption": "Week fourteen. The whole board, sides and all, poori plate poora size, no cropping. Comment which half you'd finish first.",
       "hashtags": [
         "#menva",
         "#lahorefood",
@@ -1677,7 +1686,7 @@
       "pillar": "relatable",
       "audience": "diners",
       "format": "single",
-      "caption": "Baarish ho to order khud hi tay ho jaata hai, warm, filling, zero debate.",
+      "caption": "Baarish ho to order khud hi decide ho jaata hai. Warm, filling, zero group chat debate.",
       "hashtags": [
         "#menva",
         "#lahorefood",
@@ -1705,7 +1714,7 @@
       "pillar": "for-restaurants",
       "audience": "restaurants",
       "format": "single",
-      "caption": "Monsoon evenings thin out footfall, par jo aate hain wo jaldi faisla karna chahte hain, agar menu unhe kuch dikhata hai. DM \"PILOT\" for the Lahore pilot, PKR 25,000.",
+      "caption": "Monsoon evenings thin out the footfall, par jo aate hain wo jaldi faisla karna chahte hain, agar menu unhe kuch dikhata hai. DM \"PILOT\" for the Lahore pilot, PKR 25,000.",
       "hashtags": [
         "#menva",
         "#lahorerestaurants",
@@ -1734,20 +1743,47 @@
       "audience": "diners",
       "format": "single",
       "note": "Mango season trend post, text-only, no MENVA mango scan exists.",
-      "caption": "\"But is it actually as good as it looks?\" Har mango dessert post ke neeche, wohi sawal, har baar.",
+      "caption": "Literally nobody: / the comments under every mango dessert post: \"but is it actually as good as it looks?\"",
       "hashtags": [
         "#menva",
         "#lahorefood",
         "#mangoseason",
         "#lahorefoodies"
       ],
-      "alt": "Text post about doubt culture around viral mango desserts, with no dish image since MENVA has no mango scan.",
+      "alt": "A fake group chat doubting whether a viral mango dessert is actually as good as it looks, since MENVA has no mango scan.",
       "slides": [
         {
-          "layout": "statement",
+          "layout": "chat",
           "over": "Mango season",
-          "h": "\"Is the mango dessert *actually that good?\"*",
-          "b": "Same doubt, new dessert, every July."
+          "h": "Is it actually *that good?*",
+          "title": "mango dessert or nah",
+          "members": "the usual suspects",
+          "msgs": [
+            {
+              "from": "Hira",
+              "t": "ok but is it actually good"
+            },
+            {
+              "me": true,
+              "t": "haven't tried it yet"
+            },
+            {
+              "from": "Hira",
+              "t": "then why'd you post it"
+            },
+            {
+              "me": true,
+              "t": "aesthetic reasons"
+            },
+            {
+              "from": "Zain",
+              "t": "classic"
+            },
+            {
+              "me": true,
+              "t": "every july, same energy"
+            }
+          ]
         }
       ]
     },
@@ -1760,7 +1796,7 @@
       "pillar": "relatable",
       "audience": "diners",
       "format": "single",
-      "caption": "Round fourteen, you know the drill. A: the steak board, B: the green plate. Comment A or B.",
+      "caption": "Round fourteen. You know the drill, no overthinking. A: the steak board, B: the green plate.",
       "hashtags": [
         "#menva",
         "#lahorefood",
@@ -1794,7 +1830,7 @@
       "pillar": "see-it-first",
       "audience": "diners",
       "format": "single",
-      "caption": "AR na chale to bhi, 3D poori tarah dekh sakte hain, ghuma kar, zoom karke, har side se.",
+      "caption": "AR na chale to bhi scene set hai, poora 3D dekh sakte ho, ghuma kar, zoom karke, har side se.",
       "hashtags": [
         "#menva",
         "#lahorefood",
@@ -1822,20 +1858,47 @@
       "pillar": "relatable",
       "audience": "diners",
       "format": "single",
-      "caption": "Every rainy season has one person who blames every late arrival on the baarish, dhoop wale din bhi shamil. Tag the rain blamer.",
+      "caption": "That one friend who blames baarish for being late, even on days it didn't rain. Tag the rain blamer.",
       "hashtags": [
         "#menva",
         "#lahorefood",
         "#lahorefoodies",
         "#monsoon"
       ],
-      "alt": "Text post about the friend who blames every late arrival on the rain.",
+      "alt": "A fake group chat about the friend who blames every late arrival on the rain, even on sunny days.",
       "slides": [
         {
-          "layout": "note",
+          "layout": "chat",
           "over": "Types of people at dinner · 15",
           "h": "The rain blamer. *Late, rain or shine.*",
-          "ru": "\"Baarish thi, isiliye late hua.\" Sunny din mein bhi late tha."
+          "title": "running late again",
+          "members": "the usual group",
+          "msgs": [
+            {
+              "from": "Ali",
+              "t": "where are you"
+            },
+            {
+              "me": true,
+              "t": "baarish thi yaar"
+            },
+            {
+              "from": "Ali",
+              "t": "it's not even raining today"
+            },
+            {
+              "me": true,
+              "t": "traffic ka asar tha"
+            },
+            {
+              "from": "Sana",
+              "t": "he says this every time"
+            },
+            {
+              "me": true,
+              "t": "almost there"
+            }
+          ]
         }
       ]
     },
@@ -1848,7 +1911,7 @@
       "pillar": "relatable",
       "audience": "diners",
       "format": "carousel",
-      "caption": "Results day splits the group, half celebrating, half abhi bhi page refresh kar rahe hain, phir bhi sab ek hi table pe end up hote hain.",
+      "caption": "Results day splits the group chat clean in half, half celebrating, half abhi bhi page refresh kar rahe hain, phir bhi sab ek hi table pe end up hote hain.",
       "hashtags": [
         "#menva",
         "#lahorefood",
@@ -1863,7 +1926,8 @@
           "dish": "steak-sandwich",
           "crop": "close",
           "h": "Results day. *Nobody can agree on where to eat.*",
-          "b": "Half the group's celebrating, half's still refreshing the page."
+          "b": "Half the group's celebrating, half's still refreshing the page.",
+          "stamp": "Same table"
         },
         {
           "layout": "cta",
@@ -1914,7 +1978,7 @@
       "pillar": "relatable",
       "audience": "diners",
       "format": "single",
-      "caption": "Last paper khatam, and the group chat jumps straight to \"where are we eating tonight.\" Tag whoever just finished their last paper.",
+      "caption": "Last paper khatam and the group chat skips straight to \"where are we eating tonight,\" zero celebration in between. Tag whoever just finished.",
       "hashtags": [
         "#menva",
         "#lahorefood",
@@ -1929,7 +1993,8 @@
           "dish": "bz-chicken-pizza",
           "crop": "full",
           "h": "Papers *done. Table booked.*",
-          "b": "The first real dinner out in weeks."
+          "b": "The first real dinner out in weeks.",
+          "stamp": "Papers done"
         }
       ]
     },
@@ -1955,7 +2020,7 @@
           "layout": "statement",
           "bg": "sand",
           "n": "1/3",
-          "h": "Rainy-day ordering: *a quick checklist.*"
+          "h": "Baarish ho ya na ho. *Checklist chalta hai.*"
         },
         {
           "layout": "list",
@@ -1990,7 +2055,7 @@
       "pillar": "see-it-first",
       "audience": "diners",
       "format": "carousel",
-      "caption": "Week fifteen: the sandwich, from above, pandrahvan hafta, size wohi hai. Comment if you'd share it or keep it to yourself.",
+      "caption": "Week fifteen. The sandwich, from above, pandrahvan hafta, still not sharing size. Comment: share it or keep it to yourself, be honest.",
       "hashtags": [
         "#menva",
         "#lahorefood",
@@ -2029,7 +2094,7 @@
       "pillar": "relatable",
       "audience": "diners",
       "format": "single",
-      "caption": "Every results season has one person still refreshing the portal at the table, khana thanda ho raha hai.",
+      "caption": "That one friend still refreshing the results portal at the table while khana thanda ho raha hai.",
       "hashtags": [
         "#menva",
         "#lahorefood",
@@ -2083,7 +2148,7 @@
       "audience": "diners",
       "format": "carousel",
       "note": "Mango season trend post, text-only, no MENVA mango scan exists.",
-      "caption": "Gaadha ya patla, har saal wohi behas, kabhi faisla nahi hota. No scan for this one, just the argument.",
+      "caption": "Gaadha ya patla, unpopular opinion incoming, har saal wohi behas, kabhi faisla nahi hota.",
       "hashtags": [
         "#menva",
         "#lahorefood",
@@ -2120,7 +2185,7 @@
       "pillar": "for-restaurants",
       "audience": "restaurants",
       "format": "carousel",
-      "caption": "How the pilot actually works, seedha, simple, koi lapeta nahi. DM \"PILOT\" for the Lahore pilot, PKR 25,000.",
+      "caption": "How the pilot actually works. Seedha, simple, zero lapeta. DM \"PILOT\" for the Lahore pilot, PKR 25,000.",
       "hashtags": [
         "#menva",
         "#lahorerestaurants",
@@ -2176,7 +2241,7 @@
       "pillar": "see-it-first",
       "audience": "diners",
       "format": "single",
-      "caption": "\"No onions,\" \"less spicy,\" jo bhi likho, list pe wahi rehta hai jab tak waiter ko dikhaya na jaaye. Try it next time you've got a specific ask.",
+      "caption": "\"No onions.\" \"Less spicy.\" Jo bhi likho, wahi rehta hai, lost-in-translation wala scene hi nahi hota.",
       "hashtags": [
         "#menva",
         "#lahorefood",
@@ -2209,13 +2274,17 @@
         "#menva",
         "#lahorefood"
       ],
-      "alt": "A short team note explaining that MENVA still works from four real dish scans.",
+      "alt": "A phone notes page explaining that MENVA still works from four real dish scans, no rush.",
       "slides": [
         {
-          "layout": "note",
+          "layout": "notes",
           "h": "Still *four dishes.*",
-          "by": "The MENVA team",
-          "ru": "Abhi tak char dish, jaldi mein nahi hain."
+          "title": "team note, halfway summer",
+          "items": [
+            "Abhi tak char dish, jaldi mein nahi hain",
+            "Sahi karna zyada zaroori hai speed se",
+            "More scans jab woh actually ready hon, pehle nahi"
+          ]
         }
       ]
     },
@@ -2228,7 +2297,7 @@
       "pillar": "relatable",
       "audience": "diners",
       "format": "single",
-      "caption": "Menu khulne se pehle, table pe do minute humidity discuss ho chuki hoti hai, roz ka usool hai. Whoever always starts that, tag them.",
+      "caption": "Menu khulne se pehle table pe do minute humidity pe seminar ho chuka hota hai, roz ka usool hai. Tag whoever starts it every time.",
       "hashtags": [
         "#menva",
         "#lahorefood",
@@ -2256,7 +2325,7 @@
       "pillar": "for-restaurants",
       "audience": "restaurants",
       "format": "single",
-      "caption": "Genuinely good dish ko talk up karne ki zaroorat nahi, bas saaf dikhne ki zaroorat hai, uske actual size mein. DM \"PILOT\" for the Lahore pilot, PKR 25,000.",
+      "caption": "Hot take: a genuinely good dish doesn't need talking up, bas saaf dikhne ki zaroorat hai, uske actual size mein. DM \"PILOT\" for the Lahore pilot, PKR 25,000.",
       "hashtags": [
         "#menva",
         "#lahorerestaurants",
@@ -2284,7 +2353,7 @@
       "pillar": "menu-truth",
       "audience": "diners",
       "format": "single",
-      "caption": "Worth repeating: har dish MENVA pe ek real 3D scan hai, AI ka isme koi kaam nahi, kabhi nahi.",
+      "caption": "Worth repeating, loudly: har dish MENVA pe ek real 3D scan hai, AI ka isme koi kaam nahi, kabhi nahi tha.",
       "hashtags": [
         "#menva",
         "#lahorefood",
@@ -2319,13 +2388,12 @@
         "#menva",
         "#lahorefood"
       ],
-      "alt": "A teaser statement post ahead of MENVA's 300-days milestone.",
+      "alt": "A huge stacked-caps teaser ahead of MENVA's 300-days milestone.",
       "slides": [
         {
-          "layout": "statement",
-          "bg": "chili",
+          "layout": "shout",
           "over": "Almost there",
-          "h": "Tomorrow: *300 days.*",
+          "h": "TOMORROW: *300 DAYS.*",
           "b": "Same idea as day one, still true."
         }
       ]
