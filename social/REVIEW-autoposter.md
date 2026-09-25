@@ -8,7 +8,9 @@ This review reflects the code *after* the in-progress fixes: `graphCall()` sendi
 
 Fixed and tested against the mock Instagram: overlapping runs (a 30-minute publishing lock), media growth (images older than 30 days deleted, old retry counters pruned), captions and the token moved out of POST URLs (form body), an alert when a post is abandoned after 3 tries and when the calendar ends (each fires once), calendar offsets from the file name, a blank `.env` token no longer discards a working refreshed one, a damaged `state.json` is set aside and reported, the template can't be screenshotted after an error (a bad slide is refused in about 0.3 s), font-load failures become a clear error, no first-day token-refresh false alarm, `refreshedAt` only on a real new token, Story render retries, manual "Run now" on an already-posted day no longer triggers a dry-run alert, the firewall rules go before Oracle's REJECT rule, `update.sh` waits for an in-flight publish, a re-login hint for `docker` without sudo, and the n8n login is created before the dashboard goes public (plus 2FA advice in SETUP.md).
 
-Not changed: alt text on carousel children (low; the API behaviour isn't confirmed), and the n8n editor staying on the public address (mitigated by the pre-created owner and 2FA; a VPN or IP allowlist would be the next step).
+Also fixed after the final report: the lock is refreshed while Instagram processes a carousel (so it can't expire mid-publish), and install.sh stops before going public if n8n isn't up or its settings can't be read.
+
+Not changed: GET calls (polls, refresh) still carry the token in the query string, as Instagram's API expects; n8n keeps node outputs, not these request details, in its execution history. Alt text on carousel children (low; the API behaviour isn't confirmed), and the n8n editor staying on the public address (mitigated by the pre-created owner and 2FA; a VPN or IP allowlist would be the next step).
 
 ## Findings (as reported)
 

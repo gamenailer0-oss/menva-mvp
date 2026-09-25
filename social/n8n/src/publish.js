@@ -69,8 +69,11 @@ if (already) {
   return [{ json: { alreadyPosted: true, permalink: already.permalink } }];
 }
 
+// Keep the publishing lock fresh while waiting, so a slow carousel never outlives it.
+function touchLock() { const st = readState(); st.lock = { id: p.id, at: DateTime.now().toISO() }; writeState(st); state.lock = st.lock; }
 async function waitReady(id) {
   for (let i = 0; i < 20; i++) {
+    if (i % 4 === 0) touchLock();
     const s = await graph('GET', `/${id}`, { fields: 'status_code,status' });
     if (s.status_code === 'FINISHED') return;
     if (s.status_code === 'ERROR' || s.status_code === 'EXPIRED') throw new Error(`Instagram could not process the image (${s.status_code}: ${s.status || ''}). Check that ${images[0]} opens in a browser.`);

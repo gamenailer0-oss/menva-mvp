@@ -55,14 +55,23 @@ say "Starting n8n and Gotenberg (first time downloads ~1.5 GB)"
 $DOCKER compose up -d n8n gotenberg
 
 say "Waiting for n8n to start"
-for _ in $(seq 1 60); do
-  if $DOCKER compose exec -T n8n wget -qO- http://localhost:5678/healthz >/dev/null 2>&1 </dev/null; then break; fi
+N8N_UP=
+for _ in $(seq 1 100); do
+  if $DOCKER compose exec -T n8n wget -qO- http://localhost:5678/healthz >/dev/null 2>&1 </dev/null; then N8N_UP=1; break; fi
   sleep 3
 done
+if [ -z "$N8N_UP" ]; then
+  echo "n8n didn't start within 5 minutes. Nothing is public yet. Check: sudo docker compose logs --tail 50 n8n, then run ./install.sh again."
+  exit 1
+fi
 
 # 6. Create your n8n login now, so nobody else can claim the dashboard first
 # (captured first: with pipefail, "wget | grep -q" can read as false when grep exits early)
 SETTINGS=$($DOCKER compose exec -T n8n wget -qO- http://localhost:5678/rest/settings 2>/dev/null </dev/null || true)
+if [[ $SETTINGS != *'"showSetupOnFirstLoad"'* ]]; then
+  echo "Couldn't read n8n's settings, so the dashboard stays private for now. Run ./install.sh again in a minute."
+  exit 1
+fi
 if [[ $SETTINGS == *'"showSetupOnFirstLoad":true'* ]]; then
   say "Create your n8n login (you'll use it at https://<your address>)"
   N8N_EMAIL=$(ask 'Login email')
