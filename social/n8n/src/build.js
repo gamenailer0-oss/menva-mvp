@@ -15,6 +15,16 @@ const pub = ($env.MENVA_PUBLIC_URL || '').replace(/\/$/, '');
 const stamp = DateTime.now().toFormat('yyyyLLddHHmmss'); // new name each run, so Instagram never gets a cached old image
 fs.mkdirSync('/files/media', { recursive: true });
 
+// Housekeeping: Instagram copies each image when it publishes, so finished images older than 30
+// days can go; retry counters older than 7 days too. Keeps the free server's disk from filling up.
+const cutoff = Date.now() - 30 * 86400000;
+for (const f of fs.readdirSync('/files/media')) {
+  try { const st = fs.statSync('/files/media/' + f); if (st.isFile() && st.mtimeMs < cutoff) fs.unlinkSync('/files/media/' + f); } catch (e) { /* ignore */ }
+}
+const weekAgo = DateTime.now().setZone('Asia/Karachi').minus({ days: 7 }).toISODate();
+for (const k of Object.keys(state.attempts)) if ((k.split('@')[1] || '') < weekAgo) delete state.attempts[k];
+writeState(state);
+
 return p.slides.map((slide, i) => {
   const file = `${String(p.n).padStart(3, '0')}-${p.id}-${i + 1}-${stamp}.jpg`;
   return {
