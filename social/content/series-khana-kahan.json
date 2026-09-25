@@ -2,7 +2,7 @@
   "version": 1,
   "about": "Khana kahan?: a weekly sitcom told in group-chat screenshots, with the same six made-up friends. A series file: the server posts it automatically on Wednesdays (a rest day for the main calendar), episode 1 on day 17 (Wed 21 Oct 2026 with the default start); season 2 (episodes 13 to 24) runs from day 108 to day 185, with the Ramadan episodes at 16:30 and nothing on Eid day; season 3 (episodes 25 to 37) runs from day 199 to day 297 and skips the two Wednesdays in the first ten days of Muharram. Days are counted from START_DATE across the whole 300 days, not per 100-day block. Every name is invented; never use a real person.",
   "defaultStart": "2026-10-05",
-  "handle": "",
+  "handle": "@eatmenva",
   "posts": [
     {
       "n": 1,

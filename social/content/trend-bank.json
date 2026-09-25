@@ -2,7 +2,7 @@
   "version": 1,
   "about": "Ready posts to swap into calendar.json (same format). Swap: copy a post over an existing one and keep that one's n, day, date and weekday. Then run check-calendar.mjs.",
   "defaultStart": "2026-10-05",
-  "handle": "",
+  "handle": "@eatmenva",
   "posts": [
     {
       "n": 1,

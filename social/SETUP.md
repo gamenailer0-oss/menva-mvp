@@ -120,7 +120,7 @@ Use the arrow keys to fill in these lines:
 ```
 IG_ACCESS_TOKEN=IGAA...your token...
 IG_USER_ID=1784...your id...
-IG_HANDLE=@yourhandle
+IG_HANDLE=@eatmenva
 ```
 Save: press **Ctrl+O**, then **Enter**, then **Ctrl+X**. Then apply it:
 ```

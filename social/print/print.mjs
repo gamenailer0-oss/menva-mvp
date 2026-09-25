@@ -2,7 +2,7 @@
 //
 //   node social/print/print.mjs                          all documents, QR shown as a placeholder
 //   node social/print/print.mjs --domain menva.net       put a real QR (to https://menva.net) on them
-//   node social/print/print.mjs --whatsapp "0300 0000000" --instagram "@menva.pk" --email "hi@menva.net"
+//   node social/print/print.mjs --whatsapp "0300 0000000" --instagram "@eatmenva" --email "hi@menva.net"
 //   node social/print/print.mjs --restaurant "Name"      table tent for one partner restaurant
 //
 // Documents: table-tent, menu-stickers, restaurant-one-pager, pitch-deck, window-sticker (partner door/window), staff-card (waiter briefing).
@@ -26,7 +26,9 @@ const opt = (k) => { const i = args.indexOf('--' + k); return i >= 0 ? args[i + 
 const esc = (s) => String(s ?? '').replace(/[&<>"]/g, (c) => ({ '&': '&amp;', '<': '&lt;', '>': '&gt;', '"': '&quot;' }[c]));
 
 const domain = opt('domain').replace(/^https?:\/\//, '').replace(/\/+$/, '');
-if (/\.netlify\.app$/.test(domain)) { console.error('Printed QR codes must use the custom domain, not *.netlify.app.'); process.exit(1); }
+// Abdullah's call (25 Sep): print with the netlify.app address for now and reprint once the custom domain
+// is live. Those printed codes will stop working if the Netlify site is ever renamed or moved.
+if (/\.netlify\.app$/.test(domain)) console.warn('Warning: printing QR codes with ' + domain + '. Reprint them once the custom domain is live.');
 const contact = { whatsapp: opt('whatsapp'), instagram: opt('instagram'), email: opt('email') };
 const restaurant = opt('restaurant');
 
@@ -54,9 +56,11 @@ async function dishImg(id, crop) {
   return `../.cache/${id}-${crop}.png`; // relative to out/
 }
 
+// QRCode.toString returns a promise, so the SVG is made once up front and reused.
+const QR_SVG = domain ? await QRCode.toString(`https://${domain}`, { type: 'svg', errorCorrectionLevel: 'H', margin: 2, color: { dark: '#1A1714', light: '#FFFFFF' } }) : '';
 function qr(size, label = 'Scan to open the menu') {
   if (!domain) return `<div class="qr placeholder" style="width:${size};height:${size}">QR code<br>(run with --domain to add)</div>`;
-  const svg = QRCode.toString(`https://${domain}`, { type: 'svg', errorCorrectionLevel: 'H', margin: 2, color: { dark: '#1A1714', light: '#FFFFFF' } });
+  const svg = QR_SVG;
   return `<div class="qr" style="width:${size};height:${size}" aria-label="${esc(label)}">${svg}</div>`;
 }
 // Unfilled contact details print as a visible [placeholder] so they can't go to print by accident.

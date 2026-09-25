@@ -1,7 +1,7 @@
 // Builds the "for restaurants" landing page into social/landing/dist/ — a folder you can drag onto
 // Netlify (a separate site, or a subpath of the main one later).
 //
-//   node social/landing/build.mjs --whatsapp 923001234567 --instagram menva.pk --demo https://menva.net --url https://restaurants.menva.net/
+//   node social/landing/build.mjs --whatsapp 923001234567 --instagram eatmenva --demo https://menva.net --url https://restaurants.menva.net/
 //
 // --whatsapp: the number in international format without + (opens WhatsApp with "PILOT" typed).
 // Without it the buttons show a visible [fill in] link, so the page can't go live half-done.

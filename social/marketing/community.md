@@ -6,7 +6,7 @@ Built from `BRIEF.md` and a read-only pass over `social/content/calendar.json` (
 
 A note on the two unnamed dishes: the calendar itself only ever calls them "the green plate" and "the trio" because their real names are unconfirmed. This doc uses the same two placeholders — that's not a new name, it's the calendar's own wording.
 
-Instagram `handle` is blank in `calendar.json` at the time of writing. Every script below that needs `@handle` uses `[@menva handle]` as a placeholder — see **Needs Abdullah**.
+The Instagram handle is **@eatmenva** (confirmed 25 Sep).
 
 ---
 
@@ -252,7 +252,7 @@ If pressed for the restaurant's name:
 
 > See it. Place it. Snap it.
 > Scan the code, place the dish on your table in AR, then take a photo of the real thing next to it.
-> Tag [@menva handle] — we repost our favourites.
+> Tag @eatmenva — we repost our favourites.
 > *Apni table pe rakho, phir photo lo.*
 
 Print production and placement at the restaurant needs Abdullah — see **Needs Abdullah**.
@@ -291,7 +291,7 @@ Proposed: **#MenvaMoment** — distinct from the campaign hashtags already used 
 
 > **[Promotion name]**
 > Sponsor: MENVA [and partner restaurant, once confirmed]
-> Eligibility: Lahore residents, 18+, followers of [@menva handle]
+> Eligibility: Lahore residents, 18+, followers of @eatmenva
 > How to enter: [exact steps]
 > Entry window: [start] to [end], Asia/Karachi time
 > Winner selection: [random draw method], announced by [date]
@@ -378,7 +378,7 @@ This is grounded in what's actually listed as pilot analytics in the brief (scan
 Anything below needs the founder to spend money, sign up for something, contact a person, or publish — none of it was done as part of writing this file.
 
 - Set up Instagram's automated/keyword replies (or Meta Business Suite equivalent) for the "PILOT" DM flow in section 2 — needs account-owner access.
-- Confirm the actual Instagram `@handle` — it's currently blank in `calendar.json`, and this doc uses `[@menva handle]` as a placeholder everywhere it's needed (table tent, UGC credit lines).
+- Handle confirmed: @eatmenva.
 - Every giveaway/contest idea in section 4 needs a confirmed restaurant partner to fund and honour the prize before any of them can be announced.
 - Print and physically place the "place it on your table" table tents at the partner restaurant (section 3) — needs restaurant coordination.
 - Check the proposed hashtag `#MenvaMoment` isn't already in unrelated use before it goes on printed material.
