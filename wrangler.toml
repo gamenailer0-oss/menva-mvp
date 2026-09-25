@@ -1,0 +1,14 @@
+# Cloudflare Pages config (source of truth for bindings and plain variables; the STATS_KEY secret
+# is set in the dashboard: Settings → Variables and secrets). Netlify ignores this file.
+name = "menva"
+pages_build_output_dir = "dist"
+compatibility_date = "2026-09-01"
+
+[vars]
+NODE_VERSION = "22"
+SITE_URL = "https://menva.pages.dev"
+
+# Analytics events (functions/api/e.js, functions/api/stats.js)
+[[kv_namespaces]]
+binding = "MENVA_EVENTS"
+id = "fc6a63797ed940dc948ef571daa3ebb8"
