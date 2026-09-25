@@ -1,6 +1,6 @@
 {
   "version": 1,
-  "about": "MENVA Instagram calendar, season three: 100 more days, continuing straight after calendar-2.json. Read by the n8n workflow. Edit, then run: node social/scripts/check-calendar.mjs social/content/calendar-3.json. Days around the expected Ashura dates (9-10 Muharram) carry a \"note\" flagging them for review and are kept calm/non-promotional. No post on 9-10 Muharram (Ashura, expected around 14-15 June 2027): the Ashura-day post was removed on review.",
+  "about": "MENVA Instagram calendar, season three: 100 more days, continuing straight after calendar-2.json. Read by the n8n workflow. Edit, then run: node social/scripts/check-calendar.mjs social/content/calendar-3.json. Days around the expected Ashura dates (9-10 Muharram) carry a \"note\" flagging them for review and are kept calm/non-promotional. No post on 9-10 Muharram (Ashura, expected around 14-15 June 2027): the Ashura-day post was removed on review. Muharram 1-10 (days 45-54) is kept quiet: no sales posts or jokes (moved or removed on review).",
   "defaultStart": "2027-04-23",
   "timezone": "Asia/Karachi",
   "postTime": "20:30",
@@ -1051,26 +1051,26 @@
       "day": 47,
       "date": "2027-06-08",
       "weekday": "Tue",
-      "id": "owners-summer-indoor-seating",
-      "pillar": "for-restaurants",
-      "audience": "restaurants",
+      "id": "turn-it-in-3d-no-ar",
+      "pillar": "see-it-first",
+      "audience": "diners",
       "format": "single",
-      "caption": "As tables move indoors for summer, guests are already comparing menus before they walk in. A 3D menu gives them a reason to choose yours first.\n\nAndar baithne ka season, faisla karne ka bhi season hai.\n\nDM \"PILOT\" for the Lahore pilot, PKR 25,000.",
+      "caption": "Not every phone supports AR, especially older Android models, the dish still turns fully in 3D either way.\n\nPurana phone ho ya naya, dish poori tarah dikh jaati hai.\n\nTry it, whatever phone you're on.",
       "hashtags": [
         "#menva",
-        "#lahorerestaurants",
-        "#restaurantmarketing",
-        "#lahorefood"
+        "#lahorefood",
+        "#lahorefoodies",
+        "#3dmenu"
       ],
-      "alt": "A real dish scanned in 3D, pitched to owners for indoor summer seating season.",
+      "alt": "A real dish scanned in 3D, shown working on any phone, with or without AR support.",
       "slides": [
         {
           "layout": "hero",
-          "over": "For restaurants",
-          "dish": "steak-main",
-          "crop": "board",
-          "h": "Indoor seating season *is pitch season too.*",
-          "b": "Guests are already deciding where to sit, give them a reason to open the menu."
+          "over": "Works on any phone",
+          "dish": "garlic-prawn-skewers",
+          "crop": "full",
+          "h": "Older phone, *same real dish.*",
+          "b": "No ARCore, no problem, the 3D view still works."
         }
       ]
     },
@@ -1079,24 +1079,26 @@
       "day": 49,
       "date": "2027-06-10",
       "weekday": "Thu",
-      "id": "types-of-people-13-ar-filmer",
-      "pillar": "relatable",
+      "id": "budget-summer-order",
+      "pillar": "menu-truth",
       "audience": "diners",
       "format": "single",
-      "caption": "Types of people at dinner, part thirteen: the one who records the entire AR placement before letting anyone actually look at it.\n\n\"Ruk jao, main record kar raha hoon.\"\n\nTag the AR filmer in your group.",
+      "caption": "Student budgets don't stretch in summer break, but the table's still full. Seeing the dish before you order still saves you from the one that doesn't land right.\n\nBudget kam, table full, dekh kar order karo, ghalti nahi hogi.\n\nSave this for the next tight-budget outing.",
       "hashtags": [
         "#menva",
         "#lahorefood",
         "#lahorefoodies",
-        "#lahoreeats"
+        "#summerinlahore"
       ],
-      "alt": "Text post about the friend who films the whole AR placement before anyone else can look.",
+      "alt": "A real dish scanned in 3D, paired with a note about budget-conscious summer-break ordering.",
       "slides": [
         {
-          "layout": "note",
-          "over": "Types of people at dinner · 13",
-          "h": "The AR filmer. *Records the whole placement.*",
-          "ru": "\"Ruk jao, main record kar raha hoon.\" Dish theek jagah rakhna."
+          "layout": "hero",
+          "over": "Summer break, tight budget",
+          "dish": "steak-sandwich",
+          "crop": "close",
+          "h": "Summer-break budget, *same table.*",
+          "b": "Seeing the dish first still saves a bad order."
         }
       ]
     },
@@ -1109,7 +1111,7 @@
       "pillar": "relatable",
       "audience": "diners",
       "format": "single",
-      "caption": "Every other order gets debated at the table. \"Extra ice\" never does.\n\nBarf zyada, iss par koi behas nahi hoti.\n\nWhatever you order, see it before it lands.\n\nSend this to whoever always asks for extra ice.",
+      "caption": "Every other order gets debated at the table. \"Extra ice\" never does.\n\nBarf zyada, is par koi behas nahi hoti.\n\nWhatever you order, see it before it lands.\n\nSend this to whoever always asks for extra ice.",
       "hashtags": [
         "#menva",
         "#lahorefood",
@@ -1130,34 +1132,6 @@
     },
     {
       "n": 37,
-      "day": 51,
-      "date": "2027-06-12",
-      "weekday": "Sat",
-      "id": "owners-analytics-recap-2",
-      "pillar": "for-restaurants",
-      "audience": "restaurants",
-      "format": "single",
-      "caption": "Halfway through the season is a good time to check what guests are actually opening on your menu, not guessing, just reading the numbers.\n\nAadha season guzar gaya, ab numbers dekhne ka waqt hai.\n\nDM \"PILOT\" for the Lahore pilot, PKR 25,000.",
-      "hashtags": [
-        "#menva",
-        "#lahorerestaurants",
-        "#restaurantmarketing",
-        "#lahorefood"
-      ],
-      "alt": "A real dish scanned in 3D, pitched to owners around checking mid-season pilot analytics.",
-      "slides": [
-        {
-          "layout": "hero",
-          "over": "Mid-season check",
-          "dish": "chicken-fajita-wrap",
-          "crop": "board",
-          "h": "Mid-season check: *what are guests opening?*",
-          "b": "Pilot analytics show scans, dish opens, AR launches, waiter lists."
-        }
-      ]
-    },
-    {
-      "n": 38,
       "day": 52,
       "date": "2027-06-13",
       "weekday": "Sun",
@@ -1185,7 +1159,7 @@
       ]
     },
     {
-      "n": 39,
+      "n": 38,
       "day": 56,
       "date": "2027-06-17",
       "weekday": "Thu",
@@ -1223,7 +1197,7 @@
       ]
     },
     {
-      "n": 40,
+      "n": 39,
       "day": 57,
       "date": "2027-06-18",
       "weekday": "Fri",
@@ -1249,7 +1223,7 @@
       ]
     },
     {
-      "n": 41,
+      "n": 40,
       "day": 58,
       "date": "2027-06-19",
       "weekday": "Sat",
@@ -1289,7 +1263,7 @@
       ]
     },
     {
-      "n": 42,
+      "n": 41,
       "day": 59,
       "date": "2027-06-20",
       "weekday": "Sun",
@@ -1298,7 +1272,7 @@
       "audience": "diners",
       "format": "carousel",
       "note": "Mango season trend post — text-only, no MENVA mango scan exists.",
-      "caption": "This time of year, every dawat, every dinner table, ends the same way, a plate of mangoes in the middle, no menu needed.\n\nJoon mein Lahore ka ek hi usool hai, aakhir mein aam zaroor aayega.\n\nWe haven't scanned a mango yet, so no true-size AR for this one, just appreciation.\n\nTag whoever's bringing the mangoes this weekend.",
+      "caption": "This time of year, every dawat, every dinner table, ends the same way, a plate of mangoes in the middle, no menu needed.\n\nJune mein Lahore ka ek hi usool hai, aakhir mein aam zaroor aayega.\n\nWe haven't scanned a mango yet, so no true-size AR for this one, just appreciation.\n\nTag whoever's bringing the mangoes this weekend.",
       "hashtags": [
         "#menva",
         "#lahorefood",
@@ -1327,7 +1301,7 @@
       ]
     },
     {
-      "n": 43,
+      "n": 42,
       "day": 61,
       "date": "2027-06-22",
       "weekday": "Tue",
@@ -1361,7 +1335,7 @@
       ]
     },
     {
-      "n": 44,
+      "n": 43,
       "day": 63,
       "date": "2027-06-24",
       "weekday": "Thu",
@@ -1390,10 +1364,64 @@
       ]
     },
     {
-      "n": 45,
+      "n": 44,
       "day": 64,
       "date": "2027-06-25",
       "weekday": "Fri",
+      "id": "types-of-people-13-ar-filmer",
+      "pillar": "relatable",
+      "audience": "diners",
+      "format": "single",
+      "caption": "Types of people at dinner, part thirteen: the one who records the entire AR placement before letting anyone actually look at it.\n\n\"Ruk jao, main record kar raha hoon.\"\n\nTag the AR filmer in your group.",
+      "hashtags": [
+        "#menva",
+        "#lahorefood",
+        "#lahorefoodies",
+        "#lahoreeats"
+      ],
+      "alt": "Text post about the friend who films the whole AR placement before anyone else can look.",
+      "slides": [
+        {
+          "layout": "note",
+          "over": "Types of people at dinner · 13",
+          "h": "The AR filmer. *Records the whole placement.*",
+          "ru": "\"Ruk jao, main record kar raha hoon.\" Dish theek jagah rakhna."
+        }
+      ]
+    },
+    {
+      "n": 45,
+      "day": 65,
+      "date": "2027-06-26",
+      "weekday": "Sat",
+      "id": "owners-summer-indoor-seating",
+      "pillar": "for-restaurants",
+      "audience": "restaurants",
+      "format": "single",
+      "caption": "As tables move indoors for summer, guests are already comparing menus before they walk in. A 3D menu gives them a reason to choose yours first.\n\nAndar baithne ka season, faisla karne ka bhi season hai.\n\nDM \"PILOT\" for the Lahore pilot, PKR 25,000.",
+      "hashtags": [
+        "#menva",
+        "#lahorerestaurants",
+        "#restaurantmarketing",
+        "#lahorefood"
+      ],
+      "alt": "A real dish scanned in 3D, pitched to owners for indoor summer seating season.",
+      "slides": [
+        {
+          "layout": "hero",
+          "over": "For restaurants",
+          "dish": "steak-main",
+          "crop": "board",
+          "h": "Indoor seating season *is pitch season too.*",
+          "b": "Guests are already deciding where to sit, give them a reason to open the menu."
+        }
+      ]
+    },
+    {
+      "n": 46,
+      "day": 66,
+      "date": "2027-06-27",
+      "weekday": "Sun",
       "id": "types-of-people-14-ice-negotiator",
       "pillar": "relatable",
       "audience": "diners",
@@ -1416,63 +1444,7 @@
       ]
     },
     {
-      "n": 46,
-      "day": 65,
-      "date": "2027-06-26",
-      "weekday": "Sat",
-      "id": "turn-it-in-3d-no-ar",
-      "pillar": "see-it-first",
-      "audience": "diners",
-      "format": "single",
-      "caption": "Not every phone supports AR, especially older Android models, the dish still turns fully in 3D either way.\n\nPurana phone ho ya naya, dish poori tarah dikh jaati hai.\n\nTry it, whatever phone you're on.",
-      "hashtags": [
-        "#menva",
-        "#lahorefood",
-        "#lahorefoodies",
-        "#3dmenu"
-      ],
-      "alt": "A real dish scanned in 3D, shown working on any phone, with or without AR support.",
-      "slides": [
-        {
-          "layout": "hero",
-          "over": "Works on any phone",
-          "dish": "garlic-prawn-skewers",
-          "crop": "full",
-          "h": "Older phone, *same real dish.*",
-          "b": "No ARCore, no problem, the 3D view still works."
-        }
-      ]
-    },
-    {
       "n": 47,
-      "day": 66,
-      "date": "2027-06-27",
-      "weekday": "Sun",
-      "id": "budget-summer-order",
-      "pillar": "menu-truth",
-      "audience": "diners",
-      "format": "single",
-      "caption": "Student budgets don't stretch in summer break, but the table's still full. Seeing the dish before you order still saves you from the one that doesn't land right.\n\nBudget kam, table full, dekh kar order karo, ghalti nahi hogi.\n\nSave this for the next tight-budget outing.",
-      "hashtags": [
-        "#menva",
-        "#lahorefood",
-        "#lahorefoodies",
-        "#summerinlahore"
-      ],
-      "alt": "A real dish scanned in 3D, paired with a note about budget-conscious summer-break ordering.",
-      "slides": [
-        {
-          "layout": "hero",
-          "over": "Summer break, tight budget",
-          "dish": "steak-sandwich",
-          "crop": "close",
-          "h": "Summer-break budget, *same table.*",
-          "b": "Seeing the dish first still saves a bad order."
-        }
-      ]
-    },
-    {
-      "n": 48,
       "day": 68,
       "date": "2027-06-29",
       "weekday": "Tue",
@@ -1480,7 +1452,7 @@
       "pillar": "for-restaurants",
       "audience": "restaurants",
       "format": "single",
-      "caption": "One of the quieter benefits: fewer table-side questions about what a dish actually looks like, since guests already saw it before ordering.\n\n\"Yeh kaisi dikhti hai\" wala sawal khud hi khatam ho jaata hai.\n\nDM \"PILOT\" for the Lahore pilot, PKR 25,000.",
+      "caption": "One quieter upside to expect: fewer table-side questions about what a dish actually looks like, once guests have already seen it before ordering.\n\n\"Yeh kaisi dikhti hai\" wala sawal aksar khud hi khatam ho jaata hai.\n\nDM \"PILOT\" for the Lahore pilot, PKR 25,000.",
       "hashtags": [
         "#menva",
         "#lahorerestaurants",
@@ -1495,12 +1467,12 @@
           "dish": "chicken-fajita-wrap",
           "crop": "close",
           "h": "Fewer \"what does this *look like\" questions.*",
-          "b": "Guests answer that one themselves before the waiter arrives."
+          "b": "Guests can often answer that one themselves before the waiter arrives."
         }
       ]
     },
     {
-      "n": 49,
+      "n": 48,
       "day": 70,
       "date": "2027-07-01",
       "weekday": "Thu",
@@ -1528,7 +1500,7 @@
       ]
     },
     {
-      "n": 50,
+      "n": 49,
       "day": 71,
       "date": "2027-07-02",
       "weekday": "Fri",
@@ -1566,7 +1538,7 @@
       ]
     },
     {
-      "n": 51,
+      "n": 50,
       "day": 72,
       "date": "2027-07-03",
       "weekday": "Sat",
@@ -1594,7 +1566,7 @@
       ]
     },
     {
-      "n": 52,
+      "n": 51,
       "day": 73,
       "date": "2027-07-04",
       "weekday": "Sun",
@@ -1622,7 +1594,7 @@
       ]
     },
     {
-      "n": 53,
+      "n": 52,
       "day": 75,
       "date": "2027-07-06",
       "weekday": "Tue",
@@ -1649,7 +1621,7 @@
       ]
     },
     {
-      "n": 54,
+      "n": 53,
       "day": 77,
       "date": "2027-07-08",
       "weekday": "Thu",
@@ -1683,7 +1655,7 @@
       ]
     },
     {
-      "n": 55,
+      "n": 54,
       "day": 78,
       "date": "2027-07-09",
       "weekday": "Fri",
@@ -1711,7 +1683,7 @@
       ]
     },
     {
-      "n": 56,
+      "n": 55,
       "day": 79,
       "date": "2027-07-10",
       "weekday": "Sat",
@@ -1737,7 +1709,7 @@
       ]
     },
     {
-      "n": 57,
+      "n": 56,
       "day": 80,
       "date": "2027-07-11",
       "weekday": "Sun",
@@ -1775,7 +1747,7 @@
       ]
     },
     {
-      "n": 58,
+      "n": 57,
       "day": 82,
       "date": "2027-07-13",
       "weekday": "Tue",
@@ -1803,7 +1775,7 @@
       ]
     },
     {
-      "n": 59,
+      "n": 58,
       "day": 84,
       "date": "2027-07-15",
       "weekday": "Thu",
@@ -1831,7 +1803,7 @@
       ]
     },
     {
-      "n": 60,
+      "n": 59,
       "day": 85,
       "date": "2027-07-16",
       "weekday": "Fri",
@@ -1879,7 +1851,7 @@
       ]
     },
     {
-      "n": 61,
+      "n": 60,
       "day": 86,
       "date": "2027-07-17",
       "weekday": "Sat",
@@ -1917,7 +1889,7 @@
       ]
     },
     {
-      "n": 62,
+      "n": 61,
       "day": 87,
       "date": "2027-07-18",
       "weekday": "Sun",
@@ -1943,7 +1915,7 @@
       ]
     },
     {
-      "n": 63,
+      "n": 62,
       "day": 89,
       "date": "2027-07-20",
       "weekday": "Tue",
@@ -1981,7 +1953,7 @@
       ]
     },
     {
-      "n": 64,
+      "n": 63,
       "day": 91,
       "date": "2027-07-22",
       "weekday": "Thu",
@@ -2037,7 +2009,7 @@
       ]
     },
     {
-      "n": 65,
+      "n": 64,
       "day": 92,
       "date": "2027-07-23",
       "weekday": "Fri",
@@ -2065,7 +2037,7 @@
       ]
     },
     {
-      "n": 66,
+      "n": 65,
       "day": 93,
       "date": "2027-07-24",
       "weekday": "Sat",
@@ -2073,7 +2045,7 @@
       "pillar": "behind-the-scan",
       "audience": "both",
       "format": "single",
-      "caption": "A quick honest note: we're still working from the same four real scans we started with. No new ones yet, no rush to fake it with anything else.\n\nAbhi tak char dishes hain, jaldi mein nahi hain, sahi karna zyada zaroori hai.\n\nMore scans when they're actually ready, not before.",
+      "caption": "A quick honest note: we're still working from the same four real scans we started with. No new ones yet, no rush to fake it with anything else.\n\nAbhi tak char dish hain, jaldi mein nahi hain, sahi karna zyada zaroori hai.\n\nMore scans when they're actually ready, not before.",
       "hashtags": [
         "#menva",
         "#lahorefood"
@@ -2084,12 +2056,12 @@
           "layout": "note",
           "h": "Still *four dishes.*",
           "by": "The MENVA team",
-          "ru": "Abhi tak char dishes, jaldi mein nahi hain."
+          "ru": "Abhi tak char dish, jaldi mein nahi hain."
         }
       ]
     },
     {
-      "n": 67,
+      "n": 66,
       "day": 94,
       "date": "2027-07-25",
       "weekday": "Sun",
@@ -2117,7 +2089,7 @@
       ]
     },
     {
-      "n": 68,
+      "n": 67,
       "day": 96,
       "date": "2027-07-27",
       "weekday": "Tue",
@@ -2145,7 +2117,7 @@
       ]
     },
     {
-      "n": 69,
+      "n": 68,
       "day": 98,
       "date": "2027-07-29",
       "weekday": "Thu",
@@ -2173,7 +2145,7 @@
       ]
     },
     {
-      "n": 70,
+      "n": 69,
       "day": 99,
       "date": "2027-07-30",
       "weekday": "Fri",
@@ -2199,7 +2171,7 @@
       ]
     },
     {
-      "n": 71,
+      "n": 70,
       "day": 100,
       "date": "2027-07-31",
       "weekday": "Sat",

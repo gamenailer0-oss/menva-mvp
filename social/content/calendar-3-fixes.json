@@ -1,0 +1,58 @@
+[
+  {
+    "file": "calendar-3.json",
+    "id": "team-note-halfway-summer",
+    "field": "caption",
+    "old": "Abhi tak char dishes hain, jaldi mein nahi hain, sahi karna zyada zaroori hai.",
+    "new": "Abhi tak char dish hain, jaldi mein nahi hain, sahi karna zyada zaroori hai.",
+    "why": "Urdu doesn't take the English plural '-s' on a borrowed noun once a number already marks it plural ('char dish', not 'char dishes') — the same pattern the calendar already uses correctly elsewhere ('Result season', not 'Results season'). 'Char dishes' reads like a direct English insert, not something a Lahori would actually say."
+  },
+  {
+    "file": "calendar-3.json",
+    "id": "team-note-halfway-summer",
+    "field": "slides[0].ru",
+    "old": "Abhi tak char dishes, jaldi mein nahi hain.",
+    "new": "Abhi tak char dish, jaldi mein nahi hain.",
+    "why": "Same fix as the caption, for consistency within the same post: 'char dish' not 'char dishes'."
+  },
+  {
+    "file": "calendar-3.json",
+    "id": "cold-drinks-again",
+    "field": "caption",
+    "old": "Barf zyada, iss par koi behas nahi hoti.",
+    "new": "Barf zyada, is par koi behas nahi hoti.",
+    "why": "Spelling consistency: 'is' (this) is spelled with a single 's' elsewhere in this same calendar (muharram-quiet-note: 'is dauraan lehja...'). 'Iss' is the only doubled-s instance in the file — standardising avoids the same kind of drift the earlier roman-urdu-review.md caught with 'baqi' vs 'baaki'."
+  },
+  {
+    "file": "calendar-3.json",
+    "id": "mango-season-lahore-plates",
+    "field": "caption",
+    "old": "Joon mein Lahore ka ek hi usool hai, aakhir mein aam zaroor aayega.",
+    "new": "June mein Lahore ka ek hi usool hai, aakhir mein aam zaroor aayega.",
+    "why": "The brand book's spelling table keeps English loanwords in English, not phonetically respelled ('scan', 'table', not a Roman-Urdu version). Month names follow the same logic — a Lahori would text 'June' with a Roman Urdu sentence around it, not the phonetic 'Joon'. The slide headline in the same post already uses 'June' correctly ('Lahore in June'), so this also fixes an internal inconsistency."
+  },
+  {
+    "file": "calendar-3.json",
+    "id": "owners-staff-time-3",
+    "field": "caption",
+    "old": "One of the quieter benefits: fewer table-side questions about what a dish actually looks like, since guests already saw it before ordering.",
+    "new": "One quieter upside to expect: fewer table-side questions about what a dish actually looks like, once guests have already seen it before ordering.",
+    "why": "States an operational result ('fewer table-side questions') as an established fact. Nothing in BRIEF.md or the brand book confirms this — the pilot's analytics exist but haven't been measured yet (brand-book Section 8: 'No AOV or \"orders increased\" claims about MENVA itself exist yet'). This is the same kind of unverified-benefit claim, just about waiter time instead of sales. Hedging it as an expectation keeps the sentence honest without losing the point."
+  },
+  {
+    "file": "calendar-3.json",
+    "id": "owners-staff-time-3",
+    "field": "caption",
+    "old": "\"Yeh kaisi dikhti hai\" wala sawal khud hi khatam ho jaata hai.",
+    "new": "\"Yeh kaisi dikhti hai\" wala sawal aksar khud hi khatam ho jaata hai.",
+    "why": "Same claims-policy fix as above, in the Roman Urdu line: 'aksar' (often/usually) turns a flat, unverified claim into a plausible, hedged one."
+  },
+  {
+    "file": "calendar-3.json",
+    "id": "owners-staff-time-3",
+    "field": "slides[0].b",
+    "old": "Guests answer that one themselves before the waiter arrives.",
+    "new": "Guests can often answer that one themselves before the waiter arrives.",
+    "why": "Same claims-policy fix, in the slide subtext: states a specific outcome as settled fact when it hasn't been measured yet. 'Can often' keeps the line calm and plausible without an unearned guarantee."
+  }
+]

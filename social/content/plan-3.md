@@ -22,8 +22,8 @@ observance overlapping (Ramadan and Eid ul Fitr both fell in season two). The pi
 close to season two's, with slightly more relatable/seasonal content since so much of the window
 is built around weather and culture rather than a single big event.
 
-Pillars: relatable 30, see-it-first 12, for-restaurants 15, menu-truth 9, behind-the-scan 5 (71
-total). Audience: diners 51, restaurants 15, both 5. Format: 18 carousels (25%), 53 single images
+Pillars: relatable 30, see-it-first 12, for-restaurants 15, menu-truth 9, behind-the-scan 5 (70
+total). Audience: diners 51, restaurants 14, both 5. Format: 18 carousels (26%), 52 single images
 — right on the ~25% carousel target.
 
 ## 2. Themes by week
@@ -130,3 +130,7 @@ Everything else — captions, hashtags, alt text, the DM "PILOT" pitch, the PKR 
 needs no sign-off; it follows the same rules as `calendar.json` and `calendar-2.json` and passes
 the same automated checker (`node social/scripts/check-calendar.mjs social/content/calendar-3.json`
 → OK).
+
+## Review changes (25 Sep 2026)
+
+A copy and sensitivity review (`calendar-3-review.md`) found the calendar strong; 7 wording fixes were applied (`calendar-3-fixes.json`). To keep **1–10 Muharram (days 45–54)** quiet, the two restaurant sales posts and the joke post in that window were moved or removed: `owners-summer-indoor-seating` moved to day 65, `types-of-people-13-ar-filmer` to day 64, and `owners-analytics-recap-2` was removed. The window now holds only the calm Muharram note, two practical tips, a light summer post and the pre-Ashura checklist, with nothing on Ashura itself. Check the dates against the moon sighting in May 2027.

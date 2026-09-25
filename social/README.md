@@ -1,11 +1,11 @@
 # MENVA social: Instagram on autopilot
 
-Posts MENVA's Instagram for 300 days (215 posts, each with a Story), fully automatically, from a free server we control. No third-party scheduler, no approval step, and no AI at runtime: every caption and slide is already written in `content/calendar.json`, `calendar-2.json` and `calendar-3.json`.
+Posts MENVA's Instagram for 300 days (214 posts, each with a Story), fully automatically, from a free server we control. No third-party scheduler, no approval step, and no AI at runtime: every caption and slide is already written in `content/calendar.json`, `calendar-2.json` and `calendar-3.json`.
 
 **Start here:** [marketing/MORNING.md](marketing/MORNING.md) (decisions and to-dos) · [marketing/STRATEGY.md](marketing/STRATEGY.md) (the whole marketing plan on one page) · [SETUP.md](SETUP.md) (server, click by click) · [marketing/LAUNCH-30.md](marketing/LAUNCH-30.md) (the first 30 days) · [OPEN-QUESTIONS.md](OPEN-QUESTIONS.md)
 
 What's in the kit:
-- **Automated Instagram**: 215 feed posts over 300 days (`content/calendar.json`, `calendar-2.json`, `calendar-3.json`), a Story teaser for each, and a 22-post trend bank.
+- **Automated Instagram**: 214 feed posts over 300 days (`content/calendar.json`, `calendar-2.json`, `calendar-3.json`), a Story teaser for each, and a 22-post trend bank.
 - **Ready to post by hand**: 8 motion Reels (`reels/`), a WhatsApp Status week and 8 ad creatives in 9:16 (`previews/ready/`).
 - **Print**: table tent, menu stickers, window sticker, A4 one-pager, 10-slide pitch deck, pilot results report (`print/`).
 - **Web**: a "for restaurants" landing page (`landing/`) and an Instagram profile kit (`profile/`).
