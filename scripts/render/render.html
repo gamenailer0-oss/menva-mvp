@@ -19,6 +19,7 @@
     import { GLTFLoader } from 'three/addons/loaders/GLTFLoader.js';
     import { DRACOLoader } from 'three/addons/loaders/DRACOLoader.js';
     import { USDZExporter } from 'three/addons/exporters/USDZExporter.js';
+    import { MeshStandardMaterial } from 'three';
 
     await customElements.whenDefined('model-viewer');
     const ModelViewer = customElements.get('model-viewer');
@@ -62,6 +63,8 @@
       const draco = new DRACOLoader().setDecoderPath('/vendor/draco/');
       const gltf = await new GLTFLoader().setDRACOLoader(draco).loadAsync(src);
       if (!opts.normalMap) gltf.scene.traverse((o) => { if (o.material) o.material.normalMap = null; });
+      // Unlit GLBs load as MeshBasicMaterial, which the exporter skips; Quick Look gets a matte standard material.
+      gltf.scene.traverse((o) => { if (o.material?.isMeshBasicMaterial) o.material = new MeshStandardMaterial({ map: o.material.map, roughness: 1, metalness: 0 }); });
       const exporter = new USDZExporter();
       const bytes = await exporter.parseAsync(gltf.scene, {
         quickLookCompatible: true,

@@ -78,13 +78,57 @@ test('dish sheet: bean card only when the fields exist, serve tags, no steam on 
   expect(w.errors).toEqual([]);
 });
 
-test('home page has no link to Baraza (not listed)', async ({ page }) => {
+test('home page: Baraza is listed alongside Gauchos', async ({ page }) => {
   const w = watch(page);
   await page.goto('/');
-  await expect(page.locator('a[href="/baraza"], a[href^="/baraza/"], a[href^="/baraza?"]')).toHaveCount(0);
-  await expect(page.locator('.pilot-card')).toBeVisible(); // Gauchos still shows, unchanged
+
+  await test.step('Gauchos card still shows, unchanged, and comes first (pilot)', async () => {
+    const cards = page.locator('.pilot-card');
+    await expect(cards).toHaveCount(2);
+    await expect(cards.first()).toBeVisible();
+    await expect(cards.first()).toHaveAttribute('href', '/g');
+  });
+
+  await test.step('the Baraza card shows its brand and links to /baraza', async () => {
+    const barazaItem = page.locator('.restaurant-row-item[data-theme="baraza"]');
+    const card = barazaItem.locator('.pilot-card');
+    await expect(card).toHaveAttribute('href', '/baraza');
+    await expect(card.locator('.pilot-logo-round')).toHaveAttribute('src', /baraza-logo\.webp/);
+    await expect(card).toContainText('Baraza Coffee');
+    await expect(card).toContainText('Gulberg III · Lahore');
+    await expect(card.locator('.pilot-tagline')).toHaveText("Pakistan's largest specialty coffee brew bar");
+  });
+
+  // Baraza's 3D pipeline runs independently of this listing change: today it may have zero 3D
+  // dishes (no strip renders — never an empty box) or some already landed (e.g. bz-chicken-pizza).
+  // Either way the strip, when present, must render exactly like Gauchos': a photo + name per dish,
+  // linking into that dish on /baraza.
+  await test.step('dish strip (if any 3D dishes have landed) renders like Gauchos\'', async () => {
+    const barazaItem = page.locator('.restaurant-row-item[data-theme="baraza"]');
+    const items = barazaItem.locator('.pilot-dishes li');
+    const n = await items.count();
+    for (let i = 0; i < n; i++) {
+      const link = items.nth(i).locator('a');
+      await expect(link).toHaveAttribute('href', /^\/baraza\?dish=/);
+      await expect(link.locator('.pilot-dish-photo img')).toBeVisible();
+      await expect(link.locator('.pilot-dish-name')).not.toBeEmpty();
+    }
+  });
+
   expect(w.errors).toEqual([]);
   expect(w.external).toEqual([]);
+});
+
+test('clicking the Baraza home card opens /baraza with its own theme', async ({ page }) => {
+  await page.goto('/');
+  await page.locator('.restaurant-row-item[data-theme="baraza"] .pilot-card').click();
+  await expect(page).toHaveURL(/\/baraza$/);
+  expect(await page.evaluate(() => document.body.dataset.theme)).toBe('baraza');
+});
+
+test('Baraza pages are not noindex\'d now that it is listed', async ({ request }) => {
+  const res = await request.get('/baraza');
+  expect(res.headers()['x-robots-tag']).toBeUndefined();
 });
 
 test('Gauchos is unaffected: theme, accent and existing journeys', async ({ page }) => {

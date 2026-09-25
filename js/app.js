@@ -161,16 +161,31 @@
   }
 
   // A restaurant card for the home page's "Our restaurants" row: logo/name, up to 3 dish photos,
-  // and a link to its menu. Used for every restaurant with `listed: true` (pilot first).
+  // and a link to its menu. Used for every restaurant with `listed: true` (pilot first). The whole
+  // row item is scoped with the restaurant's own `data-theme` so --accent etc. resolve to its own
+  // palette (Gauchos' card is unaffected — none of its rules read a themed variable). A restaurant
+  // with a `logoRound` (e.g. Baraza) gets the richer brand layout: round crop, name, tagline and a
+  // sage-band accent stripe; one without it keeps the original wide-logo card unchanged.
   function restaurantRowItem(r) {
     const rslug = esc(r.slug);
     const rname = esc(r.displayName || r.name);
+    const rtheme = esc(r.theme || 'default');
     const rdishes = (r.dishes || []).filter(d => d.has3d).slice(0, 3);
-    return `<div class="restaurant-row-item">
-      <a class="pilot-card" href="/${rslug}" data-link>
-        ${r.logo ? `<img src="${esc(r.logo)}" alt="${rname}" width="200" height="80" class="pilot-logo">` : `<span class="pilot-name">${rname}</span>`}
-        <span class="pilot-where">${esc(r.area || 'Gulberg III')} · ${esc(r.location || 'Lahore')}</span>
-      </a>
+    const hasBrand = !!r.logoRound;
+    // The brand layout has room for the full name (e.g. "Baraza Coffee"), unlike the compact
+    // wide-logo card, which already carries the name in its logo art.
+    const rfullname = esc(r.name || r.displayName);
+    const cardInner = hasBrand
+      ? `<img src="${esc(r.logoRound)}" alt="${rfullname}" width="56" height="56" class="pilot-logo-round">
+        <span class="pilot-copy">
+          <span class="pilot-name">${rfullname}</span>
+          ${r.tagline ? `<span class="pilot-tagline">${esc(r.tagline)}</span>` : ''}
+          <span class="pilot-where">${esc(r.area || 'Gulberg III')} · ${esc(r.location || 'Lahore')}</span>
+        </span>`
+      : `${r.logo ? `<img src="${esc(r.logo)}" alt="${rname}" width="200" height="80" class="pilot-logo">` : `<span class="pilot-name">${rname}</span>`}
+        <span class="pilot-where">${esc(r.area || 'Gulberg III')} · ${esc(r.location || 'Lahore')}</span>`;
+    return `<div class="restaurant-row-item" data-theme="${rtheme}">
+      <a class="pilot-card${hasBrand ? ' pilot-card--brand' : ''}" href="/${rslug}" data-link>${cardInner}</a>
       ${rdishes.length ? `<ul class="pilot-dishes">${rdishes.map(d => `
         <li><a href="/${rslug}?dish=${esc(d.id)}" data-link>
           <span class="pilot-dish-photo" style="background-image:url('${d.assets.blur}')"><img src="${esc(d.assets.poster)}" alt="" width="1200" height="900" loading="lazy" decoding="async"></span>

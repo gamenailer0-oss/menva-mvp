@@ -7,10 +7,12 @@ test('home page: every button and link', async ({ page }) => {
   const w = watch(page);
   await page.goto('/');
 
+  const gauchosItem = page.locator('.restaurant-row-item[data-theme="gauchos"]');
+
   await test.step('shows the hero, the Gauchos section and "How it works"', async () => {
     await expect(page.locator('h1')).toContainText('See it on your table.');
-    await expect(page.locator('.pilot-card')).toBeVisible();
-    await expect(page.locator('.pilot-dishes li')).toHaveCount(3);
+    await expect(page.locator('.pilot-card').first()).toBeVisible(); // Gauchos card (pilot, listed first)
+    await expect(gauchosItem.locator('.pilot-dishes li')).toHaveCount(3);
     await expect(page.locator('.home-how li')).toHaveCount(3);
   });
 
@@ -31,21 +33,21 @@ test('home page: every button and link', async ({ page }) => {
   });
 
   await test.step('Gauchos card opens the menu', async () => {
-    await page.locator('.pilot-card').click();
+    await page.locator('.pilot-card').first().click();
     await expect(page).toHaveURL(/\/g$/);
     await page.goBack();
   });
 
   await test.step('"See the full menu" opens the menu', async () => {
-    await page.locator('.pilot-more').click();
+    await page.locator('.pilot-more').first().click();
     await expect(page).toHaveURL(/\/g$/);
     await page.goBack();
   });
 
-  const names = await page.locator('.pilot-dish-name').allTextContents();
+  const names = await gauchosItem.locator('.pilot-dish-name').allTextContents();
   for (const [i, name] of names.entries()) {
     await test.step(`dish photo "${name}" opens that dish`, async () => {
-      await page.locator('.pilot-dishes a').nth(i).click();
+      await gauchosItem.locator('.pilot-dishes a').nth(i).click();
       await expect(page.locator('dialog[open] #dish-title')).toHaveText(name);
       await expect(page).toHaveURL(/\/g$/); // ?dish= removed so a reload shows the menu
       await page.goto('/');
@@ -184,7 +186,7 @@ test('error screens: every button', async ({ page }) => {
     await page.goto('/nowhere/4');
     await page.getByRole('link', { name: /Go to MENVA/ }).click();
     await expect(page).toHaveURL(/\/$/);
-    await expect(page.locator('.pilot-card')).toBeVisible();
+    await expect(page.locator('.pilot-card').first()).toBeVisible();
   });
 
   await test.step('"Try again" after the menu failed to load', async () => {

@@ -1124,6 +1124,29 @@ footer small {
   color: #5E5247;
   text-align: right;
 }
+/* Richer brand card (a restaurant with its own round logo, e.g. Baraza): round crop on the left,
+   name + tagline + area stacked beside it, a thin sage-band stripe reads as that restaurant's own
+   mark without competing with the MENVA ember used elsewhere on this page. */
+.pilot-card--brand {
+  justify-content: flex-start;
+  border-left: 5px solid var(--brand-band, var(--gold));
+}
+.pilot-logo-round {
+  width: 56px;
+  height: 56px;
+  flex: none;
+  border-radius: 50%;
+  object-fit: cover;
+  border: 1px solid var(--line);
+}
+.pilot-copy { display: flex; flex-direction: column; gap: 2px; min-width: 0; }
+.pilot-card--brand .pilot-name { font-size: var(--text-lg); }
+.pilot-tagline { font-size: var(--text-xs); color: var(--accent); }
+.pilot-card--brand .pilot-where {
+  margin-top: 2px;
+  text-align: left;
+  color: var(--muted);
+}
 .pilot-dishes {
   display: grid;
   grid-template-columns: repeat(3, minmax(0, 1fr));

@@ -12,7 +12,7 @@ import crypto from 'node:crypto';
 import { execFileSync } from 'node:child_process';
 import { fileURLToPath } from 'node:url';
 import { Document, NodeIO } from '@gltf-transform/core';
-import { ALL_EXTENSIONS } from '@gltf-transform/extensions';
+import { ALL_EXTENSIONS, KHRMaterialsUnlit } from '@gltf-transform/extensions';
 import { weld, dedup, prune, draco, flatten, getBounds, transformMesh, clearNodeTransform } from '@gltf-transform/functions';
 import draco3d from 'draco3dgltf';
 import sharp from 'sharp';
@@ -292,9 +292,15 @@ async function processDish(row, io, getRenderer) {
   const { tris, verts } = await clean(doc, warnings);
 
   // Material sanity (spec §4): flat high roughness with no map reads as clay.
+  // model-sources.json 'unlit': the lighting is already in the texture (photo-like scans and generated
+  // models), so the GLB is shown unlit — no plastic highlights — and the USDZ gets a fully matte material.
+  const unlit = !!sources[id]?.unlit;
   const material = doc.getRoot().listMaterials()[0];
   const origRoughness = material.getRoughnessFactor();
-  if (origRoughness >= FLAT_ROUGHNESS && !hasRoughnessMap) {
+  if (unlit) {
+    material.setRoughnessFactor(1).setExtension('KHR_materials_unlit', doc.createExtension(KHRMaterialsUnlit).createUnlit());
+    warnings.push('Unlit (model-sources.json): lighting comes from the texture; the USDZ uses a matte material.');
+  } else if (origRoughness >= FLAT_ROUGHNESS && !hasRoughnessMap) {
     material.setRoughnessFactor(FIXED_ROUGHNESS);
     warnings.push(`Roughness was flat ${+origRoughness.toFixed(2)} with no map — set to ${FIXED_ROUGHNESS}. Needs a manual look for clay-like appearance.`);
   }
