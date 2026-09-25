@@ -1,6 +1,7 @@
 // Publish the rendered images to Instagram (Instagram API with Instagram Login), then record it.
 // Dry run: skip Instagram, just report where the images are.
 const p = $("Pick today's post").first().json;
+if (p.skip) return [];
 const images = $('Build render requests').all().map((i) => i.json.imageUrl);
 const helpers = this.helpers;
 const state = readState();
@@ -22,7 +23,9 @@ const sleep = (ms) => new Promise((r) => setTimeout(r, ms));
 const envToken = ($env.IG_ACCESS_TOKEN || '').trim();
 if (!envToken && !(state.token && state.token.value)) throw new Error('IG_ACCESS_TOKEN is empty in .env — see SETUP.md step 6');
 const envTag = envToken.slice(-12);
-if (!state.token || state.token.fromEnv !== envTag) state.token = { value: envToken, fromEnv: envTag, refreshedAt: null };
+// A newly pasted token counts as fresh (refresh needs it to be 24h+ old, so the first refresh is a week later).
+// A blank .env token never throws away a working refreshed one.
+if (envToken && (!state.token || state.token.fromEnv !== envTag)) state.token = { value: envToken, fromEnv: envTag, refreshedAt: DateTime.now().toISO() };
 let token = state.token.value;
 
 async function graph(method, path, qs) {
@@ -40,7 +43,8 @@ const ageDays = state.token.refreshedAt ? DateTime.now().diff(DateTime.fromISO(s
 if (ageDays > 7) {
   try {
     const r = await graph('GET', '/refresh_access_token', { grant_type: 'ig_refresh_token' });
-    if (r.access_token) { token = r.access_token; state.token.value = token; }
+    if (!r.access_token) throw new Error('Instagram answered the refresh without a new token');
+    token = r.access_token; state.token.value = token;
     state.token.refreshedAt = DateTime.now().toISO();
     state.token.expiresInDays = r.expires_in ? Math.round(r.expires_in / 86400) : null;
     writeState(state);

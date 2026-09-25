@@ -15,6 +15,16 @@ if (!start.isValid) throw new Error('START_DATE "' + startIso + '" is not a date
 
 const dateOf = (p) => start.plus({ days: p.day - 1 }).toISODate();
 
+if (STATE_PROBLEM) { logLine(['', '', 'state-recovered', STATE_PROBLEM]); await notify(this.helpers, 'MENVA: posting history was reset', STATE_PROBLEM); }
+
+// Once, when the last calendar day has passed: say so, instead of going quiet forever.
+const last = cal.posts[cal.posts.length - 1];
+if (!manual && last && today > dateOf(last) && !state.endedAlerted) {
+  state.endedAlerted = today; writeState(state);
+  logLine(['', '', 'calendar-ended', 'last post was ' + dateOf(last)]);
+  await notify(this.helpers, 'MENVA: the content calendar has ended', `The last post (#${last.n}, ${dateOf(last)}) has gone out. Add social/content/calendar-${last.part + 1}.json and run update.sh to keep posting.`);
+}
+
 let post = cal.posts.find((p) => dateOf(p) === today);
 let test = false;
 if (manual && !post) {
@@ -39,7 +49,16 @@ if (lock && DateTime.fromISO(lock.at).plus({ minutes: 30 }) > now) return [];
 if (!manual) {
   if (now < postTime) return [];
   if (done) return [];
-  if (attempts >= MAX_ATTEMPTS) return [];
+  if (attempts >= MAX_ATTEMPTS) {
+    const key = post.id + '@' + today;
+    state.gaveUp = state.gaveUp || {};
+    if (!state.gaveUp[key]) {
+      state.gaveUp[key] = true; writeState(state);
+      logLine([post.n, post.id, 'gave-up', `${MAX_ATTEMPTS} failed attempts today`]);
+      await notify(this.helpers, `MENVA: post #${post.n} did not go out today`, `It failed ${MAX_ATTEMPTS} times, so it was skipped. The calendar carries on tomorrow. Check the Executions tab in n8n for the reason.`);
+    }
+    return [];
+  }
 } else if (live && state.posted && state.posted[post.id]) {
   return [{ json: { skip: true, reason: 'Already posted: ' + state.posted[post.id].permalink } }];
 }

@@ -23,7 +23,12 @@ DOCKER="sudo docker"
 say "Opening ports 80 and 443 on the server firewall"
 for rule in "-p tcp --dport 80" "-p tcp --dport 443" "-p udp --dport 443"; do
   # shellcheck disable=SC2086
-  sudo iptables -C INPUT -m state --state NEW $rule -j ACCEPT 2>/dev/null || sudo iptables -I INPUT 5 -m state --state NEW $rule -j ACCEPT
+  if ! sudo iptables -C INPUT -m state --state NEW $rule -j ACCEPT 2>/dev/null; then
+    # Insert just before the first REJECT/DROP rule (Oracle's images end INPUT with one); else append.
+    pos=$(sudo iptables -L INPUT --line-numbers -n | awk '$2=="REJECT" || $2=="DROP" {print $1; exit}')
+    # shellcheck disable=SC2086
+    if [ -n "$pos" ]; then sudo iptables -I INPUT "$pos" -m state --state NEW $rule -j ACCEPT; else sudo iptables -A INPUT -m state --state NEW $rule -j ACCEPT; fi
+  fi
 done
 if command -v netfilter-persistent >/dev/null 2>&1; then sudo netfilter-persistent save >/dev/null; fi
 
@@ -86,5 +91,6 @@ cat <<EOF
   (If the page doesn't load yet, wait a minute: the HTTPS certificate is being issued.)
 
   Next: SETUP.md step 6 (Instagram token).
+  (To use plain \`docker\` without sudo, log out and back in once.)
 
 EOF

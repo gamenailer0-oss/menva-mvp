@@ -165,5 +165,8 @@
       img.onload = r; img.onerror = () => { fail('Image failed: ' + img.src); r(); };
     }));
     return Promise.all(imgs);
-  }).then(() => { window.__ready = true; });
+  }).catch((e) => fail('Fonts failed to load: ' + e.message))
+    // On an error, fail() has already queued its throw; mark ready a moment later so Gotenberg
+    // sees the exception first and refuses the render (failOnConsoleExceptions) instead of shooting it.
+    .then(() => { if (window.__error) setTimeout(() => { window.__ready = true; }, 100); else window.__ready = true; });
 })();

@@ -92,6 +92,8 @@ The installer asks for:
 
 It takes about 5 minutes. When it prints **Done.**, open **https://your-address** in your browser and sign in with that login.
 
+**Then turn on two-factor login** (strongly recommended: the dashboard is on the internet and holds the Instagram key). In n8n, click your initials (bottom left) → **Settings → Personal → Enable 2FA**, and scan the code with an authenticator app.
+
 ## Step 6: Get the Instagram key (15 min)
 
 This lets the server post to your account. Meta changes these screens often, so the wording may be slightly different.

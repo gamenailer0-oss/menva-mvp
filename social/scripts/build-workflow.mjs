@@ -78,7 +78,7 @@ const main = {
     },
     {
       id: 'b0c1a001-0000-4000-8000-000000000009', name: 'Render story (Gotenberg)', type: 'n8n-nodes-base.httpRequest', typeVersion: 4.2, position: [1680, 100],
-      onError: 'continueRegularOutput',
+      onError: 'continueRegularOutput', retryOnFail: true, maxTries: 3, waitBetweenTries: 5000,
       parameters: {
         method: 'POST',
         url: 'http://gotenberg:3000/forms/chromium/screenshot/url',

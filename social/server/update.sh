@@ -16,6 +16,12 @@ $DOCKER compose exec -T n8n n8n import:workflow --input=/repo/social/n8n/workflo
 $DOCKER compose exec -T n8n n8n publish:workflow --id=MenvaAlerts00001
 $DOCKER compose exec -T n8n n8n publish:workflow --id=MenvaAutopost001
 
+# Don't restart in the middle of a publish (the lock in files/state.json lasts at most 30 minutes).
+for _ in $(seq 1 60); do
+  sudo grep -q '"lock"' files/state.json 2>/dev/null || break
+  echo "▸ A post is being published right now; waiting…"; sleep 30
+done
+
 echo "▸ Restarting so the changes take effect"
 $DOCKER compose up -d
 $DOCKER compose restart n8n

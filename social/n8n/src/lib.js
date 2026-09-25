@@ -7,10 +7,11 @@ function readCalendars() {
     .sort((a, b) => (Number((a.match(/-(\d+)/) || [0, 1])[1])) - (Number((b.match(/-(\d+)/) || [0, 1])[1])));
   const first = JSON.parse(fs.readFileSync(CALENDAR_DIR + '/calendar.json', 'utf8'));
   const posts = [];
-  files.forEach((f, i) => {
-    const cal = i === 0 ? first : JSON.parse(fs.readFileSync(CALENDAR_DIR + '/' + f, 'utf8'));
-    const offset = i * 100; // each file is a 100-day block
-    for (const p of cal.posts) posts.push(Object.assign({}, p, { day: p.day + offset, part: i + 1 }));
+  files.forEach((f) => {
+    const num = Number((f.match(/-(\d+)\.json$/) || [0, 1])[1]); // calendar.json = 1, calendar-2.json = 2…
+    const cal = num === 1 ? first : JSON.parse(fs.readFileSync(CALENDAR_DIR + '/' + f, 'utf8'));
+    const offset = (num - 1) * 100; // each file is a 100-day block, placed by its number, not its position
+    for (const p of cal.posts) posts.push(Object.assign({}, p, { day: p.day + offset, part: num }));
   });
   return { defaultStart: first.defaultStart, posts };
 }
@@ -18,8 +19,17 @@ const STATE = '/files/state.json';   // what has been posted, the current Instag
 const LOG = '/files/log/posts.csv';  // one line per attempt, human-readable
 const MAX_ATTEMPTS = 3;              // per post per day, then give up and alert
 
+// A damaged state.json is set aside (never silently lost) and reported through STATE_PROBLEM; the
+// caption check in Publish still prevents double posts while the history is gone.
+let STATE_PROBLEM = '';
 function readState() {
-  try { return JSON.parse(fs.readFileSync(STATE, 'utf8')); } catch (e) { return {}; }
+  if (!fs.existsSync(STATE)) return {};
+  try { return JSON.parse(fs.readFileSync(STATE, 'utf8')); } catch (e) {
+    const aside = STATE + '.broken-' + Date.now();
+    try { fs.renameSync(STATE, aside); } catch (err) { /* ignore */ }
+    STATE_PROBLEM = `state.json could not be read (${e.message}); it was moved to ${aside} and a fresh one started.`;
+    return {};
+  }
 }
 function writeState(s) {
   fs.writeFileSync(STATE + '.tmp', JSON.stringify(s, null, 2));
