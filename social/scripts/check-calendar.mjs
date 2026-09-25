@@ -76,6 +76,14 @@ cal.posts.forEach((p, i) => {
   });
 });
 
+// Post ids must be unique across every calendar file: the server's "already posted" record uses them.
+if (/^calendar(-\d+)?$/.test(NAME)) {
+  for (const f of fs.readdirSync(path.dirname(CAL)).filter((x) => /^calendar(-\d+)?\.json$/.test(x) && x !== NAME + '.json')) {
+    const other = JSON.parse(fs.readFileSync(path.join(path.dirname(CAL), f), 'utf8'));
+    for (const q of other.posts || []) if (seenIds.has(q.id)) problems.push(`${q.id}: id also used in ${f} (ids must be unique across calendar files)`);
+  }
+}
+
 if (problems.length) {
   console.error(`${NAME}.json has ${problems.length} problem(s):\n  ` + problems.join('\n  '));
   process.exit(1);
