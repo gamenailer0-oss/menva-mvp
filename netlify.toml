@@ -92,12 +92,12 @@
 # must resolve before the generic catch-all below — order matters.
 [[redirects]]
   from = "/g/*"
-  to = "/g/index.html"
+  to = "/g/"
   status = 200
 
 [[redirects]]
   from = "/baraza/*"
-  to = "/baraza/index.html"
+  to = "/baraza/"
   status = 200
 
 [[redirects]]
