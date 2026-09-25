@@ -1,6 +1,6 @@
 {
   "version": 1,
-  "about": "Khana kahan?: a weekly sitcom told in group-chat screenshots, with the same six made-up friends. A series file: the server posts it automatically on Wednesdays (a rest day for the main calendar), episode 1 on day 17 (Wed 21 Oct 2026 with the default start). Days are counted from START_DATE across the whole 300 days, not per 100-day block. Every name is invented; never use a real person.",
+  "about": "Khana kahan?: a weekly sitcom told in group-chat screenshots, with the same six made-up friends. A series file: the server posts it automatically on Wednesdays (a rest day for the main calendar), episode 1 on day 17 (Wed 21 Oct 2026 with the default start); season 2 (episodes 13 to 24) runs from day 108 to day 185, with the Ramadan episodes at 16:30 and nothing on Eid day. Days are counted from START_DATE across the whole 300 days, not per 100-day block. Every name is invented; never use a real person.",
   "defaultStart": "2026-10-05",
   "handle": "",
   "posts": [
@@ -697,6 +697,722 @@
       ],
       "date": "2027-01-06",
       "weekday": "Wed"
+    },
+    {
+      "n": 13,
+      "day": 108,
+      "date": "2027-01-20",
+      "weekday": "Wed",
+      "id": "saga-13-resolution",
+      "series": "Khana kahan? (the group chat)",
+      "pillar": "relatable",
+      "audience": "diners",
+      "format": "carousel",
+      "caption": "Season 2. New year, same group chat.\n\nHamza made a resolution. Anum took a screenshot. We'll see.",
+      "hashtags": [
+        "#menva",
+        "#lahorefood",
+        "#lahorefoodies",
+        "#khanakahan"
+      ],
+      "alt": "A group chat about a new year's resolution to order faster, then the real steak board.",
+      "slides": [
+        {
+          "layout": "chat",
+          "over": "Khana kahan? Ep. 13",
+          "n": "1/2",
+          "h": "2027. *Same Hamza.*",
+          "title": "Khana kahan? (6)",
+          "members": "Hamza, Anum, Zain, Sara, Ali bhai, you",
+          "msgs": [
+            {
+              "from": "Hamza",
+              "t": "2027 resolution: 5 minute mein order"
+            },
+            {
+              "from": "Anum",
+              "t": "screenshot le liya"
+            },
+            {
+              "from": "Zain",
+              "t": "pichle saal bhi yehi kaha tha"
+            },
+            {
+              "from": "Hamza",
+              "t": "pichle saal menu mein photo nahi thi"
+            },
+            {
+              "from": "Sara",
+              "t": "mera bhi yehi resolution"
+            }
+          ]
+        },
+        {
+          "layout": "hero",
+          "over": "Khana kahan? Ep. 13",
+          "n": "2/2",
+          "dish": "steak-main",
+          "crop": "board",
+          "h": "Four minutes. *He saw it first.*",
+          "b": "Resolution: day 1, still alive."
+        }
+      ]
+    },
+    {
+      "n": 14,
+      "day": 115,
+      "date": "2027-01-27",
+      "weekday": "Wed",
+      "id": "saga-14-commentator",
+      "series": "Khana kahan? (the group chat)",
+      "pillar": "relatable",
+      "audience": "diners",
+      "format": "single",
+      "caption": "Zain has started doing commentary on everyone's order and honestly it's the best part of dinner.\n\nAur Hamza ne phir safe khela.",
+      "hashtags": [
+        "#menva",
+        "#lahorefood",
+        "#lahorefoodies",
+        "#khanakahan"
+      ],
+      "alt": "A made-up group chat where one friend commentates everyone's order like cricket.",
+      "slides": [
+        {
+          "layout": "chat",
+          "over": "Khana kahan? Ep. 14",
+          "n": "1/1",
+          "h": "Zain, *on commentary.*",
+          "title": "Khana kahan? (6)",
+          "members": "Hamza, Anum, Zain, Sara, Ali bhai, you",
+          "msgs": [
+            {
+              "from": "Zain",
+              "t": "and Hamza plays it safe AGAIN"
+            },
+            {
+              "from": "Zain",
+              "t": "Anum checks the size first, textbook"
+            },
+            {
+              "from": "Zain",
+              "t": "Sara waits for the field to settle"
+            },
+            {
+              "from": "Zain",
+              "t": "Ali bhai goes for the big one, trust me shot"
+            },
+            {
+              "from": "Hamza",
+              "t": "tum khud kya le rahe ho"
+            },
+            {
+              "from": "Zain",
+              "t": "commentator order nahi karta"
+            }
+          ]
+        }
+      ]
+    },
+    {
+      "n": 15,
+      "day": 122,
+      "date": "2027-02-03",
+      "weekday": "Wed",
+      "id": "saga-15-match-night",
+      "series": "Khana kahan? (the group chat)",
+      "pillar": "relatable",
+      "audience": "diners",
+      "format": "carousel",
+      "caption": "Match night rule one: the order goes in before the toss. Rule two: nobody asks \"aur kuch?\" in the last over.",
+      "hashtags": [
+        "#menva",
+        "#lahorefood",
+        "#lahorefoodies",
+        "#khanakahan"
+      ],
+      "alt": "A chat and a notes list about ordering before a cricket match starts.",
+      "slides": [
+        {
+          "layout": "chat",
+          "over": "Khana kahan? Ep. 15",
+          "n": "1/2",
+          "h": "Toss at 7:30. *Order at 7:25.*",
+          "title": "Khana kahan? (6)",
+          "members": "Hamza, Anum, Zain, Sara, Ali bhai, you",
+          "msgs": [
+            {
+              "from": "Anum",
+              "t": "toss 7:30, order 7:25. final"
+            },
+            {
+              "from": "Ali bhai",
+              "t": "main score dekh raha hoon tum order karo"
+            },
+            {
+              "from": "Hamza",
+              "t": "konsa board sab ke liye kaafi hai?"
+            },
+            {
+              "me": true,
+              "t": "table pe rakh ke dekh lo, 10 second"
+            }
+          ]
+        },
+        {
+          "layout": "notes",
+          "over": "Khana kahan? Ep. 15",
+          "n": "2/2",
+          "title": "Match night, 7:20 pm",
+          "h": "Rules. *Non-negotiable.*",
+          "items": [
+            "order before the toss",
+            "see the size, then order for the table",
+            "~~\"ek over ke baad order karte hain\"~~",
+            "one list to the waiter",
+            "no menu during the last over"
+          ]
+        }
+      ]
+    },
+    {
+      "n": 16,
+      "day": 129,
+      "date": "2027-02-10",
+      "weekday": "Wed",
+      "id": "saga-16-iftar-kahan",
+      "series": "Khana kahan? (the group chat)",
+      "pillar": "relatable",
+      "audience": "diners",
+      "format": "carousel",
+      "caption": "Ramadan Mubarak from the group chat.\n\nIftar plans are a team sport. Order set before the azaan, so the table is ready when it matters.",
+      "hashtags": [
+        "#menva",
+        "#lahorefood",
+        "#ramadan",
+        "#iftar",
+        "#khanakahan"
+      ],
+      "alt": "A group chat planning an iftar table, then the real steak board.",
+      "slides": [
+        {
+          "layout": "chat",
+          "over": "Khana kahan? Ep. 16",
+          "n": "1/2",
+          "h": "Iftar *kahan?*",
+          "title": "Khana kahan? (6)",
+          "members": "Hamza, Anum, Zain, Sara, Ali bhai, you",
+          "msgs": [
+            {
+              "from": "Anum",
+              "t": "table 5:30 tak book"
+            },
+            {
+              "from": "Hamza",
+              "t": "azaan kitne bajay hai?"
+            },
+            {
+              "from": "Zain",
+              "t": "5:58"
+            },
+            {
+              "from": "Anum",
+              "t": "order pehle set kar lo, plate dekh ke"
+            },
+            {
+              "from": "Sara",
+              "t": "jo sab lein, mera bhi"
+            },
+            {
+              "from": "Ali bhai",
+              "t": "khajoorein main laa raha hoon"
+            }
+          ]
+        },
+        {
+          "layout": "hero",
+          "over": "Khana kahan? Ep. 16",
+          "n": "2/2",
+          "dish": "steak-main",
+          "crop": "board",
+          "h": "Enough for the table? *See it first.*",
+          "b": "Ramadan Mubarak, Lahore."
+        }
+      ],
+      "time": "16:30",
+      "note": "Ramadan (expected 9 Feb to 9 Mar 2027, subject to moon sighting). Check the dates before Ramadan; move or re-time if they shift."
+    },
+    {
+      "n": 17,
+      "day": 136,
+      "date": "2027-02-17",
+      "weekday": "Wed",
+      "id": "saga-17-mama-iftar",
+      "series": "Khana kahan? (the group chat)",
+      "pillar": "relatable",
+      "audience": "diners",
+      "format": "single",
+      "caption": "Mama's position on iftar outside has not changed since 2009. But she did agree to one Friday.",
+      "hashtags": [
+        "#menva",
+        "#lahorefood",
+        "#ramadan",
+        "#iftar",
+        "#khanakahan"
+      ],
+      "alt": "A family chat where a mother agrees to one iftar outside.",
+      "slides": [
+        {
+          "layout": "chat",
+          "over": "Khana kahan? Ep. 17",
+          "n": "1/1",
+          "h": "Mama *has a condition.*",
+          "title": "Family (4)",
+          "members": "Mama, Hamza, Anum, you",
+          "msgs": [
+            {
+              "from": "Mama",
+              "t": "iftar ghar pe hoga"
+            },
+            {
+              "from": "Hamza",
+              "t": "mama ek din bahar?"
+            },
+            {
+              "from": "Mama",
+              "t": "pakoray ghar ke hi achay hain"
+            },
+            {
+              "me": true,
+              "t": "pakoray ghar ke, main course bahar?"
+            },
+            {
+              "from": "Mama",
+              "t": "achha. Friday. pehle mujhe plate dikhana"
+            }
+          ]
+        }
+      ],
+      "time": "16:30",
+      "note": "Ramadan (expected 9 Feb to 9 Mar 2027, subject to moon sighting). Check the dates before Ramadan; move or re-time if they shift."
+    },
+    {
+      "n": 18,
+      "day": 143,
+      "date": "2027-02-24",
+      "weekday": "Wed",
+      "id": "saga-18-iftar-for-14",
+      "series": "Khana kahan? (the group chat)",
+      "pillar": "relatable",
+      "audience": "diners",
+      "format": "single",
+      "caption": "Ali bhai booked iftar for 14 people. Somehow it worked. Somehow nobody argued. Ramadan does that.",
+      "hashtags": [
+        "#menva",
+        "#lahorefood",
+        "#ramadan",
+        "#iftar",
+        "#khanakahan"
+      ],
+      "alt": "A joke receipt of a big iftar dinner, with no prices.",
+      "slides": [
+        {
+          "layout": "receipt",
+          "over": "Khana kahan? Ep. 18",
+          "n": "1/1",
+          "h": "Iftar for 14. *Ali bhai's bill.*",
+          "title": "Table for 14",
+          "lines": [
+            [
+              "Chairs borrowed from next table",
+              "x3"
+            ],
+            [
+              "Khajoor first",
+              "always"
+            ],
+            [
+              "Plates seen before ordering",
+              "all of them"
+            ],
+            [
+              "\"Aur kuch?\" at the azaan",
+              "0"
+            ],
+            [
+              "Arguments",
+              "0 (Ramadan)"
+            ]
+          ],
+          "total": [
+            "Total",
+            "one full table, one quiet minute"
+          ],
+          "footer": "Ramadan Mubarak"
+        }
+      ],
+      "time": "16:30",
+      "note": "Ramadan (expected 9 Feb to 9 Mar 2027, subject to moon sighting). Check the dates before Ramadan; move or re-time if they shift."
+    },
+    {
+      "n": 19,
+      "day": 150,
+      "date": "2027-03-03",
+      "weekday": "Wed",
+      "id": "saga-19-eid-plans",
+      "series": "Khana kahan? (the group chat)",
+      "pillar": "relatable",
+      "audience": "diners",
+      "format": "carousel",
+      "caption": "Eid is close and the family chat has already scheduled three dawats. Nobody was consulted.",
+      "hashtags": [
+        "#menva",
+        "#lahorefood",
+        "#eid",
+        "#khanakahan"
+      ],
+      "alt": "A family chat and a notes list planning the three days of Eid.",
+      "slides": [
+        {
+          "layout": "chat",
+          "over": "Khana kahan? Ep. 19",
+          "n": "1/2",
+          "h": "Eid *logistics.*",
+          "title": "Family (4)",
+          "members": "Mama, Hamza, Anum, you",
+          "msgs": [
+            {
+              "from": "Mama",
+              "t": "pehla din ghar, doosra din Nani"
+            },
+            {
+              "from": "Hamza",
+              "t": "teesra din?"
+            },
+            {
+              "from": "Mama",
+              "t": "bahar. tum decide karna"
+            },
+            {
+              "from": "Anum",
+              "t": "Hamza decide karega?? Eid kharab ho jayegi"
+            },
+            {
+              "me": true,
+              "t": "sab plates pehle dekh lenge, done"
+            }
+          ]
+        },
+        {
+          "layout": "notes",
+          "over": "Khana kahan? Ep. 19",
+          "n": "2/2",
+          "title": "Eid week",
+          "h": "The *dawat* plan",
+          "items": [
+            "day 1: ghar",
+            "day 2: Nani ke ghar",
+            "day 3: bahar",
+            "~~Hamza decides~~",
+            "Anum decides. plates seen first."
+          ]
+        }
+      ],
+      "time": "16:30",
+      "note": "Ramadan (expected 9 Feb to 9 Mar 2027, subject to moon sighting). Check the dates before Ramadan; move or re-time if they shift."
+    },
+    {
+      "n": 20,
+      "day": 157,
+      "date": "2027-03-10",
+      "weekday": "Wed",
+      "id": "saga-20-eid-photos",
+      "series": "Khana kahan? (the group chat)",
+      "pillar": "relatable",
+      "audience": "diners",
+      "format": "carousel",
+      "caption": "Eid week, day 2. Zain has taken 140 photos. Three are of people.\n\nEid Mubarak from all six of us.",
+      "hashtags": [
+        "#menva",
+        "#lahorefood",
+        "#eid",
+        "#khanakahan"
+      ],
+      "alt": "A chat about one friend photographing the food at Eid, then the real steak sandwich.",
+      "slides": [
+        {
+          "layout": "chat",
+          "over": "Khana kahan? Ep. 20",
+          "n": "1/2",
+          "h": "Eid photos, *Zain edition.*",
+          "title": "Khana kahan? (6)",
+          "members": "Hamza, Anum, Zain, Sara, Ali bhai, you",
+          "msgs": [
+            {
+              "from": "Zain",
+              "t": "sab photo ke liye ruko"
+            },
+            {
+              "from": "Anum",
+              "t": "khana thanda ho raha hai"
+            },
+            {
+              "from": "Zain",
+              "t": "plate ki photo pehle"
+            },
+            {
+              "from": "Hamza",
+              "t": "hum log bhi hain yaar"
+            },
+            {
+              "from": "Zain",
+              "t": "plate zyada achi lag rahi hai"
+            }
+          ]
+        },
+        {
+          "layout": "closeup",
+          "over": "Khana kahan? Ep. 20",
+          "n": "2/2",
+          "dish": "steak-sandwich",
+          "crop": "full",
+          "h": "Honestly, *fair.*",
+          "b": "Eid Mubarak from the group chat."
+        }
+      ],
+      "note": "Eid ul Fitr week (expected around 9 March 2027, subject to moon sighting)."
+    },
+    {
+      "n": 21,
+      "day": 164,
+      "date": "2027-03-17",
+      "weekday": "Wed",
+      "id": "saga-21-patio",
+      "series": "Khana kahan? (the group chat)",
+      "pillar": "relatable",
+      "audience": "diners",
+      "format": "carousel",
+      "caption": "Spring in Lahore lasts about eleven days, so the group chat treats every one of them like an emergency.",
+      "hashtags": [
+        "#menva",
+        "#lahorefood",
+        "#lahorefoodies",
+        "#khanakahan"
+      ],
+      "alt": "A chat about eating outdoors in spring, then the real green plate.",
+      "slides": [
+        {
+          "layout": "chat",
+          "over": "Khana kahan? Ep. 21",
+          "n": "1/2",
+          "h": "Spring. *Emergency meeting.*",
+          "title": "Khana kahan? (6)",
+          "members": "Hamza, Anum, Zain, Sara, Ali bhai, you",
+          "msgs": [
+            {
+              "from": "Anum",
+              "t": "mausam dekha??"
+            },
+            {
+              "from": "Zain",
+              "t": "bahar baithenge"
+            },
+            {
+              "from": "Hamza",
+              "t": "bahar kahan?"
+            },
+            {
+              "from": "Anum",
+              "t": "HAMZA focus"
+            },
+            {
+              "from": "Sara",
+              "t": "jahan sab baithein"
+            }
+          ]
+        },
+        {
+          "layout": "hero",
+          "over": "Khana kahan? Ep. 21",
+          "n": "2/2",
+          "dish": "garlic-prawn-skewers",
+          "crop": "full",
+          "h": "Outdoor table. *The green plate.*",
+          "b": "Real scan, true size, even outside."
+        }
+      ]
+    },
+    {
+      "n": 22,
+      "day": 171,
+      "date": "2027-03-24",
+      "weekday": "Wed",
+      "id": "saga-22-sara-first",
+      "series": "Khana kahan? (the group chat)",
+      "pillar": "relatable",
+      "audience": "diners",
+      "format": "carousel",
+      "caption": "Twenty-one episodes. Sara has never ordered first.\n\nUntil tonight.",
+      "hashtags": [
+        "#menva",
+        "#lahorefood",
+        "#lahorefoodies",
+        "#khanakahan"
+      ],
+      "alt": "A chat where the friend who always orders last orders first, then a big headline.",
+      "slides": [
+        {
+          "layout": "chat",
+          "over": "Khana kahan? Ep. 22",
+          "n": "1/2",
+          "h": "The waiter asked *Sara first.*",
+          "title": "Khana kahan? (6)",
+          "members": "Hamza, Anum, Zain, Sara, Ali bhai, you",
+          "msgs": [
+            {
+              "from": "Waiter (IRL)",
+              "t": "ma'am aap?"
+            },
+            {
+              "from": "Sara",
+              "t": "the steak sandwich. aur table ke liye green plate"
+            },
+            {
+              "from": "Hamza",
+              "t": "SARA??"
+            },
+            {
+              "from": "Anum",
+              "t": "who are you"
+            },
+            {
+              "from": "Sara",
+              "t": "table pe dekh liya tha. easy"
+            }
+          ]
+        },
+        {
+          "layout": "shout",
+          "bg": "chili",
+          "over": "Khana kahan? Ep. 22",
+          "n": "2/2",
+          "h": "Sara ordered\n*first.*",
+          "ru": "History ban gayi."
+        }
+      ]
+    },
+    {
+      "n": 23,
+      "day": 178,
+      "date": "2027-03-31",
+      "weekday": "Wed",
+      "id": "saga-23-the-bet",
+      "series": "Khana kahan? (the group chat)",
+      "pillar": "relatable",
+      "audience": "diners",
+      "format": "single",
+      "caption": "Anum and Hamza bet on whether the board is a one-person meal. They placed it on the table to settle it. Then they shared it anyway.",
+      "hashtags": [
+        "#menva",
+        "#lahorefood",
+        "#lahorefoodies",
+        "#khanakahan"
+      ],
+      "alt": "A joke receipt of a bet between two friends, with no prices.",
+      "slides": [
+        {
+          "layout": "receipt",
+          "over": "Khana kahan? Ep. 23",
+          "n": "1/1",
+          "h": "The *bet.*",
+          "title": "Anum vs Hamza",
+          "lines": [
+            [
+              "Hamza says",
+              "one person"
+            ],
+            [
+              "Anum says",
+              "sharing"
+            ],
+            [
+              "Checked on the table",
+              "yes"
+            ],
+            [
+              "Arguments after",
+              "2 min"
+            ],
+            [
+              "Who paid for chai",
+              "still disputed"
+            ]
+          ],
+          "total": [
+            "Result",
+            "they shared it anyway"
+          ],
+          "footer": "See it first, then argue"
+        }
+      ]
+    },
+    {
+      "n": 24,
+      "day": 185,
+      "date": "2027-04-07",
+      "weekday": "Wed",
+      "id": "saga-24-khana-yahan",
+      "series": "Khana kahan? (the group chat)",
+      "pillar": "relatable",
+      "audience": "diners",
+      "format": "carousel",
+      "caption": "Season 2 finale. Hamza renamed the group.\n\nThanks for watching 24 episodes of six people deciding where to eat. Tag your group. Season 3 soon.",
+      "hashtags": [
+        "#menva",
+        "#lahorefood",
+        "#lahorefoodies",
+        "#khanakahan"
+      ],
+      "alt": "The final group chat of season 2, then the headline Khana kahan? Khana yahan.",
+      "slides": [
+        {
+          "layout": "chat",
+          "over": "Khana kahan? Ep. 24",
+          "n": "1/2",
+          "h": "Hamza *renamed the group.*",
+          "title": "Khana yahan (6)",
+          "members": "Hamza, Anum, Zain, Sara, Ali bhai, you",
+          "msgs": [
+            {
+              "from": "Hamza",
+              "t": "changed the group name"
+            },
+            {
+              "from": "Anum",
+              "t": "finally"
+            },
+            {
+              "from": "Zain",
+              "t": "season finale energy"
+            },
+            {
+              "from": "Sara",
+              "t": "mera bhi wohi naam"
+            },
+            {
+              "from": "Ali bhai",
+              "t": "main owner ko... nahi, chhodo"
+            }
+          ]
+        },
+        {
+          "layout": "shout",
+          "bg": "chili",
+          "over": "Khana kahan? Ep. 24",
+          "n": "2/2",
+          "h": "Khana kahan?\n*Khana yahan.*",
+          "b": "Scan the table QR. See the real plate, true size. Then order."
+        }
+      ]
     }
   ]
 }
