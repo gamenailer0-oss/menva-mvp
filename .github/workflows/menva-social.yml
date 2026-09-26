@@ -1,0 +1,88 @@
+# MENVA's Instagram autoposter, run by GitHub (no server needed). The code and posts live on the
+# social-automation branch; this file must sit on the default branch because GitHub only runs
+# scheduled workflows from there. Setup: social/actions/README.md.
+name: MENVA social autopost
+
+on:
+  schedule:
+    - cron: '*/15 7-18 * * *'   # every 15 minutes, 12:00-23:59 Lahore time: posts, Reels, trend posts
+    - cron: '17 */3 * * *'      # every 3 hours: trend watch
+  workflow_dispatch:
+    inputs:
+      task:
+        description: 'What to run'
+        type: choice
+        options: [autopost, trends]
+        default: autopost
+
+permissions:
+  contents: write   # to save the posting history and images on the menva-autopost-data branch
+
+concurrency:
+  group: menva-social
+  cancel-in-progress: false
+
+jobs:
+  run:
+    runs-on: ubuntu-latest
+    timeout-minutes: 25
+    env:
+      IG_ACCESS_TOKEN: ${{ secrets.IG_ACCESS_TOKEN }}
+      IG_USER_ID: ${{ secrets.IG_USER_ID }}
+      NTFY_TOPIC: ${{ secrets.NTFY_TOPIC }}
+      ANTHROPIC_API_KEY: ${{ secrets.ANTHROPIC_API_KEY }}
+      IG_HANDLE: ${{ vars.IG_HANDLE || '@eatmenva' }}
+      START_DATE: ${{ vars.START_DATE || '2026-10-05' }}
+      POST_TIME: ${{ vars.POST_TIME || '20:30' }}
+      DRY_RUN: ${{ vars.DRY_RUN || 'true' }}
+      STORIES: ${{ vars.STORIES || 'true' }}
+      REELS_MODE: ${{ vars.REELS_MODE || 'auto' }}
+      TRENDS: ${{ vars.TRENDS || 'true' }}
+      TREND_MAX_PER_WEEK: ${{ vars.TREND_MAX_PER_WEEK || '2' }}
+      TREND_DELAY_MINUTES: ${{ vars.TREND_DELAY_MINUTES || '90' }}
+      TASK: ${{ github.event_name == 'schedule' && (github.event.schedule == '17 */3 * * *' && 'trends' || 'autopost') || inputs.task }}
+    steps:
+      - uses: actions/checkout@v4
+        with:
+          ref: social-automation
+
+      - name: Posting history (menva-autopost-data branch)
+        run: |
+          if git ls-remote --exit-code --heads origin menva-autopost-data >/dev/null; then
+            git fetch -q --depth=1 origin menva-autopost-data
+            git worktree add -B menva-autopost-data menva-autopost-data FETCH_HEAD
+          else
+            git worktree add --orphan -b menva-autopost-data menva-autopost-data
+          fi
+
+      - uses: actions/setup-node@v4
+        with:
+          node-version: 22
+
+      - name: Install
+        working-directory: social/actions
+        run: npm ci --no-audit --no-fund
+
+      - name: Anything to post?
+        id: check
+        if: env.TASK == 'autopost'
+        run: node social/actions/autopost.mjs --check
+
+      - name: Browser for drawing the slides
+        if: env.TASK == 'autopost' && steps.check.outputs.work == 'true'
+        working-directory: social/actions
+        run: npx playwright install --with-deps chromium
+
+      - name: Post
+        if: env.TASK == 'autopost' && steps.check.outputs.work == 'true'
+        run: node social/actions/autopost.mjs
+
+      - name: Trend watch
+        if: env.TASK == 'trends'
+        run: node social/actions/trends.mjs
+
+      - name: Phone alert on failure
+        if: failure() && env.NTFY_TOPIC != ''
+        run: |
+          curl -s -H "Title: MENVA: autopost run failed" -H "Click: ${{ github.server_url }}/${{ github.repository }}/actions/runs/${{ github.run_id }}" \
+            -d "The ${TASK} run failed. It retries automatically in 15 minutes. Tap to see why." "https://ntfy.sh/${NTFY_TOPIC}"
