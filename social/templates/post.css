@@ -244,3 +244,22 @@ html.tall .cover-img { height: 1920px; }
 .clue small { display: block; margin-top: 6px; font-size: 22px; letter-spacing: .14em; text-transform: uppercase; opacity: .8; }
 .clue small + small { margin-top: 2px; }
 .bg-ink .clue { background: var(--cream); color: var(--ink); }
+
+/* riddle: the treasure-hunt clue (answer boxes) and the 10-letter code board */
+.l-riddle h1 { margin-top: 36px; }
+.blanks { display: flex; flex-wrap: wrap; gap: 14px; margin: 56px 0 36px; }
+.blanks .bl { width: 64px; height: 84px; border-bottom: 6px solid currentColor; opacity: .55; display: flex; align-items: center; justify-content: center; font-family: var(--serif); font-size: 72px; }
+.blanks .bl.hit { opacity: 1; border: 0; border-radius: 14px; background: var(--chili); color: #fff; }
+.blanks .gap { width: 34px; }
+.board { margin-top: auto; margin-bottom: 44px; padding: 30px 32px 26px; border-radius: 28px; background: var(--ink); color: var(--cream); }
+.board-label { display: block; font-size: 24px; letter-spacing: .16em; text-transform: uppercase; opacity: .75; margin-bottom: 18px; }
+.board .cells { display: flex; gap: 10px; }
+.board .gap { width: 22px; }
+.board .cell { position: relative; width: 70px; height: 92px; border-radius: 12px; border: 3px solid rgba(245,239,228,.35); display: flex; align-items: center; justify-content: center; }
+.board .cell b { font-family: var(--serif); font-weight: 400; font-size: 64px; line-height: 1; }
+.board .cell i { position: absolute; bottom: -2px; right: 6px; font-style: normal; font-size: 16px; opacity: .6; }
+.board .cell.got { background: rgba(245,239,228,.12); border-color: transparent; }
+.board .cell.hit { background: var(--chili); border-color: var(--chili); }
+.board .cell.hit b::before { content: '?'; }
+.bg-chili .blanks .bl.hit { background: var(--ink); }
+.bg-chili .board .cell.hit { background: var(--cream); color: var(--chili); border-color: var(--cream); }

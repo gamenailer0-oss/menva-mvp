@@ -163,6 +163,14 @@
     // cover: a Reel's cover frame, full bleed (img = social/reels/out/<name>-cover.jpg). Reels only.
     cover: (d) => /^social\/reels\/out\/[\w-]+\.jpg$/.test(d.img || '') ? `<img class="cover-img" src="../../${esc(d.img)}" alt="">` : (fail('cover needs img = social/reels/out/<name>-cover.jpg'), ''),
 
+    // riddle: the pre-launch treasure hunt. pattern: the answer's letters as boxes ('_' a letter, '?' the one
+    // that counts, ' ' a gap). board: the 10-letter code so far ('_' unknown, '?' tonight's slot, letters found).
+    riddle: (d) => `${top(d)}<h1 class="${size(d, 's')}">${rich(d.h)}</h1>
+      <div class="blanks">${[...(d.pattern || '')].map((c) => c === ' ' ? '<span class="gap"></span>' : `<span class="bl${c === '?' ? ' hit' : ''}">${c === '?' ? '?' : ''}</span>`).join('')}</div>
+      ${bodyHtml(d)}
+      <div class="board"><span class="board-label">${esc(d.boardLabel || 'The code')}</span><div class="cells">${[...(d.board || '')].map((c, i) => `${i === 5 ? '<span class="gap"></span>' : ''}<span class="cell${c === '?' ? ' hit' : c === '_' ? '' : ' got'}"><b>${c === '_' || c === '?' ? '' : esc(c)}</b><i>${i + 1}</i></span>`).join('')}</div></div>
+      ${foot(d)}`,
+
     // shout: huge, heavy, stacked sans. For punchlines only.
     shout: (d) => `${top(d)}<h1 class="shout">${rich(d.h)}</h1>${bodyHtml(d)}${foot(d)}`,
 

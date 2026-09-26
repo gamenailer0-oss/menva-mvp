@@ -1,0 +1,399 @@
+{
+  "version": 1,
+  "about": "Escape the menu: nine pre-launch posts, 26 Sep to 4 Oct 2026 (days -8 to 0 before START_DATE 2026-10-05), 8:30 pm. Each: an exaggerated diner problem, then a riddle about Lahore food whose answer gives one letter of the 10-letter code. From 4 Oct 8:30 pm the first 5 correct DMs win. Prize venue not confirmed yet: confirm before announcing winners.",
+  "defaultStart": "2026-10-05",
+  "handle": "@eatmenva",
+  "posts": [
+    {
+      "n": 1,
+      "day": -8,
+      "id": "escape-01-the-photo",
+      "series": "Escape the menu (pre-launch treasure hunt)",
+      "pillar": "tease",
+      "audience": "diners",
+      "format": "carousel",
+      "caption": "Room 1. You walked in hungry. You trusted a photo. The photo lied, and now you are locked in with the consequences.\n\nThe only way out is a 10-letter code. One riddle a night. Tonight's gives you letter 4.\n\nESCAPE THE MENU: one riddle a night until 4 October. Every answer gives one letter of a 10-letter code (the chili box tells you which letter, the board tells you where it goes). DMs count from 4 October, 8:30 pm. The first 5 people to DM @eatmenva the code win a premium dine-in on us, a private after party and MENVA Black free as founding members.\n\nRules: Lahore only, 18+, one entry per account. The code only counts if you DM it after 4 October, 8:30 pm. Winners are announced on our Story and contacted by DM from @eatmenva only; we will never ask for money or card details. Venue and date are shared with the winners. Run by MENVA, not sponsored, endorsed or run by Instagram.\n\nWe have a way out. DM us \"secret\".",
+      "hashtags": [
+        "#menva",
+        "#lahorefood",
+        "#lahorefoodies",
+        "#escapethemenu"
+      ],
+      "alt": "Escape the menu, room 1: a problem every diner knows, and a riddle about Lahore food that gives one letter of a 10-letter code.",
+      "slides": [
+        {
+          "layout": "shout",
+          "bg": "chili",
+          "over": "Escape the menu · Room 1",
+          "n": "1/2",
+          "h": "The menu photo\nwas *lying.*",
+          "ru": "Tasveer mein burger tha. Plate pe uska chhota bhai aaya."
+        },
+        {
+          "layout": "riddle",
+          "over": "Escape the menu · Room 1",
+          "n": "2/2",
+          "h": "Market jahan shopping kam, *gol gappay zyada.* Naam mein hi azaadi hai.",
+          "pattern": "?______",
+          "b": "Pehla letter. It goes in *slot 4.*",
+          "board": "___?______"
+        }
+      ]
+    },
+    {
+      "n": 2,
+      "day": -7,
+      "id": "escape-02-chefs-special",
+      "series": "Escape the menu (pre-launch treasure hunt)",
+      "pillar": "tease",
+      "audience": "diners",
+      "format": "carousel",
+      "caption": "Room 2. Page 11 of 23. \"Chef's special.\" Kya special? Chef ko bhi nahi pata. Aap abhi bhi locked ho.\n\nTonight's riddle gives you letter 9.\n\nESCAPE THE MENU: one riddle a night until 4 October. Every answer gives one letter of a 10-letter code (the chili box tells you which letter, the board tells you where it goes). DMs count from 4 October, 8:30 pm. The first 5 people to DM @eatmenva the code win a premium dine-in on us, a private after party and MENVA Black free as founding members.\n\nWe have a way out. DM us \"secret\".",
+      "hashtags": [
+        "#menva",
+        "#lahorefood",
+        "#lahorefoodies",
+        "#escapethemenu"
+      ],
+      "alt": "Escape the menu, room 2: a problem every diner knows, and a riddle about Lahore food that gives one letter of a 10-letter code.",
+      "slides": [
+        {
+          "layout": "notes",
+          "over": "Escape the menu · Room 2",
+          "n": "1/2",
+          "title": "Menu, page 11 of 23",
+          "h": "Dishes that *explain nothing*",
+          "items": [
+            "Chef's special",
+            "House platter",
+            "Signature something",
+            "Mystery karahi",
+            "\"Ask your server\""
+          ]
+        },
+        {
+          "layout": "riddle",
+          "over": "Escape the menu · Room 2",
+          "n": "2/2",
+          "h": "Sunday subah ka *asli* national breakfast. Chanay saath, neend baad mein.",
+          "pattern": "?____ ____",
+          "b": "Pehla letter. It goes in *slot 9.*",
+          "board": "___L____?_"
+        }
+      ]
+    },
+    {
+      "n": 3,
+      "day": -6,
+      "id": "escape-03-group-chat",
+      "series": "Escape the menu (pre-launch treasure hunt)",
+      "pillar": "tease",
+      "audience": "diners",
+      "format": "carousel",
+      "caption": "Room 3. Six people, one menu photo, zero decisions. Dinner plan became breakfast plan. Still locked.\n\nTonight: letter 1.\n\nESCAPE THE MENU: one riddle a night until 4 October. Every answer gives one letter of a 10-letter code (the chili box tells you which letter, the board tells you where it goes). DMs count from 4 October, 8:30 pm. The first 5 people to DM @eatmenva the code win a premium dine-in on us, a private after party and MENVA Black free as founding members.\n\nWe have a way out. DM us \"secret\".",
+      "hashtags": [
+        "#menva",
+        "#lahorefood",
+        "#lahorefoodies",
+        "#escapethemenu"
+      ],
+      "alt": "Escape the menu, room 3: a problem every diner knows, and a riddle about Lahore food that gives one letter of a 10-letter code.",
+      "slides": [
+        {
+          "layout": "chat",
+          "over": "Escape the menu · Room 3",
+          "n": "1/2",
+          "h": "Friday 7:52 pm. *Saturday* 1:14 am.",
+          "title": "Khana kahan?",
+          "members": "you + 5",
+          "msgs": [
+            {
+              "from": "Zain",
+              "t": "menu ki pic bhejo"
+            },
+            {
+              "me": true,
+              "t": "bheji"
+            },
+            {
+              "from": "Zain",
+              "t": "ye blur kyun hai"
+            },
+            {
+              "from": "Anum",
+              "t": "order kya karein"
+            },
+            {
+              "me": true,
+              "t": "jo tu le"
+            },
+            {
+              "from": "Hamza",
+              "t": "guys breakfast ka time ho gaya"
+            }
+          ]
+        },
+        {
+          "layout": "riddle",
+          "over": "Escape the menu · Room 3",
+          "n": "2/2",
+          "h": "Raat bhar pakte hain, subah *naan* ke saath. Gosht ke pairon ki kahani.",
+          "pattern": "?____",
+          "b": "Pehla letter. It goes in *slot 1.*",
+          "board": "?__L____H_"
+        }
+      ]
+    },
+    {
+      "n": 4,
+      "day": -5,
+      "id": "escape-04-portion",
+      "series": "Escape the menu (pre-launch treasure hunt)",
+      "pillar": "tease",
+      "audience": "diners",
+      "format": "carousel",
+      "caption": "Room 4. Ek kaafi hoga ya do? Nobody knows. Nobody has ever known. Aap abhi bhi andar ho.\n\nTonight: letter 7.\n\nESCAPE THE MENU: one riddle a night until 4 October. Every answer gives one letter of a 10-letter code (the chili box tells you which letter, the board tells you where it goes). DMs count from 4 October, 8:30 pm. The first 5 people to DM @eatmenva the code win a premium dine-in on us, a private after party and MENVA Black free as founding members.\n\nWe have a way out. DM us \"secret\".",
+      "hashtags": [
+        "#menva",
+        "#lahorefood",
+        "#lahorefoodies",
+        "#escapethemenu"
+      ],
+      "alt": "Escape the menu, room 4: a problem every diner knows, and a riddle about Lahore food that gives one letter of a 10-letter code.",
+      "slides": [
+        {
+          "layout": "shout",
+          "over": "Escape the menu · Room 4",
+          "n": "1/2",
+          "h": "Ordered one.\n*It fed a village.*",
+          "ru": "Agli baar do order kiye. Ab ghar mein fridge nahi, godown hai."
+        },
+        {
+          "layout": "riddle",
+          "over": "Escape the menu · Room 4",
+          "n": "2/2",
+          "h": "Fort Road ki gali, *Badshahi Masjid* ke saamne. Upar rooftop, neeche karahi.",
+          "pattern": "____ ___?__",
+          "b": "Doosre lafz ka 4th letter. It goes in *slot 7.*",
+          "board": "P__L__?_H_"
+        }
+      ]
+    },
+    {
+      "n": 5,
+      "day": -4,
+      "id": "escape-05-sab-acha-hai",
+      "series": "Escape the menu (pre-launch treasure hunt)",
+      "pillar": "tease",
+      "audience": "diners",
+      "format": "carousel",
+      "caption": "Room 5. You asked for help. You got \"sab acha hai.\" The walls are closing in (not literally, relax).\n\nTonight: letter 3.\n\nESCAPE THE MENU: one riddle a night until 4 October. Every answer gives one letter of a 10-letter code (the chili box tells you which letter, the board tells you where it goes). DMs count from 4 October, 8:30 pm. The first 5 people to DM @eatmenva the code win a premium dine-in on us, a private after party and MENVA Black free as founding members.\n\nWe have a way out. DM us \"secret\".",
+      "hashtags": [
+        "#menva",
+        "#lahorefood",
+        "#lahorefoodies",
+        "#escapethemenu"
+      ],
+      "alt": "Escape the menu, room 5: a problem every diner knows, and a riddle about Lahore food that gives one letter of a 10-letter code.",
+      "slides": [
+        {
+          "layout": "note",
+          "bg": "ink",
+          "over": "Escape the menu · Room 5",
+          "n": "1/2",
+          "h": "\"Sir, sab acha hai.\"",
+          "ru": "Menu mein 212 cheezein. Recommendation: 212.",
+          "by": "Every waiter, every restaurant, forever"
+        },
+        {
+          "layout": "riddle",
+          "over": "Escape the menu · Room 5",
+          "n": "2/2",
+          "h": "Daal, gandum, gosht, aur *ghanton ka ghota.* Upar se tarka, lemon, adrak.",
+          "pattern": "?_____",
+          "b": "Pehla letter. It goes in *slot 3.*",
+          "board": "P_?L__E_H_"
+        }
+      ]
+    },
+    {
+      "n": 6,
+      "day": -3,
+      "id": "escape-06-wo-wala",
+      "series": "Escape the menu (pre-launch treasure hunt)",
+      "pillar": "tease",
+      "audience": "diners",
+      "format": "carousel",
+      "caption": "Room 6. Something amazing landed on the next table. You pointed. The waiter nodded. What arrived was not that.\n\nTonight: letter 10.\n\nESCAPE THE MENU: one riddle a night until 4 October. Every answer gives one letter of a 10-letter code (the chili box tells you which letter, the board tells you where it goes). DMs count from 4 October, 8:30 pm. The first 5 people to DM @eatmenva the code win a premium dine-in on us, a private after party and MENVA Black free as founding members.\n\nWe have a way out. DM us \"secret\".",
+      "hashtags": [
+        "#menva",
+        "#lahorefood",
+        "#lahorefoodies",
+        "#escapethemenu"
+      ],
+      "alt": "Escape the menu, room 6: a problem every diner knows, and a riddle about Lahore food that gives one letter of a 10-letter code.",
+      "slides": [
+        {
+          "layout": "shout",
+          "bg": "chili",
+          "over": "Escape the menu · Room 6",
+          "n": "1/2",
+          "h": "*Wo* wala.\nJo us table pe gaya.",
+          "ru": "Ajnabi ki plate ki taraf ungli. Lahore ka national sport."
+        },
+        {
+          "layout": "riddle",
+          "over": "Escape the menu · Room 6",
+          "n": "2/2",
+          "h": "Paani, imli, chanay. *Ek bite,* poora dhamaka. Rukna mana hai.",
+          "pattern": "_?_ ______",
+          "b": "Pehle lafz ka 2nd letter. It goes in *slot 10.*",
+          "board": "P_HL__E_H?"
+        }
+      ]
+    },
+    {
+      "n": 7,
+      "day": -2,
+      "id": "escape-07-the-stare",
+      "series": "Escape the menu (pre-launch treasure hunt)",
+      "pillar": "tease",
+      "audience": "diners",
+      "format": "carousel",
+      "caption": "Room 7. Forty minutes, twenty-three pages, and you ordered the exact same thing as last time. Classic.\n\nTonight: letter 5. Two rooms left.\n\nESCAPE THE MENU: one riddle a night until 4 October. Every answer gives one letter of a 10-letter code (the chili box tells you which letter, the board tells you where it goes). DMs count from 4 October, 8:30 pm. The first 5 people to DM @eatmenva the code win a premium dine-in on us, a private after party and MENVA Black free as founding members.\n\nWe have a way out. DM us \"secret\".",
+      "hashtags": [
+        "#menva",
+        "#lahorefood",
+        "#lahorefoodies",
+        "#escapethemenu"
+      ],
+      "alt": "Escape the menu, room 7: a problem every diner knows, and a riddle about Lahore food that gives one letter of a 10-letter code.",
+      "slides": [
+        {
+          "layout": "list",
+          "over": "Escape the menu · Room 7",
+          "n": "1/2",
+          "h": "Ordering, *a horror story*",
+          "items": [
+            "Minute 1: menu opens",
+            "Minute 9: still on page 2",
+            "Minute 22: \"aap log order karo\"",
+            "Minute 40: same as last time"
+          ]
+        },
+        {
+          "layout": "riddle",
+          "over": "Escape the menu · Room 7",
+          "n": "2/2",
+          "h": "Chawal aur doodh ki dosti. Shaadi mein *sab se pehle* khatam.",
+          "pattern": "__?__",
+          "b": "Teesra letter. It goes in *slot 5.*",
+          "board": "P_HL?_E_HO"
+        }
+      ]
+    },
+    {
+      "n": 8,
+      "day": -1,
+      "id": "escape-08-regret",
+      "series": "Escape the menu (pre-launch treasure hunt)",
+      "pillar": "tease",
+      "audience": "diners",
+      "format": "carousel",
+      "caption": "Room 8. The receipt says it all. One more night and the door opens.\n\nTonight: letter 8. Tomorrow: the last two.\n\nESCAPE THE MENU: one riddle a night until 4 October. Every answer gives one letter of a 10-letter code (the chili box tells you which letter, the board tells you where it goes). DMs count from 4 October, 8:30 pm. The first 5 people to DM @eatmenva the code win a premium dine-in on us, a private after party and MENVA Black free as founding members.\n\nWe have a way out. DM us \"secret\".",
+      "hashtags": [
+        "#menva",
+        "#lahorefood",
+        "#lahorefoodies",
+        "#escapethemenu"
+      ],
+      "alt": "Escape the menu, room 8: a problem every diner knows, and a riddle about Lahore food that gives one letter of a 10-letter code.",
+      "slides": [
+        {
+          "layout": "receipt",
+          "over": "Escape the menu · Room 8",
+          "n": "1/2",
+          "h": "Ordered. *Regretted.*",
+          "title": "Table 7",
+          "lines": [
+            [
+              "Mystery platter",
+              "1"
+            ],
+            [
+              "Expectations",
+              "sky high"
+            ],
+            [
+              "What arrived",
+              "?"
+            ],
+            [
+              "Hope",
+              "0"
+            ]
+          ],
+          "total": [
+            "Regret",
+            "full"
+          ],
+          "footer": "Thank you, visit again"
+        },
+        {
+          "layout": "riddle",
+          "over": "Escape the menu · Room 8",
+          "n": "2/2",
+          "h": "Bartan bhi yahi, dish ka naam bhi yahi. *Namak* ya tamatar, jang jari hai.",
+          "pattern": "?_____",
+          "b": "Pehla letter. It goes in *slot 8.*",
+          "board": "P_HLE_E?HO"
+        }
+      ]
+    },
+    {
+      "n": 9,
+      "day": 0,
+      "id": "escape-09-the-door",
+      "series": "Escape the menu (pre-launch treasure hunt)",
+      "pillar": "tease",
+      "audience": "diners",
+      "format": "carousel",
+      "caption": "Room 9. The last two letters. Solve them, and the code is complete.\n\nTHE HUNT IS OPEN FROM NOW. DM @eatmenva the 10-letter code. The first 5 correct DMs win:\n- a premium dine-in, on us\n- a private after party\n- MENVA Black, free, as founding members\n\nKal, 5 October, 8:30 pm: you find out what is behind the door.\n\nRules: Lahore only, 18+, one entry per account. The code only counts if you DM it after 4 October, 8:30 pm. Winners are announced on our Story and contacted by DM from @eatmenva only; we will never ask for money or card details. Venue and date are shared with the winners. Run by MENVA, not sponsored, endorsed or run by Instagram.",
+      "hashtags": [
+        "#menva",
+        "#lahorefood",
+        "#lahorefoodies",
+        "#escapethemenu"
+      ],
+      "alt": "Escape the menu, room 9: a problem every diner knows, and a riddle about Lahore food that gives one letter of a 10-letter code.",
+      "slides": [
+        {
+          "layout": "statement",
+          "bg": "chili",
+          "over": "Escape the menu · Room 9",
+          "n": "1/3",
+          "h": "The door opens\n*tonight.*",
+          "b": "Last two riddles. Then DM us the code. The first 5 get out, and dinner is on us."
+        },
+        {
+          "layout": "riddle",
+          "over": "Escape the menu · Room 9",
+          "n": "2/3",
+          "h": "Garam, gol gol, *sheeray mein doobi.* Dahi ke saath ya akeli, dono chalti hain.",
+          "pattern": "___?__",
+          "b": "4th letter. It goes in *slot 2.*",
+          "board": "P?HLE_EKHO"
+        },
+        {
+          "layout": "riddle",
+          "over": "Escape the menu · Room 9",
+          "n": "3/3",
+          "h": "Chai jismein *paani ki entry band* hai.",
+          "pattern": "?____ _____",
+          "b": "Pehla letter. It goes in *slot 6.* That is all ten.",
+          "board": "PEHLE?EKHO"
+        }
+      ]
+    }
+  ]
+}
