@@ -24,6 +24,8 @@ let blackout = [];
 try { blackout = JSON.parse(fs.readFileSync(path.join(ROOT, 'social/content/trend-blackout.json'), 'utf8')).ranges || []; } catch (e) { /* none */ }
 const quiet = blackout.find((r) => today >= r.from && today <= r.to);
 if (quiet) { console.log('Quiet period:', quiet.why); save('trends: quiet period'); process.exit(0); }
+// Before launch the feed is a mystery (the Escape the menu hunt): a trend post would give the product away.
+if (today <= env('START_DATE', '2026-10-05')) { console.log('Trend posts start the day after launch.'); save('trends: pre-launch'); process.exit(0); }
 const thisWeek = state.trendQueue.filter((t) => !t.stopped && Date.now() - Date.parse(t.created) < 7 * 86400000).length;
 if (thisWeek >= Number(env('TREND_MAX_PER_WEEK', '2'))) { console.log(`Already ${thisWeek} trend posts this week.`); save('trends: weekly cap'); process.exit(0); }
 
@@ -96,6 +98,8 @@ ${voice}`;
   return JSON.parse(text);
 }
 function writeFromTemplate() {
+  // Template trend posts read as filler, so they only go out when TREND_TEMPLATE=true; otherwise a trend needs Claude.
+  if (!isTrue(env('TREND_TEMPLATE'))) return { post: false, reason: 'no ANTHROPIC_API_KEY, so no trend post about "' + trend.title + '"' };
   const word = (trend.title.match(FOOD) || [])[0];
   if (!word || trend.title.split(/\s+/).length > 4) return { post: false, reason: 'needs ANTHROPIC_API_KEY to write about "' + trend.title + '"' };
   const W = word.charAt(0).toUpperCase() + word.slice(1).toLowerCase();
