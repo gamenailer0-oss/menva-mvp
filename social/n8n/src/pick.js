@@ -30,7 +30,7 @@ let test = false;
 
 // Trend posts (from the trend watcher) go out when their veto window has passed, on top of the
 // day's calendar post. One at a time: the calendar post waits its turn behind the lock.
-const trend = (state.trendQueue || []).find((t) => !t.stopped && !t.posted && (t.approved || DateTime.fromISO(t.due) <= now)
+const trend = (state.trendQueue || []).find((t) => !t.stopped && !t.posted && now.diff(DateTime.fromISO(t.due), "hours").hours < 6 && (t.approved || DateTime.fromISO(t.due) <= now)
   && !(state.posted && state.posted[t.post.id]));
 if (trend && !manual) {
   const tp = trend.post;

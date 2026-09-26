@@ -52,7 +52,9 @@ if (last && now.date > dateOf(last) && !state.endedAlerted) {
 const attemptsOf = (id) => ((state.attempts || {})[id + '@' + now.date]) || 0;
 const done = (id) => dryRun() ? !!(state.dry && state.dry[id]) : !!(state.posted && state.posted[id]);
 let job = null;
-const trend = (state.trendQueue || []).find((t) => !t.stopped && !t.posted && (t.approved || Date.parse(t.due) <= now.ms) && !done(t.post.id));
+// A trend post is news: drop it if it is more than 6 hours past its time (e.g. queued while in test mode).
+const fresh = (t) => now.ms - Date.parse(t.due) < 6 * 3600000;
+const trend = (state.trendQueue || []).find((t) => !t.stopped && !t.posted && fresh(t) && (t.approved || Date.parse(t.due) <= now.ms) && !done(t.post.id));
 if (trend && attemptsOf(trend.post.id) < MAX_ATTEMPTS) {
   const tp = trend.post;
   job = { n: 0, id: tp.id, format: 'single', trend: true, caption: [tp.caption, (tp.hashtags || []).join(' ')].filter(Boolean).join('\n\n'), alt: tp.alt || '', slides: tp.slides };
