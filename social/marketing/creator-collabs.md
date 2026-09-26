@@ -32,3 +32,15 @@ We animate our four characters around their real clip (their video in a phone fr
 - Written OK (a WhatsApp message is enough) before we use their face, voice or name.
 - They see the final cut before it posts.
 - No fake quotes, no invented reactions, no "X recommends MENVA" unless they said it.
+
+## They said yes: what to send each creator
+```
+Shukriya! Bas 3 cheezein chahiye:
+1. Ek line WhatsApp pe: "I agree to appear as a cartoon cameo in MENVA's Madam ki Class Reel, with my name, handle and my own voice."
+2. Ye lines apne andaaz mein voice notes pe record kar dein (har line alag note, 5-15 second, quiet jagah):
+   [the episode's lines go here]
+   Apna signature dialogue bhi add kar dein, jaise aap apni videos mein bolte hain.
+3. Apni 2-3 photos (sirf look ke liye: hair, glasses, beard, outfit). Hum apne cartoon style mein banayenge.
+Final cut post karne se pehle aapko bhejenge.
+```
+Then follow `social/reels/cameos/README.md`: add them to `consent.json`, save the voice notes as `cameos/<handle>/<line id>.m4a`, and the builder does the rest.

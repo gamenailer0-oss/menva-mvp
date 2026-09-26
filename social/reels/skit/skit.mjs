@@ -39,7 +39,7 @@ const seats = {
   sara: { x: 540, y: 850, size: 510 },
   ...(EP.guest ? { guest: { x: 330, y: 250, size: 420 } } : {}),
 };
-const NAMES = { ayesha: 'Ayesha', madam: 'Ayesha (Madam mode)', hamza: 'Hamza', sara: 'Sara', zain: 'Zain', waiter: 'Waiter', ...(EP.guest ? { guest: EP.guest.name } : {}) };
+const NAMES = { ayesha: 'Ayesha', madam: 'Ayesha (Madam mode)', hamza: 'Hamza', sara: 'Sara', zain: 'Zain', waiter: 'Waiter', ...(EP.guest ? { guest: EP.guest.handle ? `${EP.guest.name} (${EP.guest.handle})` : EP.guest.name } : {}) };
 const VOICE = { ayesha: ['hf_beta', 1.12, 0.92], madam: ['hf_beta', 1.0, 1.0], sara: ['hf_alpha', 1.06, 0.95], hamza: ['hm_omega', 1.04, 1.08], zain: ['hm_psi', 1.0, 0.92], waiter: ['hm_omega', 0.92, 0.95], ...(EP.guest ? { guest: EP.guest.voice } : {}) }; // voice, pitch, speed
 const SCRIPT = [...EP.setup, EP.panic, EP.scoldA, EP.scoldB, EP.object, EP.back, EP.saza, ...EP.read, EP.try1, EP.try2, EP.chup, EP.fourth, EP.sweet];
 
@@ -167,12 +167,31 @@ function build(dur) {
   };
 }
 
+// ── real-creator cameos: consent required, and their own recorded voice (never a generated one) ──
+const CAMEO = EP.guest && EP.guest.handle;
+const cameoAudio = {};
+if (CAMEO) {
+  const consent = JSON.parse(fs.readFileSync(path.join(REELS, 'cameos/consent.json'), 'utf8')).creators || [];
+  if (!consent.some((c) => c.handle.toLowerCase() === EP.guest.handle.toLowerCase())) throw new Error(`${EP.guest.handle} is not in social/reels/cameos/consent.json: get their written OK first.`);
+  const dir = path.join(REELS, 'cameos', EP.guest.handle.replace(/^@/, ''));
+  for (const l of SCRIPT.filter((x) => x.who === 'guest')) {
+    const src = ['m4a', 'mp3', 'ogg', 'wav', 'aac', 'opus'].map((e) => path.join(dir, `${l.id}.${e}`)).find((f) => fs.existsSync(f));
+    if (!src) throw new Error(`Missing voice note ${dir}/${l.id}.(m4a|mp3|ogg|wav) from ${EP.guest.handle}. Real creators use their own recording.`);
+    cameoAudio[l.id] = src;
+  }
+}
+
 // ── voices ──
 fs.mkdirSync(TMP, { recursive: true });
-const lines = SCRIPT.map((l) => { const [v, pitch, speed] = VOICE[l.who]; return { id: l.id, text: l.hi, voice: v, pitch, speed }; });
+const lines = SCRIPT.filter((l) => !cameoAudio[l.id]).map((l) => { const [v, pitch, speed] = VOICE[l.who]; return { id: l.id, text: l.hi, voice: v, pitch, speed }; });
 let dur = {};
 if (process.env.KOKORO_DIR && process.env.VOICE !== 'off') {
   dur = JSON.parse(execFileSync('python3', [path.join(REELS, 'voice.py'), JSON.stringify({ lines }), TMP], { env: process.env }).toString().trim().split('\n').pop());
+}
+for (const [id, src] of Object.entries(cameoAudio)) {
+  const dst = path.join(TMP, id + '.wav');
+  execFileSync(ffmpeg, ['-y', '-loglevel', 'error', '-i', src, '-af', 'silenceremove=start_periods=1:start_threshold=-40dB,areverse,silenceremove=start_periods=1:start_threshold=-40dB,areverse,loudnorm=I=-16:TP=-1.5', '-ar', '44100', '-ac', '1', dst]);
+  dur[id] = Number(execFileSync('python3', ['-c', 'import soundfile as sf,sys;i=sf.info(sys.argv[1]);print(i.frames/i.samplerate)', dst]).toString().trim());
 }
 const B = build(dur);
 if (!Object.keys(dur).length) B.voice = [];
