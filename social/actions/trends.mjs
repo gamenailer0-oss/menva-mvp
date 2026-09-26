@@ -10,6 +10,8 @@ import crypto from 'node:crypto';
 import { ROOT, env, isTrue, pkNow, addDays, readState, writeState, logLine, commitData, notify, controlTopic, checkPostText } from './lib.mjs';
 
 if (!isTrue(env('TRENDS'))) { console.log('Trend watch is off (TRENDS is not true).'); process.exit(0); }
+// The Stop button lives on the phone, so no phone topic = no trend posts (and no failing runs while setting up).
+if (!env('NTFY_TOPIC')) { console.log('Trend watch waits for the NTFY_TOPIC secret (social/actions/README.md step 4).'); process.exit(0); }
 const now = pkNow();
 const today = now.date;
 const state = readState();
