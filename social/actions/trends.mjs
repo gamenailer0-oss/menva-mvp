@@ -24,8 +24,8 @@ let blackout = [];
 try { blackout = JSON.parse(fs.readFileSync(path.join(ROOT, 'social/content/trend-blackout.json'), 'utf8')).ranges || []; } catch (e) { /* none */ }
 const quiet = blackout.find((r) => today >= r.from && today <= r.to);
 if (quiet) { console.log('Quiet period:', quiet.why); save('trends: quiet period'); process.exit(0); }
-// Before launch the feed is a mystery (the Escape the menu hunt): a trend post would give the product away.
-if (today <= env('START_DATE', '2026-10-05')) { console.log('Trend posts start the day after launch.'); save('trends: pre-launch'); process.exit(0); }
+// Before launch the feed is a mystery (the Escape the menu hunt): trend posts tease instead of explaining.
+const PRELAUNCH = today < env('START_DATE', '2026-10-05');
 const thisWeek = state.trendQueue.filter((t) => !t.stopped && Date.now() - Date.parse(t.created) < 7 * 86400000).length;
 if (thisWeek >= Number(env('TREND_MAX_PER_WEEK', '2'))) { console.log(`Already ${thisWeek} trend posts this week.`); save('trends: weekly cap'); process.exit(0); }
 
@@ -75,7 +75,9 @@ async function writeWithClaude() {
   const client = new Anthropic();
   const system = `You write one Instagram post for MENVA (@eatmenva), a Lahore startup: diners scan the QR on a partner restaurant's table (no app, Safari or Chrome) and see the real dish as a 3D scan, placed on their own table at true size in AR, before they order. They show the waiter their list; MENVA never takes orders, delivers, or books tables.
 
-A trend just appeared. Decide if MENVA should post about it and, if so, write a short, funny, specific, Lahori post in the voice guide below that links the trend to "see it before you order it" (the brand line: "Pehle dekho, phir order.").
+A trend just appeared. Decide if MENVA should post about it and, if so, write a short, funny, specific, Lahori post in the voice guide below that links the trend to "see it before you order it". Never use the phrase "pehle dekho" (it is the answer to a running treasure hunt).${PRELAUNCH ? `
+
+MENVA has NOT launched yet (launch: 5 October, 8:30 pm). Right now the page runs "Escape the menu", a riddle-a-night treasure hunt. So do not explain what MENVA does, do not mention 3D, AR, scans or QR codes: tease instead ("something is coming for everyone who has ever ordered the wrong thing"), and point people to the nightly riddles and 5 October, 8:30 pm.` : ''}
 
 Set post=false when the trend is about a person, a specific restaurant, brand or chain, anything sad, political, religious or divisive, or when the link to seeing food before ordering would be forced.
 
@@ -98,15 +100,19 @@ ${voice}`;
   return JSON.parse(text);
 }
 function writeFromTemplate() {
-  // Template trend posts read as filler, so they only go out when TREND_TEMPLATE=true; otherwise a trend needs Claude.
-  if (!isTrue(env('TREND_TEMPLATE'))) return { post: false, reason: 'no ANTHROPIC_API_KEY, so no trend post about "' + trend.title + '"' };
   const word = (trend.title.match(FOOD) || [])[0];
   if (!word || trend.title.split(/\s+/).length > 4) return { post: false, reason: 'needs ANTHROPIC_API_KEY to write about "' + trend.title + '"' };
   const W = word.charAt(0).toUpperCase() + word.slice(1).toLowerCase();
   return {
     post: true, reason: 'template', layout: 'shout', over: 'Trending in Pakistan', headline: `${W}. *Again.*`,
-    body: 'Everyone is talking about it. Before you order it, see it.', roman_urdu: 'Pehle dekho, phir order.',
-    caption: `${W} is trending again and the group chat already has opinions.\n\nWherever you end up, see the real plate before you order it. Pehle dekho, phir order.`,
+    // Never "Pehle dekho": it is the Escape the menu answer. Before launch, tease; after, say what MENVA does.
+    ...(PRELAUNCH ? {
+      over: 'Trending in Pakistan', body: 'Sab isi ki baat kar rahe hain. Hum kisi aur cheez ki tayari mein hain.', roman_urdu: '5.10 · 8:30 pm',
+      caption: `${W} is trending and the group chat already has opinions.\n\nMeanwhile, we are building something for everyone who has ever ordered the wrong thing. Escape the menu: one riddle a night on our page. 5 October, 8:30 pm.`,
+    } : {
+      body: 'Everyone is talking about it. See the real plate on your table before you order.', roman_urdu: 'Menu ki tasveer nahi, asli plate.',
+      caption: `${W} is trending and the group chat already has opinions.\n\nWherever you end up, see the real plate on your table before you order it. Menu ki tasveer nahi, asli plate.`,
+    }),
     hashtags: ['#menva', '#eatmenva', '#lahorefood', '#lahorefoodies'], alt: `A text post about ${word} trending in Pakistan.`,
   };
 }

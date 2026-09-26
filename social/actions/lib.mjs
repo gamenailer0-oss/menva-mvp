@@ -159,6 +159,7 @@ export function checkPostText(p) {
   if (/\b(PKR|Rs\.?)\s?\d/i.test(text)) probs.push('a price');
   if (/\{\{|\[fill in/i.test(text)) probs.push('placeholder');
   if (/—/.test(text)) probs.push('em dash');
+  if (/pehle\s+dekho/i.test(text)) probs.push('says "pehle dekho" (the hunt answer)');
   if (slides.length !== 1 || !TREND_LAYOUTS.includes(slides[0].layout) || !slides[0].h) probs.push('needs one text slide with a headline');
   if (slides[0] && (slides[0].dish || slides[0].dishes)) probs.push('trend posts are text-only');
   return probs;
