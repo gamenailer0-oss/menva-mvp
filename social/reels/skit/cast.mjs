@@ -4,7 +4,7 @@ import { openPeeps } from '@dicebear/collection';
 
 const peep = (seed, o) => createAvatar(openPeeps, { seed, facialHairProbability: 0, accessoriesProbability: 0, maskProbability: 0, ...o }).toString();
 const person = (seed, base, faces) => Object.fromEntries(faces.map((f) => [f, peep(seed, { ...base, face: [f] })]));
-const FACES = ['calm', 'smile', 'smileBig', 'explaining', 'fear', 'concernedFear', 'suspicious', 'awe', 'hectic', 'cheeky', 'blank', 'serious', 'lovingGrin1'];
+const FACES = ['eyesClosed', 'calm', 'smile', 'smileBig', 'explaining', 'fear', 'concernedFear', 'suspicious', 'awe', 'hectic', 'cheeky', 'blank', 'serious', 'lovingGrin1'];
 
 export function cast() {
   return {

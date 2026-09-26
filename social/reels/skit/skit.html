@@ -4,210 +4,259 @@
 <meta charset="utf-8">
 <title>Table Edition</title>
 <!-- "Madam ki Class: Table Edition". Four friends at a restaurant table; one of them turns into Madam.
-     skit.mjs passes the cast (SVGs) and a timeline; render(t) draws any moment, so frames are reproducible. -->
+     skit.mjs passes the cast (SVGs) and a timeline; render(t, overlay) draws any moment, so frames are reproducible.
+     Motion follows .claude/skills/animation-principles + shot-composition: eased camera moves (one per beat),
+     parallax depth (background 0.4x), breathing and blinking, anticipation + settle on expression changes,
+     overshoot on entrances, ease-in on exits. -->
 <style>
 @font-face { font-family: 'Instrument Serif'; src: url(../../../vendor/fonts/instrument-serif-400.woff2) format('woff2'); }
 @font-face { font-family: 'Instrument Serif'; font-style: italic; src: url(../../../vendor/fonts/instrument-serif-400-italic.woff2) format('woff2'); }
 @font-face { font-family: 'DM Sans'; font-weight: 400; src: url(../../../vendor/fonts/dm-sans-400.woff2) format('woff2'); }
 @font-face { font-family: 'DM Sans'; font-weight: 600; src: url(../../../vendor/fonts/dm-sans-600.woff2) format('woff2'); }
-:root { --paper: #EFEBE2; --ink: #1A1714; --chili: #B5371F; --cream: #F5EFE4; --wood: #8a5a3b; --board: #22241F; --chalk: #EDE8DC; }
+:root { --paper: #EFEBE2; --ink: #1A1714; --chili: #B5371F; --cream: #F5EFE4; --board: #22241F; --chalk: #EDE8DC; }
 * { margin: 0; box-sizing: border-box; }
 html, body { width: 1080px; height: 1920px; overflow: hidden; background: var(--ink); font-family: 'DM Sans', sans-serif; }
 #frame { position: absolute; inset: 0; overflow: hidden; }
-#world { position: absolute; left: 0; top: 0; width: 1080px; height: 1920px; transform-origin: 0 0; }
-/* the restaurant: warm wall, pendant lamps, a window */
-.bg { position: absolute; inset: 0; }
+.layer { position: absolute; left: 0; top: 0; width: 1080px; height: 1920px; transform-origin: 0 0; }
+.bg { position: absolute; inset: -120px; }
 #resto { background: linear-gradient(#d9b98f 0%, #c9a57a 58%, #b48c63 100%); }
 #resto .lamp { position: absolute; top: 0; width: 6px; background: #2b2118; }
 #resto .shade { position: absolute; width: 170px; height: 90px; border-radius: 90px 90px 12px 12px; background: var(--ink); }
 #resto .glow { position: absolute; width: 420px; height: 420px; border-radius: 50%; background: radial-gradient(rgba(255,220,150,.55), transparent 65%); }
-#resto .win { position: absolute; left: 700px; top: 180px; width: 280px; height: 380px; border-radius: 140px 140px 12px 12px; background: linear-gradient(#26324a, #3f4f6b); border: 14px solid #6d4b33; }
-#resto .frame-art { position: absolute; left: 110px; top: 230px; width: 220px; height: 170px; background: var(--chili); border: 12px solid #3a2a1d; }
-/* the classroom: blackboard wall */
+#resto .win { position: absolute; left: 820px; top: 300px; width: 280px; height: 380px; border-radius: 140px 140px 12px 12px; background: linear-gradient(#26324a, #3f4f6b); border: 14px solid #6d4b33; }
+#resto .frame-art { position: absolute; left: 230px; top: 350px; width: 220px; height: 170px; background: var(--chili); border: 12px solid #3a2a1d; }
 #classroom { background: radial-gradient(ellipse at 50% 30%, #2f332c 0%, var(--board) 70%); opacity: 0; }
-#classroom .chalkline { position: absolute; left: 80px; right: 80px; height: 4px; background: rgba(237,232,220,.12); }
-#classroom .abc { position: absolute; left: 90px; top: 150px; font-family: 'Instrument Serif'; font-size: 90px; color: rgba(237,232,220,.18); }
-/* people */
+#classroom .abc { position: absolute; left: 210px; top: 270px; font-family: 'Instrument Serif'; font-size: 90px; color: rgba(237,232,220,.16); }
+#classroom .line { position: absolute; left: 200px; right: 200px; top: 1300px; height: 4px; background: rgba(237,232,220,.1); }
 .peep { position: absolute; transform-origin: 50% 100%; }
 .peep svg { width: 100%; height: auto; display: block; }
 .peep .face { position: absolute; inset: 0; opacity: 0; }
 .peep .face.on { opacity: 1; }
 .chair { position: absolute; width: 330px; height: 120px; border-radius: 20px; background: #5a3b27; }
-/* the table and the plate */
 #table { position: absolute; left: -60px; right: -60px; top: 1330px; height: 700px; background: linear-gradient(#9b6844, #7a5033); border-top: 16px solid #b07a52; }
 #plate { position: absolute; left: 470px; top: 1400px; width: 240px; height: 90px; border-radius: 50%; background: #f7f3ea; box-shadow: 0 14px 0 rgba(0,0,0,.18); }
 #burger { position: absolute; left: 555px; top: 1392px; width: 70px; }
-/* a floating "menu photo" card */
-#menu { position: absolute; left: 110px; top: 330px; width: 520px; padding: 26px; border-radius: 26px; background: #fff; box-shadow: 0 30px 80px rgba(0,0,0,.35); transform-origin: 30% 80%; opacity: 0; }
-#menu .lab { font-size: 30px; letter-spacing: .16em; text-transform: uppercase; color: var(--chili); font-weight: 600; }
+#menu { position: absolute; width: 470px; padding: 24px; border-radius: 26px; background: #fff; box-shadow: 0 30px 80px rgba(0,0,0,.35); transform-origin: 50% 100%; opacity: 0; }
+#menu .lab { font-size: 28px; letter-spacing: .16em; text-transform: uppercase; color: var(--chili); font-weight: 600; }
 #menu .big { width: 100%; }
-#menu .price { font-family: 'Instrument Serif'; font-size: 54px; color: var(--ink); }
-/* speech bubbles */
-.bubble { position: absolute; max-width: 620px; padding: 22px 30px; border-radius: 34px; background: #fff; color: var(--ink); font-size: 46px; font-weight: 600; line-height: 1.1; box-shadow: 0 12px 30px rgba(0,0,0,.2); opacity: 0; transform-origin: 20% 100%; }
-.bubble.madam { background: var(--chili); color: #fff; font-size: 54px; }
-.bubble.whisper { background: #f1ede4; color: #5c5349; font-style: italic; font-weight: 400; }
-/* captions (burned in, for muted viewers) */
-#cap { position: absolute; left: 60px; right: 60px; bottom: 150px; display: flex; justify-content: center; }
-#cap > div { padding: 18px 30px 20px; border-radius: 26px; background: rgba(26,23,20,.82); text-align: center; font-size: 50px; font-weight: 600; line-height: 1.12; color: #fff; }
-#cap b { color: #FFD28A; font-weight: 600; }
-#cap .who { display: block; font-size: 28px; letter-spacing: .18em; text-transform: uppercase; opacity: .8; margin-bottom: 8px; }
-/* overlays */
-#flash { position: absolute; inset: 0; background: #fff; opacity: 0; }
-#puff { position: absolute; inset: 0; pointer-events: none; }
-#puff i { position: absolute; border-radius: 50%; background: rgba(245,239,228,.95); }
-.stamp { position: absolute; padding: 16px 44px; border: 10px solid var(--chili); color: var(--chili); border-radius: 22px; font-weight: 600; font-size: 130px; letter-spacing: .08em; background: rgba(255,255,255,.85); opacity: 0; }
-#board { position: absolute; left: 50px; right: 50px; top: 120px; padding: 46px 50px 40px; border-radius: 28px; background: var(--board); border: 14px solid #6d4b33; box-shadow: 0 30px 80px rgba(0,0,0,.45); opacity: 0; }
-#board .over { font-size: 36px; letter-spacing: .2em; text-transform: uppercase; color: #F0B6A8; font-weight: 600; }
-#board .q { font-family: 'Instrument Serif'; font-size: 78px; line-height: 1.08; color: var(--chalk); margin-top: 20px; }
+#menu .price { font-family: 'Instrument Serif'; font-size: 52px; color: var(--ink); }
+#board { position: absolute; left: 50px; right: 50px; top: 110px; padding: 44px 50px 40px; border-radius: 28px; background: var(--board); border: 14px solid #6d4b33; box-shadow: 0 30px 80px rgba(0,0,0,.45); opacity: 0; transform-origin: 50% 0; }
+#board .over { font-size: 34px; letter-spacing: .2em; text-transform: uppercase; color: #F0B6A8; font-weight: 600; }
+#board .q { font-family: 'Instrument Serif'; font-size: 76px; line-height: 1.08; color: var(--chalk); margin-top: 18px; }
 #board .q em { color: #F0B6A8; }
-#board .blanks { display: flex; gap: 14px; margin-top: 34px; }
-#board .bl { width: 64px; height: 84px; border-bottom: 7px solid var(--chalk); opacity: .7; }
-#board .bl.hit { border-bottom-color: var(--chili); opacity: 1; position: relative; }
-#board .note { font-size: 44px; color: var(--chalk); margin-top: 22px; }
+#board .blanks { display: flex; gap: 14px; margin-top: 30px; }
+#board .bl { width: 64px; height: 80px; border-bottom: 7px solid var(--chalk); opacity: .7; }
+#board .bl.hit { border-bottom-color: var(--chili); opacity: 1; }
+#board .note { font-size: 42px; color: var(--chalk); margin-top: 20px; }
 #board .note b { color: #F0B6A8; }
 .ruler { position: absolute; width: 1300px; height: 110px; left: -200px; border-radius: 10px; background: linear-gradient(#e2c27a, #caa45b); box-shadow: 0 20px 50px rgba(0,0,0,.35); transform-origin: 0 50%; opacity: 0; }
 .ruler::before { content: ''; position: absolute; left: 30px; right: 30px; top: 0; height: 38px; background: repeating-linear-gradient(to right, rgba(60,40,10,.7) 0 3px, transparent 3px 26px); }
-#tag { position: absolute; top: 80px; left: 60px; right: 60px; display: flex; justify-content: space-between; font-size: 28px; letter-spacing: .18em; text-transform: uppercase; color: rgba(255,255,255,.85); font-weight: 600; text-shadow: 0 2px 8px rgba(0,0,0,.4); }
-#wm { position: absolute; bottom: 70px; left: 0; right: 0; text-align: center; font-family: 'Instrument Serif'; font-size: 48px; color: rgba(255,255,255,.9); }
+#puff i { position: absolute; border-radius: 50%; background: rgba(245,239,228,.95); }
+#cap { position: absolute; left: 60px; right: 60px; bottom: 170px; display: flex; justify-content: center; }
+#cap > div { padding: 18px 30px 20px; border-radius: 26px; background: rgba(26,23,20,.84); text-align: center; font-size: 50px; font-weight: 600; line-height: 1.12; color: #fff; }
+#cap b { color: #FFD28A; font-weight: 600; }
+#cap .who { display: block; font-size: 26px; letter-spacing: .18em; text-transform: uppercase; opacity: .75; margin-bottom: 8px; }
+#tag { position: absolute; top: 80px; left: 60px; right: 60px; display: flex; justify-content: space-between; font-size: 26px; letter-spacing: .18em; text-transform: uppercase; color: rgba(255,255,255,.85); font-weight: 600; text-shadow: 0 2px 8px rgba(0,0,0,.4); }
+#wm { position: absolute; bottom: 80px; left: 0; right: 0; text-align: center; font-family: 'Instrument Serif'; font-size: 46px; color: rgba(255,255,255,.9); }
 #wm i { color: var(--chili); font-style: normal; }
+#flash { position: absolute; inset: 0; background: #fff; opacity: 0; }
+/* cold-open headline */
+#headline { position: absolute; left: 60px; right: 60px; top: 190px; text-align: center; opacity: 0; }
+#headline span { display: inline-block; padding: 18px 30px; border-radius: 20px; background: var(--cream); color: var(--ink); font-size: 64px; font-weight: 600; line-height: 1.08; letter-spacing: -.02em; box-shadow: 0 16px 40px rgba(0,0,0,.35); }
+#headline em { font-family: 'Instrument Serif'; font-style: italic; font-weight: 400; color: var(--chili); }
+/* rewind */
+#rewind { position: absolute; inset: 0; opacity: 0; background: repeating-linear-gradient(to bottom, rgba(255,255,255,.07) 0 3px, transparent 3px 7px); }
+#rewind .rw { position: absolute; left: 0; right: 0; top: 820px; text-align: center; }
+#rewind .rw b { display: inline-flex; align-items: center; gap: 22px; padding: 22px 40px; border-radius: 20px; background: rgba(26,23,20,.85); color: #fff; font-size: 64px; font-weight: 600; }
+#rewind .tri { width: 0; height: 0; border-top: 22px solid transparent; border-bottom: 22px solid transparent; border-right: 34px solid #fff; display: inline-block; margin-right: -14px; }
+/* end card */
+#cta { position: absolute; inset: 0; background: var(--chili); display: flex; flex-direction: column; justify-content: center; padding: 0 90px; opacity: 0; }
+#cta .big { font-size: 110px; font-weight: 600; line-height: 1.02; letter-spacing: -.03em; color: #fff; }
+#cta .big em { font-family: 'Instrument Serif'; font-style: italic; font-weight: 400; color: var(--ink); }
+#cta .small { margin-top: 50px; font-size: 40px; color: rgba(255,255,255,.85); line-height: 1.3; }
+#cta .wm2 { position: absolute; bottom: 100px; left: 90px; font-family: 'Instrument Serif'; font-size: 64px; color: #fff; }
+#cta .wm2 i { color: var(--ink); font-style: normal; }
 </style>
 </head>
 <body>
 <div id="frame">
-  <div id="world">
+  <div class="layer" id="bgL">
     <div class="bg" id="resto">
-      <div class="lamp" style="left:300px;height:120px"></div><div class="shade" style="left:218px;top:110px"></div><div class="glow" style="left:95px;top:20px"></div>
-      <div class="lamp" style="left:780px;height:80px"></div><div class="shade" style="left:698px;top:70px"></div><div class="glow" style="left:575px;top:-20px"></div>
+      <div class="lamp" style="left:420px;height:240px"></div><div class="shade" style="left:338px;top:230px"></div><div class="glow" style="left:215px;top:140px"></div>
+      <div class="lamp" style="left:900px;height:200px"></div><div class="shade" style="left:818px;top:190px"></div><div class="glow" style="left:695px;top:100px"></div>
       <div class="frame-art"></div><div class="win"></div>
     </div>
-    <div class="bg" id="classroom"><div class="abc">a + b = ?</div><div class="chalkline" style="top:1180px"></div></div>
+    <div class="bg" id="classroom"><div class="abc">a + b = ?</div><div class="line"></div></div>
+  </div>
+  <div class="layer" id="world">
     <div id="people"></div>
     <div id="table"></div>
     <div id="plate"></div>
     <svg id="burger" viewBox="0 0 70 50"><ellipse cx="35" cy="14" rx="30" ry="13" fill="#d9953f"/><rect x="6" y="22" width="58" height="8" rx="4" fill="#5a2d17"/><rect x="4" y="29" width="62" height="5" rx="2" fill="#6ea34a"/><rect x="7" y="34" width="56" height="10" rx="5" fill="#d9953f"/></svg>
-    <div id="bubbles"></div>
+    <div id="menu"><div class="lab">Menu photo</div>
+      <svg class="big" viewBox="0 0 70 50"><ellipse cx="35" cy="14" rx="31" ry="13" fill="#e0a04a"/><rect x="4" y="20" width="62" height="5" rx="2" fill="#e7c341"/><rect x="3" y="24" width="64" height="9" rx="4" fill="#5a2d17"/><rect x="2" y="32" width="66" height="5" rx="2" fill="#6ea34a"/><rect x="4" y="36" width="62" height="4" rx="2" fill="#c8402b"/><rect x="6" y="39" width="58" height="10" rx="5" fill="#e0a04a"/></svg>
+      <div class="price">"Jumbo" burger</div></div>
+    <div id="puff"></div>
   </div>
-  <div id="menu"><div class="lab">The menu photo</div>
-    <svg class="big" viewBox="0 0 70 50"><ellipse cx="35" cy="14" rx="31" ry="13" fill="#e0a04a"/><rect x="4" y="20" width="62" height="5" rx="2" fill="#e7c341"/><rect x="3" y="24" width="64" height="9" rx="4" fill="#5a2d17"/><rect x="2" y="32" width="66" height="5" rx="2" fill="#6ea34a"/><rect x="4" y="36" width="62" height="4" rx="2" fill="#c8402b"/><rect x="6" y="39" width="58" height="10" rx="5" fill="#e0a04a"/></svg>
-    <div class="price">"Jumbo" burger</div></div>
-  <div class="stamp" id="stamp">FAIL</div>
   <div id="board"><div class="over" id="bover"></div><div class="q" id="bq"></div><div class="blanks" id="bblanks"></div><div class="note" id="bnote"></div></div>
   <div class="ruler" id="ruler"></div>
-  <div id="puff"></div>
   <div id="tag"><span id="tagl"></span><span id="tagr"></span></div>
+  <div id="headline"><span id="hl"></span></div>
   <div id="cap"></div>
   <div id="wm">menva<i>.</i></div>
+  <div id="rewind"><div class="rw"><b><span class="tri"></span><span class="tri"></span>&nbsp; <span id="rwt"></span></b></div></div>
+  <div id="cta"><div class="big" id="ctab"></div><div class="small" id="ctas"></div><div class="wm2">menva<i>.</i></div></div>
   <div id="flash"></div>
 </div>
 <script>
 'use strict';
 const clamp = (x, a = 0, b = 1) => Math.max(a, Math.min(b, x));
-const ease = (x) => 1 - Math.pow(1 - clamp(x), 3);
-const back = (x) => { x = clamp(x); const c = 1.9; return 1 + (c + 1) * Math.pow(x - 1, 3) + c * Math.pow(x - 1, 2); };
+// easing (animation-principles quick reference)
+const easeOut = (x) => 1 - Math.pow(1 - clamp(x), 3);                         // enter
+const easeIn = (x) => Math.pow(clamp(x), 3);                                  // exit
+const easeInOut = (x) => { x = clamp(x); return x < 0.5 ? 4 * x * x * x : 1 - Math.pow(-2 * x + 2, 3) / 2; }; // move
+const back = (x) => { x = clamp(x); const c = 1.7; return 1 + (c + 1) * Math.pow(x - 1, 3) + c * Math.pow(x - 1, 2); }; // overshoot
 const esc = (s) => String(s).replace(/[&<>"]/g, (c) => ({ '&': '&amp;', '<': '&lt;', '>': '&gt;', '"': '&quot;' }[c]));
-const rich = (s) => esc(s).replace(/\*(.+?)\*/g, '<b>$1</b>');
+const rich = (s, tag = 'b') => esc(s).replace(/\*(.+?)\*/g, `<${tag}>$1</${tag}>`);
 const $ = (id) => document.getElementById(id);
-let S; // { cast, seats, tl }
-
-// latest keyframe at or before t in a sorted list of { t, ... }
+const lerp = (a, b, k) => a + (b - a) * k;
+let S;
 const at = (list, t, dflt) => { let v = dflt; for (const k of list || []) { if (k.t <= t) v = k; else break; } return v; };
+const prevOf = (list, k) => { const i = list.indexOf(k); return i > 0 ? list[i - 1] : null; };
 
 window.load = function (data) {
   S = data;
-  // people: one element per seat, holding every expression; madam shares Ayesha's seat
   $('people').innerHTML = Object.entries(S.seats).map(([id, s]) => {
     const faces = Object.entries(S.cast[id]).map(([f, svg]) => `<div class="face" data-f="${f}">${svg}</div>`).join('');
     const madam = id === 'ayesha' ? Object.entries(S.cast.madam).map(([f, svg]) => `<div class="face" data-f="madam:${f}">${svg}</div>`).join('') : '';
     return `<div class="chair" id="chair-${id}" style="left:${s.x + s.size / 2 - 165}px;top:${s.y + s.size - 40}px"></div>` +
       `<div class="peep" id="p-${id}" style="left:${s.x}px;top:${s.y}px;width:${s.size}px;height:${s.size}px">${faces}${madam}</div>`;
   }).join('');
-  $('bubbles').innerHTML = S.tl.lines.map((l, i) => `<div class="bubble ${l.style || ''}" id="bb${i}">${rich(l.say)}</div>`).join('');
   const b = S.tl.board;
-  $('bover').textContent = b.over; $('bq').innerHTML = esc(b.q).replace(/\*(.+?)\*/g, '<em>$1</em>');
+  $('bover').textContent = b.over; $('bq').innerHTML = rich(b.q, 'em');
   $('bblanks').innerHTML = [...b.pattern].map((c) => c === ' ' ? '<span style="width:36px"></span>' : `<span class="bl${c === '?' ? ' hit' : ''}"></span>`).join('');
-  $('bnote').innerHTML = esc(b.note).replace(/\*(.+?)\*/g, '<b>$1</b>');
-  $('puff').innerHTML = Array.from({ length: 26 }, () => '<i></i>').join('');
+  $('bnote').innerHTML = rich(b.note);
+  $('puff').innerHTML = Array.from({ length: 22 }, () => '<i></i>').join('');
   $('tagl').textContent = S.tl.tag[0]; $('tagr').textContent = S.tl.tag[1];
-  window.render(0);
+  $('hl').innerHTML = rich(S.tl.headline, 'em');
+  $('rwt').textContent = S.tl.rewindText;
+  $('ctab').innerHTML = rich(S.tl.cta.big, 'em'); $('ctas').innerHTML = esc(S.tl.cta.small);
+  window.render(0, {});
 };
 
-window.render = function (t) {
+// camera target for a keyframe
+function camTarget(k) {
+  if (!k || k.shot === 'wide') return { z: 1, cx: 540, cy: 960 };
+  if (k.cx) return { z: k.zoom || 2, cx: k.cx, cy: k.cy };
+  const s = S.seats[k.shot];
+  return { z: k.zoom || 2, cx: s.x + s.size / 2, cy: s.y + s.size * (k.face ? 0.42 : 0.52) };
+}
+
+window.render = function (t, ov = {}) {
   const T = S.tl;
-  // ── characters: face, talking bounce, fear shake, Zain standing up ──
+  // ── characters ──
   for (const [id, seat] of Object.entries(S.seats)) {
     const el = $('p-' + id);
-    const face = at(T.faces[id], t, { f: 'calm' }).f;
+    const fk = at(T.faces[id], t, { t: -9, f: 'calm' });
+    let face = fk.f;
+    // blink (not in Madam mode): a 0.12 s eyes-closed frame every few seconds, offset per person
+    const ph = { ayesha: 0.3, hamza: 1.7, sara: 2.6, zain: 0.9 }[id] || 0;
+    const bp = (t + ph) % 3.7;
+    if (!face.startsWith('madam:') && bp < 0.12 && S.cast[id].eyesClosed && t - fk.t > 0.4) face = 'eyesClosed';
     el.querySelectorAll('.face').forEach((f) => f.classList.toggle('on', f.dataset.f === face));
-    let y = 0, sx = 1, sy = 1, x = 0, rot = 0;
-    for (const l of T.lines) if (l.who === id && t >= l.t && t < l.t + l.d) { const k = Math.sin((t - l.t) * 22); sy = 1 + 0.025 * k; sx = 1 - 0.012 * k; y = -6 * Math.abs(k); }
-    for (const s of T.shakes || []) if (s.who === id && t >= s.t && t < s.t + s.d) { x = 7 * Math.sin(t * 70); rot = 1.5 * Math.sin(t * 55); }
-    for (const p of T.pops || []) if (p.who === id) { const d = t - p.t; if (d >= 0 && d < 0.35) { const k = 1 - ease(d / 0.35); sy *= 1 + 0.12 * k; sx *= 1 - 0.06 * k; } }
-    const st = T.stand && T.stand.who === id ? ease((t - T.stand.t) / 0.5) * (t < T.stand.until ? 1 : 1 - ease((t - T.stand.until) / 0.4)) : 0;
-    y -= 230 * st;
-    el.style.transform = `translate(${x}px,${y}px) rotate(${rot}deg) scale(${sx},${sy})`;
-    const ch = $('chair-' + id); if (ch) ch.style.opacity = 1;
+    // breathing (ambient layer)
+    let sy = 1 + 0.012 * Math.sin((t + ph) * 2 * Math.PI / 3.2), sx = 1 - 0.006 * Math.sin((t + ph) * 2 * Math.PI / 3.2);
+    let y = 0, x = 0, rot = 0;
+    // expression change: anticipation (squash 0.1 s before) then a settle with slight overshoot
+    const d = t - fk.t;
+    if (fk.t > 0 && d > -0.1 && d < 0) { const k = easeIn((d + 0.1) / 0.1); sy *= 1 - 0.04 * k; sx *= 1 + 0.02 * k; }
+    if (fk.t > 0 && d >= 0 && d < 0.35) { const k = 1 - back(d / 0.35); sy *= 1 + 0.05 * k; sx *= 1 - 0.025 * k; }
+    // talking: a soft bob and a head nod
+    for (const l of T.lines) if ((l.who === id || (l.who === 'madam' && id === 'ayesha')) && t >= l.t && t < l.t + l.d) {
+      const k = (t - l.t); sy *= 1 + 0.014 * Math.sin(k * 11); y -= 5 * Math.abs(Math.sin(k * 5.5)); rot += 1.4 * Math.sin(k * 3.8);
+    }
+    // fear tremble
+    for (const s of T.shakes || []) if (s.who === id && t >= s.t && t < s.t + s.d) { const f = Math.min(1, (t - s.t) / 0.15, (s.t + s.d - t) / 0.2); x += 4 * f * Math.sin(t * 38); rot += 0.8 * f * Math.sin(t * 29); }
+    // standing on the chair: anticipation dip, rise with overshoot, sit back down with ease-in-out
+    if (T.stand && T.stand.who === id) {
+      const u = t - T.stand.t;
+      let h = 0;
+      if (u > -0.15 && u < 0) h = -18 * easeIn((u + 0.15) / 0.15);
+      else if (u >= 0 && t < T.stand.until) h = 230 * back(u / 0.55);
+      else if (t >= T.stand.until) h = 230 * (1 - easeInOut((t - T.stand.until) / 0.5));
+      y -= h;
+    }
+    el.style.transform = `translate(${x.toFixed(1)}px,${y.toFixed(1)}px) rotate(${rot.toFixed(2)}deg) scale(${sx.toFixed(4)},${sy.toFixed(4)})`;
   }
-  // ── the transformation: flash + chalk puff + restaurant → classroom ──
+  // ── the transformation: flash + chalk puff + restaurant to classroom ──
   const tr = T.transform;
-  const cls = t >= tr.t && t < tr.until ? ease((t - tr.t) / 0.25) : (t >= tr.until ? 1 - ease((t - tr.until) / 0.3) : 0);
-  $('classroom').style.opacity = cls.toFixed(3);
-  $('resto').style.opacity = (1 - cls).toFixed(3);
-  $('table').style.filter = `brightness(${1 - 0.35 * cls})`;
-  const pd = t - tr.t;
+  const cls = t >= tr.t && t < tr.until ? easeOut((t - tr.t) / 0.3) : (t >= tr.until ? 1 - easeInOut((t - tr.until) / 0.45) : 0);
+  $('classroom').style.opacity = cls.toFixed(3); $('resto').style.opacity = (1 - cls).toFixed(3);
+  $('table').style.filter = `brightness(${(1 - 0.3 * cls).toFixed(3)})`;
   const seat = S.seats.ayesha;
+  const puffs = [tr.t, tr.until];
   $('puff').querySelectorAll('i').forEach((p, i) => {
-    const a = i * 2.39996, r = 60 + (i % 5) * 45;
-    const k = pd >= 0 && pd < 0.8 ? ease(pd / 0.5) : (pd >= 0.8 ? 1 : 0);
-    const cx = seat.x + seat.size / 2 + Math.cos(a) * r * (0.6 + 1.6 * k), cy = seat.y + seat.size * 0.45 + Math.sin(a) * r * (0.6 + 1.6 * k);
-    const sz = 26 + (i % 4) * 16;
+    let best = null; for (const pt of puffs) { const pd = t - pt; if (pd >= 0 && pd < 0.55) best = pd; }
+    if (best === null) { p.style.opacity = 0; return; }
+    const a = i * 2.39996, r = 70 + (i % 5) * 40, k = easeOut(best / 0.55);
+    const cx = seat.x + seat.size / 2 + Math.cos(a) * r * (0.5 + 1.5 * k), cy = seat.y + seat.size * 0.4 + Math.sin(a) * r * (0.5 + 1.5 * k);
+    const sz = (22 + (i % 4) * 14) * (1 - 0.4 * k);
     p.style.left = cx - sz / 2 + 'px'; p.style.top = cy - sz / 2 + 'px'; p.style.width = p.style.height = sz + 'px';
-    p.style.opacity = pd >= 0 && pd < 0.5 ? (1 - clamp((pd - 0.1) / 0.4)).toFixed(3) : 0;
+    p.style.opacity = (1 - easeIn(best / 0.55)).toFixed(3);
   });
-  // puff lives in screen space; keep it aligned with the camera by drawing it inside the camera transform below
-  // ── the menu photo card (0 → hide) ──
-  const m = T.menu, md = t - m.t;
-  $('menu').style.opacity = md >= 0 && t < m.until ? 1 : 0;
-  $('menu').style.transform = `rotate(${-6 + 2 * Math.sin(t * 2)}deg) scale(${md >= 0 ? (0.4 + 0.6 * back(md / 0.3)).toFixed(3) : 0.4})`;
-  // ── the stamp ──
-  const sp = T.stamp, sd = t - sp.t;
-  $('stamp').style.opacity = sd >= 0 && t < sp.until ? 1 : 0;
-  $('stamp').style.left = sp.x + 'px'; $('stamp').style.top = sp.y + 'px';
-  $('stamp').style.transform = `rotate(-10deg) scale(${sd <= 0 ? 3 : (1 + 2 * (1 - ease(sd / 0.12))).toFixed(3)})`;
-  // ── the blackboard ──
+  // ── the menu photo: Zain holds it up (enter: rise with overshoot; exit: ease-in drop) ──
+  const m = T.menu, zs = S.seats.zain;
+  let mk = 0; if (t >= m.t && t < m.until) mk = back((t - m.t) / 0.45); else if (t >= m.until) mk = 1 - easeIn((t - m.until) / 0.25);
+  $('menu').style.opacity = mk > 0.01 ? 1 : 0;
+  $('menu').style.left = (zs.x + 30) + 'px'; $('menu').style.top = (zs.y + 170) + 'px';
+  $('menu').style.transform = `translateY(${(260 * (1 - mk)).toFixed(1)}px) rotate(${(-8 + 2 * Math.sin(t * 2.2)).toFixed(2)}deg) scale(${(0.4 + 0.4 * mk).toFixed(3)})`;
+  // ── the blackboard: drops with overshoot and a small swing, leaves upward ──
   const bd = T.board, bt = t - bd.t;
-  $('board').style.opacity = bt >= 0 && t < bd.until ? 1 : 0;
-  $('board').style.transform = `translateY(${bt >= 0 ? (-900 * (1 - back(bt / 0.35))).toFixed(1) : -900}px) rotate(-1.5deg)`;
-  const pw = clamp((bt - 0.3) / bd.write);
+  let bk = 0, swing = 0;
+  if (bt >= 0 && t < bd.until) { bk = back(bt / 0.5); swing = 2.5 * Math.exp(-bt * 5) * Math.sin(bt * 14); }
+  else if (t >= bd.until) bk = 1 - easeIn((t - bd.until) / 0.3);
+  $('board').style.opacity = bk > 0.01 ? 1 : 0;
+  $('board').style.transform = `translateY(${(-1000 * (1 - bk)).toFixed(1)}px) rotate(${(-1.5 + swing).toFixed(2)}deg)`;
+  const pw = clamp((bt - 0.45) / bd.write);
   $('bq').style.clipPath = `inset(0 0 ${(100 - pw * 100).toFixed(1)}% 0)`;
-  $('bblanks').style.opacity = clamp((bt - 0.3 - bd.write) / 0.2); $('bnote').style.opacity = clamp((bt - 0.5 - bd.write) / 0.2);
-  // ── speech bubbles (wide shots) and captions (always) ──
-  const cam = at(T.camera, t, { shot: 'wide' });
-  T.lines.forEach((l, i) => {
-    const b = $('bb' + i), on = t >= l.t && t < l.t + l.d + 0.25;
-    const s = S.seats[l.who === 'madam' ? 'ayesha' : l.who];
-    const boardOn = t >= T.board.t && t < T.board.until;
-    b.style.opacity = on && cam.shot === 'wide' && !boardOn ? 1 : 0;
-    b.style.left = Math.min(Math.max(30, s.x + (l.bx || 0)), 1080 - 660) + 'px';
-    b.style.top = (s.y - 150 + (l.by || 0)) + 'px';
-    b.style.transform = `scale(${on ? (0.6 + 0.4 * back((t - l.t) / 0.2)).toFixed(3) : 0.6})`;
-  });
-  const cur = [...T.lines].reverse().find((l) => t >= l.t && t < l.t + l.d + 0.25);
-  $('cap').innerHTML = cur ? `<div><span class="who">${esc(cur.name)}</span>${rich(cur.say)}</div>` : '';
-  // ── camera: wide, or a close-up on one person; a slow push, and a punch + shake on hits ──
-  let z = 1, cx = 540, cy = 960;
-  if (cam.cx) { z = cam.zoom || 2; cx = cam.cx; cy = cam.cy; } else if (cam.shot !== 'wide') { const s = S.seats[cam.shot]; z = cam.zoom || 2; cx = s.x + s.size / 2; cy = s.y + s.size * 0.52; }
-  z *= 1 + 0.035 * clamp((t - cam.t) / 4);
+  $('bblanks').style.opacity = clamp((bt - 0.45 - bd.write) / 0.25); $('bnote').style.opacity = clamp((bt - 0.7 - bd.write) / 0.25);
+  // ── captions ──
+  const cur = [...T.lines].reverse().find((l) => t >= l.t && t < l.t + l.d + 0.3);
+  $('cap').innerHTML = cur ? `<div style="opacity:${clamp((t - cur.t) / 0.12).toFixed(2)}"><span class="who">${esc(cur.name)}</span>${rich(cur.say)}</div>` : '';
+  // ── camera: ease-in-out move from the previous shot to the current one; blur only while moving fast ──
+  const ck = at(T.camera, t, { t: 0, shot: 'wide' });
+  const from = camTarget(prevOf(T.camera, ck) || ck), to = camTarget(ck);
+  const mv = ck.move ?? 0.5;
+  const k = mv > 0 ? easeInOut((t - ck.t) / mv) : 1;
+  let z = lerp(from.z, to.z, k), cx = lerp(from.cx, to.cx, k), cy = lerp(from.cy, to.cy, k);
+  z *= 1 + 0.03 * easeInOut(clamp((t - ck.t - mv) / 4)); // slow push while a shot holds
   let sx = 0, sy = 0, fl = 0;
-  for (const h of T.hits) { const d = t - h.t; if (d >= 0 && d < 0.5) { z *= 1 + (h.zoom || 0.05) * (1 - ease(d / 0.3)); const k = Math.exp(-d * 13) * (h.shake || 14); sx += k * Math.sin(d * 95); sy += k * Math.cos(d * 77); if (h.flash && d < 0.12) fl = Math.max(fl, 0.6 * (1 - d / 0.12)); } }
+  for (const h of T.hits) { const d = t - h.t; if (d >= 0 && d < 0.45) { z *= 1 + (h.zoom || 0.05) * (1 - easeOut(d / 0.3)); const a = Math.exp(-d * 12) * (h.shake || 12); sx += a * Math.sin(d * 70); sy += a * Math.cos(d * 55); if (h.flash && d < 0.12) fl = Math.max(fl, 0.6 * (1 - d / 0.12)); } }
   const tx = 540 - cx * z + sx, ty = 960 - cy * z + sy;
-  const clampX = Math.min(0, Math.max(1080 - 1080 * z, tx)), clampY = Math.min(0, Math.max(1920 - 1920 * z, ty));
-  $('world').style.transform = `translate(${clampX.toFixed(1)}px,${clampY.toFixed(1)}px) scale(${z.toFixed(4)})`;
-  $('puff').style.transform = $('world').style.transform; $('puff').style.transformOrigin = '0 0';
+  const X = Math.min(0, Math.max(1080 - 1080 * z, tx)), Y = Math.min(0, Math.max(1920 - 1920 * z, ty));
+  $('world').style.transform = `translate(${X.toFixed(1)}px,${Y.toFixed(1)}px) scale(${z.toFixed(4)})`;
+  // parallax: the background moves at ~40% of the camera (depth)
+  const bz = 1 + (z - 1) * 0.4;
+  $('bgL').style.transform = `translate(${((540 - cx * bz) * 0.9 + sx * 0.4).toFixed(1)}px,${((960 - cy * bz) * 0.9 + sy * 0.4).toFixed(1)}px) scale(${bz.toFixed(4)})`;
+  const speed = mv > 0 && t - ck.t < mv ? Math.sin(Math.PI * clamp((t - ck.t) / mv)) : 0;
+  // motion blur only on fast moves (whips), never on slow cinematic pushes
+  const fast = clamp((0.6 - mv) / 0.35);
+  const blur = fast * speed * Math.min(5, Math.abs(to.z - from.z) * 3 + Math.hypot(to.cx - from.cx, to.cy - from.cy) / 120);
+  $('world').style.filter = blur > 0.3 ? `blur(${blur.toFixed(1)}px)` : '';
+  $('bgL').style.filter = blur > 0.3 ? `blur(${(blur * 1.4).toFixed(1)}px)` : '';
   $('flash').style.opacity = fl.toFixed(3);
-  // the ruler slap
+  // ── the ruler slap (anticipation up, fast strike, recoil) ──
   const r = $('ruler'); let rv = null;
-  for (const w of T.whacks) { const d = t - w.t; if (d > -0.14 && d < 0.3) rv = { d, y: w.y }; }
-  if (rv) { const a = rv.d < 0 ? -55 + 55 * ease((rv.d + 0.14) / 0.14) : -70 * ease(Math.max(0, rv.d - 0.12) / 0.18); r.style.opacity = 1; r.style.top = rv.y + 'px'; r.style.transform = `rotate(${a.toFixed(1)}deg)`; } else r.style.opacity = 0;
+  for (const w of T.whacks) { const d = t - w.t; if (d > -0.16 && d < 0.32) rv = { d, y: w.y }; }
+  if (rv) { const a = rv.d < 0 ? -60 + 60 * easeIn((rv.d + 0.16) / 0.16) : -65 * easeInOut(Math.max(0, rv.d - 0.1) / 0.22); r.style.opacity = 1; r.style.top = rv.y + 'px'; r.style.transform = `rotate(${a.toFixed(1)}deg)`; } else r.style.opacity = 0;
+  // ── overlays: cold-open headline, rewind, end card ──
+  const hk = ov.headline ?? 0;
+  $('headline').style.opacity = hk.toFixed(3); $('headline').style.transform = `translateY(${(-30 * (1 - hk)).toFixed(1)}px) scale(${(0.9 + 0.1 * hk).toFixed(3)})`;
+  $('rewind').style.opacity = (ov.rewind ?? 0).toFixed(3);
+  const ctaK = ov.cta ?? 0;
+  $('cta').style.opacity = clamp(ctaK * 3).toFixed(3);
+  $('ctab').style.transform = `translateY(${(60 * (1 - back(ctaK))).toFixed(1)}px)`;
+  $('ctas').style.opacity = clamp(ctaK * 2 - 0.6).toFixed(3);
 };
 window.__ready = false;
 document.fonts.ready.then(() => { window.__ready = true; });

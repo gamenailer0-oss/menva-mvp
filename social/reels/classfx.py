@@ -85,6 +85,16 @@ def scribble():
     return np.stack([s, s])
 
 
+def rewind(dur=0.9):
+    """A tape rewind: a warbling, falling squeal over hiss."""
+    n = int(SR * dur)
+    p = np.linspace(0, 1, n)
+    f = 1900 * (0.25 ** p) * (1 + 0.08 * np.sin(2 * np.pi * 17 * p * dur))
+    s = np.sin(2 * np.pi * np.cumsum(f) / SR) * 0.35 + svf_bandpass(rng.standard_normal(n), np.full(n, 3000.0), q=0.8) * 0.25
+    s *= np.minimum(1, np.minimum(p * 12, (1 - p) * 8))
+    return np.stack([s, s])
+
+
 def main():
     tl = json.loads(sys.argv[1])
     n = int(SR * float(tl['len']))
@@ -100,6 +110,8 @@ def main():
         snd = {'bell': bell, 'whack': whack, 'stamp': stamp, 'pop': pop, 'scribble': scribble, 'lock': lock}.get(k)
         if snd:
             place(fx, snd(), t, e.get('gain', 1.0))
+        elif k == 'rewind':
+            place(fx, rewind(e.get('dur', 0.9)), t, e.get('gain', 0.9))
         elif k == 'chalk':
             place(fx, chalk(e['dur']), t, e.get('gain', 0.8))
         elif k == 'whoosh':
