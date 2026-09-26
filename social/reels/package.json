@@ -1,0 +1,11 @@
+{
+  "name": "menva-reels",
+  "private": true,
+  "type": "module",
+  "description": "Tools for MENVA's Reels: characters (DiceBear, CC0 styles) and motion (GSAP).",
+  "dependencies": {
+    "@dicebear/collection": "9.4.2",
+    "@dicebear/core": "9.4.2",
+    "gsap": "3.15.0"
+  }
+}
