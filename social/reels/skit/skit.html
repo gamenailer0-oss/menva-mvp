@@ -214,7 +214,11 @@ window.render = function (t, ov = {}) {
   const m = T.menu, zs = S.seats[m.holder || 'zain'];
   let mk = 0; if (t >= m.t && t < m.until) mk = back((t - m.t) / 0.45); else if (t >= m.until) mk = 1 - easeIn((t - m.until) / 0.25);
   $('menu').style.opacity = mk > 0.01 && m.label ? 1 : 0;
-  $('menu').style.left = Math.min(1080 - 520, Math.max(20, zs.x + (zs.x > 300 ? 30 : 60))) + 'px'; $('menu').style.top = (zs.y + (zs.size > 450 ? 60 : 170)) + 'px';
+  // never over a face: back row holds it beside them, front row puts it down at table level
+  const front = zs.y > 700;
+  const mx = front ? (zs.x > 400 ? zs.x - 40 : zs.x + 60) : (zs.x > 400 ? zs.x - 390 : zs.x + zs.size - 60);
+  const my = front ? 1150 : zs.y + zs.size * 0.3;
+  $('menu').style.left = Math.min(1080 - 500, Math.max(10, mx)) + 'px'; $('menu').style.top = my + 'px';
   $('menu').style.transform = `translateY(${(260 * (1 - mk)).toFixed(1)}px) rotate(${(-8 + 2 * Math.sin(t * 2.2)).toFixed(2)}deg) scale(${(0.4 + 0.4 * mk).toFixed(3)})`;
   // ── the blackboard: drops with overshoot and a small swing, leaves upward ──
   let bd = T.boards[0];
