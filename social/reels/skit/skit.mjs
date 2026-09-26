@@ -15,14 +15,19 @@ import { cast } from './cast.mjs';
 const ROOT = path.resolve(path.dirname(fileURLToPath(import.meta.url)), '../../..');
 const REELS = path.join(ROOT, 'social/reels');
 const OUT = path.join(REELS, 'out');
-const NAME = 'table-edition-room-1';
-const TMP = path.join(OUT, '.class-tmp', NAME);
 const FPS = 30;
 let ffmpeg = process.env.FFMPEG;
 if (!ffmpeg) { try { ffmpeg = execFileSync('python3', ['-c', 'import imageio_ffmpeg;print(imageio_ffmpeg.get_ffmpeg_exe())']).toString().trim(); } catch { ffmpeg = 'ffmpeg'; } }
 
-const room1 = JSON.parse(fs.readFileSync(path.join(ROOT, 'social/content/series-escape.json'), 'utf8')).posts[0];
-const riddle = room1.frames.find((f) => f.layout === 'riddle');
+import { EPISODES } from './episodes.mjs';
+const ID = process.argv[2] || 'escape-01-the-photo';
+const EP = EPISODES[ID];
+if (!EP) throw new Error('Unknown episode ' + ID + ' (see episodes.mjs)');
+const post = JSON.parse(fs.readFileSync(path.join(ROOT, 'social/content/series-escape.json'), 'utf8')).posts.find((p) => p.id === ID);
+const riddles = post.frames.filter((f) => f.layout === 'riddle');
+const NUM = EP.room.replace(/\D/g, '');
+const NAME = 'table-edition-room-' + NUM;
+const TMP = path.join(OUT, '.class-tmp', NAME);
 
 const seats = {
   hamza: { x: 80, y: 520, size: 420 },
@@ -30,130 +35,122 @@ const seats = {
   ayesha: { x: 30, y: 850, size: 510 },
   sara: { x: 540, y: 850, size: 510 },
 };
-const NAMES = { ayesha: 'Ayesha', madam: 'Ayesha (Madam mode)', hamza: 'Hamza', sara: 'Sara', zain: 'Zain' };
-const VOICE = { ayesha: ['hf_beta', 1.12, 0.92], madam: ['hf_beta', 1.0, 1.0], sara: ['hf_alpha', 1.06, 0.95], hamza: ['hm_omega', 1.04, 1.08], zain: ['hm_psi', 1.0, 0.92] }; // voice, pitch, speed
+const NAMES = { ayesha: 'Ayesha', madam: 'Ayesha (Madam mode)', hamza: 'Hamza', sara: 'Sara', zain: 'Zain', waiter: 'Waiter' };
+const VOICE = { ayesha: ['hf_beta', 1.12, 0.92], madam: ['hf_beta', 1.0, 1.0], sara: ['hf_alpha', 1.06, 0.95], hamza: ['hm_omega', 1.04, 1.08], zain: ['hm_psi', 1.0, 0.92], waiter: ['hm_omega', 0.92, 0.95] }; // voice, pitch, speed
+const SCRIPT = [...EP.setup, EP.panic, EP.scoldA, EP.scoldB, EP.object, EP.back, EP.saza, ...EP.read, EP.try1, EP.try2, EP.chup, EP.fourth, EP.sweet];
 
-// Every line has a reason in the story: Zain complains (the menu lied), Madam punishes (bench), Sara objects,
-// Madam sets a "saza" (the riddle, or you pay the bill), the friends try, Madam breaks the fourth wall (DM).
-const SCRIPT = [
-  { id: 'l0', who: 'zain', say: 'Bhai... menu pe ye *jumbo* tha.', hi: 'भाई... मेन्यू पे ये जंबो था।' },
-  { id: 'l1', who: 'hamza', say: 'Nahi nahi nahi! Ayesha, *phir se nahi!*', hi: 'नहीं नहीं नहीं! आयशा, फिर से नहीं!' },
-  { id: 'l2a', who: 'madam', say: 'Menu ki photo pe *bharosa* kiya?', hi: 'मेन्यू की फ़ोटो पे भरोसा किया?' },
-  { id: 'l2b', who: 'madam', say: 'Bench pe *khade* ho jao!', hi: 'बेंच पे खड़े हो जाओ!' },
-  { id: 'l3', who: 'sara', say: 'Yaar chup kar, *log dekh rahe hain!*', hi: 'यार चुप कर, लोग देख रहे हैं!' },
-  { id: 'l3b', who: 'sara', say: '...main to bas *keh rahi thi.*', hi: '...मैं तो बस कह रही थी।' },
-  { id: 'l4', who: 'madam', say: 'Saza milegi. Sawal solve karo, *warna bill tumhara!*', hi: 'सज़ा मिलेगी। सवाल सॉल्व करो, वरना बिल तुम्हारा!' },
-  { id: 'l5', who: 'madam', say: 'Market jahan shopping kam, *gol gappay zyada.* Pehla letter!', hi: 'मार्केट जहाँ शॉपिंग कम, गोलगप्पे ज़्यादा। पहला लेटर!' },
-  { id: 'l6', who: 'zain', say: 'Gol gappay wali market... *wo to...*', hi: 'गोलगप्पे वाली मार्केट... वो तो...' },
-  { id: 'l7', who: 'hamza', say: 'Mujhe pata hai! *Pehla letter...*', hi: 'मुझे पता है! पहला लेटर...' },
-  { id: 'l8a', who: 'madam', say: '*Chup!*', hi: 'चुप!' },
-  { id: 'l8b', who: 'madam', say: 'Aur tum... answer sirf *DM* mein. 4 October ke baad.', hi: 'और तुम... आंसर सिर्फ़ डीएम में। चार अक्टूबर के बाद।' },
-  { id: 'l9', who: 'ayesha', say: 'Kya hua? Khana *thanda* ho raha hai.', hi: 'क्या हुआ? खाना ठंडा हो रहा है।' },
-];
-
+// The shared episode shape (see episodes.mjs). Every beat is linked by BUT / THEREFORE.
 function build(dur) {
   const lines = [], voice = [], events = [], hits = [], whacks = [], shakes = [], camera = [];
   const faces = { ayesha: [], hamza: [], zain: [], sara: [] };
-  const face = (who, t, f) => faces[who].push({ t, f });
+  const face = (who, t, f) => { if (faces[who]) faces[who].push({ t, f }); };
   let t = 0;
-  const say = (id, pause = 0.45, overlap = 0) => {
-    const s = SCRIPT.find((x) => x.id === id); const d = dur[id] || 1.6;
+  const say = (L, pause = 0.45, overlap = 0) => {
+    const d = dur[L.id] || 1.6;
     t -= overlap;
-    lines.push({ ...s, t, d, name: NAMES[s.who] }); voice.push({ t, file: path.join(TMP, id + '.wav'), gain: s.id.startsWith('l3') ? 0.8 : 1 });
+    lines.push({ ...L, t, d, name: NAMES[L.who] }); voice.push({ t, file: path.join(TMP, L.id + '.wav'), gain: L.id === 'object' || L.id === 'back' ? 0.85 : 1 });
     const start = t; t += d + pause; return start;
   };
   const hold = (secs) => { t += secs; };
-  // camera: `move` is the eased travel time from the previous shot (0 = cut)
   const cam = (tt, shot, zoom, move = 0.5, extra = {}) => camera.push({ t: tt, shot, zoom, move, ...extra });
   const whack = (tt, y = 1150, big = 1) => { whacks.push({ t: tt, y }); events.push({ t: tt, type: 'whack', gain: big }); hits.push({ t: tt, zoom: 0.06 * big, shake: 18 * big }); };
+  const others = (...ex) => ['hamza', 'zain', 'sara'].filter((w) => !ex.includes(w));
 
   for (const w of Object.keys(faces)) face(w, 0, 'smile');
-  face('zain', 0, 'calm');
-
-  // 1. Dinner arrives. A slow push from the table toward the plate.
+  // 1. The table. (Room 1 pushes onto the tiny burger.)
   cam(0, 'wide', 1, 0); hold(0.8);
-  cam(t, 'plate', 2.4, 1.1, { cx: 590, cy: 1430 }); events.push({ t, type: 'whoosh', dur: 0.5, gain: 0.35 }); hold(1.5);
-  // 2. A tiny burger. BUT the menu said jumbo: Zain holds up the photo.
-  cam(t, 'zain', 1.7, 0.6); face('zain', t, 'suspicious');
-  const menu = { t: t + 0.25, until: 0 }; events.push({ t: t + 0.3, type: 'pop', gain: 0.9 });
-  let s = say('l0', 0.5);
-  face('hamza', s + 0.6, 'awe'); face('sara', s + 0.6, 'awe');
+  if (NUM === '1') { cam(t, 'plate', 2.4, 1.1, { cx: 590, cy: 1430 }); events.push({ t, type: 'whoosh', dur: 0.5, gain: 0.35 }); hold(1.5); }
+  // 2. The problem, with its prop.
+  const menu = { t: 0, until: 0, holder: EP.holder, label: EP.prop.label, html: EP.prop.html };
+  EP.setup.forEach((L, i) => {
+    if (L.who === 'waiter') { cam(t, 'wide', 1, 0.5); events.push({ t, type: 'pop', gain: 0.5 }); for (const w of ['hamza', 'zain', 'sara']) face(w, t, 'awe'); }
+    else { cam(t, L.who, 1.8, i ? 0.4 : 0.6); face(L.who, t, i ? 'explaining' : 'suspicious'); }
+    if (i === 0 && EP.holder) { menu.t = t + 0.25; events.push({ t: t + 0.3, type: 'pop', gain: 0.9 }); }
+    const s = say(L, 0.45);
+    for (const w of others(L.who)) if (w !== EP.holder || i) face(w, s + 0.6, 'awe');
+  });
   menu.until = t;
-  // 3. THEREFORE everyone looks at Ayesha. BUT she has gone very quiet.
-  cam(t, 'wide', 1, 0.6); face('ayesha', t, 'blank'); face('hamza', t + 0.3, 'concernedFear'); hold(0.8);
+  // 3. BUT Ayesha has gone very quiet.
+  cam(t, 'wide', 1, 0.6); face('ayesha', t, 'blank'); face(EP.panicker, t + 0.3, 'concernedFear'); hold(0.8);
   cam(t, 'ayesha', 1.9, 0.9); face('ayesha', t + 0.3, 'serious'); events.push({ t, type: 'riser', dur: 1.4, gain: 0.5 }); hold(1.3);
-  // 4. The glasses. Bell, flash, chalk puff: the restaurant becomes a classroom.
+  // 4. THEREFORE: glasses. Bell, flash, chalk puff, classroom.
   const tr = { t, until: 0 };
   events.push({ t: t - 0.25, type: 'bell' }); face('ayesha', t, 'madam:rage'); events.push({ t, type: 'impact', big: 1 }); hits.push({ t, zoom: 0.08, shake: 20, flash: true });
-  face('hamza', t + 0.35, 'fear'); face('sara', t + 0.35, 'concernedFear'); face('zain', t + 0.35, 'fear');
+  for (const w of ['hamza', 'zain', 'sara']) face(w, t + 0.35, w === 'sara' ? 'concernedFear' : 'fear');
   hold(1.1);
-  // 5. THEREFORE Hamza panics.
-  cam(t, 'hamza', 2.0, 0.45); shakes.push({ who: 'hamza', t, d: (dur.l1 || 1.5) + 0.4 }); events.push({ t, type: 'whoosh', dur: 0.4, gain: 0.45 });
-  say('l1', 0.45);
-  // 6. BUT it's too late. Madam: "Menu ki photo pe bharosa kiya?" (to Zain, who trusted the photo)
+  // 5. Someone panics.
+  cam(t, EP.panicker, 2.0, 0.45); shakes.push({ who: EP.panicker, t, d: (dur.panic || 1.5) + 0.4 }); events.push({ t, type: 'whoosh', dur: 0.4, gain: 0.45 });
+  say(EP.panic, 0.45);
+  // 6. BUT it's too late: Madam scolds the one who messed up.
   cam(t, 'ayesha', 2.1, 0.45); whack(t + 0.25, 1180); hold(0.45);
   face('ayesha', t, 'madam:veryAngry');
-  say('l2a', 0.35);
-  cam(t, 'zain', 2.0, 0.35); face('zain', t, 'fear'); events.push({ t: t + 0.2, type: 'pop', gain: 0.5 }); hold(0.7);
+  say(EP.scoldA, 0.35);
+  cam(t, EP.victim, 2.0, 0.35); face(EP.victim, t, 'fear'); events.push({ t: t + 0.2, type: 'pop', gain: 0.5 }); hold(0.7);
   cam(t, 'ayesha', 2.2, 0.3);
   const coldStart = t - 0.1;
-  say('l2b', 0.25);
-  // 7. THEREFORE Zain actually stands on his chair. Silence.
-  cam(t, 'wide', 1, 0.55); face('zain', t, 'hectic');
-  const stand = { who: 'zain', t: t + 0.2, until: 0 }; events.push({ t: t + 0.2, type: 'whoosh', dur: 0.35, gain: 0.5 }); events.push({ t: t + 0.7, type: 'impact', big: 0.35 });
+  say(EP.scoldB, 0.25);
+  // 7. THEREFORE the punishment.
+  cam(t, 'wide', 1, 0.55); face(EP.victim, t, 'hectic');
+  const stand = { who: EP.victim, kind: EP.punish, t: t + 0.2, until: 0 };
+  events.push({ t: t + 0.2, type: 'whoosh', dur: 0.35, gain: 0.5 }); events.push({ t: t + 0.7, type: 'impact', big: 0.35 });
   hold(1.4);
   const coldEnd = t;
-  // 8. BUT Sara tries to stop her. THEREFORE the glare. Sara backs off.
-  cam(t, 'sara', 2.0, 0.5); face('sara', t, 'concernedFear');
-  say('l3', 0.35);
+  // 8. BUT someone objects. THEREFORE the glare. They back off.
+  cam(t, EP.objector, 2.0, 0.5); face(EP.objector, t, 'concernedFear');
+  say(EP.object, 0.35);
   cam(t, 'ayesha', 2.1, 0.4); face('ayesha', t, 'madam:suspicious'); events.push({ t: t + 0.15, type: 'pop', gain: 0.6 }); hold(1.0);
-  cam(t, 'sara', 2.0, 0.35); face('sara', t, 'fear');
-  say('l3b', 0.45);
-  // 9. THEREFORE the punishment: "Saza milegi. Sawal solve karo, warna bill tumhara!" The board drops.
+  cam(t, EP.objector, 2.0, 0.35); face(EP.objector, t, 'fear');
+  say(EP.back, 0.45);
+  // 9. THEREFORE the "saza": the riddle.
   cam(t, 'ayesha', 2.0, 0.4); face('ayesha', t, 'madam:explaining'); whack(t + 0.2, 1180, 0.9); hold(0.3);
-  say('l4', 0.3);
-  cam(t, 'wide', 1, 0.55);
-  const board = { t, until: 0, write: 2.0, over: 'Saza · Aaj ka sawal', q: riddle.h, pattern: riddle.pattern, note: riddle.b };
-  events.push({ t: t + 0.1, type: 'impact', big: 0.7 }); events.push({ t: t + 0.45, type: 'chalk', dur: 2.0 }); hits.push({ t: t + 0.1, zoom: 0.03, shake: 10 });
-  face('zain', t, 'suspicious'); face('hamza', t, 'concernedFear'); face('sara', t, 'suspicious');
-  hold(0.5);
-  say('l5', 0.2);
-  events.push({ t: board.t + 2.6, type: 'scribble' }); events.push({ t: board.t + 2.9, type: 'lock', gain: 0.6 });
-  const tickFrom = board.t + 0.4;
-  hold(1.5);
-  // 10. The friends try: Zain thinks, BUT Hamza jumps in, AND Madam cuts him off mid-word.
-  cam(t, 'zain', 1.9, 0.5); face('zain', t, 'explaining');
-  say('l6', 0.35);
-  cam(t, 'hamza', 1.9, 0.35); face('hamza', t, 'smileBig');
-  say('l7', 0, 0.35);
-  cam(t, 'ayesha', 2.2, 0.15); whack(t, 1180, 1.1); face('ayesha', t, 'madam:angryWithFang'); face('hamza', t + 0.1, 'fear'); shakes.push({ who: 'hamza', t: t + 0.1, d: 1.0 });
-  say('l8a', 0.35);
-  board.until = t;
+  say(EP.saza, 0.3);
+  const boards = [];
+  const tickFrom = t + 0.4;
+  EP.read.forEach((L, i) => {
+    cam(t, 'wide', 1, 0.55);
+    const rd = riddles[i] || riddles[0];
+    const b = { t, until: 0, write: 2.0, over: riddles.length > 1 ? `Aakhri sawal ${i + 1}/${riddles.length}` : 'Saza · Aaj ka sawal', q: rd.h, pattern: rd.pattern, note: rd.b };
+    if (boards.length) boards[boards.length - 1].until = t;
+    boards.push(b);
+    events.push({ t: t + 0.1, type: 'impact', big: 0.7 }); events.push({ t: t + 0.45, type: 'chalk', dur: 2.0 }); hits.push({ t: t + 0.1, zoom: 0.03, shake: 10 });
+    for (const w of ['hamza', 'zain', 'sara']) face(w, t, i % 2 ? 'concernedFear' : 'suspicious');
+    hold(0.5);
+    say(L, 0.2);
+    events.push({ t: b.t + 2.6, type: 'scribble' }); events.push({ t: b.t + 2.9, type: 'lock', gain: 0.6 });
+    hold(1.5);
+  });
+  // 10. The friends try; the second one gets cut off.
+  const [a1, a2] = EP.solvers;
+  cam(t, a1, 1.9, 0.5); face(a1, t, 'explaining');
+  say(EP.try1, 0.35);
+  cam(t, a2, 1.9, 0.35); face(a2, t, 'smileBig');
+  say(EP.try2, 0, 0.35);
+  cam(t, 'ayesha', 2.2, 0.15); whack(t, 1180, 1.1); face('ayesha', t, 'madam:angryWithFang'); face(a2, t + 0.1, 'fear'); shakes.push({ who: a2, t: t + 0.1, d: 1.0 });
+  say(EP.chup, 0.35);
+  boards[boards.length - 1].until = t;
   const tickTo = t;
-  // 11. She turns to us: the fourth wall. Slow push to her face.
+  // 11. The fourth wall.
   cam(t, 'ayesha', 2.6, 0.7, { face: true }); face('ayesha', t, 'madam:serious'); events.push({ t, type: 'riser', dur: 0.7, gain: 0.3 });
   hold(0.4);
-  say('l8b', 0.5);
-  // 12. Frozen table.
+  say(EP.fourth, 0.5);
+  // 12. Frozen table. 13. Glasses off.
   cam(t, 'wide', 1, 0.6); hold(0.9);
-  // 13. Glasses off. Sweet as ever. (last line = the loop back to the cold open)
   tr.until = t; stand.until = t;
   events.push({ t, type: 'whoosh', dur: 0.4, gain: 0.45 }); face('ayesha', t, 'smile');
   for (const w of ['hamza', 'zain', 'sara']) face(w, t + 0.15, 'blank');
   cam(t + 0.2, 'ayesha', 1.8, 0.6); hold(0.9);
   face('ayesha', t, 'lovingGrin1');
-  say('l9', 0.5);
+  say(EP.sweet, 0.5);
   cam(t, 'wide', 1, 0.6); hold(0.5); events.push({ t, type: 'bell', gain: 0.35 }); hold(0.5);
-  // 14. End card: send it to your group's Ayesha.
+  // 14. End card.
   const ctaAt = t; events.push({ t, type: 'impact', big: 0.4 }); hold(2.2);
   const len = t;
-  for (const k of Object.keys(faces)) faces[k].sort((a, b) => a.t - b.t);
-  camera.sort((a, b) => a.t - b.t);
+  for (const k of Object.keys(faces)) faces[k].sort((x, y) => x.t - y.t);
+  camera.sort((x, y) => x.t - y.t);
   return {
     len, voice, events, tick: [[tickFrom, tickTo]], coldStart, coldEnd, ctaAt,
-    tl: { lines, faces, camera, hits, whacks, shakes, menu, transform: tr, board, stand,
-      tag: ['Madam ki Class', 'Room 1'], headline: 'Har group mein ek *Ayesha* hoti hai', rewindText: '10 second pehle...',
-      cta: { big: 'Apne group ki *Ayesha* ko bhejo.', small: 'Escape the menu, Room 1. Code DM karo, 4 October ke baad. Pehle 5 ka dinner humari taraf se.' } },
+    tl: { lines, faces, camera, hits, whacks, shakes, menu, transform: tr, boards, stand, burger: NUM === '1',
+      tag: ['Madam ki Class', EP.room], headline: EP.headline, rewindText: '10 second pehle...', cta: EP.cta },
   };
 }
 
