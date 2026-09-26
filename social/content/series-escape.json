@@ -12,19 +12,19 @@
       "pillar": "tease",
       "audience": "diners",
       "format": "reel",
-      "caption": "Madam ki Class, Room 1. Surprise test. You trusted a menu photo, so you failed. Bench pe khade ho jao.\n\nClass roz raat 8:30 pe lagti hai. Late aaye to absent.\nAttendance: comment PRESENT.\nHomework: 3 dost tag karo. Agar tumhara tag kiya hua dost jeet gaya aur DM mein tumhara naam likha, tum bhi saath dinner pe chalo ge.\n\nThe only way out is a 10-letter code. One riddle a night. Tonight's gives you letter 4.\n\nESCAPE THE MENU: one riddle a night until 4 October. Every answer gives one letter of a 10-letter code (the chili box tells you which letter, the board tells you where it goes). DMs count from 4 October, 8:30 pm. The first 5 people to DM @eatmenva the code win a premium dine-in on us, a private after party and MENVA Black free as founding members.\n\nRules: Lahore only, 18+, one entry per account. The code only counts if you DM it after 4 October, 8:30 pm. Winners are announced on our Story and contacted by DM from @eatmenva only; we will never ask for money or card details. Venue and date are shared with the winners. Run by MENVA, not sponsored, endorsed or run by Instagram.\n\nWe have a way out. DM us \"secret\".",
+      "caption": "Madam ki Class, Room 1: menu photo vs real burger. Har group mein ek Ayesha hoti hai.\n\nBurger chhota aaya, menu pe jumbo tha. Aur phir Ayesha ne chashma pehen liya.\n\nApne group ki Ayesha ko bhejo. Aur jis dost ne menu photo pe bharosa kiya tha, usko tag karo.\nReferral: agar tumhara tag kiya hua dost jeet gaya aur DM mein tumhara naam likha, tum bhi saath dinner pe chalo ge.\n\nClass roz raat 8:30. Late aaye to absent.\n\nThe only way out is a 10-letter code. One riddle a night. Tonight's gives you letter 4.\n\nESCAPE THE MENU: one riddle a night until 4 October. Every answer gives one letter of a 10-letter code (the chili box tells you which letter, the board tells you where it goes). DMs count from 4 October, 8:30 pm. The first 5 people to DM @eatmenva the code win a premium dine-in on us, a private after party and MENVA Black free as founding members.\n\nRules: Lahore only, 18+, one entry per account. The code only counts if you DM it after 4 October, 8:30 pm. Winners are announced on our Story and contacted by DM from @eatmenva only; we will never ask for money or card details. Venue and date are shared with the winners. Run by MENVA, not sponsored, endorsed or run by Instagram.\n\nWe have a way out. DM us \"secret\".",
       "hashtags": [
         "#menva",
         "#lahorefood",
         "#lahorefoodies",
         "#escapethemenu"
       ],
-      "alt": "Escape the menu, room 1: a problem every diner knows, and a riddle about Lahore food that gives one letter of a 10-letter code.",
+      "alt": "An animated skit: four friends at a restaurant get a tiny burger that looked jumbo on the menu, and Ayesha turns into a strict teacher who sets them a riddle.",
       "slides": [
         {
           "layout": "cover",
-          "img": "social/reels/out/escape-01-the-photo-cover.jpg",
-          "h": "The menu photo\nwas *lying.*"
+          "img": "social/reels/out/table-edition-room-1-cover.jpg",
+          "h": "Har group mein ek Ayesha hoti hai"
         }
       ],
       "frames": [
@@ -46,7 +46,7 @@
           "board": "___?______"
         }
       ],
-      "video": "social/reels/out/escape-01-the-photo.mp4",
+      "video": "social/reels/out/table-edition-room-1.mp4",
       "madam": {
         "room": "Room 1",
         "format": "Surprise test",
