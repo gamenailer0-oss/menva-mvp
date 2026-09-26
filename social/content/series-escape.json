@@ -12,7 +12,7 @@
       "pillar": "tease",
       "audience": "diners",
       "format": "reel",
-      "caption": "Room 1. You walked in hungry. You trusted a photo. The photo lied, and now you are locked in with the consequences.\n\nThe only way out is a 10-letter code. One riddle a night. Tonight's gives you letter 4.\n\nESCAPE THE MENU: one riddle a night until 4 October. Every answer gives one letter of a 10-letter code (the chili box tells you which letter, the board tells you where it goes). DMs count from 4 October, 8:30 pm. The first 5 people to DM @eatmenva the code win a premium dine-in on us, a private after party and MENVA Black free as founding members.\n\nRules: Lahore only, 18+, one entry per account. The code only counts if you DM it after 4 October, 8:30 pm. Winners are announced on our Story and contacted by DM from @eatmenva only; we will never ask for money or card details. Venue and date are shared with the winners. Run by MENVA, not sponsored, endorsed or run by Instagram.\n\nWe have a way out. DM us \"secret\".",
+      "caption": "Madam ki Class, Room 1. Surprise test. You trusted a menu photo, so you failed. Bench pe khade ho jao.\n\nClass roz raat 8:30 pe lagti hai. Late aaye to absent.\nAttendance: comment PRESENT.\nHomework: 3 dost tag karo. Agar tumhara tag kiya hua dost jeet gaya aur DM mein tumhara naam likha, tum bhi saath dinner pe chalo ge.\n\nThe only way out is a 10-letter code. One riddle a night. Tonight's gives you letter 4.\n\nESCAPE THE MENU: one riddle a night until 4 October. Every answer gives one letter of a 10-letter code (the chili box tells you which letter, the board tells you where it goes). DMs count from 4 October, 8:30 pm. The first 5 people to DM @eatmenva the code win a premium dine-in on us, a private after party and MENVA Black free as founding members.\n\nRules: Lahore only, 18+, one entry per account. The code only counts if you DM it after 4 October, 8:30 pm. Winners are announced on our Story and contacted by DM from @eatmenva only; we will never ask for money or card details. Venue and date are shared with the winners. Run by MENVA, not sponsored, endorsed or run by Instagram.\n\nWe have a way out. DM us \"secret\".",
       "hashtags": [
         "#menva",
         "#lahorefood",
@@ -46,7 +46,66 @@
           "board": "___?______"
         }
       ],
-      "video": "social/reels/out/escape-01-the-photo.mp4"
+      "video": "social/reels/out/escape-01-the-photo.mp4",
+      "madam": {
+        "room": "Room 1",
+        "format": "Surprise test",
+        "stamp": "FAIL",
+        "voice": "hf_beta",
+        "scold": [
+          "s1",
+          "s2"
+        ],
+        "homework": "Attendance: comment <b>PRESENT</b><br>Homework: <b>3 dost tag karo</b>",
+        "lines": [
+          {
+            "id": "hook",
+            "say": "Phone neechay *nahi!*",
+            "hi": "फ़ोन नीचे नहीं!",
+            "pitch": 1.1,
+            "speed": 1.15
+          },
+          {
+            "id": "s1",
+            "say": "Menu ki photo pe *bharosa* kiya?",
+            "hi": "मेन्यू की फ़ोटो पे भरोसा किया?",
+            "pitch": 1.08
+          },
+          {
+            "id": "s2",
+            "say": "Burger dekha tha, aaya uska *chhota bhai!*",
+            "size": "mid",
+            "hi": "बर्गर देखा था... आया उसका छोटा भाई!",
+            "pitch": 1.05
+          },
+          {
+            "id": "verdict",
+            "say": "Bench pe khade ho jao!",
+            "hi": "बेंच पे खड़े हो जाओ!",
+            "pitch": 1.12,
+            "speed": 1.2
+          },
+          {
+            "id": "sawal",
+            "say": "Aaj ka sawal. Likho!",
+            "hi": "आज का सवाल। लिखो!",
+            "pitch": 1.06
+          },
+          {
+            "id": "hurry",
+            "say": "Jaldi karo! *Time khatam!*",
+            "hi": "जल्दी करो! टाइम ख़तम!",
+            "pitch": 1.12,
+            "speed": 1.2
+          },
+          {
+            "id": "outro",
+            "say": "Kal *8:30.* Late aaye to *absent!*",
+            "hi": "कल साढ़े आठ बजे। लेट आए तो एब्सेंट!",
+            "pitch": 1.08
+          }
+        ]
+      }
     },
     {
       "n": 2,

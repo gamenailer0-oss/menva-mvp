@@ -1,0 +1,216 @@
+<!doctype html>
+<html lang="en">
+<head>
+<meta charset="utf-8">
+<title>Madam ki Class</title>
+<!-- "Madam ki Class": the Escape the menu Reels. One page draws any moment of a Reel: render(t) with t in
+     seconds. class.mjs fills window.TL (the timeline, timed to Madam's voice) and captures 30 frames a second. -->
+<style>
+@font-face { font-family: 'Instrument Serif'; src: url(../../vendor/fonts/instrument-serif-400.woff2) format('woff2'); }
+@font-face { font-family: 'Instrument Serif'; font-style: italic; src: url(../../vendor/fonts/instrument-serif-400-italic.woff2) format('woff2'); }
+@font-face { font-family: 'DM Sans'; font-weight: 400; src: url(../../vendor/fonts/dm-sans-400.woff2) format('woff2'); }
+@font-face { font-family: 'DM Sans'; font-weight: 600; src: url(../../vendor/fonts/dm-sans-600.woff2) format('woff2'); }
+:root { --paper: #EFEBE2; --ink: #1A1714; --chili: #B5371F; --cream: #F5EFE4; --board: #22241F; --chalk: #EDE8DC; --line: #C9D6E3; }
+* { margin: 0; box-sizing: border-box; }
+html, body { width: 1080px; height: 1920px; overflow: hidden; background: var(--ink); font-family: 'DM Sans', sans-serif; }
+#cam { position: absolute; inset: 0; transform-origin: 50% 45%; }
+.scene { position: absolute; inset: 0; opacity: 0; }
+/* exam paper: ruled lines, a red margin */
+.paper { background: var(--paper) repeating-linear-gradient(to bottom, transparent 0 86px, var(--line) 86px 89px); }
+.paper::before { content: ''; position: absolute; top: 0; bottom: 0; left: 150px; width: 4px; background: rgba(181,55,31,.55); }
+.board { background: radial-gradient(ellipse at 50% 40%, #2c2f28 0%, var(--board) 70%); }
+.board::after { content: ''; position: absolute; inset: 0; background: repeating-linear-gradient(115deg, rgba(255,255,255,.012) 0 3px, transparent 3px 9px); }
+.inkbg { background: var(--ink); }
+.chili { background: var(--chili); }
+/* header strip: the class register */
+.reg { position: absolute; top: 120px; left: 190px; right: 90px; display: flex; justify-content: space-between; font-size: 30px; letter-spacing: .16em; text-transform: uppercase; color: rgba(26,23,20,.6); font-weight: 600; }
+.board .reg, .inkbg .reg, .chili .reg { color: rgba(237,232,220,.6); left: 90px; }
+/* Madam's words: big, one word at a time */
+.say { position: absolute; left: 190px; right: 90px; font-family: 'DM Sans'; font-weight: 600; color: var(--ink); line-height: 1.02; letter-spacing: -.03em; }
+.board .say, .inkbg .say, .chili .say { color: var(--chalk); left: 90px; }
+.say .w { display: inline-block; margin-right: .22em; transform-origin: 50% 80%; }
+.say em { font-family: 'Instrument Serif'; font-style: italic; font-weight: 400; color: var(--chili); letter-spacing: 0; }
+.chili .say em, .inkbg .say em { color: var(--cream); }
+.say.huge { font-size: 176px; text-transform: uppercase; }
+.say.big { font-size: 132px; }
+.say.mid { font-size: 100px; }
+.say.small { font-size: 50px; font-weight: 400; letter-spacing: -.01em; }
+/* red pen */
+.pen { font-family: 'Instrument Serif'; font-style: italic; color: var(--chili); }
+.stamp { position: absolute; padding: 18px 46px; border: 10px solid var(--chili); color: var(--chili); border-radius: 22px; font-weight: 600; font-size: 120px; letter-spacing: .08em; text-transform: uppercase; background: rgba(239,235,226,.25); }
+.board .stamp, .inkbg .stamp { border-color: var(--cream); color: var(--cream); background: transparent; }
+.ruler { position: absolute; width: 1300px; height: 120px; left: -200px; top: 0; border-radius: 10px; background: linear-gradient(#e2c27a, #caa45b); box-shadow: 0 20px 50px rgba(0,0,0,.35); transform-origin: 0 50%; }
+.ruler::before { content: ''; position: absolute; left: 30px; right: 30px; top: 0; height: 40px; background: repeating-linear-gradient(to right, rgba(60,40,10,.7) 0 3px, transparent 3px 26px); }
+.flash { position: absolute; inset: 0; background: #fff; opacity: 0; pointer-events: none; }
+/* the riddle on the board */
+.q-over { position: absolute; top: 250px; left: 90px; font-size: 44px; letter-spacing: .2em; text-transform: uppercase; color: var(--chili); font-weight: 600; }
+.q { position: absolute; top: 340px; left: 90px; right: 90px; font-family: 'Instrument Serif'; font-size: 96px; line-height: 1.08; color: var(--chalk); }
+.q em { color: #F0B6A8; }
+.q .chalkmask { display: inline; }
+.blanks { position: absolute; left: 90px; right: 90px; display: flex; flex-wrap: wrap; gap: 16px; }
+.blanks .bl { width: 72px; height: 96px; border-bottom: 8px solid var(--chalk); opacity: .7; position: relative; }
+.blanks .bl.hit { opacity: 1; border-bottom-color: var(--chili); }
+.blanks .gap { width: 40px; }
+.blanks .ring { position: absolute; left: -26px; top: -18px; width: 124px; height: 140px; overflow: visible; }
+.note { position: absolute; left: 90px; right: 90px; font-size: 56px; color: var(--chalk); }
+.note b { color: #F0B6A8; font-weight: 600; }
+.code { position: absolute; left: 90px; right: 90px; bottom: 250px; padding: 30px; border: 3px dashed rgba(237,232,220,.35); border-radius: 24px; }
+.code .lab { font-size: 28px; letter-spacing: .18em; text-transform: uppercase; color: rgba(237,232,220,.6); margin-bottom: 18px; }
+.code .cells { display: flex; gap: 10px; }
+.code .cell { width: 76px; height: 100px; border-radius: 12px; border: 3px solid rgba(237,232,220,.3); display: flex; align-items: center; justify-content: center; font-family: 'Instrument Serif'; font-size: 70px; color: var(--chalk); position: relative; }
+.code .cell i { position: absolute; bottom: 2px; right: 6px; font-style: normal; font-family: 'DM Sans'; font-size: 16px; opacity: .55; }
+.code .cell.got { background: rgba(237,232,220,.1); border-color: transparent; }
+.code .cell.hit { background: var(--chili); border-color: var(--chili); }
+.code .gap { width: 24px; }
+.foot { position: absolute; bottom: 110px; left: 90px; right: 90px; display: flex; justify-content: space-between; align-items: baseline; }
+.wm { font-family: 'Instrument Serif'; font-size: 64px; color: var(--chalk); letter-spacing: -.02em; }
+.wm i { color: var(--chili); font-style: normal; }
+.paper .wm { color: var(--ink); }
+.handle { font-size: 30px; color: rgba(237,232,220,.7); }
+.paper .handle { color: rgba(26,23,20,.6); }
+.hw { position: absolute; left: 90px; right: 90px; font-size: 74px; color: var(--chalk); line-height: 1.25; }
+.hw b { font-weight: 600; color: var(--cream); background: var(--chili); padding: 0 16px; border-radius: 10px; }
+.hurry { position: absolute; left: 90px; right: 90px; top: 1180px; font-weight: 600; font-size: 92px; color: #F0B6A8; letter-spacing: -.02em; transform-origin: 0 50%; }
+.sub { position: absolute; left: 70px; right: 70px; bottom: 330px; text-align: center; font-size: 40px; font-weight: 600; color: #fff; text-shadow: 0 3px 12px rgba(0,0,0,.6); opacity: 0; }
+</style>
+</head>
+<body>
+<div id="cam"></div>
+<div class="flash" id="flash"></div>
+<script>
+'use strict';
+// ── helpers ──
+const clamp = (x, a = 0, b = 1) => Math.max(a, Math.min(b, x));
+const ease = (x) => 1 - Math.pow(1 - clamp(x), 3);            // ease-out
+const back = (x) => { x = clamp(x); const c = 1.9; return 1 + (c + 1) * Math.pow(x - 1, 3) + c * Math.pow(x - 1, 2); }; // overshoot
+const esc = (s) => String(s).replace(/[&<>"]/g, (c) => ({ '&': '&amp;', '<': '&lt;', '>': '&gt;', '"': '&quot;' }[c]));
+const rich = (s) => esc(s).replace(/\*(.+?)\*/g, '<em>$1</em>');
+
+// Build the DOM once from window.TL; render(t) only moves things.
+function build() {
+  const TL = window.TL, cam = document.getElementById('cam');
+  const parts = [];
+  TL.scenes.forEach((sc, si) => {
+    let h = `<div class="scene ${sc.bg}" id="sc${si}">`;
+    if (sc.reg) h += `<div class="reg"><span>${esc(sc.reg[0])}</span><span>${esc(sc.reg[1])}</span></div>`;
+    for (const [ei, el] of (sc.els || []).entries()) {
+      const id = `e${si}_${ei}`;
+      if (el.type === 'say') {
+        const words = [];
+        // words keep *accent* marks: split on spaces outside the asterisks
+        String(el.text).split(/\s+/).forEach((w) => words.push(w));
+        let open = false;
+        h += `<div class="say ${el.size || 'big'}" id="${id}" style="top:${el.y}px">` + words.map((w, wi) => {
+          let s = w; const starts = s.startsWith('*'), ends = s.endsWith('*') || /\*[.,!?]$/.test(s);
+          s = s.replace(/\*/g, '');
+          const inEm = open || starts; if (starts) open = true; if (ends) open = false;
+          return `<span class="w" data-i="${wi}">${inEm ? '<em>' + esc(s) + '</em>' : esc(s)}</span>`;
+        }).join('') + `</div>`;
+      } else if (el.type === 'stamp') {
+        h += `<div class="stamp" id="${id}" style="left:${el.x}px;top:${el.y}px">${esc(el.text)}</div>`;
+      } else if (el.type === 'pen') {
+        h += `<div class="pen" id="${id}" style="position:absolute;left:${el.x}px;top:${el.y}px;font-size:${el.size || 70}px;transform:rotate(${el.rot || -6}deg)">${rich(el.text)}</div>`;
+      } else if (el.type === 'riddle') {
+        h += `<div class="q-over" id="${id}o">${esc(el.over)}</div><div class="q" id="${id}q">${rich(el.q)}</div>`;
+        h += `<div class="blanks" id="${id}b" style="top:${el.by}px">` + [...el.pattern].map((c) => c === ' ' ? '<span class="gap"></span>'
+          : `<span class="bl${c === '?' ? ' hit' : ''}">${c === '?' ? '<svg class="ring" viewBox="0 0 124 140"><ellipse cx="62" cy="70" rx="56" ry="64" fill="none" stroke="#B5371F" stroke-width="7" stroke-linecap="round" pathLength="1" stroke-dasharray="1.08" stroke-dashoffset="1.08" transform="rotate(-80 62 70)"/></svg>' : ''}</span>`).join('') + `</div>`;
+        h += `<div class="note" id="${id}n" style="top:${el.by + 150}px">${rich(el.note).replace(/<em>/g, '<b>').replace(/<\/em>/g, '</b>')}</div>`;
+        if (el.hurry) h += `<div class="hurry" id="${id}h">${rich(el.hurry)}</div>`;
+        h += `<div class="code" id="${id}c"><div class="lab">The code</div><div class="cells">` + [...el.board].map((c, i) => `${i === 5 ? '<span class="gap"></span>' : ''}<span class="cell${c === '?' ? ' hit' : c === '_' ? '' : ' got'}">${c === '_' || c === '?' ? (c === '?' ? '?' : '') : esc(c)}<i>${i + 1}</i></span>`).join('') + `</div></div>`;
+      } else if (el.type === 'hw') {
+        h += `<div class="hw" id="${id}" style="top:${el.y}px">${el.html}</div>`;
+      }
+    }
+    h += `<div class="foot"><span class="wm">menva<i>.</i></span><span class="handle">@eatmenva</span></div></div>`;
+    parts.push(h);
+  });
+  parts.push(`<div class="ruler" id="ruler"></div>`);
+  cam.innerHTML = parts.join('');
+}
+
+// Everything at time t (seconds). Pure function of t, so every frame is reproducible.
+window.render = function (t) {
+  const TL = window.TL;
+  // scenes: cut on their start time (the whack/whoosh covers the cut)
+  TL.scenes.forEach((sc, si) => {
+    const on = t >= sc.t[0] && t < sc.t[1];
+    const s = document.getElementById('sc' + si);
+    s.style.opacity = on ? 1 : 0;
+    if (!on) return;
+    const lt = t - sc.t[0];
+    (sc.els || []).forEach((el, ei) => {
+      const id = `e${si}_${ei}`;
+      if (el.type === 'say') {
+        const box = document.getElementById(id);
+        const ws = box.querySelectorAll('.w');
+        ws.forEach((w, wi) => {
+          const at = el.at + (el.words ? el.words[wi] : wi * (el.step || 0.16));
+          const p = (lt - at) / 0.14;
+          w.style.opacity = p <= 0 ? 0 : 1;
+          const sc2 = p <= 0 ? 1.6 : 1 + 0.6 * (1 - back(p)) ;
+          w.style.transform = `scale(${Math.max(0.9, sc2).toFixed(3)}) translateY(${(p <= 0 ? 30 : 30 * (1 - ease(p))).toFixed(1)}px)`;
+        });
+      } else if (el.type === 'stamp') {
+        const e = document.getElementById(id), p = (lt - el.at) / 0.12;
+        e.style.opacity = p <= 0 ? 0 : 1;
+        e.style.transform = `rotate(${el.rot || -8}deg) scale(${p <= 0 ? 3 : (1 + 2 * (1 - ease(p))).toFixed(3)})`;
+      } else if (el.type === 'pen') {
+        const e = document.getElementById(id), p = (lt - el.at) / 0.35;
+        e.style.opacity = p <= 0 ? 0 : 1;
+        e.style.clipPath = `inset(0 ${(100 - 100 * ease(p)).toFixed(1)}% 0 0)`;
+      } else if (el.type === 'riddle') {
+        const o = document.getElementById(id + 'o'), q = document.getElementById(id + 'q'), b = document.getElementById(id + 'b'), n = document.getElementById(id + 'n'), c = document.getElementById(id + 'c');
+        const po = (lt - el.at) / 0.2; o.style.opacity = clamp(po); o.style.transform = `translateX(${(-60 * (1 - ease(po))).toFixed(1)}px)`;
+        // chalk writing: the riddle is revealed left to right, line by line, over el.write seconds
+        const pw = clamp((lt - el.at - 0.2) / el.write);
+        q.style.opacity = pw > 0 ? 1 : 0;
+        q.style.clipPath = `polygon(0 0, 100% 0, 100% ${(pw * 100).toFixed(1)}%, 0 ${(pw * 100).toFixed(1)}%)`;
+        q.style.webkitMaskImage = `linear-gradient(to bottom, #000 ${(pw * 100 - 8).toFixed(1)}%, transparent ${(pw * 100 + 2).toFixed(1)}%)`;
+        const bt = el.at + 0.2 + el.write;
+        b.querySelectorAll('.bl').forEach((x, i) => { const p = (lt - bt - i * 0.05) / 0.15; x.style.opacity = p <= 0 ? 0 : (x.classList.contains('hit') ? 1 : 0.7); x.style.transform = `scaleX(${ease(p).toFixed(3)})`; });
+        const ring = b.querySelector('ellipse');
+        if (ring) ring.setAttribute('stroke-dashoffset', (1.08 * (1 - ease((lt - el.ringAt) / 0.35))).toFixed(3));
+        const pn = (lt - el.ringAt - 0.2) / 0.25; n.style.opacity = clamp(pn); n.style.transform = `translateY(${(20 * (1 - ease(pn))).toFixed(1)}px)`;
+        const hu = document.getElementById(id + 'h');
+        if (hu) { const ph = (lt - el.hurryAt) / 0.12; hu.style.opacity = ph <= 0 ? 0 : 1; hu.style.transform = `scale(${ph <= 0 ? 1.8 : (1 + 0.8 * (1 - back(ph))).toFixed(3)}) rotate(-3deg)`; }
+        const pc = (lt - el.codeAt) / 0.3; c.style.opacity = clamp(pc); c.style.transform = `translateY(${(80 * (1 - ease(pc))).toFixed(1)}px)`;
+      } else if (el.type === 'hw') {
+        const e = document.getElementById(id), p = (lt - el.at) / 0.2;
+        e.style.opacity = clamp(p); e.style.transform = `translateY(${(40 * (1 - ease(p))).toFixed(1)}px)`;
+      }
+    });
+  });
+  // the ruler: swings in and SLAPS at each whack time, then leaves
+  const ruler = document.getElementById('ruler');
+  let rv = null;
+  for (const w of TL.whacks) { const d = t - w.t; if (d > -0.16 && d < 0.3) rv = { d, y: w.y || 900 }; }
+  if (rv) {
+    const a = rv.d < 0 ? -55 + 55 * ease((rv.d + 0.16) / 0.16) : 0 + 0 * rv.d;
+    const off = rv.d > 0.12 ? (rv.d - 0.12) / 0.18 : 0;
+    ruler.style.opacity = 1;
+    ruler.style.top = rv.y + 'px';
+    ruler.style.transform = `rotate(${(a - 70 * ease(off)).toFixed(1)}deg)`;
+  } else ruler.style.opacity = 0;
+  // camera: punch-in on each hit + shake
+  let z = 1, sx = 0, sy = 0, fl = 0;
+  for (const h of TL.hits) {
+    const d = t - h.t;
+    if (d >= 0 && d < 0.5) {
+      z = Math.max(z, 1 + (h.zoom || 0.06) * (1 - ease(d / 0.35)));
+      const k = Math.exp(-d * 13) * (h.shake || 16);
+      sx += k * Math.sin(d * 95); sy += k * Math.cos(d * 77);
+      if (h.flash && d < 0.12) fl = Math.max(fl, 0.55 * (1 - d / 0.12));
+    }
+  }
+  // a slow drift so no frame is ever static
+  z *= 1 + 0.012 * Math.sin(t * 0.7);
+  document.getElementById('cam').style.transform = `translate(${sx.toFixed(1)}px,${sy.toFixed(1)}px) scale(${z.toFixed(4)})`;
+  document.getElementById('flash').style.opacity = fl.toFixed(3);
+};
+
+window.__ready = false;
+document.fonts.ready.then(() => { if (window.TL) { build(); window.render(0); } window.__ready = true; });
+window.load = function (tl) { window.TL = tl; build(); window.render(0); };
+</script>
+</body>
+</html>
