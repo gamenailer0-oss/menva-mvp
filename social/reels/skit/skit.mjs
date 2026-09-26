@@ -30,7 +30,7 @@ const seats = {
   sara: { x: 540, y: 850, size: 510 },
 };
 const NAMES = { ayesha: 'Ayesha', madam: 'Ayesha (Madam mode)', hamza: 'Hamza', sara: 'Sara', zain: 'Zain' };
-const VOICE = { ayesha: ['hf_beta', 1.12, 1.0], madam: ['hf_beta', 1.0, 1.16], sara: ['hf_alpha', 1.06, 1.08], hamza: ['hm_omega', 1.04, 1.16], zain: ['hm_psi', 1.0, 1.06] }; // voice, pitch, speed
+const VOICE = { ayesha: ['hf_beta', 1.12, 0.92], madam: ['hf_beta', 1.0, 1.0], sara: ['hf_alpha', 1.06, 0.95], hamza: ['hm_omega', 1.04, 1.08], zain: ['hm_psi', 1.0, 0.92] }; // voice, pitch, speed
 
 // The script. `say` is on screen (Roman Urdu, *accent*); `hi` is what the voice reads.
 const SCRIPT = [
@@ -50,75 +50,90 @@ function build(dur) {
   const lines = [], voice = [], events = [], hits = [], whacks = [], shakes = [], pops = [], camera = [];
   const faces = { ayesha: [], hamza: [], zain: [], sara: [] };
   const face = (who, t, f) => faces[who].push({ t, f });
-  let t = 0.25;
-  const say = (id, gapAfter = 0.12) => {
+  let t = 0;
+  // say(): the line starts at t; t moves to its end plus a pause. Pauses are the comedy: let each beat land.
+  const say = (id, pause = 0.45, overlap = 0) => {
     const s = SCRIPT.find((x) => x.id === id); const d = dur[id] || 1.6;
+    t -= overlap;
     lines.push({ ...s, t, d, name: NAMES[s.who] }); voice.push({ t, file: path.join(TMP, id + '.wav'), gain: s.style === 'whisper' ? 0.75 : 1 });
-    events.push({ t, type: 'pop', gain: 0.5 });
-    const start = t; t += d + gapAfter; return start;
+    const start = t; t += d + pause; return start;
   };
-  const cam = (tt, shot, zoom) => camera.push({ t: tt, shot, zoom });
+  const hold = (secs) => { t += secs; };
+  const cam = (tt, shot, zoom, cx, cy) => camera.push({ t: tt, shot, zoom, cx, cy });
   const whack = (tt, y = 1150, big = 1) => { whacks.push({ t: tt, y }); events.push({ t: tt, type: 'whack', gain: big }); hits.push({ t: tt, zoom: 0.07 * big, shake: 22 * big }); };
 
-  for (const w of Object.keys(faces)) face(w, 0, 'calm');
-  face('zain', 0, 'suspicious'); face('hamza', 0, 'smile'); face('sara', 0, 'smile'); face('ayesha', 0, 'smile');
-  cam(0, 'wide');
-  // 1. the tiny burger
-  const menu = { t: 0.55, until: 0 };
-  events.push({ t: 0.55, type: 'impact', big: 0.5 });
-  let s = say('l0', 0.25);
-  face('hamza', s + 0.6, 'awe'); face('sara', s + 0.6, 'awe'); face('ayesha', s + 0.8, 'blank');
+  for (const w of Object.keys(faces)) face(w, 0, 'smile');
+  face('zain', 0, 'calm');
+
+  // 1. Establish: four friends, a table, dinner arrives. Let it breathe.
+  cam(0, 'wide'); hold(1.1);
+  // 2. The reveal: push in on the plate. A tiny burger. A beat of silence.
+  cam(t, 'plate', 2.7, 590, 1440); events.push({ t, type: 'whoosh', dur: 0.35, gain: 0.5 }); hold(0.9);
+  const menu = { t, until: 0 }; events.push({ t, type: 'impact', big: 0.55 }); hits.push({ t, zoom: 0.03, shake: 6 }); hold(1.0);
+  // 3. Zain says what everyone is thinking.
+  cam(t, 'zain', 2.0); face('zain', t, 'suspicious');
+  let s = say('l0', 0.35);
   menu.until = t;
-  // 2. Ayesha puts on her glasses: close-up, bell, FLASH, chalk puff, the room turns into a classroom
-  cam(t, 'ayesha', 2.1); face('ayesha', t, 'serious'); events.push({ t, type: 'bell' });
-  const tr = { t: t + 0.45, until: 0 };
-  face('ayesha', tr.t, 'madam:rage'); events.push({ t: tr.t, type: 'impact', big: 1 }); events.push({ t: tr.t - 0.02, type: 'whoosh', dur: 0.4 }); hits.push({ t: tr.t, zoom: 0.1, shake: 26, flash: true });
-  face('hamza', tr.t + 0.1, 'fear'); face('sara', tr.t + 0.1, 'concernedFear'); face('zain', tr.t + 0.1, 'fear');
-  t = tr.t + 0.55;
-  // 3. Hamza panics
-  cam(t, 'hamza', 2.1); shakes.push({ who: 'hamza', t, d: dur.l1 || 1.5 }); events.push({ t, type: 'whoosh', dur: 0.3, gain: 0.6 });
-  say('l1');
-  // 4. Madam: "Bench pe khade ho jao!" + FAIL + Zain stands on his chair
-  cam(t, 'ayesha', 2.2); whack(t, 1180); t += 0.15;
+  face('hamza', s + 0.5, 'awe'); face('sara', s + 0.5, 'awe');
+  // 4. Everyone slowly turns to Ayesha. She goes quiet. Uh oh.
+  cam(t, 'wide'); face('ayesha', t, 'blank'); hold(0.7);
+  cam(t, 'ayesha', 1.9); face('ayesha', t, 'serious'); events.push({ t, type: 'riser', dur: 1.2, gain: 0.5 }); hold(1.1);
+  // 5. The transformation: bell, FLASH, chalk puff, the restaurant becomes a classroom. Hold on her.
+  const tr = { t, until: 0 };
+  events.push({ t: t - 0.3, type: 'bell' }); face('ayesha', t, 'madam:rage'); events.push({ t, type: 'impact', big: 1 }); hits.push({ t, zoom: 0.1, shake: 26, flash: true });
+  face('hamza', t + 0.3, 'fear'); face('sara', t + 0.3, 'concernedFear'); face('zain', t + 0.3, 'fear');
+  hold(1.2);
+  // 6. Hamza panics.
+  cam(t, 'hamza', 2.1); shakes.push({ who: 'hamza', t, d: (dur.l1 || 1.5) + 0.3 }); events.push({ t, type: 'whoosh', dur: 0.3, gain: 0.5 });
+  say('l1', 0.4);
+  // 7. Madam: WHACK. "Menu ki photo pe bharosa kiya? Bench pe khade ho jao!"
+  cam(t, 'ayesha', 2.2); whack(t, 1180); hold(0.35);
   face('ayesha', t, 'madam:veryAngry');
-  s = say('l2', 0.1);
-  const stamp = { t: t, until: t + 1.3, x: 250, y: 700 };
+  say('l2', 0.2);
+  const stamp = { t, until: t + 1.6, x: 250, y: 700 };
   events.push({ t, type: 'stamp' }); hits.push({ t, zoom: 0.06, shake: 18 });
-  cam(t, 'wide'); face('zain', t + 0.2, 'hectic');
-  const stand = { who: 'zain', t: t + 0.25, until: 0 };
-  pops.push({ who: 'zain', t: t + 0.25 });
-  t += 0.7;
-  // 5. Sara, whispering, tries to stop her
+  cam(t, 'wide'); hold(0.6);
+  // 8. Zain actually gets up on his chair. Slowly. Silence.
+  face('zain', t, 'hectic');
+  const stand = { who: 'zain', t, until: 0 }; pops.push({ who: 'zain', t: t + 0.4 }); events.push({ t: t + 0.4, type: 'pop', gain: 1 });
+  hold(1.3);
+  // 9. Sara tries to stop her, whispering. Madam turns and glares. Sara shrinks.
   cam(t, 'sara', 2.1); face('sara', t, 'concernedFear');
-  say('l3', 0.15);
-  // 6. "Aaj ka sawal!" + the blackboard drops in; Madam reads the riddle
+  say('l3', 0.3);
+  cam(t, 'ayesha', 2.0); face('ayesha', t, 'madam:suspicious'); events.push({ t, type: 'pop', gain: 0.6 }); hold(0.9);
+  face('sara', t - 0.4, 'fear');
+  // 10. "Aaj ka sawal!" The board drops. She dictates. The clock ticks; let viewers read.
   cam(t, 'wide'); face('ayesha', t, 'madam:explaining'); whack(t, 1180, 0.9);
-  say('l4', 0.05);
-  const board = { t, until: 0, write: 1.6, over: 'Aaj ka sawal · Room 1', q: riddle.h, pattern: riddle.pattern, note: riddle.b };
-  events.push({ t, type: 'impact', big: 0.7 }); events.push({ t: t + 0.3, type: 'chalk', dur: 1.6 }); hits.push({ t, zoom: 0.04, shake: 10 });
+  say('l4', 0.3);
+  const board = { t, until: 0, write: 2.0, over: 'Aaj ka sawal · Room 1', q: riddle.h, pattern: riddle.pattern, note: riddle.b };
+  events.push({ t, type: 'impact', big: 0.7 }); events.push({ t: t + 0.3, type: 'chalk', dur: 2.0 }); hits.push({ t, zoom: 0.04, shake: 10 });
   face('zain', t, 'suspicious'); face('hamza', t, 'concernedFear'); face('sara', t, 'suspicious');
+  hold(0.3);
   s = say('l5', 0.2);
-  events.push({ t: s + 1.9, type: 'scribble' }); events.push({ t: s + 2.2, type: 'lock', gain: 0.6 });
-  const tickFrom = s;
-  // 7. the friends try to solve it
+  events.push({ t: board.t + 2.5, type: 'scribble' }); events.push({ t: board.t + 2.8, type: 'lock', gain: 0.6 });
+  const tickFrom = board.t + 0.3;
+  hold(1.6);
+  // 11. The friends try to crack it. Hamza gets excited, and Madam cuts him off mid-word.
   cam(t, 'zain', 2.0); face('zain', t, 'explaining'); pops.push({ who: 'zain', t });
-  say('l6', 0.05);
+  say('l6', 0.35);
   cam(t, 'hamza', 2.0); face('hamza', t, 'smileBig'); pops.push({ who: 'hamza', t });
-  say('l7', 0.0);
-  // 8. "CHUP!" Madam cuts him off
-  cam(t, 'ayesha', 2.3); whack(t, 1180, 1.1); face('ayesha', t, 'madam:angryWithFang'); face('hamza', t + 0.1, 'fear'); shakes.push({ who: 'hamza', t: t + 0.1, d: 0.8 });
+  say('l7', 0, 0.35);
+  cam(t, 'ayesha', 2.3); whack(t, 1180, 1.1); face('ayesha', t, 'madam:angryWithFang'); face('hamza', t + 0.1, 'fear'); shakes.push({ who: 'hamza', t: t + 0.1, d: 1.0 });
   board.until = t;
   const tickTo = t;
-  t += 0.12;
+  hold(0.2);
   say('l8', 0.3);
-  // 9. glasses off. Sweet as ever.
+  // 12. Frozen table. Nobody moves.
+  cam(t, 'wide'); hold(1.0);
+  // 13. Glasses off. Sweet as ever.
   tr.until = t; stand.until = t;
-  events.push({ t, type: 'whoosh', dur: 0.35, gain: 0.6 }); face('ayesha', t, 'lovingGrin1');
+  events.push({ t, type: 'whoosh', dur: 0.35, gain: 0.5 }); face('ayesha', t, 'smile');
   for (const w of ['hamza', 'zain', 'sara']) face(w, t + 0.1, 'blank');
-  cam(t, 'ayesha', 1.8);
-  t += 0.35;
-  say('l9', 0.3);
-  cam(t, 'wide'); events.push({ t: t + 0.25, type: 'bell', gain: 0.45 });
+  cam(t, 'ayesha', 1.8); hold(0.6);
+  face('ayesha', t, 'lovingGrin1');
+  say('l9', 0.5);
+  // 14. The stare. Silence. One bell.
+  cam(t, 'wide'); hold(0.4); events.push({ t, type: 'bell', gain: 0.4 }); hold(0.8);
   const len = t + 1.2;
   for (const k of Object.keys(faces)) faces[k].sort((a, b) => a.t - b.t);
   camera.sort((a, b) => a.t - b.t);

@@ -195,8 +195,8 @@ window.render = function (t) {
   $('cap').innerHTML = cur ? `<div><span class="who">${esc(cur.name)}</span>${rich(cur.say)}</div>` : '';
   // ── camera: wide, or a close-up on one person; a slow push, and a punch + shake on hits ──
   let z = 1, cx = 540, cy = 960;
-  if (cam.shot !== 'wide') { const s = S.seats[cam.shot]; z = cam.zoom || 2; cx = s.x + s.size / 2; cy = s.y + s.size * 0.52; }
-  z *= 1 + 0.02 * clamp((t - cam.t) / 3);
+  if (cam.cx) { z = cam.zoom || 2; cx = cam.cx; cy = cam.cy; } else if (cam.shot !== 'wide') { const s = S.seats[cam.shot]; z = cam.zoom || 2; cx = s.x + s.size / 2; cy = s.y + s.size * 0.52; }
+  z *= 1 + 0.035 * clamp((t - cam.t) / 4);
   let sx = 0, sy = 0, fl = 0;
   for (const h of T.hits) { const d = t - h.t; if (d >= 0 && d < 0.5) { z *= 1 + (h.zoom || 0.05) * (1 - ease(d / 0.3)); const k = Math.exp(-d * 13) * (h.shake || 14); sx += k * Math.sin(d * 95); sy += k * Math.cos(d * 77); if (h.flash && d < 0.12) fl = Math.max(fl, 0.6 * (1 - d / 0.12)); } }
   const tx = 540 - cx * z + sx, ty = 960 - cy * z + sy;
