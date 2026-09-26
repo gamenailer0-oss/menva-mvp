@@ -6,8 +6,9 @@ const peep = (seed, o) => createAvatar(openPeeps, { seed, facialHairProbability:
 const person = (seed, base, faces) => Object.fromEntries(faces.map((f) => [f, peep(seed, { ...base, face: [f] })]));
 const FACES = ['eyesClosed', 'calm', 'smile', 'smileBig', 'explaining', 'fear', 'concernedFear', 'suspicious', 'awe', 'hectic', 'cheeky', 'blank', 'serious', 'lovingGrin1'];
 
-export function cast() {
+export function cast(guest) {
   return {
+    ...(guest ? { guest: person(guest.seed, guest.look, FACES) } : {}),
     ayesha: person('Ayesha', { head: ['long'], skinColor: ['f2d3b1'], clothingColor: ['b5371f'] }, FACES),
     madam: person('Ayesha', { head: ['bun'], skinColor: ['f2d3b1'], clothingColor: ['1a1714'], accessories: ['glasses4'], accessoriesProbability: 100 }, ['rage', 'veryAngry', 'angryWithFang', 'serious', 'explaining', 'suspicious']),
     sara: person('Sara', { head: ['hijab'], skinColor: ['edb98a'], clothingColor: ['e8a33d'] }, FACES),

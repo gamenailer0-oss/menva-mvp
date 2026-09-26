@@ -132,7 +132,7 @@ window.load = function (data) {
   $('people').innerHTML = Object.entries(S.seats).map(([id, s]) => {
     const faces = Object.entries(S.cast[id]).map(([f, svg]) => `<div class="face" data-f="${f}">${svg}</div>`).join('');
     const madam = id === 'ayesha' ? Object.entries(S.cast.madam).map(([f, svg]) => `<div class="face" data-f="madam:${f}">${svg}</div>`).join('') : '';
-    return `<div class="chair" id="chair-${id}" style="left:${s.x + s.size / 2 - 165}px;top:${s.y + s.size - 40}px"></div>` +
+    return (id === 'guest' ? '' : `<div class="chair" id="chair-${id}" style="left:${s.x + s.size / 2 - 165}px;top:${s.y + s.size - 40}px"></div>`) +
       `<div class="peep" id="p-${id}" style="left:${s.x}px;top:${s.y}px;width:${s.size}px;height:${s.size}px">${faces}${madam}</div>`;
   }).join('');
   window.__board = null;
@@ -162,7 +162,7 @@ window.render = function (t, ov = {}) {
     const fk = at(T.faces[id], t, { t: -9, f: 'calm' });
     let face = fk.f;
     // blink (not in Madam mode): a 0.12 s eyes-closed frame every few seconds, offset per person
-    const ph = { ayesha: 0.3, hamza: 1.7, sara: 2.6, zain: 0.9 }[id] || 0;
+    const ph = { ayesha: 0.3, hamza: 1.7, sara: 2.6, zain: 0.9, guest: 2.1 }[id] || 0;
     const bp = (t + ph) % 3.7;
     if (!face.startsWith('madam:') && bp < 0.12 && S.cast[id].eyesClosed && t - fk.t > 0.4) face = 'eyesClosed';
     el.querySelectorAll('.face').forEach((f) => f.classList.toggle('on', f.dataset.f === face));
@@ -192,6 +192,8 @@ window.render = function (t, ov = {}) {
       else if (P.kind === 'out') { x += (seat.x > 400 ? 1 : -1) * 800 * Math.max(0, k); rot += (seat.x > 400 ? 8 : -8) * Math.max(0, k); }
       else y -= 230 * k;
     }
+    // a guest walks in from the right (hidden before), with an overshoot settle
+    if (T.enter && T.enter.who === id) { const u = t - T.enter.t; if (u < 0) x += 1400; else x += 900 * (1 - back(u / 0.6)); }
     el.style.transform = `translate(${x.toFixed(1)}px,${y.toFixed(1)}px) rotate(${rot.toFixed(2)}deg) scale(${sx.toFixed(4)},${sy.toFixed(4)})`;
   }
   // ── the transformation: flash + chalk puff + restaurant to classroom ──

@@ -20,13 +20,16 @@ let ffmpeg = process.env.FFMPEG;
 if (!ffmpeg) { try { ffmpeg = execFileSync('python3', ['-c', 'import imageio_ffmpeg;print(imageio_ffmpeg.get_ffmpeg_exe())']).toString().trim(); } catch { ffmpeg = 'ffmpeg'; } }
 
 import { EPISODES } from './episodes.mjs';
+import { EXTRAS } from './extras.mjs';
+Object.assign(EPISODES, EXTRAS);
 const ID = process.argv[2] || 'escape-01-the-photo';
 const EP = EPISODES[ID];
 if (!EP) throw new Error('Unknown episode ' + ID + ' (see episodes.mjs)');
 const post = JSON.parse(fs.readFileSync(path.join(ROOT, 'social/content/series-escape.json'), 'utf8')).posts.find((p) => p.id === ID);
-const riddles = post.frames.filter((f) => f.layout === 'riddle');
+// hunt episodes use the post's riddle(s); bonus episodes bring a "lesson" for the board instead
+const riddles = EP.lesson ? [EP.lesson] : post.frames.filter((f) => f.layout === 'riddle');
 const NUM = EP.room.replace(/\D/g, '');
-const NAME = 'table-edition-room-' + NUM;
+const NAME = EP.file || 'table-edition-room-' + NUM;
 const TMP = path.join(OUT, '.class-tmp', NAME);
 
 const seats = {
@@ -34,16 +37,18 @@ const seats = {
   zain: { x: 580, y: 520, size: 420 },
   ayesha: { x: 30, y: 850, size: 510 },
   sara: { x: 540, y: 850, size: 510 },
+  ...(EP.guest ? { guest: { x: 330, y: 250, size: 420 } } : {}),
 };
-const NAMES = { ayesha: 'Ayesha', madam: 'Ayesha (Madam mode)', hamza: 'Hamza', sara: 'Sara', zain: 'Zain', waiter: 'Waiter' };
-const VOICE = { ayesha: ['hf_beta', 1.12, 0.92], madam: ['hf_beta', 1.0, 1.0], sara: ['hf_alpha', 1.06, 0.95], hamza: ['hm_omega', 1.04, 1.08], zain: ['hm_psi', 1.0, 0.92], waiter: ['hm_omega', 0.92, 0.95] }; // voice, pitch, speed
+const NAMES = { ayesha: 'Ayesha', madam: 'Ayesha (Madam mode)', hamza: 'Hamza', sara: 'Sara', zain: 'Zain', waiter: 'Waiter', ...(EP.guest ? { guest: EP.guest.name } : {}) };
+const VOICE = { ayesha: ['hf_beta', 1.12, 0.92], madam: ['hf_beta', 1.0, 1.0], sara: ['hf_alpha', 1.06, 0.95], hamza: ['hm_omega', 1.04, 1.08], zain: ['hm_psi', 1.0, 0.92], waiter: ['hm_omega', 0.92, 0.95], ...(EP.guest ? { guest: EP.guest.voice } : {}) }; // voice, pitch, speed
 const SCRIPT = [...EP.setup, EP.panic, EP.scoldA, EP.scoldB, EP.object, EP.back, EP.saza, ...EP.read, EP.try1, EP.try2, EP.chup, EP.fourth, EP.sweet];
 
 // The shared episode shape (see episodes.mjs). Every beat is linked by BUT / THEREFORE.
 function build(dur) {
   const lines = [], voice = [], events = [], hits = [], whacks = [], shakes = [], camera = [];
-  const faces = { ayesha: [], hamza: [], zain: [], sara: [] };
+  const faces = { ayesha: [], hamza: [], zain: [], sara: [], ...(EP.guest ? { guest: [] } : {}) };
   const face = (who, t, f) => { if (faces[who]) faces[who].push({ t, f }); };
+  let enter = null;
   let t = 0;
   const say = (L, pause = 0.45, overlap = 0) => {
     const d = dur[L.id] || 1.6;
@@ -63,6 +68,7 @@ function build(dur) {
   // 2. The problem, with its prop.
   const menu = { t: 0, until: 0, holder: EP.holder, label: EP.prop.label, html: EP.prop.html };
   EP.setup.forEach((L, i) => {
+    if (L.who === 'guest' && !enter) { enter = { who: 'guest', t }; events.push({ t, type: 'whoosh', dur: 0.5, gain: 0.6 }); cam(t, 'wide', 1, 0.4); hold(0.7); }
     if (L.who === 'waiter') { cam(t, 'wide', 1, 0.5); events.push({ t, type: 'pop', gain: 0.5 }); for (const w of ['hamza', 'zain', 'sara']) face(w, t, 'awe'); }
     else { cam(t, L.who, 1.8, i ? 0.4 : 0.6); face(L.who, t, i ? 'explaining' : 'suspicious'); }
     if (i === 0 && EP.holder) { menu.t = t + 0.25; events.push({ t: t + 0.3, type: 'pop', gain: 0.9 }); }
@@ -109,14 +115,14 @@ function build(dur) {
   EP.read.forEach((L, i) => {
     cam(t, 'wide', 1, 0.55);
     const rd = riddles[i] || riddles[0];
-    const b = { t, until: 0, write: 2.0, over: riddles.length > 1 ? `Aakhri sawal ${i + 1}/${riddles.length}` : 'Saza · Aaj ka sawal', q: rd.h, pattern: rd.pattern, note: rd.b };
+    const b = { t, until: 0, write: 2.0, over: EP.lesson ? 'Aaj ka lesson' : riddles.length > 1 ? `Aakhri sawal ${i + 1}/${riddles.length}` : 'Saza · Aaj ka sawal', q: rd.h, pattern: rd.pattern || '', note: rd.b || '' };
     if (boards.length) boards[boards.length - 1].until = t;
     boards.push(b);
     events.push({ t: t + 0.1, type: 'impact', big: 0.7 }); events.push({ t: t + 0.45, type: 'chalk', dur: 2.0 }); hits.push({ t: t + 0.1, zoom: 0.03, shake: 10 });
     for (const w of ['hamza', 'zain', 'sara']) face(w, t, i % 2 ? 'concernedFear' : 'suspicious');
     hold(0.5);
     say(L, 0.2);
-    events.push({ t: b.t + 2.6, type: 'scribble' }); events.push({ t: b.t + 2.9, type: 'lock', gain: 0.6 });
+    if (!EP.lesson) { events.push({ t: b.t + 2.6, type: 'scribble' }); events.push({ t: b.t + 2.9, type: 'lock', gain: 0.6 }); }
     hold(1.5);
   });
   // 10. The friends try; the second one gets cut off.
@@ -149,8 +155,8 @@ function build(dur) {
   camera.sort((x, y) => x.t - y.t);
   return {
     len, voice, events, tick: [[tickFrom, tickTo]], coldStart, coldEnd, ctaAt,
-    tl: { lines, faces, camera, hits, whacks, shakes, menu, transform: tr, boards, stand, burger: NUM === '1',
-      tag: ['Madam ki Class', EP.room], headline: EP.headline, rewindText: '10 second pehle...', cta: EP.cta },
+    tl: { lines, faces, camera, hits, whacks, shakes, menu, transform: tr, boards, stand, enter, burger: NUM === '1' || !!EP.burger,
+      tag: ['Madam ki Class', EP.room], headline: EP.headline, rewindText: EP.rewindText || '10 second pehle...', cta: EP.cta },
   };
 }
 
@@ -189,7 +195,7 @@ const browser = await chromium.launch(process.env.CHROMIUM_PATH ? { executablePa
 const page = await browser.newPage({ viewport: { width: 1080, height: 1920 } });
 await page.goto(`http://127.0.0.1:${server.address().port}/social/reels/skit/skit.html`);
 await page.waitForFunction(() => window.__ready === true);
-await page.evaluate((d) => window.load(d), { cast: cast(), seats, tl: B.tl });
+await page.evaluate((d) => window.load(d), { cast: cast(EP.guest), seats, tl: B.tl });
 const mp4 = path.join(OUT, NAME + '.mp4');
 const ff = spawn(ffmpeg, ['-y', '-loglevel', 'error', '-f', 'image2pipe', '-framerate', String(FPS), '-c:v', 'mjpeg', '-i', '-', '-i', wav,
   '-map', '0:v', '-map', '1:a', '-c:v', 'libx264', '-pix_fmt', 'yuv420p', '-crf', '21', '-preset', 'medium', '-c:a', 'aac', '-b:a', '160k', '-shortest', '-movflags', '+faststart', mp4], { stdio: ['pipe', 'inherit', 'inherit'] });
