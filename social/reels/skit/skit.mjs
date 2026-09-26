@@ -70,6 +70,13 @@ function build(dur) {
   EP.setup.forEach((L, i) => {
     if (L.who === 'guest' && !enter) { enter = { who: 'guest', t }; events.push({ t, type: 'whoosh', dur: 0.5, gain: 0.6 }); cam(t, 'wide', 1, 0.4); hold(0.7); }
     if (L.who === 'waiter') { cam(t, 'wide', 1, 0.5); events.push({ t, type: 'pop', gain: 0.5 }); for (const w of ['hamza', 'zain', 'sara']) face(w, t, 'awe'); }
+    else if (L.who === EP.holder && EP.prop.label) {
+      // frame the holder AND their prop together (the prop sits beside them, or on the table for the front row)
+      const sz = seats[L.who], front = sz.y > 700;
+      const cardCx = front ? (sz.x > 400 ? sz.x + 195 : sz.x + 295) : (sz.x > 400 ? sz.x - 155 : sz.x + sz.size + 175);
+      const cx = (cardCx + sz.x + sz.size / 2) / 2, cy = front ? sz.y + sz.size * 0.62 : sz.y + sz.size * 0.55;
+      cam(t, L.who, 1.45, i ? 0.4 : 0.6, { cx, cy }); face(L.who, t, i ? 'explaining' : 'suspicious');
+    }
     else { cam(t, L.who, 1.8, i ? 0.4 : 0.6); face(L.who, t, i ? 'explaining' : 'suspicious'); }
     if (i === 0 && EP.holder) { menu.t = t + 0.25; events.push({ t: t + 0.3, type: 'pop', gain: 0.9 }); }
     const s = say(L, 0.45);
