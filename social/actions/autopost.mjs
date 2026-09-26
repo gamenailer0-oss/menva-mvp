@@ -70,7 +70,7 @@ if (trend && attemptsOf(trend.post.id) < MAX_ATTEMPTS) {
         await notify(`MENVA: post #${post.n} did not go out today`, `It failed ${MAX_ATTEMPTS} times, so it was skipped. The calendar carries on tomorrow. Open the repository's Actions tab for the reason.`);
       }
     } else if (due) {
-      job = { n: post.n, id: post.id, format: post.format, video: post.video || null, caption: [post.caption, (post.hashtags || []).join(' ')].filter(Boolean).join('\n\n'), alt: post.alt || '', slides: post.slides };
+      job = { n: post.n, id: post.id, format: post.format, prelaunch: post.day < 1, video: post.video || null, caption: [post.caption, (post.hashtags || []).join(' ')].filter(Boolean).join('\n\n'), alt: post.alt || '', slides: post.slides };
     }
   }
 }
@@ -130,7 +130,7 @@ try {
   var storyFile = null;
   if (!/^(0|false|no|off)$/i.test(env('STORIES', 'true')) && !(job.format === 'reel' && /^notify$/i.test(env('REELS_MODE')))) {
     storyFile = `${base}-1-${stamp}-story.jpg`;
-    const qs = new URLSearchParams({ img: '/media/' + files[0], n: job.trend ? '' : String(job.n), handle });
+    const qs = new URLSearchParams({ img: '/media/' + files[0], n: job.trend || job.prelaunch ? '' : String(job.n), handle });
     try { await shoot(`${local}/social/templates/story.html?${qs}`, 1080, 1920, path.join(MEDIA, storyFile)); } catch (e) { logLine([job.n, job.id, 'story-render-failed', e.message]); storyFile = null; }
   }
 } finally { await browser.close(); server.close(); }

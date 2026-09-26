@@ -1,0 +1,429 @@
+{
+  "version": 1,
+  "about": "Nine teasers before launch, 26 Sep to 4 Oct 2026 (days -8 to 0 before START_DATE 2026-10-05), 8:30 pm. Each shows a problem, a blurred real dish and one letter of the 10-letter hunt phrase (given out of order). The first 5 correct DMs from 4 Oct, 8:30 pm win. The prize venue is not confirmed yet: confirm it before announcing winners.",
+  "defaultStart": "2026-10-05",
+  "handle": "@eatmenva",
+  "posts": [
+    {
+      "n": 1,
+      "day": -8,
+      "id": "tease-01-menu-photo",
+      "series": "Launch teasers and treasure hunt",
+      "pillar": "tease",
+      "audience": "diners",
+      "format": "carousel",
+      "caption": "Tum ne bhi dekha hai. Menu pe perfect tasveer. Table pe... kuch aur.\n\nWe got tired of it. So we did something about it. 5 October ko pata chalega.\n\nTHE HUNT\n\nEvery teaser from tonight to 4 October hides one letter of a secret phrase (10 letters, Roman Urdu). The badge tells you where it goes: \"letter 4 of 10\" means it is the 4th letter.\n\nCollect all 10. DMs count from 4 October, 8:30 pm, when the last letters drop. DM @eatmenva the phrase. The first 5 correct DMs win:\n\n- a premium dine-in, on us\n- a private after party\n- MENVA Black, free, as founding members\n\nRules: Lahore only, 18+, one entry per account. Winners are announced on our Story and contacted by DM; we will never ask for money or card details. Venue and date shared with the winners. This hunt is run by MENVA and is not sponsored, endorsed or run by Instagram.\n\nWant the secret early? DM us \"secret\".",
+      "hashtags": [
+        "#menva",
+        "#lahorefood",
+        "#lahorefoodies",
+        "#comingsoon"
+      ],
+      "alt": "A blurred glimpse of a real dish with a hunt letter L, letter 4 of 10.",
+      "slides": [
+        {
+          "layout": "shout",
+          "bg": "chili",
+          "over": "Something is coming · 5.10",
+          "n": "1/2",
+          "h": "The menu photo\nwas *lying.*",
+          "ru": "Tasveer mein kuch aur tha. Plate pe kuch aur aaya."
+        },
+        {
+          "layout": "hero",
+          "over": "Something is coming · 5.10",
+          "n": "2/2",
+          "dish": "steak-main",
+          "crop": "steak",
+          "peek": true,
+          "clue": {
+            "l": "L",
+            "pos": "letter 4 of 10"
+          },
+          "h": "Not telling you *how.* Yet.",
+          "b": "We have a solution. *DM us \"secret\".*"
+        }
+      ]
+    },
+    {
+      "n": 2,
+      "day": -7,
+      "id": "tease-02-dish-names",
+      "series": "Launch teasers and treasure hunt",
+      "pillar": "tease",
+      "audience": "diners",
+      "format": "carousel",
+      "caption": "\"Chef's special.\" Kya special? Kis chef ka? Kitna?\n\nA name is a guess. Hum guess khatam kar rahe hain.\n\nTreasure hunt: every teaser until 4 October hides one letter of a secret phrase, and tells you where it goes. Collect all 10. From 4 October, 8:30 pm, DM us the phrase. The first 5 correct DMs win a premium dine-in on us, a private after party and MENVA Black free as founding members.\n\nWant the secret early? DM us \"secret\".",
+      "hashtags": [
+        "#menva",
+        "#lahorefood",
+        "#lahorefoodies",
+        "#comingsoon"
+      ],
+      "alt": "A blurred glimpse of a real sandwich with a hunt letter H, letter 9 of 10.",
+      "slides": [
+        {
+          "layout": "notes",
+          "over": "Something is coming · 5.10",
+          "n": "1/2",
+          "title": "Menu, page 4",
+          "h": "Dish names that tell you *nothing*",
+          "items": [
+            "Chef's special",
+            "House platter",
+            "Signature something",
+            "\"Ask your server\""
+          ]
+        },
+        {
+          "layout": "hero",
+          "over": "Something is coming · 5.10",
+          "n": "2/2",
+          "dish": "steak-sandwich",
+          "crop": "close",
+          "peek": true,
+          "clue": {
+            "l": "H",
+            "pos": "letter 9 of 10"
+          },
+          "h": "Names are nice. *Seeing* is better.",
+          "b": "We have a solution. *DM us \"secret\".*"
+        }
+      ]
+    },
+    {
+      "n": 3,
+      "day": -6,
+      "id": "tease-03-send-a-pic",
+      "series": "Launch teasers and treasure hunt",
+      "pillar": "tease",
+      "audience": "diners",
+      "format": "carousel",
+      "caption": "Koi pic bhejo. Blurry pic. Aur phir bhi koi decide nahi karta.\n\nThis one is blurry on purpose. The real one is not. 5 October.\n\nTreasure hunt: every teaser until 4 October hides one letter of a secret phrase, and tells you where it goes. Collect all 10. From 4 October, 8:30 pm, DM us the phrase. The first 5 correct DMs win a premium dine-in on us, a private after party and MENVA Black free as founding members.\n\nWant the secret early? DM us \"secret\".",
+      "hashtags": [
+        "#menva",
+        "#lahorefood",
+        "#lahorefoodies",
+        "#comingsoon"
+      ],
+      "alt": "A blurred glimpse of a real pizza with a hunt letter P, letter 1 of 10.",
+      "slides": [
+        {
+          "layout": "chat",
+          "over": "Something is coming · 5.10",
+          "n": "1/2",
+          "h": "Every group chat, *every* Friday.",
+          "title": "Dinner?",
+          "members": "you + 5",
+          "msgs": [
+            {
+              "from": "Zain",
+              "t": "menu ki pic bhejo"
+            },
+            {
+              "me": true,
+              "t": "bheji"
+            },
+            {
+              "from": "Zain",
+              "t": "ye blur kyun hai"
+            },
+            {
+              "me": true,
+              "t": "restaurant ki lighting"
+            },
+            {
+              "from": "Anum",
+              "t": "to order kya karein"
+            },
+            {
+              "me": true,
+              "t": "jo tu le"
+            }
+          ]
+        },
+        {
+          "layout": "hero",
+          "over": "Something is coming · 5.10",
+          "n": "2/2",
+          "dish": "bz-chicken-pizza",
+          "crop": "full",
+          "peek": true,
+          "clue": {
+            "l": "P",
+            "pos": "letter 1 of 10"
+          },
+          "h": "Yes, this one is blurry *on purpose.*",
+          "b": "We have a solution. *DM us \"secret\".*"
+        }
+      ]
+    },
+    {
+      "n": 4,
+      "day": -5,
+      "id": "tease-04-portion",
+      "series": "Launch teasers and treasure hunt",
+      "pillar": "tease",
+      "audience": "diners",
+      "format": "carousel",
+      "caption": "Ek order karo to kam. Do karo to aadha wapas. Har baar.\n\nWhat if you could see the size before you say it out loud?\n\nTreasure hunt: every teaser until 4 October hides one letter of a secret phrase, and tells you where it goes. Collect all 10. From 4 October, 8:30 pm, DM us the phrase. The first 5 correct DMs win a premium dine-in on us, a private after party and MENVA Black free as founding members.\n\nWant the secret early? DM us \"secret\".",
+      "hashtags": [
+        "#menva",
+        "#lahorefood",
+        "#lahorefoodies",
+        "#comingsoon"
+      ],
+      "alt": "A blurred glimpse of a real dish on a board with a hunt letter E, letter 7 of 10.",
+      "slides": [
+        {
+          "layout": "shout",
+          "over": "Something is coming · 5.10",
+          "n": "1/2",
+          "h": "Ek kaafi hoga\n*ya do?*",
+          "ru": "Har table ka sab se bara sawal."
+        },
+        {
+          "layout": "hero",
+          "over": "Something is coming · 5.10",
+          "n": "2/2",
+          "dish": "chicken-fajita-wrap",
+          "crop": "board",
+          "peek": true,
+          "clue": {
+            "l": "E",
+            "pos": "letter 7 of 10"
+          },
+          "h": "Imagine *knowing.*",
+          "b": "We have a solution. *DM us \"secret\".*"
+        }
+      ]
+    },
+    {
+      "n": 5,
+      "day": -4,
+      "id": "tease-05-sab-acha-hai",
+      "series": "Launch teasers and treasure hunt",
+      "pillar": "tease",
+      "audience": "diners",
+      "format": "carousel",
+      "caption": "Waiter se poocho kya acha hai. Jawab: sab. Thanks bhai, bohat help hui.\n\nWe found a better way to ask. 5 October.\n\nTreasure hunt: every teaser until 4 October hides one letter of a secret phrase, and tells you where it goes. Collect all 10. From 4 October, 8:30 pm, DM us the phrase. The first 5 correct DMs win a premium dine-in on us, a private after party and MENVA Black free as founding members.\n\nWant the secret early? DM us \"secret\".",
+      "hashtags": [
+        "#menva",
+        "#lahorefood",
+        "#lahorefoodies",
+        "#comingsoon"
+      ],
+      "alt": "A blurred glimpse of a real dish with a hunt letter H, letter 3 of 10.",
+      "slides": [
+        {
+          "layout": "note",
+          "over": "Something is coming · 5.10",
+          "n": "1/2",
+          "h": "\"Sir, sab acha hai.\"",
+          "ru": "Bhai, ek to batao.",
+          "by": "Every waiter, every restaurant"
+        },
+        {
+          "layout": "hero",
+          "over": "Something is coming · 5.10",
+          "n": "2/2",
+          "dish": "garlic-prawn-skewers",
+          "crop": "close",
+          "peek": true,
+          "clue": {
+            "l": "H",
+            "pos": "letter 3 of 10"
+          },
+          "h": "We asked the plate *instead.*",
+          "b": "We have a solution. *DM us \"secret\".*"
+        }
+      ]
+    },
+    {
+      "n": 6,
+      "day": -3,
+      "id": "tease-06-wo-wala",
+      "series": "Launch teasers and treasure hunt",
+      "pillar": "tease",
+      "audience": "diners",
+      "format": "carousel",
+      "caption": "Saath wali table pe kuch aaya. Sab ki gardan ghoom gayi. Naam? Kisi ko nahi pata.\n\nSoon you won't have to point.\n\nTreasure hunt: every teaser until 4 October hides one letter of a secret phrase, and tells you where it goes. Collect all 10. From 4 October, 8:30 pm, DM us the phrase. The first 5 correct DMs win a premium dine-in on us, a private after party and MENVA Black free as founding members.\n\nWant the secret early? DM us \"secret\".",
+      "hashtags": [
+        "#menva",
+        "#lahorefood",
+        "#lahorefoodies",
+        "#comingsoon"
+      ],
+      "alt": "A blurred glimpse of a real steak board with a hunt letter O, letter 10 of 10.",
+      "slides": [
+        {
+          "layout": "shout",
+          "bg": "ink",
+          "over": "Something is coming · 5.10",
+          "n": "1/2",
+          "h": "*Wo* wala.\nJo us table pe gaya.",
+          "ru": "Naam kisi ko nahi pata."
+        },
+        {
+          "layout": "hero",
+          "over": "Something is coming · 5.10",
+          "n": "2/2",
+          "dish": "steak-main",
+          "crop": "sides",
+          "peek": true,
+          "clue": {
+            "l": "O",
+            "pos": "letter 10 of 10"
+          },
+          "h": "Point less. *See* more.",
+          "b": "We have a solution. *DM us \"secret\".*"
+        }
+      ]
+    },
+    {
+      "n": 7,
+      "day": -2,
+      "id": "tease-07-menu-stare",
+      "series": "Launch teasers and treasure hunt",
+      "pillar": "tease",
+      "audience": "diners",
+      "format": "carousel",
+      "caption": "Lamba menu, lambi soch, aur end mein wohi jo pichli baar liya tha.\n\nNext time, see the new thing first. 5 October.\n\nTreasure hunt: every teaser until 4 October hides one letter of a secret phrase, and tells you where it goes. Collect all 10. From 4 October, 8:30 pm, DM us the phrase. The first 5 correct DMs win a premium dine-in on us, a private after party and MENVA Black free as founding members.\n\nWant the secret early? DM us \"secret\".",
+      "hashtags": [
+        "#menva",
+        "#lahorefood",
+        "#lahorefoodies",
+        "#comingsoon"
+      ],
+      "alt": "A blurred close-up of a real pizza with a hunt letter E, letter 5 of 10.",
+      "slides": [
+        {
+          "layout": "list",
+          "over": "Something is coming · 5.10",
+          "n": "1/2",
+          "h": "Ordering, *a timeline*",
+          "items": [
+            "Menu opens",
+            "Still on page 2",
+            "\"Aap log order karo\"",
+            "Same as last time"
+          ]
+        },
+        {
+          "layout": "hero",
+          "over": "Something is coming · 5.10",
+          "n": "2/2",
+          "dish": "bz-chicken-pizza",
+          "crop": "close",
+          "peek": true,
+          "clue": {
+            "l": "E",
+            "pos": "letter 5 of 10"
+          },
+          "h": "Next time, *try something new.*",
+          "b": "We have a solution. *DM us \"secret\".*"
+        }
+      ]
+    },
+    {
+      "n": 8,
+      "day": -1,
+      "id": "tease-08-regret",
+      "series": "Launch teasers and treasure hunt",
+      "pillar": "tease",
+      "audience": "diners",
+      "format": "carousel",
+      "caption": "Order kiya, wait kiya, plate aayi, aur dil ne kaha: yeh to nahi socha tha.\n\nTwo more days.\n\nTreasure hunt: every teaser until 4 October hides one letter of a secret phrase, and tells you where it goes. Collect all 10. From 4 October, 8:30 pm, DM us the phrase. The first 5 correct DMs win a premium dine-in on us, a private after party and MENVA Black free as founding members.\n\nWant the secret early? DM us \"secret\".",
+      "hashtags": [
+        "#menva",
+        "#lahorefood",
+        "#lahorefoodies",
+        "#comingsoon"
+      ],
+      "alt": "A blurred glimpse of a real sandwich with a hunt letter K, letter 8 of 10.",
+      "slides": [
+        {
+          "layout": "receipt",
+          "over": "Something is coming · 5.10",
+          "n": "1/2",
+          "h": "Ordered. *Regretted.*",
+          "title": "Table 7",
+          "lines": [
+            [
+              "Mystery platter",
+              "1"
+            ],
+            [
+              "Expectations",
+              "high"
+            ],
+            [
+              "What arrived",
+              "?"
+            ]
+          ],
+          "total": [
+            "Regret",
+            "full"
+          ],
+          "footer": "Thank you, visit again"
+        },
+        {
+          "layout": "hero",
+          "over": "Something is coming · 5.10",
+          "n": "2/2",
+          "dish": "steak-sandwich",
+          "crop": "full",
+          "peek": true,
+          "clue": {
+            "l": "K",
+            "pos": "letter 8 of 10"
+          },
+          "h": "No more *mystery platters.*",
+          "b": "We have a solution. *DM us \"secret\".*"
+        }
+      ]
+    },
+    {
+      "n": 9,
+      "day": 0,
+      "id": "tease-09-kal",
+      "series": "Launch teasers and treasure hunt",
+      "pillar": "tease",
+      "audience": "diners",
+      "format": "carousel",
+      "caption": "Last two letters: E is letter 2, D is letter 6. That makes all 10.\n\nThe hunt is open from now. DM @eatmenva the phrase. The first 5 correct DMs win a premium dine-in on us, a private after party and MENVA Black free as founding members.\n\nKal, 8:30 pm, sab samajh aa jayega.\n\nRules: Lahore only, 18+, one entry per account. Winners announced on our Story and contacted by DM; we will never ask for money or card details. Not sponsored, endorsed or run by Instagram.",
+      "hashtags": [
+        "#menva",
+        "#lahorefood",
+        "#lahorefoodies",
+        "#comingsoon"
+      ],
+      "alt": "A blurred glimpse of a real steak board with the last hunt letters E and D, letters 2 and 6.",
+      "slides": [
+        {
+          "layout": "statement",
+          "bg": "chili",
+          "over": "Something is coming · 5.10",
+          "n": "1/2",
+          "h": "Kal.\n*8:30 pm.*",
+          "b": "The last two letters are here. The hunt is open now."
+        },
+        {
+          "layout": "hero",
+          "over": "Something is coming · 5.10",
+          "n": "2/2",
+          "dish": "steak-main",
+          "crop": "board",
+          "peek": true,
+          "clue": {
+            "l": "E · D",
+            "pos": "letters 2 and 6"
+          },
+          "h": "Tomorrow you *see it.*",
+          "b": "Got all 10? *DM us the phrase.*"
+        }
+      ]
+    }
+  ]
+}

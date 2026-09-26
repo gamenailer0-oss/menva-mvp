@@ -236,3 +236,11 @@ html.tall .l-phone .screen { border-radius: 56px; }
 .l-cover { padding: 0; }
 .cover-img { width: 1080px; height: 1350px; object-fit: cover; object-position: 50% 25%; display: block; }
 html.tall .cover-img { height: 1920px; }
+
+/* peek: a teaser, the dish is there but blurred. clue: the treasure-hunt letter, top right. */
+.peek .dish img { filter: blur(16px) saturate(1.15); transform: scale(1.04); }
+.clue { position: absolute; top: 150px; right: 76px; z-index: 4; min-width: 170px; padding: 18px 26px 16px; border-radius: 24px; background: var(--ink); color: var(--cream); text-align: center; transform: rotate(-4deg); box-shadow: 0 10px 30px rgba(0,0,0,.18); }
+.clue b { display: block; font-family: var(--serif); font-weight: 400; font-size: 120px; line-height: 1; }
+.clue small { display: block; margin-top: 6px; font-size: 22px; letter-spacing: .14em; text-transform: uppercase; opacity: .8; }
+.clue small + small { margin-top: 2px; }
+.bg-ink .clue { background: var(--cream); color: var(--ink); }

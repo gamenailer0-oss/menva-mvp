@@ -176,8 +176,10 @@
   // tall: 1080×1920 for Stories/Reels covers/9:16 ads, with Instagram's top/bottom UI kept clear.
   if (d.tall) document.documentElement.classList.add('tall');
   const el = document.getElementById('slide');
-  el.className = `slide l-${layout} bg-${d.bg || 'paper'}`;
-  el.innerHTML = LAYOUTS[layout](d) + (d.stamp ? `<div class="stamp">${esc(d.stamp)}</div>` : '');
+  el.className = `slide l-${layout} bg-${d.bg || 'paper'}${d.peek ? ' peek' : ''}`;
+  // peek: the dish is blurred (a teaser). clue: { l: 'P', pos: '1/10' }, a treasure-hunt letter.
+  const clue = d.clue ? `<div class="clue"><b>${esc(d.clue.l)}</b><small>${esc(d.clue.pos)}</small></div>` : '';
+  el.innerHTML = LAYOUTS[layout](d) + (d.stamp ? `<div class="stamp">${esc(d.stamp)}</div>` : '') + clue;
 
   // Fill each stage with its dish, as big as the stage allows (the phone screen gets a fixed box).
   function fillStages() {

@@ -33,7 +33,7 @@ const EMOJI = /\p{Extended_Pictographic}/u;
 // Dish names not confirmed yet: the renders in these folders may not match their folder names.
 const UNCONFIRMED = /\b(prawns?|skewers?|fajitas?|wraps?)\b/i;
 
-// series-*.json: posts with their own absolute day (1–300 from START_DATE), on days the calendars leave free.
+// series-*.json: posts with their own absolute day (-30 to 300 from START_DATE), on days the calendars leave free.
 const SERIES = /^series-[a-z0-9-]+$/.test(NAME);
 const MAX_DAY = SERIES ? 300 : 100;
 const seenIds = new Set(), seenDays = new Set();
@@ -41,7 +41,9 @@ cal.posts.forEach((p, i) => {
   if (p.n !== i + 1) bad(p, `n should be ${i + 1}`);
   if (!/^[a-z0-9-]+$/.test(p.id || '')) bad(p, 'id must be lowercase letters, digits and dashes');
   if (seenIds.has(p.id)) bad(p, 'duplicate id'); seenIds.add(p.id);
-  if (!(p.day >= 1 && p.day <= MAX_DAY)) bad(p, `day must be 1–${MAX_DAY}`);
+  // Series may also run before launch (day 0 = the day before START_DATE, -8 = nine days before).
+  const MIN_DAY = SERIES ? -30 : 1;
+  if (!(p.day >= MIN_DAY && p.day <= MAX_DAY)) bad(p, `day must be ${MIN_DAY}–${MAX_DAY}`);
   if (seenDays.has(p.day)) bad(p, `two posts on day ${p.day}`); seenDays.add(p.day);
   if (i && p.day <= cal.posts[i - 1].day) bad(p, 'days must go up');
 
