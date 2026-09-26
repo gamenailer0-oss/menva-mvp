@@ -35,3 +35,19 @@ All 17 Reels are scheduled in `content/series-reels.json` and post themselves on
 Instagram's API can't attach sounds from Instagram's music library, so there are two choices:
 - **Built-in music:** put a track you have the rights to (e.g. Pixabay Music, or YouTube Audio Library tracks that allow commercial use) in `social/reels/audio/` as `default.mp3` (all Reels) or `<reel-name>.mp3` (one Reel). Then re-run `node social/reels/make.mjs`. It fades the track in and out and cuts it to the Reel's length.
 - **Trending sound:** set `REELS_MODE=notify` in the server's `.env`. On Mondays your phone gets the video and caption, and you post it in the app with the sound (about 1 minute).
+
+## Madam ki Class (the Escape the menu Reels, 26 Sep to 4 Oct)
+
+`class.mjs` builds the nine hunt Reels from `social/content/series-escape.json`: each post's `madam` script (her lines in Roman Urdu for the screen and Devanagari for the voice) plus its riddle `frames`.
+- `class.html` draws each frame.
+- `voice.py` makes Madam's voice. It uses Kokoro, an open-source Hindi TTS. The model isn't in the repo: download `kokoro-v1.0.onnx` and `voices-v1.0.bin` from the kokoro-onnx GitHub releases and point `KOKORO_DIR` at them.
+- `classfx.py` does the sound design: bell, ruler whack, stamp, chalk, pen scribble, word pops, ticking clock, and ducking under her voice.
+
+```
+pip install kokoro-onnx soundfile imageio-ffmpeg numpy
+KOKORO_DIR=/path/to/kokoro node social/reels/class.mjs                 # all nine
+KOKORO_DIR=/path/to/kokoro node social/reels/class.mjs escape-03-group-chat
+VOICE=off node social/reels/class.mjs                                  # without the voice
+```
+
+To use a better voice later (for example ElevenLabs), swap `voice.py` for one that writes `<line id>.wav` files and prints their lengths in seconds. The edit re-times itself to the new audio.

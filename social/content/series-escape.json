@@ -115,7 +115,7 @@
       "pillar": "tease",
       "audience": "diners",
       "format": "reel",
-      "caption": "Room 2. Page 11 of 23. \"Chef's special.\" Kya special? Chef ko bhi nahi pata. Aap abhi bhi locked ho.\n\nTonight's riddle gives you letter 9.\n\nESCAPE THE MENU: one riddle a night until 4 October. Every answer gives one letter of a 10-letter code (the chili box tells you which letter, the board tells you where it goes). DMs count from 4 October, 8:30 pm. The first 5 people to DM @eatmenva the code win a premium dine-in on us, a private after party and MENVA Black free as founding members.\n\nWe have a way out. DM us \"secret\".",
+      "caption": "Madam ki Class, Room 2. Dictation.\n\nRoom 2. Page 11 of 23. \"Chef's special.\" Kya special? Chef ko bhi nahi pata. Aap abhi bhi locked ho.\n\nClass roz raat 8:30 pe lagti hai. Late aaye to absent.\nAttendance: comment PRESENT.\nHomework: 3 dost tag karo. Agar tumhara tag kiya hua dost jeet gaya aur DM mein tumhara naam likha, tum bhi saath dinner pe chalo ge.\n\nTonight's riddle gives you letter 9.\n\nESCAPE THE MENU: one riddle a night until 4 October. Every answer gives one letter of a 10-letter code (the chili box tells you which letter, the board tells you where it goes). DMs count from 4 October, 8:30 pm. The first 5 people to DM @eatmenva the code win a premium dine-in on us, a private after party and MENVA Black free as founding members.\n\nWe have a way out. DM us \"secret\".",
       "hashtags": [
         "#menva",
         "#lahorefood",
@@ -155,7 +155,66 @@
           "board": "___L____?_"
         }
       ],
-      "video": "social/reels/out/escape-02-chefs-special.mp4"
+      "video": "social/reels/out/escape-02-chefs-special.mp4",
+      "madam": {
+        "room": "Room 2",
+        "format": "Dictation",
+        "stamp": "ZERO",
+        "voice": "hf_beta",
+        "scold": [
+          "s1",
+          "s2"
+        ],
+        "homework": "Attendance: comment <b>PRESENT</b><br>Homework: <b>3 dost tag karo</b>",
+        "lines": [
+          {
+            "id": "hook",
+            "say": "Copy *nikalo!*",
+            "hi": "कॉपी निकालो!",
+            "pitch": 1.1,
+            "speed": 1.15
+          },
+          {
+            "id": "s1",
+            "say": "'Chef's special' ka *matlab* likho.",
+            "hi": "शेफ़्स स्पेशल का मतलब लिखो।",
+            "pitch": 1.06
+          },
+          {
+            "id": "s2",
+            "say": "Nahi pata? *Mujhe bhi nahi pata!*",
+            "hi": "नहीं पता? मुझे भी नहीं पता!",
+            "size": "mid",
+            "pitch": 1.1
+          },
+          {
+            "id": "verdict",
+            "say": "Poora page khaali!",
+            "hi": "पूरा पेज ख़ाली!",
+            "pitch": 1.12,
+            "speed": 1.2
+          },
+          {
+            "id": "sawal",
+            "say": "Aaj ka sawal. Likho!",
+            "hi": "आज का सवाल। लिखो!",
+            "pitch": 1.06
+          },
+          {
+            "id": "hurry",
+            "say": "Ghadi dekho! *Tick tick!*",
+            "hi": "घड़ी देखो! टिक टिक!",
+            "pitch": 1.12,
+            "speed": 1.2
+          },
+          {
+            "id": "outro",
+            "say": "Kal *8:30.* Late aaye to *absent!*",
+            "hi": "कल साढ़े आठ बजे। लेट आए तो एब्सेंट!",
+            "pitch": 1.08
+          }
+        ]
+      }
     },
     {
       "n": 3,
@@ -165,7 +224,7 @@
       "pillar": "tease",
       "audience": "diners",
       "format": "reel",
-      "caption": "Room 3. Six people, one menu photo, zero decisions. Dinner plan became breakfast plan. Still locked.\n\nTonight: letter 1.\n\nESCAPE THE MENU: one riddle a night until 4 October. Every answer gives one letter of a 10-letter code (the chili box tells you which letter, the board tells you where it goes). DMs count from 4 October, 8:30 pm. The first 5 people to DM @eatmenva the code win a premium dine-in on us, a private after party and MENVA Black free as founding members.\n\nWe have a way out. DM us \"secret\".",
+      "caption": "Madam ki Class, Room 3. Group project.\n\nRoom 3. Six people, one menu photo, zero decisions. Dinner plan became breakfast plan. Still locked.\n\nClass roz raat 8:30 pe lagti hai. Late aaye to absent.\nAttendance: comment PRESENT.\nHomework: 3 dost tag karo. Agar tumhara tag kiya hua dost jeet gaya aur DM mein tumhara naam likha, tum bhi saath dinner pe chalo ge.\n\nTonight: letter 1.\n\nESCAPE THE MENU: one riddle a night until 4 October. Every answer gives one letter of a 10-letter code (the chili box tells you which letter, the board tells you where it goes). DMs count from 4 October, 8:30 pm. The first 5 people to DM @eatmenva the code win a premium dine-in on us, a private after party and MENVA Black free as founding members.\n\nWe have a way out. DM us \"secret\".",
       "hashtags": [
         "#menva",
         "#lahorefood",
@@ -225,7 +284,66 @@
           "board": "?__L____H_"
         }
       ],
-      "video": "social/reels/out/escape-03-group-chat.mp4"
+      "video": "social/reels/out/escape-03-group-chat.mp4",
+      "madam": {
+        "room": "Room 3",
+        "format": "Group project",
+        "stamp": "ZERO",
+        "voice": "hf_beta",
+        "scold": [
+          "s1",
+          "s2"
+        ],
+        "homework": "Attendance: comment <b>PRESENT</b><br>Homework: <b>3 dost tag karo</b>",
+        "lines": [
+          {
+            "id": "hook",
+            "say": "Group project *walo!*",
+            "hi": "ग्रुप प्रोजेक्ट वालो!",
+            "pitch": 1.1,
+            "speed": 1.15
+          },
+          {
+            "id": "s1",
+            "say": "Chhe log, ek chat, *zero decision.*",
+            "hi": "छह लोग, एक चैट, ज़ीरो डिसीज़न।",
+            "pitch": 1.05
+          },
+          {
+            "id": "s2",
+            "say": "Dinner plan tha, *breakfast* ho gaya!",
+            "hi": "डिनर प्लान था, ब्रेकफ़ास्ट हो गया!",
+            "size": "mid",
+            "pitch": 1.1
+          },
+          {
+            "id": "verdict",
+            "say": "Poore group ko zero!",
+            "hi": "पूरे ग्रुप को ज़ीरो!",
+            "pitch": 1.12,
+            "speed": 1.2
+          },
+          {
+            "id": "sawal",
+            "say": "Aaj ka sawal. Likho!",
+            "hi": "आज का सवाल। लिखो!",
+            "pitch": 1.06
+          },
+          {
+            "id": "hurry",
+            "say": "Group mein nahi, *khud socho!*",
+            "hi": "ग्रुप में नहीं, ख़ुद सोचो!",
+            "pitch": 1.1,
+            "speed": 1.2
+          },
+          {
+            "id": "outro",
+            "say": "Kal *8:30.* Late aaye to *absent!*",
+            "hi": "कल साढ़े आठ बजे। लेट आए तो एब्सेंट!",
+            "pitch": 1.08
+          }
+        ]
+      }
     },
     {
       "n": 4,
@@ -235,7 +353,7 @@
       "pillar": "tease",
       "audience": "diners",
       "format": "reel",
-      "caption": "Room 4. Ek kaafi hoga ya do? Nobody knows. Nobody has ever known. Aap abhi bhi andar ho.\n\nTonight: letter 7.\n\nESCAPE THE MENU: one riddle a night until 4 October. Every answer gives one letter of a 10-letter code (the chili box tells you which letter, the board tells you where it goes). DMs count from 4 October, 8:30 pm. The first 5 people to DM @eatmenva the code win a premium dine-in on us, a private after party and MENVA Black free as founding members.\n\nWe have a way out. DM us \"secret\".",
+      "caption": "Madam ki Class, Room 4. Maths.\n\nRoom 4. Ek kaafi hoga ya do? Nobody knows. Nobody has ever known. Aap abhi bhi andar ho.\n\nClass roz raat 8:30 pe lagti hai. Late aaye to absent.\nAttendance: comment PRESENT.\nHomework: 3 dost tag karo. Agar tumhara tag kiya hua dost jeet gaya aur DM mein tumhara naam likha, tum bhi saath dinner pe chalo ge.\n\nTonight: letter 7.\n\nESCAPE THE MENU: one riddle a night until 4 October. Every answer gives one letter of a 10-letter code (the chili box tells you which letter, the board tells you where it goes). DMs count from 4 October, 8:30 pm. The first 5 people to DM @eatmenva the code win a premium dine-in on us, a private after party and MENVA Black free as founding members.\n\nWe have a way out. DM us \"secret\".",
       "hashtags": [
         "#menva",
         "#lahorefood",
@@ -268,7 +386,66 @@
           "board": "P__L__?_H_"
         }
       ],
-      "video": "social/reels/out/escape-04-portion.mp4"
+      "video": "social/reels/out/escape-04-portion.mp4",
+      "madam": {
+        "room": "Room 4",
+        "format": "Maths",
+        "stamp": "WRONG",
+        "voice": "hf_beta",
+        "scold": [
+          "s1",
+          "s2"
+        ],
+        "homework": "Attendance: comment <b>PRESENT</b><br>Homework: <b>3 dost tag karo</b>",
+        "lines": [
+          {
+            "id": "hook",
+            "say": "Maths ka *period!*",
+            "hi": "मैथ्स का पीरियड!",
+            "pitch": 1.1,
+            "speed": 1.15
+          },
+          {
+            "id": "s1",
+            "say": "Ek plate, chaar log. *Teen* kyun mangwayin?",
+            "hi": "एक प्लेट, चार लोग। तीन क्यों मंगवाईं?",
+            "pitch": 1.08
+          },
+          {
+            "id": "s2",
+            "say": "Aadha khana *ghar* le ke gaye!",
+            "hi": "आधा खाना घर ले के गए!",
+            "size": "mid",
+            "pitch": 1.1
+          },
+          {
+            "id": "verdict",
+            "say": "Calculation galat!",
+            "hi": "कैलकुलेशन ग़लत!",
+            "pitch": 1.12,
+            "speed": 1.2
+          },
+          {
+            "id": "sawal",
+            "say": "Aaj ka sawal. Likho!",
+            "hi": "आज का सवाल। लिखो!",
+            "pitch": 1.06
+          },
+          {
+            "id": "hurry",
+            "say": "Ungliyon pe gino, *jaldi!*",
+            "hi": "उंगलियों पे गिनो, जल्दी!",
+            "pitch": 1.1,
+            "speed": 1.2
+          },
+          {
+            "id": "outro",
+            "say": "Kal *8:30.* Late aaye to *absent!*",
+            "hi": "कल साढ़े आठ बजे। लेट आए तो एब्सेंट!",
+            "pitch": 1.08
+          }
+        ]
+      }
     },
     {
       "n": 5,
@@ -278,7 +455,7 @@
       "pillar": "tease",
       "audience": "diners",
       "format": "reel",
-      "caption": "Room 5. You asked for help. You got \"sab acha hai.\" The walls are closing in (not literally, relax).\n\nTonight: letter 3.\n\nESCAPE THE MENU: one riddle a night until 4 October. Every answer gives one letter of a 10-letter code (the chili box tells you which letter, the board tells you where it goes). DMs count from 4 October, 8:30 pm. The first 5 people to DM @eatmenva the code win a premium dine-in on us, a private after party and MENVA Black free as founding members.\n\nWe have a way out. DM us \"secret\".",
+      "caption": "Madam ki Class, Room 5. Viva.\n\nRoom 5. You asked for help. You got \"sab acha hai.\" The walls are closing in (not literally, relax).\n\nClass roz raat 8:30 pe lagti hai. Late aaye to absent.\nAttendance: comment PRESENT.\nHomework: 3 dost tag karo. Agar tumhara tag kiya hua dost jeet gaya aur DM mein tumhara naam likha, tum bhi saath dinner pe chalo ge.\n\nTonight: letter 3.\n\nESCAPE THE MENU: one riddle a night until 4 October. Every answer gives one letter of a 10-letter code (the chili box tells you which letter, the board tells you where it goes). DMs count from 4 October, 8:30 pm. The first 5 people to DM @eatmenva the code win a premium dine-in on us, a private after party and MENVA Black free as founding members.\n\nWe have a way out. DM us \"secret\".",
       "hashtags": [
         "#menva",
         "#lahorefood",
@@ -313,7 +490,66 @@
           "board": "P_?L__E_H_"
         }
       ],
-      "video": "social/reels/out/escape-05-sab-acha-hai.mp4"
+      "video": "social/reels/out/escape-05-sab-acha-hai.mp4",
+      "madam": {
+        "room": "Room 5",
+        "format": "Viva",
+        "stamp": "OUT",
+        "voice": "hf_beta",
+        "scold": [
+          "s1",
+          "s2"
+        ],
+        "homework": "Attendance: comment <b>PRESENT</b><br>Homework: <b>3 dost tag karo</b>",
+        "lines": [
+          {
+            "id": "hook",
+            "say": "Viva *shuru!*",
+            "hi": "वाइवा शुरू!",
+            "pitch": 1.1,
+            "speed": 1.15
+          },
+          {
+            "id": "s1",
+            "say": "Waiter se poocha, *kya acha hai?*",
+            "hi": "वेटर से पूछा, क्या अच्छा है?",
+            "pitch": 1.06
+          },
+          {
+            "id": "s2",
+            "say": "Jawab mila: *sab acha hai.*",
+            "hi": "जवाब मिला: सब अच्छा है।",
+            "size": "mid",
+            "pitch": 1.02
+          },
+          {
+            "id": "verdict",
+            "say": "Ye koi jawab hai? Bahar!",
+            "hi": "ये कोई जवाब है? बाहर!",
+            "pitch": 1.14,
+            "speed": 1.2
+          },
+          {
+            "id": "sawal",
+            "say": "Aaj ka sawal. Likho!",
+            "hi": "आज का सवाल। लिखो!",
+            "pitch": 1.06
+          },
+          {
+            "id": "hurry",
+            "say": "Soch rahe ho ya *so rahe ho?*",
+            "hi": "सोच रहे हो या सो रहे हो?",
+            "pitch": 1.1,
+            "speed": 1.2
+          },
+          {
+            "id": "outro",
+            "say": "Kal *8:30.* Late aaye to *absent!*",
+            "hi": "कल साढ़े आठ बजे। लेट आए तो एब्सेंट!",
+            "pitch": 1.08
+          }
+        ]
+      }
     },
     {
       "n": 6,
@@ -323,7 +559,7 @@
       "pillar": "tease",
       "audience": "diners",
       "format": "reel",
-      "caption": "Room 6. Something amazing landed on the next table. You pointed. The waiter nodded. What arrived was not that.\n\nTonight: letter 10.\n\nESCAPE THE MENU: one riddle a night until 4 October. Every answer gives one letter of a 10-letter code (the chili box tells you which letter, the board tells you where it goes). DMs count from 4 October, 8:30 pm. The first 5 people to DM @eatmenva the code win a premium dine-in on us, a private after party and MENVA Black free as founding members.\n\nWe have a way out. DM us \"secret\".",
+      "caption": "Madam ki Class, Room 6. Manners.\n\nRoom 6. Something amazing landed on the next table. You pointed. The waiter nodded. What arrived was not that.\n\nClass roz raat 8:30 pe lagti hai. Late aaye to absent.\nAttendance: comment PRESENT.\nHomework: 3 dost tag karo. Agar tumhara tag kiya hua dost jeet gaya aur DM mein tumhara naam likha, tum bhi saath dinner pe chalo ge.\n\nTonight: letter 10.\n\nESCAPE THE MENU: one riddle a night until 4 October. Every answer gives one letter of a 10-letter code (the chili box tells you which letter, the board tells you where it goes). DMs count from 4 October, 8:30 pm. The first 5 people to DM @eatmenva the code win a premium dine-in on us, a private after party and MENVA Black free as founding members.\n\nWe have a way out. DM us \"secret\".",
       "hashtags": [
         "#menva",
         "#lahorefood",
@@ -357,7 +593,66 @@
           "board": "P_HL__E_H?"
         }
       ],
-      "video": "social/reels/out/escape-06-wo-wala.mp4"
+      "video": "social/reels/out/escape-06-wo-wala.mp4",
+      "madam": {
+        "room": "Room 6",
+        "format": "Manners",
+        "stamp": "FAIL",
+        "voice": "hf_beta",
+        "scold": [
+          "s1",
+          "s2"
+        ],
+        "homework": "Attendance: comment <b>PRESENT</b><br>Homework: <b>3 dost tag karo</b>",
+        "lines": [
+          {
+            "id": "hook",
+            "say": "Ungli *neechay!*",
+            "hi": "उंगली नीचे!",
+            "pitch": 1.12,
+            "speed": 1.15
+          },
+          {
+            "id": "s1",
+            "say": "Doosron ki plate ki taraf *ishara?*",
+            "hi": "दूसरों की प्लेट की तरफ़ इशारा?",
+            "pitch": 1.08
+          },
+          {
+            "id": "s2",
+            "say": "'Wo wala' koi *dish* nahi hoti!",
+            "hi": "वो वाला कोई डिश नहीं होती!",
+            "size": "mid",
+            "pitch": 1.1
+          },
+          {
+            "id": "verdict",
+            "say": "Manners mein fail!",
+            "hi": "मैनर्स में फ़ेल!",
+            "pitch": 1.12,
+            "speed": 1.2
+          },
+          {
+            "id": "sawal",
+            "say": "Aaj ka sawal. Likho!",
+            "hi": "आज का सवाल। लिखो!",
+            "pitch": 1.06
+          },
+          {
+            "id": "hurry",
+            "say": "Chalo chalo, *time!*",
+            "hi": "चलो चलो, टाइम!",
+            "pitch": 1.12,
+            "speed": 1.2
+          },
+          {
+            "id": "outro",
+            "say": "Kal *8:30.* Late aaye to *absent!*",
+            "hi": "कल साढ़े आठ बजे। लेट आए तो एब्सेंट!",
+            "pitch": 1.08
+          }
+        ]
+      }
     },
     {
       "n": 7,
@@ -367,7 +662,7 @@
       "pillar": "tease",
       "audience": "diners",
       "format": "reel",
-      "caption": "Room 7. Forty minutes, twenty-three pages, and you ordered the exact same thing as last time. Classic.\n\nTonight: letter 5. Two rooms left.\n\nESCAPE THE MENU: one riddle a night until 4 October. Every answer gives one letter of a 10-letter code (the chili box tells you which letter, the board tells you where it goes). DMs count from 4 October, 8:30 pm. The first 5 people to DM @eatmenva the code win a premium dine-in on us, a private after party and MENVA Black free as founding members.\n\nWe have a way out. DM us \"secret\".",
+      "caption": "Madam ki Class, Room 7. Exam hall.\n\nRoom 7. Forty minutes, twenty-three pages, and you ordered the exact same thing as last time. Classic.\n\nClass roz raat 8:30 pe lagti hai. Late aaye to absent.\nAttendance: comment PRESENT.\nHomework: 3 dost tag karo. Agar tumhara tag kiya hua dost jeet gaya aur DM mein tumhara naam likha, tum bhi saath dinner pe chalo ge.\n\nTonight: letter 5. Two rooms left.\n\nESCAPE THE MENU: one riddle a night until 4 October. Every answer gives one letter of a 10-letter code (the chili box tells you which letter, the board tells you where it goes). DMs count from 4 October, 8:30 pm. The first 5 people to DM @eatmenva the code win a premium dine-in on us, a private after party and MENVA Black free as founding members.\n\nWe have a way out. DM us \"secret\".",
       "hashtags": [
         "#menva",
         "#lahorefood",
@@ -405,7 +700,66 @@
           "board": "P_HL?_E_HO"
         }
       ],
-      "video": "social/reels/out/escape-07-the-stare.mp4"
+      "video": "social/reels/out/escape-07-the-stare.mp4",
+      "madam": {
+        "room": "Room 7",
+        "format": "Exam hall",
+        "stamp": "COPIED",
+        "voice": "hf_beta",
+        "scold": [
+          "s1",
+          "s2"
+        ],
+        "homework": "Attendance: comment <b>PRESENT</b><br>Homework: <b>3 dost tag karo</b>",
+        "lines": [
+          {
+            "id": "hook",
+            "say": "Pen *neechay!*",
+            "hi": "पेन नीचे!",
+            "pitch": 1.12,
+            "speed": 1.15
+          },
+          {
+            "id": "s1",
+            "say": "Chaalees minute *menu* padha...",
+            "hi": "चालीस मिनट मेन्यू पढ़ा...",
+            "pitch": 1.04
+          },
+          {
+            "id": "s2",
+            "say": "Aur likha wohi jo *pichli baar!*",
+            "hi": "और लिखा वही जो पिछली बार!",
+            "size": "mid",
+            "pitch": 1.1
+          },
+          {
+            "id": "verdict",
+            "say": "Cheating! Copy wapas!",
+            "hi": "चीटिंग! कॉपी वापस!",
+            "pitch": 1.14,
+            "speed": 1.2
+          },
+          {
+            "id": "sawal",
+            "say": "Aaj ka sawal. Likho!",
+            "hi": "आज का सवाल। लिखो!",
+            "pitch": 1.06
+          },
+          {
+            "id": "hurry",
+            "say": "Paanch minute *baaki!*",
+            "hi": "पाँच मिनट बाक़ी!",
+            "pitch": 1.1,
+            "speed": 1.2
+          },
+          {
+            "id": "outro",
+            "say": "Kal *8:30.* Late aaye to *absent!*",
+            "hi": "कल साढ़े आठ बजे। लेट आए तो एब्सेंट!",
+            "pitch": 1.08
+          }
+        ]
+      }
     },
     {
       "n": 8,
@@ -415,7 +769,7 @@
       "pillar": "tease",
       "audience": "diners",
       "format": "reel",
-      "caption": "Room 8. The receipt says it all. One more night and the door opens.\n\nTonight: letter 8. Tomorrow: the last two.\n\nESCAPE THE MENU: one riddle a night until 4 October. Every answer gives one letter of a 10-letter code (the chili box tells you which letter, the board tells you where it goes). DMs count from 4 October, 8:30 pm. The first 5 people to DM @eatmenva the code win a premium dine-in on us, a private after party and MENVA Black free as founding members.\n\nWe have a way out. DM us \"secret\".",
+      "caption": "Madam ki Class, Room 8. Report card.\n\nRoom 8. The receipt says it all. One more night and the door opens.\n\nClass roz raat 8:30 pe lagti hai. Late aaye to absent.\nAttendance: comment PRESENT.\nHomework: 3 dost tag karo. Agar tumhara tag kiya hua dost jeet gaya aur DM mein tumhara naam likha, tum bhi saath dinner pe chalo ge.\n\nTonight: letter 8. Tomorrow: the last two.\n\nESCAPE THE MENU: one riddle a night until 4 October. Every answer gives one letter of a 10-letter code (the chili box tells you which letter, the board tells you where it goes). DMs count from 4 October, 8:30 pm. The first 5 people to DM @eatmenva the code win a premium dine-in on us, a private after party and MENVA Black free as founding members.\n\nWe have a way out. DM us \"secret\".",
       "hashtags": [
         "#menva",
         "#lahorefood",
@@ -471,7 +825,66 @@
           "board": "P_HLE_E?HO"
         }
       ],
-      "video": "social/reels/out/escape-08-regret.mp4"
+      "video": "social/reels/out/escape-08-regret.mp4",
+      "madam": {
+        "room": "Room 8",
+        "format": "Report card",
+        "stamp": "F",
+        "voice": "hf_beta",
+        "scold": [
+          "s1",
+          "s2"
+        ],
+        "homework": "Attendance: comment <b>PRESENT</b><br>Homework: <b>3 dost tag karo</b>",
+        "lines": [
+          {
+            "id": "hook",
+            "say": "Report card *aa gaya!*",
+            "hi": "रिपोर्ट कार्ड आ गया!",
+            "pitch": 1.1,
+            "speed": 1.15
+          },
+          {
+            "id": "s1",
+            "say": "Ordering mein: *F.*",
+            "hi": "ऑर्डरिंग में: एफ़।",
+            "pitch": 1.04
+          },
+          {
+            "id": "s2",
+            "say": "Regret mein: *A plus!*",
+            "hi": "रिग्रेट में: ए प्लस!",
+            "size": "mid",
+            "pitch": 1.1
+          },
+          {
+            "id": "verdict",
+            "say": "Parents ko bulao!",
+            "hi": "पेरेंट्स को बुलाओ!",
+            "pitch": 1.14,
+            "speed": 1.2
+          },
+          {
+            "id": "sawal",
+            "say": "Aaj ka sawal. Likho!",
+            "hi": "आज का सवाल। लिखो!",
+            "pitch": 1.06
+          },
+          {
+            "id": "hurry",
+            "say": "Kal aakhri din, *jaldi!*",
+            "hi": "कल आख़िरी दिन, जल्दी!",
+            "pitch": 1.1,
+            "speed": 1.2
+          },
+          {
+            "id": "outro",
+            "say": "Kal *8:30.* Late aaye to *absent!*",
+            "hi": "कल साढ़े आठ बजे। लेट आए तो एब्सेंट!",
+            "pitch": 1.08
+          }
+        ]
+      }
     },
     {
       "n": 9,
@@ -481,7 +894,7 @@
       "pillar": "tease",
       "audience": "diners",
       "format": "reel",
-      "caption": "Room 9. The last two letters. Solve them, and the code is complete.\n\nTHE HUNT IS OPEN FROM NOW. DM @eatmenva the 10-letter code. The first 5 correct DMs win:\n- a premium dine-in, on us\n- a private after party\n- MENVA Black, free, as founding members\n\nKal, 5 October, 8:30 pm: you find out what is behind the door.\n\nRules: Lahore only, 18+, one entry per account. The code only counts if you DM it after 4 October, 8:30 pm. Winners are announced on our Story and contacted by DM from @eatmenva only; we will never ask for money or card details. Venue and date are shared with the winners. Run by MENVA, not sponsored, endorsed or run by Instagram.",
+      "caption": "Madam ki Class, Room 9. Result day.\n\nRoom 9. The last two letters. Solve them, and the code is complete.\n\nReferral: agar tumhare tag kiye hue dost ne jeet kar DM mein tumhara naam likha, tum bhi saath dinner pe chalo ge.\n\nTHE HUNT IS OPEN FROM NOW. DM @eatmenva the 10-letter code. The first 5 correct DMs win:\n- a premium dine-in, on us\n- a private after party\n- MENVA Black, free, as founding members\n\nKal, 5 October, 8:30 pm: you find out what is behind the door.\n\nRules: Lahore only, 18+, one entry per account. The code only counts if you DM it after 4 October, 8:30 pm. Winners are announced on our Story and contacted by DM from @eatmenva only; we will never ask for money or card details. Venue and date are shared with the winners. Run by MENVA, not sponsored, endorsed or run by Instagram.",
       "hashtags": [
         "#menva",
         "#lahorefood",
@@ -524,7 +937,72 @@
           "board": "PEHLE?EKHO"
         }
       ],
-      "video": "social/reels/out/escape-09-the-door.mp4"
+      "video": "social/reels/out/escape-09-the-door.mp4",
+      "madam": {
+        "room": "Room 9",
+        "format": "Result day",
+        "stamp": "FINAL",
+        "voice": "hf_beta",
+        "scold": [
+          "s1",
+          "s2"
+        ],
+        "homework": "Code complete? <b>DM @eatmenva</b><br>Kal 8:30: <b>result day</b>",
+        "lines": [
+          {
+            "id": "hook",
+            "say": "Aakhri *class!*",
+            "hi": "आख़िरी क्लास!",
+            "pitch": 1.1,
+            "speed": 1.15
+          },
+          {
+            "id": "s1",
+            "say": "Nau din, *nau sawal.*",
+            "hi": "नौ दिन, नौ सवाल।",
+            "pitch": 1.04
+          },
+          {
+            "id": "s2",
+            "say": "Aaj *darwaza* khulega!",
+            "hi": "आज दरवाज़ा खुलेगा!",
+            "size": "mid",
+            "pitch": 1.1
+          },
+          {
+            "id": "verdict",
+            "say": "Aakhri mauqa!",
+            "hi": "आख़िरी मौक़ा!",
+            "pitch": 1.12,
+            "speed": 1.2
+          },
+          {
+            "id": "sawal",
+            "say": "Pehla sawal!",
+            "hi": "पहला सवाल!",
+            "pitch": 1.06
+          },
+          {
+            "id": "hurry",
+            "say": "Jaldi! *Ek aur baaki!*",
+            "hi": "जल्दी! एक और बाक़ी!",
+            "pitch": 1.12,
+            "speed": 1.2
+          },
+          {
+            "id": "sawal2",
+            "say": "Aakhri sawal!",
+            "hi": "आख़िरी सवाल!",
+            "pitch": 1.08
+          },
+          {
+            "id": "outro",
+            "say": "Code DM karo. *Paanch* jeetenge!",
+            "hi": "कोड डीएम करो। पाँच जीतेंगे!",
+            "pitch": 1.1
+          }
+        ]
+      }
     }
   ]
 }
