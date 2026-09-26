@@ -126,6 +126,22 @@ function build() {
   });
   parts.push(`<div class="ruler" id="ruler"></div>`);
   cam.innerHTML = parts.join('');
+  // Stack Madam's lines by their real height (a long line wraps), then the stamp, then the red-pen order.
+  // If the stack would run into the footer, shrink the text and try again.
+  TL.scenes.forEach((sc, si) => {
+    const els = (sc.els || []).map((el, ei) => ({ el, node: document.getElementById(`e${si}_${ei}`) })).filter((x) => x.node && ['say', 'stamp', 'pen'].includes(x.el.type));
+    if (!els.some((x) => x.el.type === 'stamp')) return;
+    for (let shrink = 1; shrink > 0.6; shrink -= 0.08) {
+      let cursor = 0;
+      els.forEach(({ el, node }) => {
+        if (el.type === 'say') { node.style.fontSize = ''; const fs = parseFloat(getComputedStyle(node).fontSize); node.style.fontSize = (fs * shrink) + 'px'; }
+        const top = Math.max(el.y, cursor + (el.type === 'say' ? 36 : 28));
+        node.style.top = top + 'px';
+        cursor = top + node.offsetHeight;
+      });
+      if (cursor < 1640) break;
+    }
+  });
 }
 
 // Everything at time t (seconds). Pure function of t, so every frame is reproducible.

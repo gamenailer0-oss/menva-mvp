@@ -52,7 +52,7 @@ function timeline(p, dur) {
   for (const id of m.scold) {
     const ln = L(id); d = line(id);
     const ws = words(ln.say, d);
-    els.push({ type: 'say', size: ln.size || 'big', y, text: ln.say, at: t - s0, words: ws });
+    els.push({ type: 'say', size: ln.size || 'big', y: els.length ? 0 : 360, text: ln.say, at: t - s0, words: ws }); // later lines stack below (class.html)
     popAll(t, ws);
     y += ln.size === 'mid' ? 360 : 460;
     t += d + 0.12;
@@ -60,10 +60,10 @@ function timeline(p, dur) {
   // the verdict: stamp + Madam's order
   const vd = line('verdict');
   const st = t + 0.05;
-  els.push({ type: 'stamp', text: m.stamp, x: 330, y: Math.min(y + 10, 1200), at: st - s0, rot: -9 });
+  els.push({ type: 'stamp', text: m.stamp, x: 330, y: 0, at: st - s0, rot: -9 });
   events.push({ t: st, type: 'stamp' }); hits.push({ t: st, zoom: 0.07, shake: 22 });
   whacks.push({ t: st + 0.02, y: Math.min(y + 60, 1220) }); events.push({ t: st + 0.02, type: 'whack', gain: 0.8 });
-  els.push({ type: 'pen', text: L('verdict').say, x: 190, y: Math.min(y + 250, 1440), size: 96, at: st + 0.2 - s0 });
+  els.push({ type: 'pen', text: L('verdict').say, x: 190, y: 0, size: 96, at: st + 0.2 - s0 });
   events.push({ t: st + 0.2, type: 'scribble', gain: 0.7 });
   t += vd + 0.25;
   scenes.push({ t: [s0, t], bg: 'paper', reg: [m.format, m.room], els });
