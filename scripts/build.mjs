@@ -67,7 +67,7 @@ else if (process.env.URL) { origin = process.env.URL.replace(/\/+$/, ''); origin
 else { origin = 'https://menva-ar.netlify.app'; originSource = 'https://menva-ar.netlify.app'; }
 console.log(`SEO: site origin ${origin} (source: ${originSource})`);
 
-const THEME_PAPER = { default: '#EFEBE2', gauchos: '#EFEBE2', baraza: '#FAF5EC' };
+const THEME_PAPER = { default: '#EFEBE2', gauchos: '#EFEBE2', baraza: '#FAF5EC', 'haute-dolci': '#FAF3F2' };
 
 const escAttr = (s) => String(s ?? '').replace(/&/g, '&amp;').replace(/"/g, '&quot;').replace(/</g, '&lt;').replace(/>/g, '&gt;');
 // Content-hash query param so WhatsApp/Facebook's aggressive image cache busts whenever the image

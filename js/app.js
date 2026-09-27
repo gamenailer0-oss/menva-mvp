@@ -287,7 +287,8 @@
 
     const bandHTML = hasBand ? `<section class="restaurant-band ${themeClass}">
       <div class="band-inner">
-        ${r.logoRound ? `<img src="${esc(r.logoRound)}" alt="${name}" class="band-logo" width="88" height="88">` : ''}
+        ${r.logoRound ? `<img src="${esc(r.logoRound)}" alt="${name}" class="band-logo" width="88" height="88">`
+          : r.logo ? `<img src="${esc(r.logo)}" alt="${name}" class="band-logo-wide" width="220" height="27">` : ''}
         <div class="band-copy">
           <h1 class="sr-only">${name}</h1>
           ${r.tagline ? `<p class="band-tagline">${esc(r.tagline)}</p>` : ''}

@@ -45,6 +45,21 @@
   font-display: swap;
   src: url('/vendor/fonts/barlow-condensed-600.woff2') format('woff2');
 }
+/* Haute Dolci — closest OFL match to their FuturaPT-Light brand type (geometric sans, light tracking). */
+@font-face {
+  font-family: 'Jost';
+  font-style: normal;
+  font-weight: 300;
+  font-display: swap;
+  src: url('/vendor/fonts/jost-300.woff2') format('woff2');
+}
+@font-face {
+  font-family: 'Jost';
+  font-style: normal;
+  font-weight: 500;
+  font-display: swap;
+  src: url('/vendor/fonts/jost-500.woff2') format('woff2');
+}
 
 *, *::before, *::after {
   box-sizing: border-box;

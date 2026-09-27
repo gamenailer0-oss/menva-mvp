@@ -205,6 +205,15 @@
   background: #fff;
   box-shadow: var(--shadow);
 }
+/* Wide wordmark lockup (e.g. Haute Dolci — a horizontal mark, never forced into a circle crop).
+   The source PNG is black-on-transparent; dark mode inverts it to white rather than shipping a
+   second file, since it is a flat monochrome mark. */
+.band-logo-wide {
+  flex: none;
+  width: min(220px, 46vw);
+  height: auto;
+}
+html[data-mode="dark"] .theme-haute-dolci .band-logo-wide { filter: invert(1); }
 .band-copy { min-width: 0; }
 .band-tagline {
   font-family: var(--font-display);
@@ -287,6 +296,28 @@
   font-weight: 600;
   letter-spacing: 0.05em;
 }
+/* Haute Dolci: their brand tagline is tracked caps, never italic — override the generic serif
+   cover styling (which italicises quotes) so "It's a must." reads in their own register. */
+.theme-haute-dolci .band-tagline,
+.theme-haute-dolci .cover-copy p {
+  font-style: normal;
+  text-transform: uppercase;
+  letter-spacing: 0.1em;
+  font-size: var(--text-sm);
+}
+/* Haute Dolci: the Signatures category (San Sebastián cheesecake, Matilda cake, Cookie Dough) is
+   always first in the CSV, so it is always the menu's first section — presented as a small run of
+   featured cards rather than plain printed rows, without claiming a 3D view that doesn't exist yet. */
+.theme-haute-dolci .menu-category:first-of-type .dish-row {
+  border: 1px solid var(--line);
+  border-radius: var(--radius);
+  padding: 18px 20px;
+  margin-bottom: 12px;
+  background: var(--surface);
+  box-shadow: var(--shadow);
+}
+.theme-haute-dolci .menu-category:first-of-type .dish-row:last-child { margin-bottom: 0; }
+.theme-haute-dolci .menu-category:first-of-type .dish-line h4 { font-size: var(--text-xl); }
 .dish-grid {
   display: grid;
   grid-template-columns: 1fr;

@@ -74,6 +74,27 @@
   --brand-band-ink: #10150F;
 }
 
+/* Haute Dolci — lavish pink & black luxury dessert-house register (blush surfaces, deep
+   raspberry accent, near-black ink). Palette sampled from their own store interior (blush velvet
+   banquettes, black header) and Pakistan store page copy ("lavish pink and black tones").
+   Display type swaps to Jost (OFL) — the closest free match to their FuturaPT-Light brand type. */
+[data-theme="haute-dolci"] {
+  --paper: #FAF3F2;
+  --surface: #FFFFFF;
+  --surface-2: #F2E7E0;
+  --surface-offset: #F2E7E0;
+  --line: #E8D6D2;
+  --ink: #1C1416;
+  --muted: #6B5B57;
+  --faint: #A98F89;
+  --accent: #9C2F52;
+  --accent-ink: #FFFFFF;
+  --stage: #F2E7E0;
+  --brand-band: #E7C3C8;
+  --brand-band-ink: #1C1416;
+  --font-display: 'Jost', 'Arial Narrow', sans-serif;
+}
+
 /* ═══ DARK MODE — same quiet confidence, warm near-black ═══ */
 html[data-mode="dark"],
 html[data-mode="dark"] body {
@@ -113,6 +134,23 @@ html[data-mode="dark"] [data-theme="baraza"] {
   --stage: #171D15;
   --brand-band: #4B5A2B;
   --brand-band-ink: #FAF5EC;
+}
+/* Haute Dolci — "after hours" (their store runs until 1am): near-black with a warm plum
+   undertone, the accent lightened to a bright rose so it still reads as their brand at night. */
+html[data-mode="dark"] [data-theme="haute-dolci"] {
+  --paper: #1A1113;
+  --surface: #221619;
+  --surface-2: #2B1B1F;
+  --surface-offset: #2B1B1F;
+  --line: #3A262B;
+  --ink: #F5E9E7;
+  --muted: #C9AFAE;
+  --faint: #7A6260;
+  --accent: #E58AA8;
+  --accent-ink: #1A1113;
+  --stage: #221619;
+  --brand-band: #4A1F2B;
+  --brand-band-ink: #F5E9E7;
 }
 
 /* ═══ Type Scale ═══ */

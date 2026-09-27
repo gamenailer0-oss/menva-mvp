@@ -33,10 +33,17 @@ const BARAZA_STAGE = '#EFE8D8';
 const BARAZA_SAGE = '#8A9060';
 const BARAZA_OLIVE = '#4B5A2B';
 const BARAZA_ESPRESSO = '#10150F';
+const HD_PAPER = '#FAF3F2';
+const HD_BAND = '#E7C3C8';
+const HD_ACCENT = '#9C2F52';
+const HD_INK = '#1C1416';
+const HD_MUTED = '#6B5B57';
 
 const FONT_FACES = `
   @font-face { font-family: 'Instrument Serif'; font-style: normal; font-weight: 400; src: url('${fileUrl('vendor/fonts/instrument-serif-400.woff2')}') format('woff2'); }
   @font-face { font-family: 'Instrument Serif'; font-style: italic; font-weight: 400; src: url('${fileUrl('vendor/fonts/instrument-serif-400-italic.woff2')}') format('woff2'); }
+  @font-face { font-family: 'Jost'; font-style: normal; font-weight: 300; src: url('${fileUrl('vendor/fonts/jost-300.woff2')}') format('woff2'); }
+  @font-face { font-family: 'Jost'; font-style: normal; font-weight: 500; src: url('${fileUrl('vendor/fonts/jost-500.woff2')}') format('woff2'); }
   @font-face { font-family: 'DM Sans'; font-style: normal; font-weight: 400; src: url('${fileUrl('vendor/fonts/dm-sans-400.woff2')}') format('woff2'); }
   @font-face { font-family: 'DM Sans'; font-style: normal; font-weight: 500; src: url('${fileUrl('vendor/fonts/dm-sans-500.woff2')}') format('woff2'); }
   @font-face { font-family: 'DM Sans'; font-style: normal; font-weight: 600; src: url('${fileUrl('vendor/fonts/dm-sans-600.woff2')}') format('woff2'); }
@@ -161,6 +168,32 @@ function ogBarazaHtml() {
   </div>`);
 }
 
+// ─── OG image 4: Haute Dolci ────────────────────────────────────────────────
+// No dish photography exists yet (the 3D pipeline hasn't run for its three signatures), so this
+// card is typographic only — their real logo, their own words, no placeholder dish art of any
+// kind. Blush band on the left (their "lavish pink and black" palette); their tagline set in
+// tracked-caps Jost (the OFL stand-in for their FuturaPT-Light brand type) on the right.
+function ogHauteDolciHtml() {
+  return page(HD_PAPER, `<style>
+    .band { position:absolute; left:0; top:0; width:360px; height:630px; background:${HD_BAND}; display:flex; flex-direction:column; align-items:center; justify-content:center; gap:26px; }
+    .band img { width:220px; height:auto; }
+    .band .loc { font-family:'Jost'; font-weight:500; font-size:19px; letter-spacing:0.12em; text-transform:uppercase; color:${HD_INK}; text-align:center; }
+    .tagline { position:absolute; left:416px; top:130px; width:740px; font-family:'Jost'; font-weight:300; font-size:76px; line-height:1.08; letter-spacing:0.01em; text-transform:uppercase; color:${HD_ACCENT}; }
+    .sub { position:absolute; left:418px; top:300px; width:700px; font-family:'DM Sans'; font-weight:500; font-size:23px; letter-spacing:0.03em; text-transform:uppercase; color:${HD_MUTED}; }
+    .signatures { position:absolute; left:418px; bottom:96px; width:720px; font-family:'DM Sans'; font-weight:400; font-size:20px; line-height:1.5; color:${HD_INK}; }
+    .signatures b { font-weight:600; }
+    .credit { position:absolute; left:0; width:360px; bottom:34px; text-align:center; font-family:'Instrument Serif'; font-size:23px; color:${HD_INK}; opacity:.7; }
+  </style>
+  <div class="band">
+    <img src="${fileUrl('assets/restaurant/haute-dolci-logo-black.png')}">
+    <div class="loc">Raya Fairways &middot; Lahore</div>
+  </div>
+  <div class="tagline">It's a must.</div>
+  <div class="sub">Indulge, Capture, Share, Repeat.</div>
+  <div class="signatures"><b>Signatures —</b> San Sebasti&aacute;n cheesecake &middot; Matilda cake &middot; Cookie dough</div>
+  <div class="credit">menva.</div>`);
+}
+
 // ─── App icon monogram ──────────────────────────────────────────────────────
 // "m." in Instrument Serif, cream on ink, with the accent-coloured period — same trailing full
 // stop as the "menva." wordmark. `glyphPx` controls how large the glyph reads within the canvas.
@@ -219,6 +252,7 @@ const ogJobs = [
   { file: 'og-menva.jpg', html: ogMenvaHtml(), bg: PAPER },
   { file: 'og-gauchos.jpg', html: ogGauchosHtml(), bg: GAUCHOS_PAPER },
   { file: 'og-baraza.jpg', html: ogBarazaHtml(), bg: BARAZA_PAPER },
+  { file: 'og-haute-dolci.jpg', html: ogHauteDolciHtml(), bg: HD_PAPER },
 ];
 for (const job of ogJobs) {
   const img = await shoot(browser, job.html, 1200, 630);

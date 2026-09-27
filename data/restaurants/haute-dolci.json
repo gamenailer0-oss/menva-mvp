@@ -1,0 +1,36 @@
+{
+  "id": "haute-dolci",
+  "slug": "haute-dolci",
+  "name": "Haute Dolci",
+  "displayName": "Haute Dolci",
+  "logo": "/assets/restaurant/haute-dolci-logo-black.png",
+  "theme": "haute-dolci",
+  "pilot": false,
+  "listed": false,
+  "cuisine": "Desserts",
+  "tagline": "It's a must.",
+  "hours": "Daily, 9am–midnight (1am Fri–Sun)",
+  "area": "Raya Fairways, DHA Phase 6",
+  "location": "Lahore",
+  "branch": "Raya",
+  "address": "38 Raya Fairways, Defence Raya Golf Resort, Sector M, DHA Phase 6, Lahore, 54792",
+  "website": "https://hautedolci.pk/",
+  "description": "Haute Dolci's first international venture — lavish pink-and-black interiors, plush seating, and the desserts they're known for worldwide: San Sebastián cheesecake, Matilda cake, signature milk cakes and a full gourmet brunch.",
+  "menuTitle": "The Dolci Menu",
+  "menuSubtitle": "Prices in PKR",
+  "showCheffy": false,
+  "categoryNotes": {
+    "Signatures": "Indulge, Capture, Share, Repeat.",
+    "Cakes": "Signature milk cakes and cheesecakes, made fresh in-house.",
+    "All Day Breakfast": "Timeless brunch favourites, served all day.",
+    "Coffee & Hot Beverages": "Specialty coffee alongside the desserts."
+  },
+  "quickNotes": [],
+  "loaderLines": [
+    { "until": 25, "text": "Tempering the chocolate" },
+    { "until": 60, "text": "Setting the layers" },
+    { "until": 90, "text": "Dusting the finish" },
+    { "until": 99, "text": "Plating your slice" },
+    { "loaded": true, "text": "Served." }
+  ]
+}
