@@ -73,9 +73,21 @@ export async function createRenderer() {
 
     // Poster: 1200×900 (4:3), shot with exactly the dish sheet's camera (see js/app.js) so the
     // poster → live 3D crossfade lines up instead of ghosting.
-    async poster(glbFile, orbit) {
+    async poster(glbFile, orbit, target) {
       await page.evaluate((s) => window.loadModel(s, 1200, 900), rel(glbFile));
-      return dataUrlToBuffer(await page.evaluate((o) => window.shoot(o), orbit));
+      return dataUrlToBuffer(await page.evaluate((o, t) => window.shoot(o, t), orbit, target));
+    },
+
+    // Share-card cut-out: the poster's view, transparent and without the baked ground shadow (the card draws
+    // its own). Pass a wider orbit so nothing is clipped; the pipeline trims it to the dish.
+    async card(glbFile, orbit, target) {
+      await page.evaluate((s) => window.loadModel(s, 1200, 900), rel(glbFile));
+      return dataUrlToBuffer(await page.evaluate((o, t) => window.shoot(o, t, false), orbit, target));
+    },
+
+    // Model size in metres (for aiming the camera).
+    async dimensions(glbFile) {
+      return (await page.evaluate((s) => window.loadModel(s, 1200, 900), rel(glbFile))).dims;
     },
 
     // 36 frames every 10°, 480×360 each, as a 6×6 grid (a single row would exceed WebP's 16383px limit).

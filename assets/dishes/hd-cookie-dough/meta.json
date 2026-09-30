@@ -5,7 +5,7 @@
     "model": "hd-cookie-dough/hd-cookie-dough.glb",
     "photo": null
   },
-  "sourceHash": "a1536e7c51c9",
+  "sourceHash": "5e7b7c96609c",
   "audit": "amber",
   "dimensions_cm": {
     "width": 17.3,
@@ -20,8 +20,13 @@
     "normal": "1024px jpeg q85"
   },
   "roughness": 0.8,
+  "orbit": "45deg 55deg 80%",
+  "target": "-0.0048m -0.0047m 0.0048m",
   "poster": "render",
   "posterQuality": 82,
+  "card": {
+    "quality": 82
+  },
   "spin": {
     "frames": 36,
     "frameWidth": 480,
@@ -42,12 +47,16 @@
       "hash": "9540431fcc45"
     },
     "poster.webp": {
-      "bytes": 47448,
-      "hash": "93fb14e3a5cd"
+      "bytes": 53634,
+      "hash": "507deb87d45a"
     },
     "poster-blur.webp": {
-      "bytes": 654,
-      "hash": "04b56b5739d9"
+      "bytes": 694,
+      "hash": "dfdd40277022"
+    },
+    "card.webp": {
+      "bytes": 37470,
+      "hash": "99d63a78fbac"
     },
     "spin.webp": {
       "bytes": 302970,

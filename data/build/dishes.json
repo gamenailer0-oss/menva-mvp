@@ -1,5 +1,5 @@
 {
-  "generated": "2026-09-30T16:32:47.560Z",
+  "generated": "2026-09-30T18:01:52.002Z",
   "restaurants": [
     {
       "id": "gauchos",
@@ -20,6 +20,55 @@
       "menuTitle": "The Cuts",
       "menuSubtitle": "Prices in PKR",
       "showCheffy": false,
+      "roast": true,
+      "shareLinesApproved": false,
+      "shareLines": {
+        "firstLook": [
+          "Sized up my|steak before|it landed.",
+          "Medium-rare.|Full size.|Zero guessing.",
+          "Know your cut|before you order.",
+          "The steak|I saw coming."
+        ],
+        "fav": [
+          "My order.|Every time.",
+          "My cut.|No debate.",
+          "Some cuts you|keep ordering.",
+          "Loyal to|this cut."
+        ],
+        "new": [
+          "New cut.|New favourite?",
+          "Never had it.|Seen in 3D.|Now I'm having it.",
+          "New on|my list.",
+          "Trying something|new. Medium-rare."
+        ],
+        "streak": [
+          "Back again.|Obviously.",
+          "The grill|knows me now.",
+          "Regular,|officially.",
+          "Same table.|Better steak."
+        ],
+        "roast": [
+          "Not your|ammi's|aloo gosht.",
+          "Ghar ka khana|is shaking.",
+          "Steak > daal chawal.|Allegedly.",
+          "Sized it up.|It sized me up back.",
+          "Told my diet|it's 3D.|It doesn't count."
+        ],
+        "sarcastic": [
+          "Vegetables?|I've seen one.|On the side.",
+          "Calories don't|count in 3D.",
+          "Diet starts Monday.|This is Sunday energy.",
+          "Medium-rare|is a personality."
+        ],
+        "goodVibes": [
+          "Good company.|Better steak.",
+          "Tonight's mood:|sorted.",
+          "Full table.|Full hearts.",
+          "Great food.|Greater company.",
+          "Small joys,|big cuts."
+        ],
+        "roastSticker": "Sizzle > ghar ka khana"
+      },
       "loaderLines": [
         {
           "until": 25,
@@ -67,8 +116,11 @@
             "glbBytes": 1029820,
             "usdz": "/assets/dishes/steak-main/model.usdz?v=1e758865f2bb",
             "usdzBytes": 1677050,
-            "poster": "/assets/dishes/steak-main/poster.webp?v=6b0df732652f",
-            "blur": "data:image/webp;base64,UklGRqYCAABXRUJQVlA4WAoAAAAQAAAAHwAAFwAAQUxQSA8BAAABkKNt27FH9/O8sVGlzpFKlbWElFZlayfpRpVt1LZdZQ1jvLpH3/ulmjoiJgD/j/oPNWaPxIiqMQJAZS8U2mwAFDSNLJdD8ina9+1uNy8cePEl8lihSC50v2H8YUnSW14ohqYpmj7Thhid95F0PFUITRIUPWRgjPxndLxQDE2BYpaBqZYni0RTBFWvGFLoeKEYJgGKlRx0PF8JTRDUPGNIouduL0wWDEbz0PF9FSRLUHKXIY2ORxSSAcUEY1L03vIQNEtQfo8hK/rAyCczkCwoJhn/5QMZ3+4M1UOQKKi6zUBGH8kPV6cbAAiSFWP0PpA/bqy3FQKigryVN+n5+fBAOQAV5BcMvr4+12gAEUE2AFZQOCBwAQAAEAgAnQEqIAAYAD7RVKNLqCSjIbAYDAEAGglsALUXkDgYxbn1fP/vnciFvQA/ifT4/Y72AA55vKAqyOPsRyKJXVK9XlMOeFeL+AD+7UP+A7ffmJZV6mbOpUMI54CqQ/SvBd7Hic5rduut0KSg4h4P9G1aR7x/vvMhA+VvIMkxZG5alJImrwfsNKnN084CZptT8lJQnL/bWqCc0ImuH9V77+Z4DbYZ/0Pg90Adbbtd+Wp0uUuoyyg8x2n9f84bN54FqiCszjnY+kYOUBfZN85vMOhCKhWjrfYBMfeOMSmxvu9f5+OhOjnM/p1+W+6fcnhL/9jX57mPJ9aOanPmwP5zDw9v+vOp2v/N7HCuNyDeVtQ92RCl8aE+AbTbJzbii23F9auNKaBsswotkUYA1SqTT7vnOhlqqc4s9fIbLrzK2ANw7MPm8uYmWMke7/wk44Idwrr/sWa99HH36imYEVxo/Q0Rhg9TnocUK/AQQ+kAAAA=",
+            "poster": "/assets/dishes/steak-main/poster.webp?v=5939329c38ed",
+            "card": "/assets/dishes/steak-main/card.webp?v=47b975789729",
+            "orbit": "50deg 55deg 82%",
+            "target": "-0.0050m -0.0193m 0.0060m",
+            "blur": "data:image/webp;base64,UklGRsQCAABXRUJQVlA4WAoAAAAQAAAAHwAAFwAAQUxQSDMBAAABkKttt2k7/xjz+MS2UdmVkzJPeqM7VeykS5VrsJ1KfTpbpW1jjTH+cOHJDUTEBKBESSqoUhWVSg3qJo3tDSlBRFNKCROvGLeiXoqoQgRA7Zzn/MEzbSBJ86gK2jT1Wbpq/XW60fl4UzeI6j9EMWEQRt6nk+YkI/hiSx9A5Y+ExWc/fDx8jpmZ869uwXfbRgOA1GD2V3owgrndgt9ODwAUYz8wizBjUf/KhwOBnoc+hLNMz3hhLATDvoWxxDDayaFQKJZ4eDF3vmlJEACClo/0AmHhJ/pBBX8mzHpBy2XO25MTVPD3hJnPaf8y5+vNHSCCnIop92l/cQ/u7wMR5FeMv8uMDCN3zmxAEhRVjH/KLHPem69QRYmKyVfJDxs7QxPKFQzZfWgMRFG6JAAqqFKS4D8EAFZQOCBqAQAAMAgAnQEqIAAYAD7RUqJLqCSjIbAIAQAaCWwAnTMy9wXAba/nu9MA3lgrwQzfxlagG6QDrixQb9UgYLSRV53Q0d16FeSxXK0uBAAA/tMsFF8dQ8K1dF8ilnIvmuXIk4u+3fcEjBUhh0GkLMHnNvJkQzHTOSMGAZPu1KvaIPuW2egFK2/B/ltS5DhilugDkZdJhWGGm72VUFvLWwCYj8j5FkKS9rdmztzqkk7tblMgLc1jQEWzHUha9YINacQwipgPeWvgHIQ728dzpMfG3+q8uEZgse9QCjZNImkmJ+Mwf+P7fQGBcQor2y2bmizP7zFFc42DPeRrq0Kya7AZWjXEsM0NxUl4xZ65XhRi9tXXi8dgw6gM7aMulhxPfBUupb+mfICHZxfiDdLx8aj1NfZ8/+IM+CRaMavvdoACL4VSrkgljvyENPUfLIsLgzthOL1xxv1rip9O8yzs9eVxdBuxOvkd6CcmrP2IwAA=",
             "spin": "/assets/dishes/steak-main/spin.webp?v=0500f08d9a52",
             "spinLayout": {
               "frames": 36,
@@ -108,10 +160,13 @@
           "assets": {
             "glb": "/assets/dishes/steak-sandwich/model.glb?v=77d580b30f7f",
             "glbBytes": 242928,
-            "usdz": "/assets/dishes/steak-sandwich/model.usdz?v=4ca022615ca3",
-            "usdzBytes": 1560507,
-            "poster": "/assets/dishes/steak-sandwich/poster.webp?v=63e32b651802",
-            "blur": "data:image/webp;base64,UklGRkQCAABXRUJQVlA4WAoAAAAQAAAAHwAAFwAAQUxQSPoAAAABkKJt27JF9/u+uEd3aKzB3R2Su7sugU6DRuIguqzAE40Mo9H/V+6xT9LkiJgA/E8KqWR4QikJAEqJcASA+LS8ihIAUoWBzNrR89fP/LBRlw4IGUSh7YslSevIzyd9MVCB+hmJGGvptKXjUxmkP4GEcxr+22pDMwvpCxIV1pl/kTSWvVC+IHBE47xo+JIC4QtIn7uj86JlG1QAgdhjGi/NZUQFkTj3YzgRSKGRznk5dkAFqnE+HN/nQwQAovboZbgDicAicZ/2L6d5k44QBUojdM4Yy6sSJUKQKKexdPyxl6MEQozCKg0jzwf1yVIgTIm228PdgdJUKeAXVlA4ICQBAADQBgCdASogABgAPslSoUunpKMht/VYAPAZCWwAxwkAGyAL9zTge2kg3/M7gxmGTrcCrHpDnrfXBxMWFrJJ9+gA+wxkml0EcGuXgkiJsdYBrbrSjN4Nib6e8rLSzX4WJeDcKggAmv5c7PmQo/Oy+jebSBw7cn28zYT6SKUm2TSuxrZORqKX41fVlv/x4ezBaedUBbwRke7ivvjVKviX1GIDUEUV+/1ZA+nK3lNnXjfv4Py7WkOlmraF+mi/hYPQaq6/y2XS/+vd3/Om+hy2ox/esv9XOv2cIRTg1aA05tpcgyfiR19eBC2EvNM0dVn7Q3HosjG9fDAI7STMqO/qoFfxH3TO7qKx9utYAM7pf8mt92H8ZdUGxovggO6Lfd6yGQT5sYAA",
+            "usdz": "/assets/dishes/steak-sandwich/model.usdz?v=e4b16e4fbf7a",
+            "usdzBytes": 1560505,
+            "poster": "/assets/dishes/steak-sandwich/poster.webp?v=777cf4a68d8e",
+            "card": "/assets/dishes/steak-sandwich/card.webp?v=d6d474317042",
+            "orbit": "50deg 55deg 68%",
+            "target": "-0.0184m 0.0074m 0.0220m",
+            "blur": "data:image/webp;base64,UklGRt4CAABXRUJQVlA4WAoAAAAQAAAAHwAAFwAAQUxQSEcBAAABkHPbtrG9I9rnPM/3fbGtzrZt20n3ja+OWrU224xUrmy3am3byfPcc3b45EVETACKU6M4lnyoANBIcqRRjGazty5uANWcCARtLzPllQlVITlQTN/Q8jCTNBhv9IdkiVQAwYxH/JE4yZDySVNIBgAiEUaHYPx7wlXQf6jOuLgOgup7af4P5+vmAFQ1KsVCWnLt4tWXdGYMnAwIAEXfp0wCSTdmqwCWrWrRc8SCawykhWD8j3lABb8ZacYcOj+1ARrco3kw5jJwD0SxmMGYU+OHQRBEtXcxBM+BGZeWKoDSpqu/083MPIun/LGiTow/y+rNOvGFJD04STcLwfmovFoJ/h5XajFh5aELt1O6mZF0vtvdUiP8W+LK9Vt2G7rkTELnu5t3rq7vCBFk17Ja9es2HjizfHbnJg2rAIJciuCfKsix/ikiKGAAVlA4IHABAADwBwCdASogABgAPtFYpE0oJSOiKA1RABoJbAC32QEIA9FCYZmnQgHJrZttQPdK/1mPHLJMjNCgaZl8gw53zrp3+Kjh3IrI13AA/vxHayfCP7K1vc0dke/LOnmTlau/w3RWLekfz8vrnynzBI/j07GsHpMyJw+z6SrfLtU+4zMME1tXVmoN8XQv+PoQy0XrhRJBKvvbnmlyj1LX9AFK1ppqii7NFIoRpCNKMMP1NIKXmw1sxNK7nfx5rZxRfE/2C4mmozMDMApGvw3kAycH2VMtIPwtth/3X92Cecs8XR2o/k8CEaqldoTS5usxUVwT/4pG6iD+DcyY/WccCJalwoQrkW89Rw55P4Lzkgeuk2Bu2YtcoHC22EtkLM85k+L5cRpDrJOP6rbLWLU+g1IFbh5zlf+vj79wVteqyZOouJv9F+PXG5qhIXg2KlE5fXjwqP1k64UTlvNtVzzWA1hD7FLMkSy8BJn+DN2y/UqffogAAA==",
             "spin": "/assets/dishes/steak-sandwich/spin.webp?v=a50bd6b8601e",
             "spinLayout": {
               "frames": 36,
@@ -151,10 +206,13 @@
           "assets": {
             "glb": "/assets/dishes/garlic-prawn-skewers/model.glb?v=68aca1278ac2",
             "glbBytes": 964620,
-            "usdz": "/assets/dishes/garlic-prawn-skewers/model.usdz?v=c0bf94c77045",
+            "usdz": "/assets/dishes/garlic-prawn-skewers/model.usdz?v=8c860f70b4ee",
             "usdzBytes": 1693114,
-            "poster": "/assets/dishes/garlic-prawn-skewers/poster.webp?v=ba68b5996b16",
-            "blur": "data:image/webp;base64,UklGRoQCAABXRUJQVlA4WAoAAAAQAAAAHwAAFwAAQUxQSAMBAAABkGNb27E91/X8tq3eVmf7/2cQjMDJDOzKbp3O6NXZtv089x28CuuImAD8h9OQv4A0AGAYkTEAkoYyikhGEROD2LS87TceX3q5MQ0MRYIle5/fU3Xq9HgK6GcMTGws46vXvBNV68S6z7ocxg8gACx6rWKd059FH2SDHkRzBTrnLT/03llRX9GPNTAesVh6Y987FRXRgKIvikCPGHSquK9frWhQp5cSfYiks/pFQ8oXXQYDb4Pel2pdEHFOj+eAPiDGr6mItdY5a61TdXvyQQQkK9c8UlFP0SdHZpJABCbiG2ZtOnXx1q1zR9fM7UhHpEzMKquuKclKNgAjIImARLT0xW8OAFZQOCBaAQAAcAgAnQEqIAAYAD7RXKZOKCUjIigKqQAaCWwAtvCBzNaANsBdgG8RvJYvAwwTK/oAbpL+wBbssTbrv9ClU0aNNtfmsF24zeV8QDdEAAD++2zGkqPOISsyFveUZdv0BPFL1Z388t8dKszi6zAk4aj6S/8DwM9OvTACexTjPT1X4XfkXL8ExFaTbf50zm7a7DihjBHH4+WgKODl068e6Kirq4q06L8coWJNJEZjrhymcgYlNiOv/e1/wJ1G9MMqOMuYZsSQ5kQeWRU/fg1DeD5NRjnbfShU2/yC0Ze3pk374QTx64hyL24wlSb4jk/Npmoxz9WR4b9Cnllgu06klEG3I9gNTqGs2Dm+Vo//fZxX7L33pd4C3ju2vzfjldz19j2ePYH3mj6GnN4ynyZt8Pn7PqsMboI6FpX/fmuilvR3jgvJwNAhDy2ncMRz/KH+3PiLPNHKqH9VCLSAAA==",
+            "poster": "/assets/dishes/garlic-prawn-skewers/poster.webp?v=cb38b399f849",
+            "card": "/assets/dishes/garlic-prawn-skewers/card.webp?v=491df30fb572",
+            "orbit": "340deg 55deg 59%",
+            "target": "-0.0161m 0.0147m -0.0059m",
+            "blur": "data:image/webp;base64,UklGRhwDAABXRUJQVlA4WAoAAAAQAAAAHwAAFwAAQUxQSIQBAAANkKxtkyFZf0RWjefYtr20bfsGbC19VsbO3J3lrI5t7Wy7janMiOOqcwcRMQGIliGImhhCsKDCAKLhiMUCys3yY27eYoaGMWILetY/U29jM8TLq31a+824f2ESW7vR3Hba7QO0SJu3rdt2YcDyDypm6LLaKlTLd0ZJ4WbPm3ufSQGQsowd18NC4EHgAyCG67N51RWwsIBtrVblsOIRwPirsbW3rqweUyksjlWr5cVgENYLOg8/u//ItLWxTx1fqoJCwWBM62UDKlHQGuXCiJDQJFWzqThSgocold6c7xcUEggRK708Mcngv14/Wd7TepGJn7oY2zK/oTMRCXgPcPX4msaOiMKJ+rKjkpxcODxnCKkDg/6iqgTDnzeWe0Bl/uHeGlPalitUFCCAmAh4XHG2vAAAgmym4pzfs0fTGobwu8RS3y4/+F6r2OCPkq2MPb32VE3LpmXmUyb/Jsm2ee1yH//o8pW57JvYi3dZV7e4oGEDr0oRI6QEgXPOKYRAiFpFBOEBVlA4IHIBAADQBwCdASogABgAPtFUo0uoJKMhsAgBABoJbACdMzRA/xk81tt7sA3lHygE8CgZ9t6DIdQ5DDr1b86y+ibzlhJlHgi70uRXAAD+wyL37mANfcnygXL6JfKQTUS1bAdkONzq4agzopQmfMyZt81ALJGc6LD95IYSuMQ7PhYaiTrWxLOLprXuiqI6bGf+gSC0Rn05C+WYhgkXnO0n6iEA57ksOwPm/LdPDAmb4tTiD5thXDqhXcOThF9oCrf/kY7uBI0Esh1HmzTtru2lVZTlVf9IJrX1r9At05awq1A6vrn/tJtxvBr9DSvsVIm5WI3ATg1kzo+5O1P6Tocp/gbxw5H6NaPqZoPg3/7AMYLH9Vsn+6eHJb6joegSFd6eZC4Ec5EJYCW+JgQ3uz4XHhd2RzVMB7I5/ad/KMz+eBPDrzuKBhOltX9+378EzDy7Ui4T4DmmIO3+Jecw1/OaA2OYYB9iSHZLmfzO/2DLUN+4VOPqsAAA",
             "spin": "/assets/dishes/garlic-prawn-skewers/spin.webp?v=6f1eae720aff",
             "spinLayout": {
               "frames": 36,
@@ -194,10 +252,13 @@
           "assets": {
             "glb": "/assets/dishes/chicken-fajita-wrap/model.glb?v=dd6a775b6612",
             "glbBytes": 872100,
-            "usdz": "/assets/dishes/chicken-fajita-wrap/model.usdz?v=279238204906",
-            "usdzBytes": 1776446,
-            "poster": "/assets/dishes/chicken-fajita-wrap/poster.webp?v=60c8da0a0fd9",
-            "blur": "data:image/webp;base64,UklGRn4CAABXRUJQVlA4WAoAAAAQAAAAHwAAFwAAQUxQSAsBAAABkLNtmwE77zezx7Z9Kvuc1jH+ATv+BZWq2CVdKttu7aS1k5Iz873Rzm5YR8QE4L/Tyq8Qaw3EpElsQiCo3lIMmwaxAghKxlce+vJwEonUANRMrTr7TKmen5fDSpxB464r70kyOE8fuBpWUuj4QFXng5Jk8NwAIzEw2MwvyuTquAnWxAgqHzJEUB23J8REwGJRHNXxYDZMBGCO0cdQHY+UwEQYjH+ixpBfeCoLkgyC3fRxdLxcDYkZfE9NomTw3nEVbDIYrKf/WdAQqHyxswcSISi/wS9KDZ4u8NXVbb0JxAvG3lPJwIsL1ywbLRSkLGbmnkd0d3e0wwAQkVQgJr93zmSL/BzpFAEAQTwAVlA4IEwBAABQCACdASogABgAPs1UpEunpKOhsBgMAPAZiWwArDM0NVkILsA3jorwPbR9FewBulf6Zh2af6+8tP3gud9n/eY+UN7pbB9ug+22qgAA/sNNlDA2PvWpalas5jONp7WhhbTc2oPNvr7m8JguoFHFUReHaG27KMUzdb0IJoWXpmiYbCQ1ozulsLDlV+LeuSqb29ODS9qYjg9xo8fGEKN+5OoC2PvnehoNB4ZthsuEloKsBaatEjwKyFVRaFVLo6JA89Je0pOc56mpgZ7AXd064Zf/O384S6ZtH/RJ4Y4vvCVUhNPvEvk9/V/MtIa+FVjro+Iy/4mITN2Mt0OPo62tN/bnXIJm6UC8QL6lBoZBGEJCZbeD/KSumwC6w+JdeFNCvz9QVjJVLR9oojDvkkgCUbHTWm4KMobaU05lWj7wyel6DrGNSeZkfr2pdgAAAA==",
+            "usdz": "/assets/dishes/chicken-fajita-wrap/model.usdz?v=7bdfb9a60ff9",
+            "usdzBytes": 1776443,
+            "poster": "/assets/dishes/chicken-fajita-wrap/poster.webp?v=8043bc0dd5d2",
+            "card": "/assets/dishes/chicken-fajita-wrap/card.webp?v=0a1ac2840f6c",
+            "orbit": "45deg 55deg 76%",
+            "target": "-0.0018m -0.0385m 0.0018m",
+            "blur": "data:image/webp;base64,UklGRr4CAABXRUJQVlA4WAoAAAAQAAAAHwAAFwAAQUxQSDoBAAABkKttt2k7/xhz7WPERnXKGF0qO7Wdymaf08W5AfapbVyCbZtjjP947vM8uYCImADkiwq6U5NAkpZLUgJ6jKiEJFWRLEkCDN/7kLfXDIAgdU1VkiBNOv6FEcFXh6eMuDQGpc4EIqhfdMUZZjQj/37gDqhKBwUmjui75yHD/wXb+z8P/3F1HtqpotfTp08ZZuxqMMjr/QFBad5ZGs2Z+895rBqKpqv0CGduGL9srABQXOVfY747r84oBEDTX/sXWWG0/QNUAKDmDJ254Xy2tk7RXjDo6O33GU47Pa5K0bFI9cCjtC6E89O2PoWgcwGW/Pxrnbjz4uQaRZdF07ZvtHbhtOahVYrchB1O8zDnnZU9C5RRa+ZcZDg/7BtZl1DWlIY1v/l6ZUFjhaDMUjRMmT+0oUA3FpWlkuD/C1ZQOCBeAQAAMAgAnQEqIAAYAD7RUqFLqCSjIbAIAQAaCWwArCjN5ANtXNHsw6tPZAOUGzaPTm+a9DP9QB2XbSWjyjbLUuUwa/+vDRj2Su6snUAA/outAaTTHnQE+Z4VVYlx56PBLiaI1z+mxNwbCIjxxFd/S1K9cVu0wYIlXsJYLkSoKQrwe1EY70gwhvpIfXiCWjk7+hMK61xIb8uKdb5kZOhx1nNfQmyyli57xX3sDZ99jPGIs3357tX8dZtpEVlbCNHJvXsCQBHr6uEbqmdGg6kmtATZy3xajl69ZzbeeOYMnC82X/VgnM1kU3nip3G2xwA0/ToChF9M3gCfdoQsSk/uk+fvk689hFzyhv9/cfQoF7bnKAhk1twUQu1Fe4iG518Fk8+WYk6+LHYf9MwGCKHqKb+eZL7nnOggIBK3TRQL8Ay/Zp8/qtc0wlBwGh9Bt/kNbxBzdYvQSw4S2FFLTv2AAAA=",
             "spin": "/assets/dishes/chicken-fajita-wrap/spin.webp?v=160d2bfd9b4b",
             "spinLayout": {
               "frames": 36,
@@ -244,6 +305,55 @@
       "menuTitle": "The Menu",
       "menuSubtitle": "Prices in PKR",
       "showCheffy": false,
+      "roast": true,
+      "shareLinesApproved": false,
+      "shareLines": {
+        "firstLook": [
+          "Open 24/7.|So am I.",
+          "Brewed|for the table.",
+          "One visit,|new habit.",
+          "Seen it in 3D.|Now to taste it."
+        ],
+        "fav": [
+          "My order.|Every time.",
+          "My usual.|No questions.",
+          "Same cup.|Every time.",
+          "Loyal to|this roast."
+        ],
+        "new": [
+          "Never had it.|Seen in 3D.|Now I'm having it.",
+          "New on|my list.",
+          "Trying something|new. Again.",
+          "New order.|Who dis?"
+        ],
+        "streak": [
+          "Back again.|Obviously.",
+          "My second|home.",
+          "Regular,|officially.",
+          "The barista|knows me now."
+        ],
+        "roast": [
+          "Not your|ammi's|chai.",
+          "Ghar ki chai|is shaking.",
+          "Told my sleep|it's 3D.|It doesn't count.",
+          "Sized it up.|It sized me up back.",
+          "POV: 2 AM and|I'm fully functional."
+        ],
+        "sarcastic": [
+          "Sleep is optional.|Coffee isn't.",
+          "It's 3 AM and I'm|calling this|a personality.",
+          "Calories don't|count in 3D.",
+          "I came for one.|I'm leaving with|a personality."
+        ],
+        "goodVibes": [
+          "Good coffee.|Good company.",
+          "Tonight's mood:|sorted.",
+          "Slow sips,|big smiles.",
+          "Warm cup.|Warm people.",
+          "Fresh brew,|fresh start."
+        ],
+        "roastSticker": "Fine. Chai can wait."
+      },
       "categoryNotes": {
         "Specialty Coffee": "Double shots pulled with precision on La Marzocco.",
         "Chillers": "24-hour slow-steeped cold brew, nitro float, and flash-chilled iced creations.",
@@ -609,8 +719,11 @@
             "glbBytes": 953324,
             "usdz": "/assets/dishes/bz-chicken-pizza/model.usdz?v=de7f6fd14a40",
             "usdzBytes": 1781172,
-            "poster": "/assets/dishes/bz-chicken-pizza/poster.webp?v=872feb060e3d",
-            "blur": "data:image/webp;base64,UklGRqACAABXRUJQVlA4WAoAAAAQAAAAHwAAFwAAQUxQSCIBAAANkGNb27E9535+G5XtGJW6P5XtAajKJFKmywDSprJt27ZtP/cVfIzqiJgA/seDlCkLoMCXkCOZKw0LcjngzNx71xCp5yg6VtHTOaD4FCen3H18suHSC1OiYDFS2TevGwGD7e67cdVdfBrjJHYYO7+HX6Mwb/GvhYV3rpHYNGLWiG/gMizXwKS884s/FyQyt6VEj5YTSGrQ9v5wSKQQTwz3nEDqsXj53mWmX4AVM/NFinLl5LotWnPH9Is48mW0h0SOcoP5nX0bHucjEuR8WDmbXx1ysbcXDx58kEOqzuZhNZJCDrw8fejIO8CClEx27VZfzDPdO77zcmkhmElOqqa1E+z2vi0PiwEMF2mKPeeO3A6AAU764sESwMDJtAeBk00n81ZQOCBYAQAAsAgAnQEqIAAYAD7JUKFLp6SjIbf1WADwGQlsALEUgczR5i7AN5lvwDRLdwHcDGBs3KoB0a/IADpnVmj9q08u6u4pPmdDzM/hGAUKLrqAAP6Xybeb8QgHNT0FUw1OwMT8F3BL92wmV+7CVBNsuFtnhB52qJF/XuCqelb8Z5iccPUQY97kUAvHif7rvteItu2eynK+ca+zrddhsfaOaebuiy0j5voRpRTvGDFouKcbwK3Q0bJKAwBMn0mbxmaQx81/SE91uUulSIMnhbsYMgfTE466PI8WzET/kI6N8N1ycobFB0N+5eTH9U8+PIMy92XfKfDC+s1Ipv5zdpXvMW/55mHsaQbv2E2RW5Ooqr//8CkAK/gKw1EyIclNuvs3I0kQa0GgPwqIi2pkWBEzuJfL/1zBDFzXPdGVx5/KVdf6d/gvP5+bf6YDKo4SVhdfWE5fso6DC5aIAAA=",
+            "poster": "/assets/dishes/bz-chicken-pizza/poster.webp?v=59384a076f12",
+            "card": "/assets/dishes/bz-chicken-pizza/card.webp?v=5fbecdc5bd69",
+            "orbit": "40deg 55deg 74%",
+            "target": "-0.0099m -0.0089m 0.0083m",
+            "blur": "data:image/webp;base64,UklGRqgCAABXRUJQVlA4WAoAAAAQAAAAHwAAFwAAQUxQSCQBAAABkCrZtmo7c+31mJlZPQ2OmaJZMaNORaFitCjpC54NuXhOHDNn7TUD51LAR8QE4B+qqiFI1oIG/C6qISsq0MlV2wZ7SgCoZCSKrjWLTvqXOwen2yAa0hJFwb739GjmpPPVwXaIpIXKCzQzkvRo5nx9cgB5IUnQfPgpzZlmNCf3QAsSgHOM3yLT9+/8vu/SNMJv0rTrPt08LdKNvikJgp7DrxktPfo3HoImCfKHrhljTMeNtwEEwe8iqF17091iiujOh3sXOgWptbhr9xNGSzC+/UQ67WxeKiCg99xnRnM3Xp9beuwuI9/2pANB4ZLFyBh5uTWvsKLv1OOPJyDpQALq1t34/vVQJQTIq+4frQ/IUEQbNq8uDPhdBAGZSwh5ityK4P8KVlA4IF4BAABQBwCdASogABgAPtFUokuoJKMhsAgBABoJbACpJxkUhzCO8BTE/GbqCbYAOI3udv8n20pnQSEikQ1QxsZgQ1g2yPaQAP6vjiNYeGZOfc2Hx1CyML3+jDoJsrtM1Bz80Z+BR0IEXqNd0mBOvdwV7PbyGSjDD/FCFuVIVAJYZcUCcP3iQjGucoLkDfFq6Hx0Cki7Tr7deEQ5RM6lCZRHUN73erAxStgGCUrkq/Ru+27ZoI1O8WOWqfN4/Cj7b7CnjHj0o79HS93uRnCdXtkDu3FMRTop4CINeNalnEiaYFaH+uU41oklH03aGt+SQ/9s9GmFswv3Mjczwt//lyn/+yialq76BDRayWNp36p/JSe//vCG+zAvF4yw/4YqbH+i5uWfxoH+4Rh/d2fM9r6Ayi/119mLBP0yyojkkHpYAtQKs7LHYgs66HN5VSx91bPdb9kT9EyQAZ4hRA5x8AAAAA==",
             "spin": "/assets/dishes/bz-chicken-pizza/spin.webp?v=070290298cf5",
             "spinLayout": {
               "frames": 36,
@@ -810,6 +923,56 @@
       "menuTitle": "The Dolci Menu",
       "menuSubtitle": "Prices in PKR",
       "showCheffy": false,
+      "roast": true,
+      "shareLinesApproved": false,
+      "shareLines": {
+        "firstLook": [
+          "It's a|must.",
+          "Indulge, capture,|share, repeat.",
+          "Dessert first.|Obviously.",
+          "First look.|Then first bite.",
+          "Seen it.|Now to taste it."
+        ],
+        "fav": [
+          "My order.|Every time.",
+          "My usual.|No surprises.",
+          "Some things|you just keep|ordering.",
+          "Loyal to|this slice."
+        ],
+        "new": [
+          "Saw it in 3D.|Ordered it|anyway.",
+          "New on|my list.",
+          "Never had it.|Now I'm having it.",
+          "Trying something|new. Again."
+        ],
+        "streak": [
+          "Back again.|Obviously.",
+          "Back again.|No regrets.",
+          "Regular,|officially.",
+          "This table|knows me now."
+        ],
+        "roast": [
+          "Not your|ammi's|aloo anday.",
+          "Ghar ka khana|is shaking.",
+          "POV: dessert arrived before the dessert arrived.",
+          "Told my diet|it's 3D.|It doesn't count.",
+          "Sized it up.|It sized me up back."
+        ],
+        "sarcastic": [
+          "Calories don't|count in 3D.",
+          "I came for one slice.|I'm leaving with|a personality.",
+          "Diet starts Monday.|This is Sunday energy.",
+          "Self-control is|overrated. Dessert|isn't."
+        ],
+        "goodVibes": [
+          "Good company.|Better dessert.",
+          "Tonight's mood:|sorted.",
+          "Small joys,|big slices.",
+          "Sweet people.|Sweeter plates.",
+          "Happy table.|Happy heart."
+        ],
+        "roastSticker": "Dessert > ghar ka khana"
+      },
       "categoryNotes": {
         "Signatures": "Indulge, Capture, Share, Repeat.",
         "Cakes": "Signature milk cakes and cheesecakes, made fresh in-house.",
@@ -873,8 +1036,11 @@
             "glbBytes": 610776,
             "usdz": "/assets/dishes/hd-san-sebastian/model.usdz?v=bdebd21a00dc",
             "usdzBytes": 1613147,
-            "poster": "/assets/dishes/hd-san-sebastian/poster.webp?v=f952a0aa378a",
-            "blur": "data:image/webp;base64,UklGRr4CAABXRUJQVlA4WAoAAAAQAAAAHwAAFwAAQUxQSCwBAAABkCvbtmlbY651bRuR7ftsI7YV27bt7H0DU0c2vuCGz95rzREcXeYRMQEYjo01fSTGhhXASh8Yi7CCul2dsBKDWAHyWkct27lx7ujX/LLWionKGsT13OgNGFYDz/sliJNIBqnbP/wjqS5UqQGfVMFIOIPRT6jqvCojquOPi7mQEIvV1MArY/SO9xIhgEHLZwbsQ/+PJyEQJD2hY5+q1y4Yg9H07OOAi2EtVvSd4w7YOJxl0HdnQjbT9d08WIPqz9S+cXyUCoHYQwy0Lxx/zBEBEFd5k87HpI5/thfEIzS98zap3ms4VXVe+Wl1dTLCmqKuDc89SXrnVRnq785syUNEW9oyee31178Z/l/v48urRtfnIErJqu0ZMWXehiNXz+7bu27x3AkjRlYnISxWUDggbAEAABAJAJ0BKiAAGAA+0VikS6glI6GwCAEAGglsAJ0y43V3s3Fjb3u6ngNtft/98tYQFcCgA9yqYB+oA7NfeA2GuXmGbp9nyw7tBcacULogFITlZAD+mNhQjdaKe0PlGVnkpW75nC5NFaH+8Xmf9TanoaNo3Rav/y1j7c/wEA2J3hfiE9pBgOL+/ECNsPtYhl9msYzuL2G0+g6F9uzBev0ZC5Ow501z5aO4PFPj75B2Oda1NDV7COBA5U3p+pi+MNOQFhFtLivIBSanl0FNeGoE7+9vn43DQCeYz+f5dbE/+St9lj7lhuzRFY62aDuxrIBNxEM7uyjxNxIoJnGzD5Uxcy7X7fNg1b9fN8I30D+Y2LSX/Y+fxePtNzBNdyQWwt3BG/Ns0S53fihpY/UbF2R7e/huNxJZcSXO2OzmWWDKWAF2sy0/JzVR0FByx63werxhyRuTeQXDk782DDHGZ0vkFSLJtpLeWzs2aN3wAAA=",
+            "poster": "/assets/dishes/hd-san-sebastian/poster.webp?v=c83876ad7c56",
+            "card": "/assets/dishes/hd-san-sebastian/card.webp?v=fe529752a356",
+            "orbit": "222deg 55deg 89%",
+            "target": "0.0006m -0.0063m -0.0006m",
+            "blur": "data:image/webp;base64,UklGRt4CAABXRUJQVlA4WAoAAAAQAAAAHwAAFwAAQUxQSHMBAAANkGzbtmk7Y+2Dh9i2bdVsq2yjmpZS8gmq2j+Qmsq2bds6e68VnnNaviAiJoAynVJcnCgOUBHLnFkhUwMFMGPgtY+xqeWrHjq1p7/9vLJF42/nK0cdWesRpzmSrMdmLOnQBKjsg61YePLQ4XeR6d+ib82nkzlMDEAiHTRwbJt1B5zYH+LXzMNSEOQPkABdNqTLbzsFF1a10hCTPxKU8atX3BeLsjGT1EUUd5L1Wr/ok4jNwceUKXE2fNBGBwmlO4YeI9AQKQsavFanpwaalHYZp2wZ1tfHpWjydT9m8m7jyqZBXDEV2VYlAQuXdswdZAoiORRi2/m5EuD7h+d7ms5qa2L6L4lMrm9r2ZC/vv9a4+CR5kO6t3D/8k+vHXs9uK39jRevm7mjJ55UNGpav17tjB/3znxr3re3F/794XFo0ujzzRdP37z5GEvadnAb3n8ht3548bmqXlVlGik/fnz7/D6isH15//G7V8EkonQNPvDfAwBWUDggRAEAADAHAJ0BKiAAGAA+0VSiS6gkoyGwCAEAGglsALEfWJUKLAsnKsAPEEeCEA1ej0kPa7LygRKtrJU7ZATuSm6tQHU9QAC+w7iig+Pqj3xdk2HO3mhCjRCVnqDJfk8juqinCis29h665Cv1+4e1Rj0seWBWNq+V3k+69EGVYlv6aXdO9QPyaVYIn577akKp1X7g9YJCZINK0HUvH3ONFtNuTiOo19vTdi/luc7WjbppqDLKNjRiQCz9mq5xpaCa8nkvUPdCRutb8So3r5hs3+QCJ3sjxDsqfn1hAKT8RRVCo0eu1Nb5BUJCF5N/HgMQCMTuYJDDKI8/te9134UgfHFiBhlLuGE4blY+f70X4BtDX+Dgw09TPv4EjoCem9UnvxlM7f59130fi87QSKifgmoUQiX4S8+FxD7qkifuZ8DHe/hktIAAAA==",
             "spin": "/assets/dishes/hd-san-sebastian/spin.webp?v=18383d34462a",
             "spinLayout": {
               "frames": 36,
@@ -916,8 +1082,11 @@
             "glbBytes": 661252,
             "usdz": "/assets/dishes/hd-matilda-cake/model.usdz?v=2cc06c2ccdfd",
             "usdzBytes": 1687417,
-            "poster": "/assets/dishes/hd-matilda-cake/poster.webp?v=887bdacb64c6",
-            "blur": "data:image/webp;base64,UklGRoACAABXRUJQVlA4WAoAAAAQAAAAHwAAFwAAQUxQSBIBAAABkGrbtrI3+9wTZuZEZ8SSimPmqHhmUikzPkArq5hfgFxdFbeyUWXuvd/dP/+hB4iICcBBKym6OyqAkZ0ziuJTMzCyUyrofUseh8qOqKL2lvfW8hTUJCdGMLpNF9A7HoIYk4RKWuuVwDtP0gc8UweoJKLIuEnvAsZ2/H2nEUbiKRqe0VnP+M7z//kMSCxF7zdaz4S9tXyUDYky6PxDy6T9P16LIch/ScedtByCAoopWu6o43WYqJs7FfBVBkSAZ3Q79SEPAoOHO+X4GAIotmh3xnINCgjqtxnshOOLaggAwRIDl5zj9wkjiDYFl0nnEwscvy8WGsROrdj8yCQ8n0/WpCN+Wmnb1U/08Tw/nG2pyUQ0VlA4IEgBAAAQBwCdASogABgAPtFWpEuoJKOhsAgBABoJYgDKFQAmitGgbOtMA/WYdM51FBeXNpU8WwOPRf31R4PVCICDl5cuAAD+93mX/oijJa8ox6mkf/HiSBLVCJ6R/CSXiPIM62VA89aY/XX+/meTPHWgWUQc06jth1fpVjjqpst/Js/G4a9eZJ2rmZciP7dEuBuvK4uKB8umCtmSDEAo2mmL4vyw7aE8uQW4PFOnOS86DO9Of/f4b9+Cy+fd/x+S6KtuT2NVzjmcb1WidBPF4o+vjI5TX8r3Kqu3PIguj50U73q9/Jz2JlPpuXOowBnZd3hONKuqd+QR1F0PPuSQTFrTdnr8hjCr27hbH89/NM/PobpzSdcCSIEJl3VPG1xoQXf6/Nt6XAf1Z7rYCm+mHbFXlUjoX7AJcEU/4byR0Is5y07bttzaZ+mMvXAA",
+            "poster": "/assets/dishes/hd-matilda-cake/poster.webp?v=734fda3c38f7",
+            "card": "/assets/dishes/hd-matilda-cake/card.webp?v=98d22339ee7c",
+            "orbit": "95deg 55deg 85%",
+            "target": "0.0001m 0.0132m 0.0007m",
+            "blur": "data:image/webp;base64,UklGRrwCAABXRUJQVlA4WAoAAAAQAAAAHwAAFwAAQUxQSFsBAAABkGxtmyFJX0S0be3cY9u2bVs7z9K2PXMDxta2zaXNjIhvkZw7iIgJgKeKESImRgmk5UFIRB835tm31WlQIoxAuz0nTx6cPPomreWDFlAimEQT0tJtjHXoTEQIhY78q7WjtSZJza9bE6UKIlH0joYBrWFtSCH9EIPz1EFo7YWpdRIgfSSSLtIEcjv3e0B5SDS4T8uQWht+bA4JQKLeRxqGtw4/N4SEgDjNf4zU4a0kCIUONIzY4RCoGCyijkpzo2vh/1gJpdCBJro+UAJpt6ij0byTBQGBUcaaCKzmv9FCAFC5SzS1CWG04Zf5eQrupPJZr2itNsa6jdaGdK6NKEmCd3qVbjveMqjl12NT21Smwj+lpE632Ycevfvz75f58fTyqTVDm9cvSURQmVlWp1GnASNGDhszrHvrJo3qlKYLhJQpBaVVazdoWK9u7WrFuQmIVsUnJyclxAgEBgBWUDggOgEAANAGAJ0BKiAAGAA+0VqmTSglI6IwGAgBABoJYgCo9ywYeJmz0APJuDCzeWvCBx2HvXC/r0kovHInN6UeB0OMAADFyQcuNEMS/df4LT8jZ5MoewvEP0LV4DLGTQ46RD5IjsNvWermpnN57XHDcf6byrcrO2/EGjpcgHrzTyy9nwwtJIjHCUUt6VkjXxY4aXWuIUrNmLlbQO9R5obmebyrsR5ndh0qo4ZtdK76JwEVfxoC1luGrV/Z9skku8wHBq4yELdfwwQuqTmN/6s8gwNA6quA9KlY38rFNWJ5vP8iwRD8IGvSyKTbPUAba/zxI2pSN+2r/Vc4l/zCOnn8vmBiz1SRJmgulKXNdIwcWBnsh16nFZKYkH31kcGBqnKZgQ4zkxCodbH4eL8kNFf3t6ywW+H8IjixsMbhTAAA",
             "spin": "/assets/dishes/hd-matilda-cake/spin.webp?v=f209e575524a",
             "spinLayout": {
               "frames": 36,
@@ -959,8 +1128,11 @@
             "glbBytes": 724580,
             "usdz": "/assets/dishes/hd-cookie-dough/model.usdz?v=93331b1cf67d",
             "usdzBytes": 1728773,
-            "poster": "/assets/dishes/hd-cookie-dough/poster.webp?v=93fb14e3a5cd",
-            "blur": "data:image/webp;base64,UklGRoYCAABXRUJQVlA4WAoAAAAQAAAAHwAAFwAAQUxQSBYBAAABkGvb1rE9+znPb9vs/j+2jcp2pS59LoClWyeV3dlmZdvmgx2eN7qAiJgA/FettWL+gBEAMFZ+k7FG2o3q2pgKY36LCHJXMvLt2QWNsL9BUDTjKL0PDLxYAptI0P4qg49kDI5XW8ImMKi5xi+BP/c8WQWrE6znFyo973aDVVmsodfQ8VYTRDeYQUXPp61hFQalRxlUdNxljPkVjEz9wqii4zJoYCtXMOjouRBGgayulxh00XE0rEIyZieh4wIVTIdHjElmJkhfTqeK/NQRooHtfoNeEb9wbzr0UjThMV34SfSBL4bA6JBaMuYqY/TeB/Lz7jFFgqSphb03vWZk5Ktt01qWpiK5ZNcOmLXu4LY5w5oqcwU/BVZQOCBKAQAAcAcAnQEqIAAYAD7RXKNNKCUjIjAYCAEAGglqALbo2bABvE5XrG1/6a9gAKSuZmbpZEx2AUmWw9eOxGSswtXDmWUys4AA+dedcn4Z8TsdOK4XqkMXwOyCm+ylvgeXb8YOEbn+RxkBK54dvwQm5LrRewn9NqRci6jUp2ZfRn/c8QI+9VSAmIqYTvkRhPSjbr8N2/h6yPsbsPOUe43Z8DbC4jAGfSrWfUnYLdXX9JHg61DENMFWs410Dcnh9a30d/dAu8aclofZxyqAEGNV5O44ftNKP4f8v4Gq0XU7cFn44RsVUyMgRdjEEFQVNZ6JdwZFzQFvM20vXkU83Tz56YRlhyKL/9GPztoIWS13w/1CO4cgeW4ahFsqfmWtlLCsbFQRSuGV7g7fNE8HyA7qOnC5pILRGtbd9LcM2mBN2SpS1phRQ9WoLt+QAAAA",
+            "poster": "/assets/dishes/hd-cookie-dough/poster.webp?v=507deb87d45a",
+            "card": "/assets/dishes/hd-cookie-dough/card.webp?v=99d63a78fbac",
+            "orbit": "45deg 55deg 80%",
+            "target": "-0.0048m -0.0047m 0.0048m",
+            "blur": "data:image/webp;base64,UklGRq4CAABXRUJQVlA4WAoAAAAQAAAAHwAAFwAAQUxQSEcBAAABkHPbtrG9C9rn3s+2v9i2bbM2qq/KyB9wylQp2aeync5mZdTGc8/ZH5/7BhExAYgU55zznTpBBr0gtYtzKOw+YNyEmdMXLV41e0w1JEKysO5lYuzc+Hk7JI14j/E/aDQzU1Uz5Rr4LrwXyLLXTIwpE97IgnRwAlS23FQzpg882IlDweoD70lVRipflQPwGHaPxhCMkabcAgdB/TP+TpTR9pvHHCCovceEGVTlk3kVQBa28zfjLfDL4YXdsgDgKjXOAl+3DO+bDwB1n2lRqrwwv0eFQ8ec+wwRFoxHhtdmoVOP9VRNpcb3e0dUCbp0lfvUQlem/LB/0YAqQcqyvts+UINqCEGNF5cPai5A+rJeS88ZOxo/7R3Xu0wQW9Rt5NbTz57fvHx05/L+NVnIYFZVc7+xk0YNHdKvuQgZ9nn5BSUlhTmC/y4AVlA4IEABAADwBgCdASogABgAPtFWpEuoJKOhsAgBABoJbACpABE1+C9AdmDaRvR/Zht2dEkVVprNRUGT7RVheXSXv/08erQAAP5SFgeMTmbX9mGP1A0NqH5rNl3I80hPczO830KSI+9k9oNV/pEICK7CRmBdZL4aPXqRIwDVuyLhA00k3Q0Grz+jA0+UGhnJ0HC3y+hLxdyNawcrRFteysuUzCj6CZksCnvkAyTBpRuEY32eeqPrPInA5ZhdOQXtfjKp75nNg7/OLihw8x8Ej+C3qHbcmXzXDCbJc7C6oHhWEH6glCrgNAkdTlV41PP00aZXvUqJNcQVv3KnCc9sVFcVb+tRu577jqimuNoZD2O+A7viZoV3mVhYHNZ/F3NHB+/VgjMTgLe7YEG9+P31l/sPQwBEVZX8yTP+b/HR5e+e46+AVxgAAA==",
             "spin": "/assets/dishes/hd-cookie-dough/spin.webp?v=34406ef14de2",
             "spinLayout": {
               "frames": 36,

@@ -1,5 +1,5 @@
 // Phase 2 asset pipeline: incoming-models/ → assets/dishes/<id>/
-//   model.glb  model.usdz  poster.webp  poster-blur.webp  spin.webp  meta.json
+//   model.glb  model.usdz  poster.webp  poster-blur.webp  card.webp  spin.webp  meta.json
 //
 // Idempotent: a dish is skipped when its sources, CSV scale and this tooling are unchanged
 // (use --force to rebuild). Never writes to incoming-models/.
@@ -28,13 +28,29 @@ const FORCE = args.includes('--force');
 const ONLY = args.find((a) => a.startsWith('--only='))?.slice(7);
 
 // Budgets (CLAUDE.md Phase 2 §8) — hard fail if exceeded.
-const BUDGET = { glb: 1.2 * 1024 * 1024, glbTarget: 800 * 1024, usdz: 1.8 * 1024 * 1024, poster: 80 * 1024, spin: 300 * 1024 };
+const BUDGET = { glb: 1.2 * 1024 * 1024, glbTarget: 800 * 1024, usdz: 1.8 * 1024 * 1024, poster: 80 * 1024, card: 120 * 1024, spin: 300 * 1024 };
 const TRI_LIMIT = 40_000;
 const FLAT_ROUGHNESS = 0.85;
 const FIXED_ROUGHNESS = 0.6;
 const AO_STRENGTH = 0.6; // how strongly AO darkens the albedo when baked in (1 = plain multiply)
-const POSTER_ORBIT = '-25deg 55deg 85%'; // three-quarter, looking down — must match the dish sheet camera in js/app.js
+const POSTER_ORBIT = '-25deg 55deg 85%'; // default camera; a dish can set its own `orbit` (+ `target`) in data/model-sources.json. js/app.js starts the live 3D on the same camera.
 const SPIN_PHI = '60deg';
+
+// Crop a transparent render to its visible content (alpha > 16) plus a margin (fraction of the longer side).
+async function trimToContent(png, margin) {
+  const { data, info } = await sharp(png).ensureAlpha().raw().toBuffer({ resolveWithObject: true });
+  let x0 = info.width, x1 = -1, y0 = info.height, y1 = -1;
+  for (let y = 0; y < info.height; y++) for (let x = 0; x < info.width; x++) if (data[(y * info.width + x) * 4 + 3] > 16) { if (x < x0) x0 = x; if (x > x1) x1 = x; if (y < y0) y0 = y; if (y > y1) y1 = y; }
+  if (x1 < 0) return { png, clipped: false };
+  const clipped = x0 <= 0 || y0 <= 0 || x1 >= info.width - 1 || y1 >= info.height - 1;
+  const pad = Math.round(Math.max(x1 - x0, y1 - y0) * margin);
+  const cropped = await sharp(png).extract({ left: x0, top: y0, width: x1 - x0 + 1, height: y1 - y0 + 1 }).toBuffer();
+  return { png: await sharp(cropped).extend({ top: pad, bottom: pad, left: pad, right: pad, background: { r: 0, g: 0, b: 0, alpha: 0 } }).png().toBuffer(), clipped };
+}
+
+// Share-card cut-out: the dish's own view, pulled back 15% so nothing is clipped (the render is then trimmed to the dish).
+const scaleRadius = (orbit, k) => orbit.replace(/(\d+(?:\.\d+)?)%\s*$/, (_, n) => `${Math.round(+n * k)}%`);
+const widerOrbit = (orbit) => scaleRadius(orbit, 1.15);
 
 const kb = (n) => `${(n / 1024).toFixed(0)} KB`;
 const size = (n) => (n >= 1024 * 1024 ? `${(n / 1024 / 1024).toFixed(2)} MB` : kb(n));
@@ -286,6 +302,8 @@ async function processDish(row, io, getRenderer) {
   const warnings = [];
   const t0 = Date.now();
   const step = (name) => process.stdout.write(`${name} ${((Date.now() - t0) / 1000).toFixed(0)}s · `);
+  const orbit = sources[id]?.orbit ?? POSTER_ORBIT;
+  const target = sources[id]?.target ?? null;
   const { doc, maps, hasRoughnessMap } = src.glb ? await loadGLB(io, src.glb) : await loadUSDZ(src.usdz);
   if (!maps.albedo) throw new Error('no base colour texture found');
   const scale = await normalise(doc, plate, warnings);
@@ -354,10 +372,21 @@ async function processDish(row, io, getRenderer) {
   // Poster: real photo when we have one, otherwise a render.
   let posterSrc;
   if (src.photo) posterSrc = await sharp(src.photo).resize(1200, 900, { fit: 'cover' }).png().toBuffer();
-  else posterSrc = await renderer.poster(path.join(dir, 'model.glb'), POSTER_ORBIT);
+  else posterSrc = await renderer.poster(path.join(dir, 'model.glb'), orbit, target);
   step('poster');
   const poster = await fitWebp(posterSrc, BUDGET.poster);
   const blur = await sharp(posterSrc).resize(32).webp({ quality: 50 }).toBuffer();
+  // Card: transparent cut-out of the same view, wider frame, trimmed to the dish plus a 4% margin. Used by the share card.
+  // (Without model-viewer's ground shadow the framing is tighter than the poster's, so pull back further until the dish clears the frame.)
+  let cardOrbit = widerOrbit(orbit), cardShot;
+  for (let tries = 0; tries < 8; tries++) {
+    cardShot = await trimToContent(await renderer.card(path.join(dir, 'model.glb'), cardOrbit, target), 0.03);
+    if (!cardShot.clipped) break;
+    cardOrbit = scaleRadius(cardOrbit, 1.08);
+  }
+  const cardSrc = cardShot.png;
+  if (cardShot.clipped) warnings.push('card.webp: the dish still touches the render frame — check `orbit` in data/model-sources.json.');
+  const card = await fitWebp(cardSrc, BUDGET.card);
   const spin = await fitWebp(await renderer.spin(path.join(dir, 'model.glb'), SPIN_PHI), BUDGET.spin, [70, 60, 50, 45, 40, 35, 30, 25]);
 
   step('spin');
@@ -379,7 +408,7 @@ async function processDish(row, io, getRenderer) {
   }
 
   step('usdz');
-  const out = { 'model.glb': glb, 'poster.webp': poster.buffer, 'poster-blur.webp': blur, 'spin.webp': spin.buffer };
+  const out = { 'model.glb': glb, 'poster.webp': poster.buffer, 'poster-blur.webp': blur, 'card.webp': card.buffer, 'spin.webp': spin.buffer };
   if (usdz) out['model.usdz'] = usdz;
   for (const [name, buf] of Object.entries(out)) fs.writeFileSync(path.join(dir, name), buf);
 
@@ -388,6 +417,7 @@ async function processDish(row, io, getRenderer) {
   if (glb.length > BUDGET.glb) over.push(`GLB ${size(glb.length)} > ${size(BUDGET.glb)}`);
   if (usdz && usdz.length > BUDGET.usdz) over.push(`USDZ ${size(usdz.length)} > ${size(BUDGET.usdz)}`);
   if (poster.buffer.length > BUDGET.poster) over.push(`poster ${size(poster.buffer.length)} > ${size(BUDGET.poster)}`);
+  if (card.buffer.length > BUDGET.card) over.push(`card ${size(card.buffer.length)} > ${size(BUDGET.card)}`);
   if (spin.buffer.length > BUDGET.spin) over.push(`sprite ${size(spin.buffer.length)} > ${size(BUDGET.spin)}`);
 
   const final = dims(doc);
@@ -402,8 +432,11 @@ async function processDish(row, io, getRenderer) {
     vertices: verts,
     textures: { albedo: `${used.albedo}px jpeg q${used.aq}${maps.ao ? ' (AO baked)' : ''}`, normal: used.normal ? `${used.normal}px jpeg q${used.nq}` : null },
     roughness: +material.getRoughnessFactor().toFixed(2),
+    orbit,
+    target,
     poster: src.photo ? 'photo' : 'render',
     posterQuality: poster.quality,
+    card: { quality: card.quality },
     spin: { frames: 36, frameWidth: 480, frameHeight: 360, columns: 6, rows: 6, quality: spin.quality },
     usdz: usdz ? 'model.usdz' : null,
     usdzTextures: usdz ? { size: usdzInfo.maxTextureSize, quality: usdzInfo.quality, normalMap: usdzInfo.normalMap } : null,
@@ -440,14 +473,14 @@ if (renderer) {
 }
 
 // Before/after table
-console.log('\n| Dish | Before | GLB | USDZ | Poster | Sprite | Tris | Size (cm W×H×D) | Status |');
-console.log('|---|---:|---:|---:|---:|---:|---:|---|---|');
+console.log('\n| Dish | Before | GLB | USDZ | Poster | Card | Sprite | Tris | Size (cm W×H×D) | Status |');
+console.log('|---|---:|---:|---:|---:|---:|---:|---:|---|---|');
 for (const r of results) {
   const m = r.meta;
-  if (!m) { console.log(`| ${r.id} | | | | | | | | ${r.status} |`); continue; }
+  if (!m) { console.log(`| ${r.id} | | | | | | | | | ${r.status} |`); continue; }
   const f = (n) => (m.files[n] ? size(m.files[n].bytes) : '—');
   const d = m.dimensions_cm;
-  console.log(`| ${r.id} | ${size(Object.values(m.before)[0])} | ${f('model.glb')} | ${f('model.usdz')} | ${f('poster.webp')} | ${f('spin.webp')} | ${m.triangles.toLocaleString()} | ${d.width} × ${d.height} × ${d.depth} | ${r.status} |`);
+  console.log(`| ${r.id} | ${size(Object.values(m.before)[0])} | ${f('model.glb')} | ${f('model.usdz')} | ${f('poster.webp')} | ${f('card.webp')} | ${f('spin.webp')} | ${m.triangles.toLocaleString()} | ${d.width} × ${d.height} × ${d.depth} | ${r.status} |`);
 }
 for (const r of results) {
   const lines = [...(r.meta?.warnings ?? []), ...(r.meta?.budgetErrors ?? []).map((e) => `BUDGET: ${e}`), ...(r.error ? [r.error] : [])];

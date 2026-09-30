@@ -1,36 +1,69 @@
 {
-  "_readme": "Which folder in incoming-models/ is the 3D source for each dish id. Dishes not listed use the folder with the same name. Read by the Phase 2 pipeline.",
+  "_readme": "Which folder in incoming-models/ is the 3D source for each dish id. Dishes not listed use the folder with the same name. Read by the Phase 2 pipeline. orbit/target: the dish sheet camera (camera-orbit + camera-target) that poster.webp and card.webp are rendered with and that the live 3D starts on; chosen by eye and centred in the 4:3 frame (scripts/pipeline.mjs, js/app.js).",
   "steak-main": {
     "source": "tomahawk-steak",
     "decided": "2026-09-23",
-    "why": "The 'tomahawk-steak' scan is the same geometry as the old ribeye model (100% vertex match) with 2048px textures instead of 512px. Owner confirmed it is the Premium Ribeye Steak; tomahawk removed from dishes.csv until it has its own scan."
+    "why": "The 'tomahawk-steak' scan is the same geometry as the old ribeye model (100% vertex match) with 2048px textures instead of 512px. Owner confirmed it is the Premium Ribeye Steak; tomahawk removed from dishes.csv until it has its own scan.",
+    "orbit": "50deg 55deg 82%",
+    "target": "-0.0050m -0.0193m 0.0060m",
+    "orbitNote": "Three-quarter: the steak in the middle of the board, nothing cropped."
   },
   "bz-chicken-pizza": {
     "source": "bz-chicken-pizza",
     "unlit": true,
     "placeholder": true,
     "decided": "2026-09-25",
-    "why": "Pitch placeholder: an AI-generated model (Tripo) of Baraza's chicken pizza, supplied by the owner as pizza+3d+model+baraza.usdz (72 MB, 1.95M triangles). Pre-processed with scripts/prep-usdz.mjs to 40k triangles. Replace with the real scan after the pitch."
+    "why": "Pitch placeholder: an AI-generated model (Tripo) of Baraza's chicken pizza, supplied by the owner as pizza+3d+model+baraza.usdz (72 MB, 1.95M triangles). Pre-processed with scripts/prep-usdz.mjs to 40k triangles. Replace with the real scan after the pitch.",
+    "orbit": "40deg 55deg 74%",
+    "target": "-0.0099m -0.0089m 0.0083m",
+    "orbitNote": "Pizza and dipping sauce, three-quarter."
   },
   "hd-san-sebastian": {
     "source": "hd-san-sebastian",
     "unlit": false,
     "roughness": 0.8,
     "decided": "2026-09-30",
-    "why": "Real Apple Object Capture scan (Sab sabastein.zip). OBJ + 2K colour/normal/AO → scripts/prep-obj.mjs --grade 'sat=1.06,contrast=1.06,sharpen=0.6,warm=3'. Roughness 0.8: soft sheen on cream and sauce, not plastic."
+    "why": "Real Apple Object Capture scan (Sab sabastein.zip). OBJ + 2K colour/normal/AO → scripts/prep-obj.mjs --grade 'sat=1.06,contrast=1.06,sharpen=0.6,warm=3'. Roughness 0.8: soft sheen on cream and sauce, not plastic.",
+    "orbit": "222deg 55deg 89%",
+    "target": "0.0006m -0.0063m -0.0006m",
+    "orbitNote": "Burnt, caramelised side of the slice toward the camera."
   },
   "hd-cookie-dough": {
     "source": "hd-cookie-dough",
     "unlit": false,
     "roughness": 0.8,
     "decided": "2026-09-30",
-    "why": "Real Apple Object Capture scan (Cookie dough.zip). prep-obj --grade 'shadows=0.85,warmShadows=4,sat=1.06,contrast=1.06,sharpen=0.6'."
+    "why": "Real Apple Object Capture scan (Cookie dough.zip). prep-obj --grade 'shadows=0.85,warmShadows=4,sat=1.06,contrast=1.06,sharpen=0.6'.",
+    "orbit": "45deg 55deg 80%",
+    "target": "-0.0048m -0.0047m 0.0048m",
+    "orbitNote": "Three-quarter view: cookie, ice cream and sauce all visible."
   },
   "hd-matilda-cake": {
     "source": "hd-matilda-cake",
     "unlit": false,
     "roughness": 0.8,
     "decided": "2026-09-30",
-    "why": "Real Apple Object Capture scan (Matilda.zip). Repairs: the chocolate top was crushed to near-black → shadow lift (--grade 'shadows=0.72,warmShadows=10,sat=1.06,contrast=1.04,sharpen=0.7'); a see-through tear in the foil wrap's back corner, just under the rim → closed with prep-obj --patch (ring mapped by picking a render at '-25deg 55deg 30%'; ring saved as incoming-models/hd-matilda-cake/tear-ring.json)."
+    "why": "Real Apple Object Capture scan (Matilda.zip). Repairs: the chocolate top was crushed to near-black → shadow lift (--grade 'shadows=0.72,warmShadows=10,sat=1.06,contrast=1.04,sharpen=0.7'); a see-through tear in the foil wrap's back corner, just under the rim → closed with prep-obj --patch (ring mapped by picking a render at '-25deg 55deg 30%'; ring saved as incoming-models/hd-matilda-cake/tear-ring.json).",
+    "orbit": "95deg 55deg 85%",
+    "target": "0.0001m 0.0132m 0.0007m",
+    "orbitNote": "HD HAUTE|DOLCI imprint on the foil wrap faces the camera, cup behind it."
+  },
+  "steak-sandwich": {
+    "source": "steak-sandwich",
+    "orbit": "50deg 55deg 68%",
+    "target": "-0.0184m 0.0074m 0.0220m",
+    "orbitNote": "Three-quarter across the four sandwiches."
+  },
+  "garlic-prawn-skewers": {
+    "source": "garlic-prawn-skewers",
+    "orbit": "340deg 55deg 59%",
+    "target": "-0.0161m 0.0147m -0.0059m",
+    "orbitNote": "Front three-quarter on the unbroken side of the plate."
+  },
+  "chicken-fajita-wrap": {
+    "source": "chicken-fajita-wrap",
+    "orbit": "45deg 55deg 76%",
+    "target": "-0.0018m -0.0385m 0.0018m",
+    "orbitNote": "Three wraps in a row, board logo visible."
   }
 }

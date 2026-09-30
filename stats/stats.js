@@ -46,11 +46,11 @@
     syncRestaurantOptions(data.restaurants);
     $('meta').textContent = `Last ${data.range_days} days · ${restaurant || 'all restaurants'} · ${data.batches} batches · updated ${new Date(data.generated).toLocaleString()}`;
     table($('by-day'),
-      ['Day', 'Sessions', 'Scans', 'Dish opens', 'Median load', 'Load failures', 'Tiers 1/2/3/4/5', 'AR launches', 'AR launch rate', 'Median tap → placed', 'Added to table', 'Waiter views'],
-      data.days.map((d) => [d.day, d.sessions, d.scans, d.dish_opens, secs(d.median_load_ms), fmt(d.failure_rate_pct, '%'), tiers(d.tiers), d.ar_launches, fmt(d.ar_launch_rate_pct, '%'), secs(d.median_tap_to_placed_ms), d.tray_adds, d.waiter_views]));
+      ['Day', 'Sessions', 'Scans', 'Dish opens', 'Median load', 'Load failures', 'Tiers 1/2/3/4/5', 'AR launches', 'AR launch rate', 'Median tap → placed', 'Added to table', 'Waiter views', 'Cards shared'],
+      data.days.map((d) => [d.day, d.sessions, d.scans, d.dish_opens, secs(d.median_load_ms), fmt(d.failure_rate_pct, '%'), tiers(d.tiers), d.ar_launches, fmt(d.ar_launch_rate_pct, '%'), secs(d.median_tap_to_placed_ms), d.tray_adds, d.waiter_views, d.cards_shared]));
     table($('by-dish'),
-      ['Dish', 'Opens', 'Median load', 'Load failures', 'Tiers 1/2/3/4/5', 'AR launches', 'AR launch rate', 'Median tap → placed', 'Added to table'],
-      data.dishes.map((d) => [d.dish, d.opens, secs(d.median_load_ms), fmt(d.failure_rate_pct, '%'), tiers(d.tiers), d.ar_launches, fmt(d.ar_launch_rate_pct, '%'), secs(d.median_tap_to_placed_ms), d.tray_adds]));
+      ['Dish', 'Opens', 'Median load', 'Load failures', 'Tiers 1/2/3/4/5', 'AR launches', 'AR launch rate', 'Median tap → placed', 'Added to table', 'Cards shared'],
+      data.dishes.map((d) => [d.dish, d.opens, secs(d.median_load_ms), fmt(d.failure_rate_pct, '%'), tiers(d.tiers), d.ar_launches, fmt(d.ar_launch_rate_pct, '%'), secs(d.median_tap_to_placed_ms), d.tray_adds, d.cards_shared]));
   }
 
   $('days').addEventListener('change', load);

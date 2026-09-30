@@ -11,8 +11,8 @@ function lastDays(n) {
   return Array.from({ length: n }, (_, i) => fmt.format(new Date(Date.now() - i * 86_400_000)));
 }
 
-const CSV_COLUMNS = ['day', 'sessions', 'scans', 'dish_opens', 'median_load_ms', 'failure_rate_pct', 'tier_1', 'tier_2', 'tier_3', 'tier_4', 'tier_5', 'ar_launches', 'ar_launch_rate_pct', 'median_tap_to_placed_ms', 'tray_adds', 'waiter_views'];
-const DISH_COLUMNS = ['dish', 'opens', 'median_load_ms', 'failure_rate_pct', 'tier_1', 'tier_2', 'tier_3', 'tier_4', 'tier_5', 'ar_launches', 'ar_launch_rate_pct', 'median_tap_to_placed_ms', 'tray_adds'];
+const CSV_COLUMNS = ['day', 'sessions', 'scans', 'dish_opens', 'median_load_ms', 'failure_rate_pct', 'tier_1', 'tier_2', 'tier_3', 'tier_4', 'tier_5', 'ar_launches', 'ar_launch_rate_pct', 'median_tap_to_placed_ms', 'tray_adds', 'waiter_views', 'cards_opened', 'cards_shared'];
+const DISH_COLUMNS = ['dish', 'opens', 'median_load_ms', 'failure_rate_pct', 'tier_1', 'tier_2', 'tier_3', 'tier_4', 'tier_5', 'ar_launches', 'ar_launch_rate_pct', 'median_tap_to_placed_ms', 'tray_adds', 'cards_opened', 'cards_shared'];
 const cell = (v) => (v == null ? '' : /[",\n]/.test(String(v)) ? `"${String(v).replace(/"/g, '""')}"` : String(v));
 const rows = (items, cols) => items.map((o) => cols.map((c) => cell(c.startsWith('tier_') ? o.tiers[c.slice(5)] || 0 : o[c])).join(','));
 

@@ -48,8 +48,12 @@
     };
 
     // Render one view as a PNG data URL. orbit like "30deg 55deg auto".
-    window.shoot = async (orbit) => {
+    // target (optional) like "0m 0.01m 0m" moves the camera's aim point so the dish sits centred in frame.
+    // shadow: false drops model-viewer's baked ground shadow (the share card draws its own).
+    window.shoot = async (orbit, target, shadow = true) => {
+      mv.shadowIntensity = shadow ? 1 : 0;
       mv.cameraOrbit = orbit;
+      mv.cameraTarget = target || 'auto auto auto';
       mv.fieldOfView = 'auto';
       mv.jumpCameraToGoal();
       await frame();

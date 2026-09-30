@@ -5,7 +5,7 @@
     "model": "chicken-fajita-wrap/chicken-fajita-wrap.usdz",
     "photo": null
   },
-  "sourceHash": "99f6ad1d30ab",
+  "sourceHash": "71cfa63eb78b",
   "audit": "amber",
   "dimensions_cm": {
     "width": 29.1,
@@ -20,8 +20,13 @@
     "normal": "1024px jpeg q85"
   },
   "roughness": 0.6,
+  "orbit": "45deg 55deg 76%",
+  "target": "-0.0018m -0.0385m 0.0018m",
   "poster": "render",
   "posterQuality": 82,
+  "card": {
+    "quality": 82
+  },
   "spin": {
     "frames": 36,
     "frameWidth": 480,
@@ -42,20 +47,24 @@
       "hash": "dd6a775b6612"
     },
     "poster.webp": {
-      "bytes": 48528,
-      "hash": "60c8da0a0fd9"
+      "bytes": 61526,
+      "hash": "8043bc0dd5d2"
     },
     "poster-blur.webp": {
-      "bytes": 646,
-      "hash": "2608752dd7d1"
+      "bytes": 710,
+      "hash": "a910ffe3c5f3"
+    },
+    "card.webp": {
+      "bytes": 43624,
+      "hash": "0a1ac2840f6c"
     },
     "spin.webp": {
       "bytes": 292068,
       "hash": "160d2bfd9b4b"
     },
     "model.usdz": {
-      "bytes": 1776446,
-      "hash": "279238204906"
+      "bytes": 1776443,
+      "hash": "7bdfb9a60ff9"
     }
   },
   "before": {

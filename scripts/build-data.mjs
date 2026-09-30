@@ -1,6 +1,6 @@
 // Builds data/build/dishes.json from:
 //   data/dishes.csv                 (source of truth, filled by each restaurant, one row per dish)
-//   data/restaurants/<id>.json      (restaurant identity + loader copy)
+//   data/restaurants/<id>.json      (restaurant identity, loader copy, share-card lines; passed through as-is)
 //   assets/dishes/<id>/meta.json    (pipeline output)
 //
 // Never invents food data: empty / TO_CONFIRM fields become null or "unconfirmed" and the
@@ -134,6 +134,9 @@ function dish(row, restaurantId) {
         usdz: meta.usdz ? url('model.usdz') : null,
         usdzBytes: meta.usdz ? meta.files['model.usdz'].bytes : null, // iPhone "preparing AR" progress
         poster: url('poster.webp'),
+        card: url('card.webp'), // transparent cut-out for the share card (js/sharecard.js)
+        orbit: meta.orbit || '-25deg 55deg 85%', // the camera the poster was shot with; the live 3D starts on it
+        target: meta.target || null,
         blur: `data:image/webp;base64,${fs.readFileSync(blurFile).toString('base64')}`,
         spin: url('spin.webp'),
         spinLayout: meta.spin,

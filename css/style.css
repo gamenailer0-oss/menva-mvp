@@ -1366,3 +1366,78 @@ html.js-motion .menu-heading.is-in {
 
 /* Unpriced rows: a short, quiet line; the dish sheet carries the full "please confirm" wording */
 .dish-line .price-ask { color: var(--muted); font-size: var(--text-sm); white-space: nowrap; }
+
+/* ═══ Table Card (js/sharecard.js): the pill on the dish sheet + the share sheet ═══ */
+.share-pill {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  gap: 10px;
+  width: 100%;
+  min-height: 48px;
+  padding: 10px 20px;
+  background: transparent;
+  color: var(--accent);
+  border: 1.5px solid var(--accent);
+  border-radius: var(--radius-pill);
+  font-size: var(--text-sm);
+  font-weight: 600;
+  animation: ar-ready 350ms var(--ease) both;
+  transition: background var(--ease-fast), color var(--ease-fast), transform var(--dur-fast) var(--ease-out);
+}
+.share-pill[hidden] { display: none; }
+.share-pill svg { width: 18px; height: 18px; flex: none; }
+.share-pill:hover { background: var(--accent); color: var(--accent-ink); }
+.share-pill:active { transform: scale(0.97); }
+.share-pill.is-nudge { animation: share-nudge 900ms var(--ease-out) 2; }
+@keyframes share-nudge { 0%, 100% { box-shadow: 0 0 0 0 transparent; } 40% { box-shadow: 0 0 0 7px color-mix(in srgb, var(--accent) 24%, transparent); } }
+@media (prefers-reduced-motion: reduce) { .share-pill, .share-pill.is-nudge { animation: none; } }
+
+@media (min-width: 769px) { dialog.share-dialog { max-width: 460px; } }
+@media (max-width: 768px) { dialog.share-dialog { height: auto; max-height: 96svh; } }
+.share-body { padding: 28px 20px 24px; display: grid; gap: 14px; justify-items: center; }
+.share-title { font-size: var(--text-xl, 28px); text-align: center; margin: 0; color: var(--ink); }
+.share-preview {
+  position: relative;
+  width: min(100%, calc(50svh * 9 / 16));
+  aspect-ratio: 9 / 16;
+  border-radius: 14px;
+  overflow: hidden;
+  background: var(--surface-2);
+  box-shadow: var(--shadow-lg);
+}
+.share-img { display: block; width: 100%; height: 100%; object-fit: cover; }
+.share-img[hidden] { display: none; }
+.share-loading {
+  position: absolute; inset: 0; display: grid; place-items: center; padding: 20px;
+  text-align: center; font-size: var(--text-sm); color: var(--muted);
+}
+.share-preview[data-state="ready"] .share-loading { display: none; }
+.share-preview[data-state="loading"] .share-img { opacity: 0.35; }
+.share-chips {
+  display: flex; gap: 8px; width: 100%; overflow-x: auto; padding: 2px 2px 6px;
+  scrollbar-width: none; scroll-snap-type: x proximity;
+}
+.share-chips::-webkit-scrollbar { display: none; }
+.share-chip {
+  flex: none; min-height: 44px; padding: 0 16px; scroll-snap-align: start;
+  border: 1px solid var(--line); border-radius: var(--radius-pill);
+  background: var(--surface); color: var(--ink);
+  font-size: var(--text-sm); font-weight: 500; white-space: nowrap;
+  transition: background var(--ease-fast), color var(--ease-fast), border-color var(--ease-fast);
+}
+.share-chip[aria-pressed="true"] { background: var(--accent); color: var(--accent-ink); border-color: var(--accent); }
+.share-actions { display: grid; grid-template-columns: 1fr 1fr; gap: 10px; width: 100%; }
+.share-actions button {
+  display: flex; align-items: center; justify-content: center; gap: 8px;
+  min-height: 50px; padding: 0 14px; border-radius: var(--radius-pill);
+  border: 1px solid var(--line); background: var(--surface); color: var(--ink);
+  font-size: var(--text-sm); font-weight: 600;
+}
+.share-actions button svg { width: 18px; height: 18px; flex: none; }
+.share-actions button:disabled { opacity: 0.5; }
+.share-actions .share-go, .share-actions .share-save.is-primary { background: var(--accent); color: var(--accent-ink); border-color: var(--accent); }
+.share-actions .share-go[hidden] { display: none; }
+.share-actions .share-go:not([hidden]) ~ .share-save { grid-column: 1 / -1; }
+.share-status { min-height: 1.3em; font-size: var(--text-xs); color: var(--ink); text-align: center; }
+.share-note { font-size: var(--text-xs); color: var(--muted); text-align: center; margin: 0; }

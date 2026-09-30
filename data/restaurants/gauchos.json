@@ -17,6 +17,55 @@
   "menuTitle": "The Cuts",
   "menuSubtitle": "Prices in PKR",
   "showCheffy": false,
+  "roast": true,
+  "shareLinesApproved": false,
+  "shareLines": {
+    "firstLook": [
+      "Sized up my|steak before|it landed.",
+      "Medium-rare.|Full size.|Zero guessing.",
+      "Know your cut|before you order.",
+      "The steak|I saw coming."
+    ],
+    "fav": [
+      "My order.|Every time.",
+      "My cut.|No debate.",
+      "Some cuts you|keep ordering.",
+      "Loyal to|this cut."
+    ],
+    "new": [
+      "New cut.|New favourite?",
+      "Never had it.|Seen in 3D.|Now I'm having it.",
+      "New on|my list.",
+      "Trying something|new. Medium-rare."
+    ],
+    "streak": [
+      "Back again.|Obviously.",
+      "The grill|knows me now.",
+      "Regular,|officially.",
+      "Same table.|Better steak."
+    ],
+    "roast": [
+      "Not your|ammi's|aloo gosht.",
+      "Ghar ka khana|is shaking.",
+      "Steak > daal chawal.|Allegedly.",
+      "Sized it up.|It sized me up back.",
+      "Told my diet|it's 3D.|It doesn't count."
+    ],
+    "sarcastic": [
+      "Vegetables?|I've seen one.|On the side.",
+      "Calories don't|count in 3D.",
+      "Diet starts Monday.|This is Sunday energy.",
+      "Medium-rare|is a personality."
+    ],
+    "goodVibes": [
+      "Good company.|Better steak.",
+      "Tonight's mood:|sorted.",
+      "Full table.|Full hearts.",
+      "Great food.|Greater company.",
+      "Small joys,|big cuts."
+    ],
+    "roastSticker": "Sizzle > ghar ka khana"
+  },
   "loaderLines": [
     {
       "until": 25,

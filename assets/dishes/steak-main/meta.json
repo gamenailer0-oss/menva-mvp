@@ -5,7 +5,7 @@
     "model": "tomahawk-steak/tomahawk-steak.usdz",
     "photo": null
   },
-  "sourceHash": "1c13a78c83da",
+  "sourceHash": "d11ea6aadaab",
   "audit": "amber",
   "dimensions_cm": {
     "width": 29.5,
@@ -20,8 +20,13 @@
     "normal": "1024px jpeg q85"
   },
   "roughness": 0.6,
+  "orbit": "50deg 55deg 82%",
+  "target": "-0.0050m -0.0193m 0.0060m",
   "poster": "render",
   "posterQuality": 82,
+  "card": {
+    "quality": 82
+  },
   "spin": {
     "frames": 36,
     "frameWidth": 480,
@@ -42,12 +47,16 @@
       "hash": "3add196f698d"
     },
     "poster.webp": {
-      "bytes": 62714,
-      "hash": "6b0df732652f"
+      "bytes": 66982,
+      "hash": "5939329c38ed"
     },
     "poster-blur.webp": {
-      "bytes": 686,
-      "hash": "0bbea66c3fa9"
+      "bytes": 716,
+      "hash": "8461225e54d3"
+    },
+    "card.webp": {
+      "bytes": 50718,
+      "hash": "47b975789729"
     },
     "spin.webp": {
       "bytes": 297708,

@@ -5,7 +5,7 @@
     "model": "bz-chicken-pizza/chicken-pizza.glb",
     "photo": null
   },
-  "sourceHash": "8ef5b30f1f2d",
+  "sourceHash": "6e7490b89d2d",
   "audit": "amber",
   "dimensions_cm": {
     "width": 50,
@@ -20,8 +20,13 @@
     "normal": "1024px jpeg q85"
   },
   "roughness": 1,
+  "orbit": "40deg 55deg 74%",
+  "target": "-0.0099m -0.0089m 0.0083m",
   "poster": "render",
   "posterQuality": 82,
+  "card": {
+    "quality": 82
+  },
   "spin": {
     "frames": 36,
     "frameWidth": 480,
@@ -42,12 +47,16 @@
       "hash": "2f82f2f786cc"
     },
     "poster.webp": {
-      "bytes": 57622,
-      "hash": "872feb060e3d"
+      "bytes": 60674,
+      "hash": "59384a076f12"
     },
     "poster-blur.webp": {
-      "bytes": 680,
-      "hash": "9c3717d51c81"
+      "bytes": 688,
+      "hash": "8930e672723a"
+    },
+    "card.webp": {
+      "bytes": 44762,
+      "hash": "5fbecdc5bd69"
     },
     "spin.webp": {
       "bytes": 292612,

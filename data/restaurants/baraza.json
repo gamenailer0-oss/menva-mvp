@@ -20,6 +20,55 @@
   "menuTitle": "The Menu",
   "menuSubtitle": "Prices in PKR",
   "showCheffy": false,
+  "roast": true,
+  "shareLinesApproved": false,
+  "shareLines": {
+    "firstLook": [
+      "Open 24/7.|So am I.",
+      "Brewed|for the table.",
+      "One visit,|new habit.",
+      "Seen it in 3D.|Now to taste it."
+    ],
+    "fav": [
+      "My order.|Every time.",
+      "My usual.|No questions.",
+      "Same cup.|Every time.",
+      "Loyal to|this roast."
+    ],
+    "new": [
+      "Never had it.|Seen in 3D.|Now I'm having it.",
+      "New on|my list.",
+      "Trying something|new. Again.",
+      "New order.|Who dis?"
+    ],
+    "streak": [
+      "Back again.|Obviously.",
+      "My second|home.",
+      "Regular,|officially.",
+      "The barista|knows me now."
+    ],
+    "roast": [
+      "Not your|ammi's|chai.",
+      "Ghar ki chai|is shaking.",
+      "Told my sleep|it's 3D.|It doesn't count.",
+      "Sized it up.|It sized me up back.",
+      "POV: 2 AM and|I'm fully functional."
+    ],
+    "sarcastic": [
+      "Sleep is optional.|Coffee isn't.",
+      "It's 3 AM and I'm|calling this|a personality.",
+      "Calories don't|count in 3D.",
+      "I came for one.|I'm leaving with|a personality."
+    ],
+    "goodVibes": [
+      "Good coffee.|Good company.",
+      "Tonight's mood:|sorted.",
+      "Slow sips,|big smiles.",
+      "Warm cup.|Warm people.",
+      "Fresh brew,|fresh start."
+    ],
+    "roastSticker": "Fine. Chai can wait."
+  },
   "categoryNotes": {
     "Specialty Coffee": "Double shots pulled with precision on La Marzocco.",
     "Chillers": "24-hour slow-steeped cold brew, nitro float, and flash-chilled iced creations.",

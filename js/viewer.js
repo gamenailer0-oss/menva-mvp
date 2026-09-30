@@ -89,7 +89,7 @@
   // and resizable=false to Scene Viewer), placed on the table with a contact shadow. `button` is our
   // own "See it on your table" button, outside model-viewer, so the capability tier alone decides
   // whether it shows (js/app.js). Timings go to analytics.
-  function setupAR(viewer, { usdz, dishId, status, button }) {
+  function setupAR(viewer, { usdz, dishId, status, button, onExit }) {
     const track = (event, props) => window.MenvaTrack?.(event, { dish: dishId, ...props });
     const say = (text) => { if (status) status.textContent = text; };
     const prompt = viewer.querySelector('.ar-prompt p');
@@ -133,6 +133,7 @@
         track('ar_exit', { duration_ms: since() });
         launchedAt = 0;
         inPageSession = false;
+        onExit?.();
       }
     });
 
@@ -142,6 +143,7 @@
       if (document.visibilityState === 'visible' && launchedAt && !inPageSession) {
         track('ar_exit', { duration_ms: since() });
         launchedAt = 0;
+        onExit?.();
       }
     };
     document.addEventListener('visibilitychange', onVisible);

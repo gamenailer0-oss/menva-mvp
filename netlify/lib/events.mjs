@@ -29,6 +29,12 @@ export const EVENTS = {
   ar_failed: {},
   tray_add: {},
   waiter_view: {},
+  // Table Card (js/sharecard.js): the sheet was opened / the card was shared or saved. `mood` is which card.
+  share_card_open: {},
+  share_card_shared: {
+    mood: (v) => (['firstLook', 'fav', 'new', 'streak', 'roast', 'sarcastic', 'goodVibes'].includes(v) ? v : undefined),
+    target: (v) => (['share', 'save'].includes(v) ? v : undefined),
+  },
 };
 
 const ID = /^[a-z0-9]+(-[a-z0-9]+)*$/;
@@ -75,8 +81,8 @@ export function summarise(batches, restaurant) {
   const scoped = restaurant == null ? batches : batches.filter((b) => b.restaurant === restaurant);
   const byDay = new Map();
   const byDish = new Map();
-  const day = (d) => byDay.get(d) ?? byDay.set(d, { day: d, sessions: new Set(), scans: 0, dish_opens: 0, loads: [], failures: 0, tiers: {}, ar_launches: 0, placed: [], tray_adds: 0, waiter_views: 0 }).get(d);
-  const dish = (id) => byDish.get(id) ?? byDish.set(id, { dish: id, opens: 0, loads: [], failures: 0, tiers: {}, ar_launches: 0, placed: [], tray_adds: 0 }).get(id);
+  const day = (d) => byDay.get(d) ?? byDay.set(d, { day: d, sessions: new Set(), scans: 0, dish_opens: 0, loads: [], failures: 0, tiers: {}, ar_launches: 0, placed: [], tray_adds: 0, waiter_views: 0, cards_opened: 0, cards_shared: 0 }).get(d);
+  const dish = (id) => byDish.get(id) ?? byDish.set(id, { dish: id, opens: 0, loads: [], failures: 0, tiers: {}, ar_launches: 0, placed: [], tray_adds: 0, cards_opened: 0, cards_shared: 0 }).get(id);
 
   // A dish can report more than one tier in one opening (360° at 12 s, then 3D when it lands):
   // the distribution counts the last tier each session reached for each dish, per day.
@@ -97,6 +103,8 @@ export function summarise(batches, restaurant) {
         case 'ar_object_placed': if (ev.ms != null) { D.placed.push(ev.ms); X?.placed.push(ev.ms); } break;
         case 'tray_add': D.tray_adds++; if (X) X.tray_adds++; break;
         case 'waiter_view': D.waiter_views++; break;
+        case 'share_card_open': D.cards_opened++; if (X) X.cards_opened++; break;
+        case 'share_card_shared': D.cards_shared++; if (X) X.cards_shared++; break;
       }
     }
   }

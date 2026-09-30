@@ -5,7 +5,7 @@
     "model": "hd-matilda-cake/hd-matilda-cake.glb",
     "photo": null
   },
-  "sourceHash": "315da1d3dd74",
+  "sourceHash": "148c6cfdb3a5",
   "audit": "amber",
   "dimensions_cm": {
     "width": 25.6,
@@ -20,8 +20,13 @@
     "normal": "1024px jpeg q85"
   },
   "roughness": 0.8,
+  "orbit": "95deg 55deg 85%",
+  "target": "0.0001m 0.0132m 0.0007m",
   "poster": "render",
   "posterQuality": 82,
+  "card": {
+    "quality": 82
+  },
   "spin": {
     "frames": 36,
     "frameWidth": 480,
@@ -42,12 +47,16 @@
       "hash": "7835ac951f91"
     },
     "poster.webp": {
-      "bytes": 46440,
-      "hash": "887bdacb64c6"
+      "bytes": 58272,
+      "hash": "734fda3c38f7"
     },
     "poster-blur.webp": {
-      "bytes": 648,
-      "hash": "3e774ebde4e3"
+      "bytes": 708,
+      "hash": "9c2d61df4f89"
+    },
+    "card.webp": {
+      "bytes": 40484,
+      "hash": "98d22339ee7c"
     },
     "spin.webp": {
       "bytes": 306738,

@@ -236,3 +236,20 @@ test('KV adapter: missing binding returns 503', async () => {
   })();
   assert.match(err.message, /not set up/);
 });
+
+test('Table Card events: share_card_open / share_card_shared are kept, bad mood and target dropped, counted per day and dish', () => {
+  const out = clean(batch([
+    { e: 'share_card_open', d: 'hd-matilda-cake' },
+    { e: 'share_card_shared', d: 'hd-matilda-cake', mood: 'sarcastic', target: 'share', extra: 'x' },
+    { e: 'share_card_shared', d: 'hd-matilda-cake', mood: '<b>', target: 'email' },
+  ]));
+  assert.deepEqual(out.events, [
+    { e: 'share_card_open', d: 'hd-matilda-cake' },
+    { e: 'share_card_shared', d: 'hd-matilda-cake', mood: 'sarcastic', target: 'share' },
+    { e: 'share_card_shared', d: 'hd-matilda-cake' },
+  ]);
+  const sum = summarise([{ day: '2026-09-30', restaurant: 'haute-dolci', table: '12', session: 's1', events: out.events }]);
+  assert.equal(sum.days[0].cards_opened, 1);
+  assert.equal(sum.days[0].cards_shared, 2);
+  assert.equal(sum.dishes[0].cards_shared, 2);
+});

@@ -5,7 +5,7 @@
     "model": "hd-san-sebastian/hd-san-sebastian.glb",
     "photo": null
   },
-  "sourceHash": "6e146bd49db7",
+  "sourceHash": "6e8f451ee642",
   "audit": "amber",
   "dimensions_cm": {
     "width": 26.1,
@@ -20,8 +20,13 @@
     "normal": "1024px jpeg q85"
   },
   "roughness": 0.8,
+  "orbit": "222deg 55deg 89%",
+  "target": "0.0006m -0.0063m -0.0006m",
   "poster": "render",
   "posterQuality": 82,
+  "card": {
+    "quality": 82
+  },
   "spin": {
     "frames": 36,
     "frameWidth": 480,
@@ -42,12 +47,16 @@
       "hash": "66b815fc4fcb"
     },
     "poster.webp": {
-      "bytes": 39494,
-      "hash": "f952a0aa378a"
+      "bytes": 40448,
+      "hash": "c83876ad7c56"
     },
     "poster-blur.webp": {
-      "bytes": 710,
-      "hash": "45a301cccbe7"
+      "bytes": 742,
+      "hash": "95fc7cc6f2d4"
+    },
+    "card.webp": {
+      "bytes": 26752,
+      "hash": "fe529752a356"
     },
     "spin.webp": {
       "bytes": 296370,

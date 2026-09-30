@@ -5,7 +5,7 @@
     "model": "garlic-prawn-skewers/garlic-prawn-skewers.usdz",
     "photo": null
   },
-  "sourceHash": "07be7df711b2",
+  "sourceHash": "882815f580cd",
   "audit": "amber",
   "dimensions_cm": {
     "width": 27.6,
@@ -20,8 +20,13 @@
     "normal": "1024px jpeg q85"
   },
   "roughness": 0.6,
+  "orbit": "340deg 55deg 59%",
+  "target": "-0.0161m 0.0147m -0.0059m",
   "poster": "render",
   "posterQuality": 82,
+  "card": {
+    "quality": 82
+  },
   "spin": {
     "frames": 36,
     "frameWidth": 480,
@@ -42,12 +47,16 @@
       "hash": "68aca1278ac2"
     },
     "poster.webp": {
-      "bytes": 46174,
-      "hash": "ba68b5996b16"
+      "bytes": 77890,
+      "hash": "cb38b399f849"
     },
     "poster-blur.webp": {
-      "bytes": 652,
-      "hash": "842961f4dce8"
+      "bytes": 804,
+      "hash": "5b65febf3858"
+    },
+    "card.webp": {
+      "bytes": 56874,
+      "hash": "491df30fb572"
     },
     "spin.webp": {
       "bytes": 297576,
@@ -55,7 +64,7 @@
     },
     "model.usdz": {
       "bytes": 1693114,
-      "hash": "c0bf94c77045"
+      "hash": "8c860f70b4ee"
     }
   },
   "before": {

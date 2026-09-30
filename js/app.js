@@ -12,6 +12,7 @@
   const arrow = '<svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round"><path d="M4 12h15M13 6l6 6-6 6"/></svg>';
   const closeIcon = '<svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round"><path d="m6 6 12 12M18 6 6 18"/></svg>';
   const resetIcon = '<svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round"><path d="M4 10a8 8 0 1 1 1 8M4 4v6h6"/></svg>';
+  const shareIcon = '<svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round"><path d="M4 8a2 2 0 0 1 2-2h12a2 2 0 0 1 2 2v9a2 2 0 0 1-2 2H6a2 2 0 0 1-2-2Z"/><path d="M4 13h16M8 6V4m8 2V4"/></svg>';
   const arIcon = '<svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round"><path d="M3 7V5a2 2 0 0 1 2-2h2M17 3h2a2 2 0 0 1 2 2v2M21 17v2a2 2 0 0 1-2 2h-2M7 21H5a2 2 0 0 1-2-2v-2"/><path d="M7 12h10M7 8h10M7 16h6"/></svg>';
 
   const TABLE_KEY = 'menva.table';
@@ -577,6 +578,9 @@
   // ─── Dish Sheet ──────────────────────────────────────────────
   // Order: price → description → halal → allergens → spice → dietary → ingredients → nutrition.
   const LOAD_LIMIT_MS = 12000; // past this, show the 360° view while the full view keeps loading
+  // Each dish is shot from its own best angle (data/model-sources.json → assets.orbit/target); the poster,
+  // the share card and the live 3D's first view all use it so the poster → 3D crossfade lines up.
+  const DEFAULT_ORBIT = '-25deg 55deg 85%';
 
   async function openDish(dish, trigger) {
     lastTrigger = trigger;
@@ -584,10 +588,11 @@
     const content = app.querySelector('#dish-content');
     const a = dish.assets;
     MenvaTrack('dish_open', { dish: dish.id });
+    const firstOpen = window.MenvaShare ? MenvaShare.markSeen(activeRestaurant.id, dish.id) : false; // first time on this phone → "tried something new"
 
     // The Pass: blur-up poster paints instantly (inline base64, zero network), then focuses as the GLB loads.
     // model-viewer's own AR button is replaced by an empty slot; ours sits below the stage (thumb reach).
-    const modelViewer = dish.has3d ? `<model-viewer id="dish-viewer" camera-controls touch-action="pan-y" camera-orbit="-25deg 55deg 85%" shadow-intensity="1" shadow-softness="0.6" environment-image="neutral" interaction-prompt="auto" alt="${esc(dish.name)} — 3D scan">
+    const modelViewer = dish.has3d ? `<model-viewer id="dish-viewer" camera-controls touch-action="pan-y" camera-orbit="${esc(a.orbit || DEFAULT_ORBIT)}"${a.target ? ` camera-target="${esc(a.target)}"` : ''} shadow-intensity="1" shadow-softness="0.6" environment-image="neutral" interaction-prompt="auto" alt="${esc(dish.name)} — 3D scan">
             <span slot="ar-button" hidden></span>
             <div slot="ar-prompt" class="ar-prompt">
               <svg viewBox="0 0 120 80" aria-hidden="true"><ellipse cx="60" cy="62" rx="44" ry="12"/><g class="ar-prompt-phone"><rect x="50" y="8" width="20" height="34" rx="4"/><line x1="57" y1="13" x2="63" y2="13"/></g></svg>
@@ -601,6 +606,7 @@
           <button id="reset-view" class="reset-view" hidden aria-label="Reset the view">${resetIcon}</button>
           <div class="stage-actions">
             <button type="button" class="ar-btn" hidden>${arIcon} <span class="ar-btn-label">See it on your table</span></button>
+            <button type="button" class="share-pill" hidden>${shareIcon} Share my table card</button>
             <p id="viewer-status" class="stage-status" role="status"></p>
             ${MenvaCaps.inApp ? `<p class="inapp-note">For the table view, open this page in Chrome or Safari. <button type="button" class="copy-link">Copy link</button></p>` : ''}
           </div>
@@ -639,6 +645,17 @@
     const status = document.getElementById('viewer-status');
     const arButton = content.querySelector('.ar-btn');
     const resetBtn = document.getElementById('reset-view');
+    const sharePill = content.querySelector('.share-pill');
+    sharePill.addEventListener('click', () => {
+      window.MenvaShare?.open({ restaurant: activeRestaurant, dish, table: currentTable, isNew: firstOpen, trigger: sharePill });
+    });
+    // The card is offered once the dish has settled on a view: the live 3D, or the 360° / photo
+    // fallback — and again, with a nudge, when the diner comes back from AR.
+    const showSharePill = (nudge) => {
+      if (!window.MenvaShare || !stage.isConnected) return;
+      sharePill.hidden = false;
+      if (nudge) { sharePill.classList.remove('is-nudge'); void sharePill.offsetWidth; sharePill.classList.add('is-nudge'); }
+    };
     const say = (text) => { status.textContent = text; };
     const spin = a.spin ? { url: a.spin, layout: a.spinLayout } : null;
     const openedAt = performance.now();
@@ -650,6 +667,7 @@
       if (t === tier || !stage.isConnected) return;
       tier = t;
       stage.dataset.tier = t;
+      showSharePill(false);
       MenvaTrack('tier_assigned', { dish: dish.id, tier: t, ...(reason && { reason }) });
     };
 
@@ -713,7 +731,7 @@
     if (!viewer.isConnected) return clearTimeout(slowTimer); // sheet closed while downloading
 
     // AR wiring goes on before src so no event is missed.
-    MenvaViewer.setupAR(viewer, { usdz: MenvaViewer.absolute(a.usdz), dishId: dish.id, status, button: arButton });
+    MenvaViewer.setupAR(viewer, { usdz: MenvaViewer.absolute(a.usdz), dishId: dish.id, status, button: arButton, onExit: () => showSharePill(true) });
     viewer.addEventListener('error', () => failed('model'), { once: true });
     viewer.addEventListener('load', () => {
       clearTimeout(slowTimer);
@@ -764,7 +782,8 @@
     }
 
     resetBtn.addEventListener('click', () => {
-      viewer.cameraOrbit = '-25deg 55deg 85%'; // matches the poster framing
+      viewer.cameraOrbit = a.orbit || DEFAULT_ORBIT; // matches the poster framing
+      viewer.cameraTarget = a.target || 'auto auto auto';
       viewer.fieldOfView = 'auto';
       viewer.jumpCameraToGoal?.();
     });
@@ -827,6 +846,7 @@
         MenvaTrack.setContext(r.id, table);
         if (firstRoute && tablePart) MenvaTrack('scan'); // arrived from a table QR code
         MenvaTrack('menu_view');
+        window.MenvaShare?.recordVisit(r.id); // one day per visit, on this phone only (the "streak" mood)
         restaurantPage(r, table);
         openLinkedDish(r);
       }

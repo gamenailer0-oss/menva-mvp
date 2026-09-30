@@ -19,6 +19,56 @@
   "menuTitle": "The Dolci Menu",
   "menuSubtitle": "Prices in PKR",
   "showCheffy": false,
+  "roast": true,
+  "shareLinesApproved": false,
+  "shareLines": {
+    "firstLook": [
+      "It's a|must.",
+      "Indulge, capture,|share, repeat.",
+      "Dessert first.|Obviously.",
+      "First look.|Then first bite.",
+      "Seen it.|Now to taste it."
+    ],
+    "fav": [
+      "My order.|Every time.",
+      "My usual.|No surprises.",
+      "Some things|you just keep|ordering.",
+      "Loyal to|this slice."
+    ],
+    "new": [
+      "Saw it in 3D.|Ordered it|anyway.",
+      "New on|my list.",
+      "Never had it.|Now I'm having it.",
+      "Trying something|new. Again."
+    ],
+    "streak": [
+      "Back again.|Obviously.",
+      "Back again.|No regrets.",
+      "Regular,|officially.",
+      "This table|knows me now."
+    ],
+    "roast": [
+      "Not your|ammi's|aloo anday.",
+      "Ghar ka khana|is shaking.",
+      "POV: dessert arrived before the dessert arrived.",
+      "Told my diet|it's 3D.|It doesn't count.",
+      "Sized it up.|It sized me up back."
+    ],
+    "sarcastic": [
+      "Calories don't|count in 3D.",
+      "I came for one slice.|I'm leaving with|a personality.",
+      "Diet starts Monday.|This is Sunday energy.",
+      "Self-control is|overrated. Dessert|isn't."
+    ],
+    "goodVibes": [
+      "Good company.|Better dessert.",
+      "Tonight's mood:|sorted.",
+      "Small joys,|big slices.",
+      "Sweet people.|Sweeter plates.",
+      "Happy table.|Happy heart."
+    ],
+    "roastSticker": "Dessert > ghar ka khana"
+  },
   "categoryNotes": {
     "Signatures": "Indulge, Capture, Share, Repeat.",
     "Cakes": "Signature milk cakes and cheesecakes, made fresh in-house.",
