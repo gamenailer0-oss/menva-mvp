@@ -1,5 +1,6 @@
 // Local stand-in for Netlify: serves dist/ with the [[headers]] rules from
-// netlify.toml and the SPA fallback (/* → /index.html). For testing only.
+// netlify.toml, the per-restaurant table rewrites (/<slug>/<table> → /<slug>/) and a real 404 for
+// everything else (dist/404.html with status 404, as Cloudflare Pages does). For testing only.
 //
 // Usage: npm run build && npm run serve   (PORT=8080 by default)
 
@@ -58,7 +59,7 @@ function headersFileRules() {
 const rules = [...headerRules(), ...headersFileRules()];
 
 // Restaurant slugs, so /<slug>/<table> falls back to that restaurant's own stamped HTML (its own
-// SEO tags) instead of the generic app shell — mirrors the /<slug>/* rules in netlify.toml.
+// SEO tags) — mirrors the /<slug>/:table rules in netlify.toml.
 let restaurantSlugs = [];
 const menuPath = path.join(DIST, 'data', 'menu.json');
 if (fs.existsSync(menuPath)) {
@@ -100,11 +101,13 @@ http.createServer((req, res) => {
   let file = path.join(DIST, urlPath);
   if (!file.startsWith(DIST)) { res.writeHead(403).end(); return; }
   if (fs.existsSync(file) && fs.statSync(file).isDirectory()) file = path.join(file, 'index.html');
+  let status = 200;
   if (!fs.existsSync(file)) {
-    // SPA fallback: an unknown /<slug>/<table> path gets that restaurant's own index.html (its
-    // own SEO tags), everything else gets the generic app shell.
-    const slug = urlPath.split('/').filter(Boolean)[0];
-    file = restaurantSlugs.includes(slug) ? path.join(DIST, slug, 'index.html') : path.join(DIST, 'index.html');
+    // Known route: /<slug>/<table> (one segment) gets that restaurant's own index.html, mirroring
+    // the /<slug>/:table rewrites in netlify.toml. Anything else is a real 404 — no catch-all.
+    const parts = urlPath.split('/').filter(Boolean);
+    if (parts.length === 2 && restaurantSlugs.includes(parts[0])) file = path.join(DIST, parts[0], 'index.html');
+    else { file = path.join(DIST, '404.html'); status = 404; }
   }
 
   const headers = { 'Content-Type': TYPES[path.extname(file)] || 'application/octet-stream' };
@@ -112,7 +115,7 @@ http.createServer((req, res) => {
   for (const r of rules) if (r.pattern?.test(urlPath)) Object.assign(headers, r.values);
   headers['Content-Length'] = fs.statSync(file).size;
 
-  res.writeHead(200, headers);
+  res.writeHead(status, headers);
   if (req.method === 'HEAD') return res.end();
   fs.createReadStream(file).pipe(res);
 }).listen(PORT, () => console.log(`Serving dist/ on http://localhost:${PORT}`));

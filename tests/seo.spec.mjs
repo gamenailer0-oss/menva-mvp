@@ -17,7 +17,7 @@ function jsonLdBlocks(html) {
 }
 
 const PAGES = [
-  { path: '/', canonicalPath: '/', title: 'MENVA — See it before you order it', ogImageName: 'og-menva.jpg', ldTypes: ['Organization', 'WebSite'] },
+  { path: '/', canonicalPath: '/', title: '3D &amp; AR restaurant menus in Lahore — MENVA', ogImageName: 'og-menva.jpg', ldTypes: ['Organization', 'WebSite'] },
   { path: '/g/12', canonicalPath: '/g', title: 'Gauchos — menu in 3D · MENVA', ogImageName: 'og-gauchos.jpg', ldTypes: ['Restaurant'] },
   { path: '/baraza/12', canonicalPath: '/baraza', title: 'Baraza Coffee — menu in 3D · MENVA', ogImageName: 'og-baraza.jpg', ldTypes: ['Restaurant'] },
 ];
@@ -142,3 +142,121 @@ for (const route of ['/', '/g/12', '/baraza/12']) {
     expect(w.external).toEqual([]);
   });
 }
+
+// ── Real 404s, indexable static HTML, sitemap ────────────────────────────────────────────────
+// Google treats a 200 on a URL that does not exist as a "soft 404", so unknown paths must answer 404.
+for (const bad of ['/nowhere/4', '/nowhere', '/g/12/extra', '/some/deep/unknown/path', '/g.html']) {
+  test(`${bad}: a real 404 with noindex and a way back, no JS needed`, async ({ request }) => {
+    const res = await request.get(bad);
+    expect(res.status()).toBe(404);
+    expect(res.headers()['content-type']).toContain('text/html');
+    const html = await res.text();
+    expect(html).toMatch(/<meta name="robots" content="noindex">/);
+    expect(html).toContain("<h1>This page isn't <em>on the menu.</em></h1>");
+    expect(html).toContain('<html lang="en">');
+    expect(html).toContain('href="/"'); // home
+    for (const slug of ['g', 'baraza', 'haute-dolci']) expect(html).toContain(`href="/${slug}"`);
+    expect(html).not.toContain('<script src="/js/app.js'); // no app shell, nothing to render
+    expect(html).not.toContain('rel="canonical"');
+  });
+}
+
+test('404 page renders (styled, single h1, links work) in the browser', async ({ page }) => {
+  const w = watch(page);
+  const res = await page.goto('/nowhere/4');
+  expect(res.status()).toBe(404);
+  await expect(page.locator('h1')).toHaveCount(1);
+  await expect(page.locator('h1')).toBeVisible();
+  await expect(page.locator('.static-links a')).toHaveCount(3);
+  expect(w.errors.filter((e) => !/404/.test(e))).toEqual([]);
+  expect(w.external).toEqual([]);
+  await page.locator('.static-links a', { hasText: 'Haute Dolci' }).click();
+  await expect(page).toHaveURL(/\/haute-dolci$/);
+  await expect(page.locator('h1')).toBeVisible();
+});
+
+test('known routes are 200: table URLs, invalid tables, stats, restaurant roots', async ({ request }) => {
+  for (const p of ['/', '/g', '/g/', '/g/12', '/g/abc', '/g/9999', '/baraza/12', '/haute-dolci/12', '/haute-dolci', '/stats/']) {
+    const res = await request.get(p);
+    expect(res.status(), p).toBe(200);
+  }
+});
+
+test('/haute-dolci/12 serves the restaurant page with its own tags and canonical /haute-dolci', async ({ request }) => {
+  const res = await request.get('/haute-dolci/12');
+  expect(res.status()).toBe(200);
+  const html = await res.text();
+  expect(tagContent(html, /<title>([^<]*)<\/title>/)).toBe('Haute Dolci — menu in 3D · MENVA');
+  expect(tagContent(html, /<link rel="canonical" href="([^"]*)">/)).toMatch(/\/haute-dolci$/);
+  expect(jsonLdBlocks(html).map((b) => b['@type'])).toEqual(['Restaurant']);
+});
+
+test('sitemap lists the home page and all three listed restaurants, each with a lastmod', async ({ request }) => {
+  const text = await (await request.get('/sitemap.xml')).text();
+  const urls = [...text.matchAll(/<url><loc>([^<]+)<\/loc><lastmod>(\d{4}-\d{2}-\d{2})<\/lastmod><\/url>/g)].map((m) => new URL(m[1]).pathname);
+  expect(urls).toEqual(['/', '/g', '/baraza', '/haute-dolci']);
+});
+
+// Crawlers that do not run JS still need real content: one h1, a description, links to every menu.
+for (const p of [
+  { path: '/', h1: /<h1>See it on your table\. Then <em>decide\.<\/em><\/h1>/ },
+  { path: '/g/12', h1: /<h1>Gauchos<\/h1>/ },
+  { path: '/haute-dolci', h1: /<h1>Haute Dolci<\/h1>/ },
+]) {
+  test(`${p.path}: raw HTML (no JS) has exactly one h1, a description and links`, async ({ request }) => {
+    const html = await (await request.get(p.path)).text();
+    expect(html).toContain('<html lang="en">');
+    expect(html.match(/<h1[\s>]/g)).toHaveLength(1);
+    expect(html).toMatch(p.h1);
+    const fallback = html.match(/<div id="app">([\s\S]*?)<\/div>\s*<script/)?.[1] ?? '';
+    expect(fallback).toContain('<noscript>');
+    expect(fallback).toMatch(/<p>[^<]{40,}/); // a real sentence, not just a heading
+    expect(fallback).toContain('href="/"');
+    if (p.path === '/') for (const slug of ['g', 'baraza', 'haute-dolci']) expect(fallback).toContain(`href="/${slug}"`);
+  });
+}
+
+test('home: title and description target the search intent; Organization + WebSite JSON-LD', async ({ request }) => {
+  const html = await (await request.get('/')).text();
+  expect(tagContent(html, /<title>([^<]*)<\/title>/)).toContain('restaurant menus in Lahore');
+  const description = tagContent(html, /<meta name="description" content="([^"]*)">/);
+  expect(description.length).toBeLessThanOrEqual(160);
+  expect(description).toMatch(/3D and AR/);
+  const org = jsonLdBlocks(html).find((b) => b['@type'] === 'Organization');
+  expect(org.url).toMatch(/\/$/);
+  expect(org).not.toHaveProperty('aggregateRating');
+});
+
+// JS on: a single h1 per page, and every image has alt text (decorative ones an empty alt).
+for (const route of ['/', '/g/12', '/baraza/12', '/haute-dolci/12']) {
+  test(`${route}: one h1 and every image has an alt attribute`, async ({ page }) => {
+    await page.goto(route);
+    await expect(page.locator('h1')).toHaveCount(1);
+    await expect(page.locator('h1')).toBeVisible();
+    await expect(page.locator('img:not([alt])')).toHaveCount(0);
+  });
+}
+
+test('home hero: the three beats and the cited evidence are on the page', async ({ page }) => {
+  await page.goto('/');
+  await expect(page.locator('h1')).toHaveText('See it on your table. Then decide.');
+  await expect(page.locator('.decide-beats .beat')).toHaveCount(3);
+  await expect(page.locator('.decide-beats')).toContainText('Unsure what to order?');
+  await expect(page.locator('.decide-beats')).toContainText('See it life-size on your table');
+  await expect(page.locator('.decide-beats')).toContainText('Order with confidence');
+  const proof = page.locator('.hero-proof');
+  await expect(proof).toContainText('Grubhub');
+  await expect(proof).toContainText('Kabaq × Bareburger');
+});
+
+test('home hero under reduced motion: nothing animates and all three beats are fully visible', async ({ page }) => {
+  await page.emulateMedia({ reducedMotion: 'reduce' });
+  await page.goto('/');
+  await expect(page.locator('.decide-beats .beat').first()).toBeVisible();
+  const state = await page.evaluate(() => ({
+    running: document.getAnimations().filter((a) => a instanceof CSSAnimation && a.effect?.target?.closest?.('.home-hero') && a.playState === 'running').length,
+    beatOpacity: [...document.querySelectorAll('.beat-text')].map((el) => getComputedStyle(el).opacity),
+  }));
+  expect(state.running).toBe(0);
+  expect(state.beatOpacity).toEqual(['1', '1', '1']);
+});

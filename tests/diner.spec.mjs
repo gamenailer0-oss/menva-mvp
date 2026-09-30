@@ -81,11 +81,12 @@ test('bad and old links still land somewhere useful', async ({ page }) => {
   await page.goto('/#/restaurant/gauchos');
   await expect(page).toHaveURL(/\/g$/);
 
+  // Unknown URLs are real 404s with their own branded page (see tests/seo.spec.mjs), not the app.
   await page.goto('/nowhere/2');
-  await expect(page.locator('h1')).toHaveText('Restaurant not found');
+  await expect(page.locator('h1')).toHaveText("This page isn't on the menu.");
 
   await page.goto('/g/12/extra');
-  await expect(page.locator('h1')).toHaveText('Page not found');
+  await expect(page.locator('h1')).toHaveText("This page isn't on the menu.");
 
   await page.goto('/');
   await page.getByRole('link', { name: /Open the Gauchos menu/ }).click();

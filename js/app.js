@@ -15,6 +15,9 @@
   const shareIcon = '<svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round"><path d="M4 8a2 2 0 0 1 2-2h12a2 2 0 0 1 2 2v9a2 2 0 0 1-2 2H6a2 2 0 0 1-2-2Z"/><path d="M4 13h16M8 6V4m8 2V4"/></svg>';
   const arIcon = '<svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round"><path d="M3 7V5a2 2 0 0 1 2-2h2M17 3h2a2 2 0 0 1 2 2v2M21 17v2a2 2 0 0 1-2 2h-2M7 21H5a2 2 0 0 1-2-2v-2"/><path d="M7 12h10M7 8h10M7 16h6"/></svg>';
 
+  const unsureIcon = '<svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round"><circle cx="12" cy="12" r="9"/><path d="M9.6 9.4a2.4 2.4 0 1 1 3.4 2.2c-.7.4-1 .9-1 1.6M12 16.8h.01"/></svg>';
+  const tickIcon = '<svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round"><path d="m5 12.5 4.5 4.5L19 7.5"/></svg>';
+
   const TABLE_KEY = 'menva.table';
   const DATA_URL = '/data/menu.json';
 
@@ -69,10 +72,13 @@
   // ─── Home hero: the AR story in a phone (css/hero.css) ────────
   // The pilot's first 3D dish drops onto a table and is measured at its real size. Pure CSS
   // animation; the loop pauses when the hero is scrolled out of view.
-  function arDemo(dish) {
+  function arDemo(dish, menuNames = []) {
     const src = dish?.assets?.poster || '/assets/dishes/steak-main/poster.webp';
     const d = dish?.dimensions_cm;
     const size = d ? `True size · ${Math.round(Math.max(d.width, d.depth))} cm` : 'True size';
+    // Beat 1 on the phone: a menu that is only words — the real dish names, no pictures.
+    const rows = (menuNames.length ? menuNames : ['', '', '']).slice(0, 4).map(n =>
+      `<li>${n ? `<span class="ar-menu-name">${esc(n)}</span>` : '<span class="ar-menu-bar ar-menu-bar--name"></span>'}<span class="ar-menu-bar"></span><span class="ar-menu-bar ar-menu-bar--short"></span></li>`).join('');
     return `<figure class="ar-demo" role="img" aria-label="A phone camera pointed at a table: the ${esc(dish?.name || 'dish')} appears on it at its true size.">
       <div class="ar-phone" aria-hidden="true">
         <div class="ar-screen">
@@ -85,21 +91,34 @@
           <span class="ar-label">${esc(size)}</span>
           <span class="ar-hint ar-hint-scan">Move your phone slowly over the table</span>
           <span class="ar-hint ar-hint-placed">Placed on your table</span>
+          <span class="ar-hint ar-hint-order">${tickIcon}Show the waiter</span>
+          <div class="ar-menu"><p class="ar-menu-title">Menu</p><ul>${rows}</ul></div>
         </div>
       </div>
     </figure>`;
   }
 
+  // "How it helps you decide": three beats in step with the phone's 9 s loop (css/hero.css).
+  function decideBeats() {
+    const beat = (n, icon, title, text) => `<li class="beat beat-${n}"><span class="beat-icon" aria-hidden="true">${icon}</span><span class="beat-text"><strong>${title}</strong><span>${text}</span></span><span class="beat-bar" aria-hidden="true"></span></li>`;
+    return `<ol class="decide-beats" aria-label="How MENVA helps you decide">
+      ${beat(1, unsureIcon, 'Unsure what to order?', 'A menu of words only.')}
+      ${beat(2, arIcon, 'See it life-size on your table', 'Scan the QR and place the real dish, at true size.')}
+      ${beat(3, tickIcon, 'Order with confidence', 'Show the waiter what you picked.')}
+    </ol>`;
+  }
+
   function pauseDemoOffscreen() {
-    const demo = app.querySelector('.ar-demo');
-    if (!demo || !('IntersectionObserver' in window)) return;
-    new IntersectionObserver(([e]) => demo.classList.toggle('is-offscreen', !e.isIntersecting)).observe(demo);
+    // One class on the whole hero, so the phone and the three beats pause together and stay in step.
+    const hero = app.querySelector('.home-hero');
+    if (!hero || !('IntersectionObserver' in window)) return;
+    new IntersectionObserver(([e]) => hero.classList.toggle('is-offscreen', !e.isIntersecting)).observe(hero);
   }
 
   // ─── Motion: scroll reveal ──────────────────────────────────────
   // Section/card arrival: fade + rise, staggered, once per element. Content is visible even if this
   // never runs (the opacity:0 start only applies under html.js-motion). Reduced motion: skip entirely.
-  const REVEAL_SELECTOR = '.dish-card, .dish-row, .home-pilot, .home-how, .menu-heading';
+  const REVEAL_SELECTOR = '.dish-card, .dish-row, .home-pilot, .home-how, .menu-heading, .decide-beats, .hero-proof';
   function initMotion(root) {
     const reduced = matchMedia('(prefers-reduced-motion: reduce)').matches;
     document.documentElement.classList.toggle('js-motion', !reduced);
@@ -199,7 +218,7 @@
 
   // ─── Brand page (/) — no 3D ───────────────────────────────────
   function brandPage() {
-    document.title = 'MENVA — See it before you order it';
+    document.title = '3D & AR restaurant menus in Lahore — MENVA';
     setTheme('default');
     // The pilot's link never depends on the menu data loading: /g is the Gauchos menu.
     const pilot = data?.restaurants.find(r => r.pilot);
@@ -207,6 +226,7 @@
     const name = esc(pilot?.name || 'Gauchos');
     const dishes = (pilot?.dishes || []).filter(d => d.has3d).slice(0, 3);
     const hero = dishes[0];
+    const menuNames = (pilot?.dishes || []).slice(0, 4).map(d => d.name);
 
     // A small row of partner restaurants (not a searchable directory, CLAUDE.md §9) — every
     // `listed: true` restaurant, pilot first. Today only Gauchos is listed, so this renders exactly
@@ -220,12 +240,18 @@
       <section class="home-hero">
         <div class="hero-copy">
           <p class="overline">AR menus · Lahore</p>
-          <h1>See it on your table. Then <em>order it.</em></h1>
-          <p>Scan the code at your table and the real dish appears in front of you — true to size, before you decide.</p>
+          <h1>See it on your table. Then <em>decide.</em></h1>
+          <p>Scan the QR at your table and the real dish appears in 3D at true size. Judge the portion, the look and the value before you order.</p>
           <a class="product-action" href="/${slug}" data-link>Open the ${name} menu ${arrow}</a>
           <p class="hero-trust">Works in Safari and Chrome · No app to install</p>
         </div>
-        ${arDemo(hero)}
+        <div class="hero-stage">${arDemo(hero, menuNames)}</div>
+        ${decideBeats()}
+        <ul class="hero-proof" aria-label="What published studies found">
+          <li><strong>Up to 30%</strong> more sales for dishes once a photo is added <cite>Grubhub</cite></li>
+          <li><strong>25%</strong> more dessert sales when guests viewed desserts in AR <cite>Kabaq × Bareburger study</cite></li>
+          <li class="hero-proof-note">Published studies from abroad, not MENVA results.</li>
+        </ul>
       </section>
 
       <section class="home-pilot" aria-labelledby="pilot-heading">

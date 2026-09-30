@@ -1,14 +1,19 @@
 /* ═══ Home hero — the AR story in a phone (design/MENVA.DESIGN.md › Motion) ═══
-   One 9 s loop: camera on a table → plane dots → reticle → the dish lands → true-size measure → reset.
-   Only transform/opacity animate. Reduced motion shows the final frame. */
+   One 9 s loop, three beats: unsure what to order (a menu of words) → see it life-size on your table
+   (camera, plane dots, the dish lands, true-size measure) → order with confidence (Show the waiter).
+   The phone and the three beats beside it share the loop length and start together, so the lit beat
+   always matches what the phone is showing. Only transform/opacity animate. Reduced motion shows the
+   final frame and all three beats, unlit. */
 .home-hero {
   display: grid;
+  grid-template-columns: minmax(0, 1fr);
+  grid-template-areas: "copy" "stage" "beats" "proof";
   max-width: none; /* overrides the earlier single-column hero in style.css */
-  gap: 36px;
-  align-items: center;
-  padding: 36px 0 48px;
+  gap: 28px;
+  align-items: start;
+  padding: 32px 0 40px;
 }
-.hero-copy { display: flex; flex-direction: column; gap: 14px; max-width: 34rem; }
+.hero-copy { grid-area: copy; display: flex; flex-direction: column; gap: 14px; max-width: 34rem; }
 .hero-copy h1 {
   font-size: var(--text-hero);
   line-height: 1.02;
@@ -23,13 +28,98 @@
 }
 .hero-copy .product-action { align-self: flex-start; margin-top: 8px; }
 .hero-trust { font-size: var(--text-xs); color: var(--muted); }
+.hero-stage { grid-area: stage; display: grid; place-items: center; }
+
+/* How it helps you decide — three beats, lit in turn by the same loop as the phone */
+.decide-beats {
+  --loop: 9s;
+  grid-area: beats;
+  list-style: none;
+  margin: 0;
+  padding: 0;
+  max-width: 34rem;
+}
+.beat {
+  position: relative;
+  display: grid;
+  grid-template-columns: 44px minmax(0, 1fr);
+  gap: 14px;
+  align-items: center;
+  padding: 12px 0;
+  border-top: 1px solid var(--line);
+}
+.beat:last-child { border-bottom: 1px solid var(--line); }
+.beat-icon {
+  position: relative;
+  display: grid;
+  place-items: center;
+  width: 44px;
+  height: 44px;
+  border-radius: 50%;
+  background: var(--surface);
+  border: 1px solid var(--line);
+  color: var(--ink);
+}
+.beat-icon svg { width: 22px; height: 22px; }
+.beat-icon::after { /* the ember ring on the beat that is playing */
+  content: '';
+  position: absolute;
+  inset: -1px;
+  border-radius: 50%;
+  border: 2px solid var(--accent);
+  opacity: 0;
+}
+.beat-text { display: flex; flex-direction: column; gap: 1px; }
+.beat-text strong { font-weight: 600; font-size: var(--text-sm); color: var(--ink); letter-spacing: -0.01em; }
+.beat-text span { font-size: var(--text-xs); line-height: 1.4; color: var(--muted); }
+.beat-bar { /* progress through the beat: a hairline that fills left to right */
+  position: absolute;
+  left: 0;
+  right: 0;
+  top: -1px;
+  height: 2px;
+  background: var(--accent);
+  transform: scaleX(0);
+  transform-origin: 0 50%;
+  opacity: 0;
+}
+/* Text keeps full contrast all the time; the lit beat is shown by the ring, the progress hairline and a 4 px nudge */
+.beat-text { animation-duration: var(--loop); animation-timing-function: var(--ease-in-out, ease-in-out); animation-iteration-count: infinite; }
+.beat-1 .beat-text { animation-name: beat-lit-1; }
+.beat-2 .beat-text { animation-name: beat-lit-2; }
+.beat-3 .beat-text { animation-name: beat-lit-3; }
+.beat-1 .beat-icon::after { animation: beat-ring-1 var(--loop) linear infinite; }
+.beat-2 .beat-icon::after { animation: beat-ring-2 var(--loop) linear infinite; }
+.beat-3 .beat-icon::after { animation: beat-ring-3 var(--loop) linear infinite; }
+.beat-1 .beat-bar { animation: beat-bar-1 var(--loop) linear infinite; }
+.beat-2 .beat-bar { animation: beat-bar-2 var(--loop) linear infinite; }
+.beat-3 .beat-bar { animation: beat-bar-3 var(--loop) linear infinite; }
+
+/* Decision proof: only figures the pitch already cites, sources named */
+.hero-proof {
+  grid-area: proof;
+  list-style: none;
+  margin: 0;
+  padding: 16px 0 0;
+  display: flex;
+  flex-wrap: wrap;
+  gap: 6px 28px;
+  border-top: 1px solid var(--line);
+  font-size: var(--text-xs);
+  line-height: 1.5;
+  color: var(--muted);
+}
+.hero-proof strong { color: var(--ink); font-weight: 600; }
+.hero-proof cite { font-style: normal; white-space: nowrap; }
+.hero-proof cite::before { content: '— '; }
+.hero-proof-note { flex-basis: 100%; }
 
 /* The phone */
 .ar-demo {
   --loop: 9s;
   position: relative;
   justify-self: center;
-  width: min(270px, 72vw);
+  width: min(250px, 66vw);
   aspect-ratio: 9 / 18.5;
   margin: 0;
 }
@@ -116,7 +206,7 @@
   width: 108%;
   max-width: none;
   translate: -50% -50%;
-  opacity: 0;
+  opacity: 0.01; /* not 0: a fully transparent image is not counted as a paint, so the dish landing at 3.8 s would become the page's LCP */
   animation: ar-dish var(--loop) var(--ease-out, ease-out) infinite;
 }
 /* True-size measure: a line drawn across the dish and a label */
@@ -180,78 +270,146 @@
   font-size: 11px;
   white-space: nowrap;
 }
-.ar-hint-scan { animation: ar-hint-scan var(--loop) linear infinite; }
+.ar-hint-scan { opacity: 0; animation: ar-hint-scan var(--loop) linear infinite; }
 .ar-hint-placed { opacity: 0; animation: ar-hint-placed var(--loop) linear infinite; }
+/* Beat 3: same pill position, once the diner has decided */
+.ar-hint-order {
+  display: inline-flex;
+  align-items: center;
+  gap: 6px;
+  background: var(--accent);
+  font-weight: 600;
+  opacity: 0;
+  animation: ar-hint-order var(--loop) linear infinite;
+}
+.ar-hint-order svg { width: 13px; height: 13px; }
 
-/* Timeline (percent of the 9 s loop) */
+/* Beat 1 on the phone: a menu with no pictures, just names. It fades out as the camera opens. */
+.ar-menu {
+  position: absolute;
+  inset: 0;
+  z-index: 2;
+  padding: 46px 16px 16px;
+  background: #F3EEE4;
+  color: #1A1714;
+  animation: ar-menu var(--loop) linear infinite;
+}
+.ar-menu-title {
+  margin: 0 0 10px;
+  font-family: var(--font-display);
+  font-size: 22px;
+  line-height: 1;
+}
+.ar-menu ul { list-style: none; margin: 0; padding: 0; }
+.ar-menu li { padding: 10px 0 11px; border-top: 1px solid #DCD3C4; }
+.ar-menu-name { display: block; margin-bottom: 7px; font-size: 12.5px; font-weight: 600; line-height: 1.25; }
+.ar-menu-bar { display: block; height: 5px; margin-top: 5px; border-radius: 3px; background: #DCD3C4; }
+.ar-menu-bar--name { width: 62%; height: 8px; margin: 0 0 9px; background: #C9BFAE; }
+.ar-menu-bar--short { width: 58%; }
+
+/* Timeline (percent of the 9 s loop): 0–22 menu · 22–68 camera, dish, measure · 68–94 order · 94–100 back to the menu */
 @keyframes ar-hand {
-  0%, 30%, 100% { transform: rotate(0deg) translateY(0); }
-  10% { transform: rotate(-2.5deg) translateY(-4px); }
-  20% { transform: rotate(2deg) translateY(2px); }
+  0%, 18%, 38%, 100% { transform: rotate(0deg) translateY(0); }
+  26% { transform: rotate(-2.5deg) translateY(-4px); }
+  32% { transform: rotate(2deg) translateY(2px); }
+}
+@keyframes ar-menu {
+  0%, 14% { opacity: 1; }
+  22%, 94% { opacity: 0; }
+  100% { opacity: 1; }
 }
 @keyframes ar-dots {
-  0%, 4% { opacity: 0; }
-  14%, 30% { opacity: 0.85; }
-  40%, 100% { opacity: 0; }
+  0%, 18% { opacity: 0; }
+  26%, 38% { opacity: 0.85; }
+  46%, 100% { opacity: 0; }
 }
 @keyframes ar-reticle {
-  0%, 14% { opacity: 0; transform: scale(1.25); }
-  20% { opacity: 1; transform: scale(1); }
-  25% { opacity: 1; transform: scale(1.06); }
-  30% { opacity: 1; transform: scale(1); }
-  35%, 100% { opacity: 0; transform: scale(0.9); }
+  0%, 22% { opacity: 0; transform: scale(1.25); }
+  27% { opacity: 1; transform: scale(1); }
+  31% { opacity: 1; transform: scale(1.06); }
+  35% { opacity: 1; transform: scale(1); }
+  40%, 100% { opacity: 0; transform: scale(0.9); }
 }
 @keyframes ar-dish {
-  0%, 30% { opacity: 0; transform: translateY(-34%) scale(0.92); }
-  38% { opacity: 1; transform: translateY(1.5%) scale(1); }
-  41% { transform: translateY(0) scale(1); }
+  0%, 35% { opacity: 0.01; transform: translateY(-34%) scale(0.92); }
+  42% { opacity: 1; transform: translateY(1.5%) scale(1); }
+  45% { transform: translateY(0) scale(1); }
   88% { opacity: 1; transform: translateY(0) scale(1); }
-  95%, 100% { opacity: 0; transform: translateY(0) scale(1); }
+  95%, 100% { opacity: 0.01; transform: translateY(0) scale(1); }
 }
 @keyframes ar-shadow {
-  0%, 33% { opacity: 0; transform: scale(0.4); }
-  41% { opacity: 1; transform: scale(1); }
+  0%, 37% { opacity: 0; transform: scale(0.4); }
+  45% { opacity: 1; transform: scale(1); }
   88% { opacity: 1; transform: scale(1); }
   95%, 100% { opacity: 0; transform: scale(1); }
 }
 @keyframes ar-rule {
-  0%, 45% { transform: scaleX(0); opacity: 1; }
-  55%, 88% { transform: scaleX(1); opacity: 1; }
+  0%, 49% { transform: scaleX(0); opacity: 1; }
+  58%, 88% { transform: scaleX(1); opacity: 1; }
   95%, 100% { transform: scaleX(1); opacity: 0; }
 }
 @keyframes ar-fade-mid {
-  0%, 45% { opacity: 0; }
-  50%, 88% { opacity: 1; }
+  0%, 49% { opacity: 0; }
+  54%, 88% { opacity: 1; }
   95%, 100% { opacity: 0; }
 }
 @keyframes ar-label {
-  0%, 53% { opacity: 0; transform: translateY(6px) scale(0.96); }
-  58%, 88% { opacity: 1; transform: none; }
+  0%, 57% { opacity: 0; transform: translateY(6px) scale(0.96); }
+  62%, 88% { opacity: 1; transform: none; }
   95%, 100% { opacity: 0; transform: none; }
 }
 @keyframes ar-hint-scan {
-  0%, 2% { opacity: 0; }
-  6%, 28% { opacity: 1; }
-  32%, 100% { opacity: 0; }
+  0%, 22% { opacity: 0; }
+  26%, 34% { opacity: 1; }
+  38%, 100% { opacity: 0; }
 }
 @keyframes ar-hint-placed {
-  0%, 42% { opacity: 0; }
-  46%, 86% { opacity: 1; }
-  90%, 100% { opacity: 0; }
+  0%, 47% { opacity: 0; }
+  51%, 64% { opacity: 1; }
+  68%, 100% { opacity: 0; }
+}
+@keyframes ar-hint-order {
+  0%, 69% { opacity: 0; transform: translateY(-4px); }
+  74%, 90% { opacity: 1; transform: none; }
+  94%, 100% { opacity: 0; transform: none; }
 }
 
-/* Pause the loop while the hero is off screen (js adds .is-offscreen) */
-.ar-demo.is-offscreen * { animation-play-state: paused !important; }
+/* The three beats, lit in the window the phone is showing it */
+@keyframes beat-lit-1 { 0%, 20% { transform: translateX(4px); } 26%, 94% { transform: none; } 100% { transform: translateX(4px); } }
+@keyframes beat-lit-2 { 0%, 22% { transform: none; } 28%, 64% { transform: translateX(4px); } 70%, 100% { transform: none; } }
+@keyframes beat-lit-3 { 0%, 68% { transform: none; } 74%, 90% { transform: translateX(4px); } 96%, 100% { transform: none; } }
+@keyframes beat-ring-1 { 0%, 20% { opacity: 1; } 26%, 94% { opacity: 0; } 100% { opacity: 1; } }
+@keyframes beat-ring-2 { 0%, 22% { opacity: 0; } 28%, 64% { opacity: 1; } 70%, 100% { opacity: 0; } }
+@keyframes beat-ring-3 { 0%, 68% { opacity: 0; } 74%, 90% { opacity: 1; } 96%, 100% { opacity: 0; } }
+@keyframes beat-bar-1 { 0% { transform: scaleX(0); opacity: 1; } 22% { transform: scaleX(1); opacity: 1; } 26%, 100% { transform: scaleX(1); opacity: 0; } }
+@keyframes beat-bar-2 { 0%, 22% { transform: scaleX(0); opacity: 1; } 66% { transform: scaleX(1); opacity: 1; } 70%, 100% { transform: scaleX(1); opacity: 0; } }
+@keyframes beat-bar-3 { 0%, 68% { transform: scaleX(0); opacity: 1; } 92% { transform: scaleX(1); opacity: 1; } 96%, 100% { transform: scaleX(1); opacity: 0; } }
+
+/* Pause the loop while the hero is off screen (js adds .is-offscreen to the section): phone and beats together */
+.home-hero.is-offscreen * { animation-play-state: paused !important; }
 
 @media (min-width: 860px) {
-  .home-hero { grid-template-columns: 1.1fr 0.9fr; padding: 56px 0 72px; }
+  .home-hero {
+    grid-template-columns: minmax(0, 1.1fr) minmax(0, 0.9fr);
+    grid-template-areas:
+      "copy stage"
+      "beats stage"
+      "proof proof";
+    column-gap: 56px;
+    row-gap: 32px;
+    padding: 56px 0 64px;
+  }
+  .hero-copy { align-self: end; }
+  .hero-stage { grid-row: 1 / span 2; align-self: center; }
   .ar-demo { width: min(300px, 100%); }
+  .hero-proof { margin-top: 8px; }
 }
 
-/* Reduced motion: the final frame — dish placed, measured — and nothing moves */
+/* Reduced motion: the final frame — dish placed, measured — and all three beats shown plainly */
 @media (prefers-reduced-motion: reduce) {
-  .ar-demo * { animation: none !important; }
+  .home-hero *, .home-hero *::after { animation: none !important; }
   .ar-dish, .ar-shadow, .ar-label, .ar-tick, .ar-hint-placed { opacity: 1; transform: none; }
   .ar-rule { transform: none; }
-  .ar-dots, .ar-reticle, .ar-hint-scan { opacity: 0; }
+  .ar-dots, .ar-reticle, .ar-hint-scan, .ar-hint-order, .ar-menu { opacity: 0; }
+  .beat-icon::after, .beat-bar { opacity: 0; }
 }

@@ -57,14 +57,19 @@ const { restaurants } = JSON.parse(fs.readFileSync(dishesPath, 'utf8'));
 // Crawlers for link previews (WhatsApp, Facebook, X, LinkedIn, iMessage) and search engines do not
 // run JavaScript, so every URL must return its own title/description/OG/canonical in the raw HTML.
 
-// Site origin for absolute URLs: data/site.json's `domain` once the custom domain is live, else
-// SITE_URL env var (Cloudflare or explicit), else Netlify's URL env var, else the known fallback.
+// Site origin for absolute URLs: data/site.json's `domain` once the custom domain is live, else the
+// SITE_URL env var, else SITE_URL from wrangler.toml [vars] (Cloudflare Pages does not expose those
+// to the build command, so read the file), else Netlify's URL env var, else the Cloudflare default.
 const site = JSON.parse(fs.readFileSync(path.join(ROOT, 'data', 'site.json'), 'utf8'));
+const wranglerUrl = (() => {
+  try { return fs.readFileSync(path.join(ROOT, 'wrangler.toml'), 'utf8').match(/^\s*SITE_URL\s*=\s*"([^"]+)"/m)?.[1] ?? null; } catch { return null; }
+})();
 let origin, originSource;
 if (site.domain) { origin = `https://${site.domain}`; originSource = 'data/site.json domain'; }
 else if (process.env.SITE_URL) { origin = process.env.SITE_URL.replace(/\/+$/, ''); originSource = 'process.env.SITE_URL'; }
+else if (wranglerUrl) { origin = wranglerUrl.replace(/\/+$/, ''); originSource = 'wrangler.toml SITE_URL'; }
 else if (process.env.URL) { origin = process.env.URL.replace(/\/+$/, ''); originSource = 'process.env.URL'; }
-else { origin = 'https://menva-ar.netlify.app'; originSource = 'https://menva-ar.netlify.app'; }
+else { origin = 'https://menva.pages.dev'; originSource = 'default https://menva.pages.dev'; }
 console.log(`SEO: site origin ${origin} (source: ${originSource})`);
 
 const THEME_PAPER = { default: '#EFEBE2', gauchos: '#EFEBE2', baraza: '#FAF5EC', 'haute-dolci': '#FAF3F2' };
@@ -118,30 +123,56 @@ function renderHead({ title, description, canonical, image, imageAlt, themeColor
 }
 
 const SEO_BLOCK_RE = /<!-- SEO:BEGIN[\s\S]*?<!-- SEO:END -->/;
-function withHead(html, headBlock) {
+const FALLBACK_RE = /<!-- FALLBACK:BEGIN -->[\s\S]*?<!-- FALLBACK:END -->/;
+function withHead(html, headBlock, fallback = '') {
   if (!SEO_BLOCK_RE.test(html)) { console.error('index.html is missing the <!-- SEO:BEGIN/END --> markers.'); process.exit(1); }
-  return html.replace(SEO_BLOCK_RE, headBlock);
+  if (!FALLBACK_RE.test(html)) { console.error('index.html is missing the <!-- FALLBACK:BEGIN/END --> markers.'); process.exit(1); }
+  // Function replacers: the generated text must never be read as a $& / $1 replacement pattern.
+  return html.replace(SEO_BLOCK_RE, () => headBlock).replace(FALLBACK_RE, () => fallback);
 }
 
 const baseHtml = fs.readFileSync(path.join(DIST, 'index.html'), 'utf8');
+
+// Static content a crawler (or a visitor without JavaScript) sees inside #app: one h1, a short
+// description and real links. With JavaScript on, a <noscript> body is never rendered, and the app
+// replaces #app on boot anyway, so visitors see no flash and the page keeps a single h1.
+const listed = restaurants.filter((r) => r.listed === true).sort((a, b) => (a.pilot === b.pilot ? 0 : a.pilot ? -1 : 1));
+const restaurantLinks = (items) => items.length
+  ? `<ul class="static-links">${items.map((r) => `<li><a href="/${escAttr(r.slug)}">${escAttr(r.name)}</a>${r.cuisine ? ` <span>${escAttr(r.cuisine)} · ${escAttr(r.location || 'Lahore')}</span>` : ''}</li>`).join('')}</ul>`
+  : '';
+const staticHeader = '<header class="topbar"><a class="wordmark" href="/" aria-label="MENVA home">menva<span class="wordmark-dot">.</span></a></header>';
+const staticFooter = '<footer><span>menva<span class="wordmark-dot">.</span></span><p>See it before you order it.</p><small>3D scans provided by restaurants</small></footer>';
+const noscript = (body) => `<noscript>${staticHeader}<main class="brand-page">${body}</main>${staticFooter}</noscript>`;
 
 // ── Home ──
 const homeImageRel = 'assets/social/og-menva.jpg';
 const homeImage = `${origin}/${homeImageRel}?v=${assetVersion(homeImageRel)}`;
 const homeHead = renderHead({
-  title: 'MENVA — See it before you order it',
-  description: 'See real dishes in 3D and AR before you order. Scan the QR at your table and MENVA brings the menu to life — no app to install.',
+  title: '3D & AR restaurant menus in Lahore — MENVA',
+  description: 'See the real dish in 3D and AR, at true size, before you order. Scan the QR at your table — MENVA restaurant menus in Lahore, no app to install.',
   canonical: `${origin}/`,
   image: homeImage,
   imageAlt: 'MENVA — see real dishes in 3D and AR on your table.',
   themeColor: THEME_PAPER.default,
   noindex: false,
   jsonLd: [
-    { '@context': 'https://schema.org', '@type': 'Organization', name: 'MENVA', url: `${origin}/`, logo: `${origin}/assets/logo.svg` },
-    { '@context': 'https://schema.org', '@type': 'WebSite', name: 'MENVA', url: `${origin}/` },
+    {
+      '@context': 'https://schema.org', '@type': 'Organization', '@id': `${origin}/#organization`, name: 'MENVA', url: `${origin}/`,
+      logo: `${origin}/assets/logo.svg`,
+      description: '3D and AR restaurant menus: diners scan a QR code and see the real dish on their table at true size before they order.',
+      areaServed: { '@type': 'City', name: 'Lahore' },
+    },
+    {
+      '@context': 'https://schema.org', '@type': 'WebSite', '@id': `${origin}/#website`, name: 'MENVA', url: `${origin}/`, inLanguage: 'en',
+      description: '3D and AR restaurant menus in Lahore.', publisher: { '@id': `${origin}/#organization` },
+    },
   ],
 });
-fs.writeFileSync(path.join(DIST, 'index.html'), withHead(baseHtml, homeHead));
+fs.writeFileSync(path.join(DIST, 'index.html'), withHead(baseHtml, homeHead, noscript(
+  '<p class="overline">AR menus · Lahore</p>' +
+  '<h1>See it on your table. Then <em>decide.</em></h1>' +
+  '<p>MENVA puts restaurant menus in 3D and AR. Scan the QR at your table, see the real dish in front of you at true size, and judge the portion, the look and the value before you order. No app to install.</p>' +
+  (listed.length ? '<p class="overline">Our restaurants</p>' + restaurantLinks(listed) : ''))));
 
 // ── Per restaurant ── (dist/<slug>/index.html; table URLs /<slug>/12 canonicalise to /<slug>)
 for (const r of restaurants) {
@@ -157,7 +188,7 @@ for (const r of restaurants) {
   const address = { '@type': 'PostalAddress', addressCountry: 'PK' };
   if (r.address) address.streetAddress = r.address;
   if (r.location) address.addressLocality = r.location;
-  const restaurantLd = { '@context': 'https://schema.org', '@type': 'Restaurant', name: r.name, url: canonical, image };
+  const restaurantLd = { '@context': 'https://schema.org', '@type': 'Restaurant', name: r.name, url: canonical, image, menu: canonical };
   if (r.cuisine) restaurantLd.servesCuisine = r.cuisine;
   if (r.address || r.location) restaurantLd.address = address;
   if (r.hours === 'Open 24/7') restaurantLd.openingHours = 'Mo-Su 00:00-24:00';
@@ -175,7 +206,12 @@ for (const r of restaurants) {
   });
   const outPath = path.join(DIST, r.slug, 'index.html');
   fs.mkdirSync(path.dirname(outPath), { recursive: true });
-  fs.writeFileSync(outPath, withHead(baseHtml, head));
+  const restLede = (r.description || r.tagline || '').trim();
+  fs.writeFileSync(outPath, withHead(baseHtml, head, noscript(
+    `<p class="overline">${escAttr(r.area || '')}${r.area && r.location ? ' · ' : ''}${escAttr(r.location || '')}</p>` +
+    `<h1>${escAttr(r.displayName || r.name)}</h1>` +
+    `<p>${escAttr(restLede)} See every dish on your table in 3D and AR before you order.</p>` +
+    '<p><a href="/">MENVA — 3D &amp; AR restaurant menus in Lahore</a></p>')));
 }
 
 // Drag-and-drop deploys ignore netlify.toml, so mirror its headers/redirects as _headers/_redirects.
@@ -192,6 +228,13 @@ for (const line of fs.readFileSync(path.join(ROOT, 'netlify.toml'), 'utf8').spli
   else block[m[1]] = m[2];
 }
 
+// Every restaurant's table URLs (/<slug>/12) resolve to its own page. netlify.toml lists the known ones;
+// add any restaurant that is in the menu data but not there yet, so a new restaurant never 404s.
+// There is deliberately NO catch-all: any other unknown URL must be a real 404 (dist/404.html).
+for (const r of restaurants) {
+  if (!redirects.some((x) => x.from === `/${r.slug}/:table`)) redirects.push({ kind: 'r', from: `/${r.slug}/:table`, to: `/${r.slug}/`, status: '200' });
+}
+
 // Pitch demos: a restaurant not yet public (listed !== true, e.g. Baraza) gets noindex on its
 // pages, so a private client demo can never be indexed or found before it's approved to go live.
 for (const r of restaurants) {
@@ -201,6 +244,42 @@ for (const r of restaurants) {
 fs.writeFileSync(path.join(DIST, '_headers'), headers.map((h) => `${h.for}\n${h.values.map((v) => `  ${v}`).join('\n')}`).join('\n\n') + '\n');
 fs.writeFileSync(path.join(DIST, '_redirects'), redirects.map((r) => `${r.from}  ${r.to}  ${r.status}`).join('\n') + '\n');
 
+// ═══ 404: a calm, branded page, served with status 404 by Cloudflare Pages / Netlify for any URL
+// that matches no file and no rewrite. No JavaScript needed; noindex so it never appears in search.
+const notFoundHtml = `<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1, viewport-fit=cover">
+  <title>Page not found — MENVA</title>
+  <meta name="description" content="This page isn't on the menu. Head back to MENVA or open one of our restaurant menus.">
+  <meta name="robots" content="noindex">
+  <meta name="theme-color" content="${THEME_PAPER.default}">
+  <link rel="icon" href="/favicon.ico" sizes="32x32">
+  <link rel="icon" href="/assets/social/favicon.svg" type="image/svg+xml">
+  <link rel="apple-touch-icon" href="/assets/social/apple-touch-icon.png">
+  <script src="/js/appearance.js"></script>
+  <link rel="preload" href="/vendor/fonts/dm-sans-400.woff2" as="font" type="font/woff2" crossorigin>
+  <link rel="stylesheet" href="/css/tokens.css">
+  <link rel="stylesheet" href="/css/base.css">
+  <link rel="stylesheet" href="/css/style.css">
+  <link rel="stylesheet" href="/css/toggle.css">
+</head>
+<body>
+  ${staticHeader}
+  <main class="brand-page">
+    <p class="overline">Error 404</p>
+    <h1>This page isn't <em>on the menu.</em></h1>
+    <p>The link may be old or mistyped. Start from the home page, or open one of our menus.</p>
+    <a class="product-action" href="/">Go to MENVA <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round"><path d="M4 12h15M13 6l6 6-6 6"/></svg></a>
+    ${restaurantLinks(listed)}
+  </main>
+  ${staticFooter}
+</body>
+</html>
+`;
+fs.writeFileSync(path.join(DIST, '404.html'), notFoundHtml);
+
 // Browsers request /favicon.ico at the site root regardless of what any <link> tag says.
 copy('assets/social/favicon.ico', 'favicon.ico');
 
@@ -208,7 +287,7 @@ const build = hash.digest('hex').slice(0, 12);
 
 // Stamp local CSS/JS links with the build id. HTML is always revalidated, so after a deploy the
 // page asks for new URLs and the service worker can never pair old JavaScript with new data.
-for (const page of ['index.html', 'stats/index.html', ...restaurants.map((r) => `${r.slug}/index.html`)]) {
+for (const page of ['index.html', '404.html', 'stats/index.html', ...restaurants.map((r) => `${r.slug}/index.html`)]) {
   const file = path.join(DIST, page);
   if (!fs.existsSync(file)) continue;
   const html = fs.readFileSync(file, 'utf8').replace(/((?:href|src)="\/(?:css|js|stats)\/[^"?]+\.(?:css|js))"/g, `$1?v=${build}"`);

@@ -87,25 +87,25 @@
     Cache-Control = "public, max-age=0, must-revalidate"
 
 # ── Routing ───────────────────────────────────────────────────
-# Path routing (/g, /g/12): every unknown path serves the app shell. Restaurant pages have their
-# own static SEO tags per restaurant (scripts/build.mjs writes dist/<slug>/index.html), so those
-# must resolve before the generic catch-all below — order matters.
+# Table URLs (/g/12, /baraza/4) serve that restaurant's page, which has its own static SEO tags
+# (scripts/build.mjs writes dist/<slug>/index.html). The table segment is one path segment only
+# (:table), so /g/1/2 is a real 404. scripts/build.mjs adds the same rule for any restaurant in the
+# menu data that is missing here.
+#
+# There is deliberately NO catch-all (/*  /index.html  200): it made every unknown URL answer 200
+# (a "soft 404", which Google penalises). Anything that matches no file and no rule above gets
+# dist/404.html with a real 404 status — Cloudflare Pages and Netlify both do this automatically.
 [[redirects]]
-  from = "/g/*"
+  from = "/g/:table"
   to = "/g/"
   status = 200
 
 [[redirects]]
-  from = "/baraza/*"
+  from = "/baraza/:table"
   to = "/baraza/"
   status = 200
 
 [[redirects]]
-  from = "/haute-dolci/*"
+  from = "/haute-dolci/:table"
   to = "/haute-dolci/"
-  status = 200
-
-[[redirects]]
-  from = "/*"
-  to = "/index.html"
   status = 200

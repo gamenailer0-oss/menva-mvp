@@ -1,8 +1,8 @@
 # This file is a reference only — scripts/build.mjs generates the real dist/robots.txt at build
-# time (it needs the site origin for the Sitemap line, resolved from data/site.json / process.env.URL).
+# time (it needs the site origin for the Sitemap line, resolved from data/site.json / SITE_URL / wrangler.toml).
 User-agent: *
 Allow: /
 Disallow: /stats
 Disallow: /api/
 
-Sitemap: https://menva-ar.netlify.app/sitemap.xml
+Sitemap: https://menva.pages.dev/sitemap.xml
