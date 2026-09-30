@@ -1,0 +1,68 @@
+{
+  "version": 1,
+  "about": "Daytime meme carousels (social/memes/), posted at 3 pm on days that also carry the 8:30 pm Reel. Pre-launch ones tease only: no product explanation.",
+  "defaultStart": "2026-10-05",
+  "handle": "@eatmenva",
+  "posts": [
+    {
+      "n": 1,
+      "day": -3,
+      "time": "15:00",
+      "id": "meme-01-jumbo-bait",
+      "series": "Daytime memes",
+      "pillar": "tease",
+      "audience": "diners",
+      "format": "carousel",
+      "caption": "Swipe kiya na? Phir se photo pe bharosa kar liya.\n\nUs dost ko tag karo jo har baar menu photo dekh ke order karta hai.\n\nMadam ki Class, raat 8:30. Late aaye to absent.",
+      "hashtags": [
+        "#menva",
+        "#lahorefood",
+        "#foodmemes",
+        "#pakistanimemes"
+      ],
+      "alt": "Meme in two slides. Slide 1: a giant cartoon burger with the text: this is how the jumbo burger will look on your table. Slide 2: why are you believing it? It's a photo. Phir se?",
+      "slides": [
+        {
+          "layout": "meme",
+          "img": "social/memes/bait-s1.png",
+          "h": "This is how the jumbo burger will look on your table."
+        },
+        {
+          "layout": "meme",
+          "img": "social/memes/bait-s2.png",
+          "h": "Why are you believing it? It's a photo. Phir se?"
+        }
+      ]
+    },
+    {
+      "n": 2,
+      "day": -2,
+      "time": "15:00",
+      "id": "meme-02-phone-duo",
+      "series": "Daytime memes",
+      "pillar": "tease",
+      "audience": "diners",
+      "format": "carousel",
+      "caption": "Launch event dekh ke dil khush ho gaya na? Phir yaad aaya, jeb mein sirf photo hai.\n\nUs dost ko tag karo jo har launch pe 'bas ye le raha hun' bolta hai.\n\nMadam ki Class, raat 8:30. Late aaye to absent.",
+      "hashtags": [
+        "#menva",
+        "#lahorefood",
+        "#foodmemes",
+        "#pakistanimemes"
+      ],
+      "alt": "Meme in two slides styled like a phone launch event. Slide 1: two sleek phones side by side, each showing a cartoon burger, with the text: this is how the jumbo burger will look on the new phone duo. Slide 2: why are you looking? Can you afford it?",
+      "slides": [
+        {
+          "layout": "meme",
+          "img": "social/memes/duo-s1.png",
+          "h": "This is how the jumbo burger will look on the new phone duo."
+        },
+        {
+          "layout": "meme",
+          "img": "social/memes/duo-s2.png",
+          "h": "Why are you looking? Can you afford it?"
+        }
+      ]
+    }
+  ]
+}

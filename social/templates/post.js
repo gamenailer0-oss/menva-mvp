@@ -163,6 +163,9 @@
     // cover: a Reel's cover frame, full bleed (img = social/reels/out/<name>-cover.jpg). Reels only.
     cover: (d) => /^social\/reels\/out\/[\w-]+\.jpg$/.test(d.img || '') ? `<img class="cover-img" src="../../${esc(d.img)}" alt="">` : (fail('cover needs img = social/reels/out/<name>-cover.jpg'), ''),
 
+    // meme: a finished meme slide, full bleed (img = social/memes/<name>.png or .jpg), no overlay.
+    meme: (d) => /^social\/memes\/[\w-]+\.(png|jpg)$/.test(d.img || '') ? `<img class="cover-img" src="../../${esc(d.img)}" alt="">` : (fail('meme needs img = social/memes/<name>.png'), ''),
+
     // riddle: the pre-launch treasure hunt. pattern: the answer's letters as boxes ('_' a letter, '?' the one
     // that counts, ' ' a gap). board: the 10-letter code so far ('_' unknown, '?' tonight's slot, letters found).
     riddle: (d) => `${top(d)}<h1 class="${size(d, 's')}">${rich(d.h)}</h1>

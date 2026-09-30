@@ -1,0 +1,80 @@
+<!doctype html><html><head><meta charset="utf-8"><style>
+*{margin:0;box-sizing:border-box}html,body{width:1080px;background:#000}
+.s{position:relative;width:1080px;height:1350px;overflow:hidden;color:#f5f5f7;font-family:"SF Pro Display","Helvetica Neue",Inter,Arial,Helvetica,sans-serif;background:radial-gradient(ellipse 760px 620px at 50% 36%,#3a2a24 0%,#1a1413 45%,#050505 80%),#050505}
+.s::before{content:"";position:absolute;left:0;right:0;top:0;height:2px;background:linear-gradient(90deg,transparent,rgba(231,97,46,.55),transparent)}
+.kick{position:absolute;top:104px;left:0;right:0;text-align:center;font-size:30px;letter-spacing:.32em;text-transform:uppercase;font-weight:400;color:#E7612E}
+.n{position:absolute;top:60px;right:64px;font-size:26px;font-weight:300;letter-spacing:.08em;color:rgba(255,255,255,.55)}
+h1{position:absolute;left:80px;right:80px;text-align:center;font-weight:200;text-transform:uppercase;letter-spacing:-.005em}
+.wm{position:absolute;bottom:64px;left:80px;font-size:38px;font-weight:300;letter-spacing:-.01em;color:#FFF4E6;opacity:.85}
+.arr{position:absolute;bottom:60px;right:72px;display:flex;align-items:center;gap:14px;font-size:24px;letter-spacing:.2em;text-transform:uppercase;color:rgba(255,255,255,.5);font-weight:300}
+.arr svg{width:54px;height:24px}
+/* device */
+.dev{position:absolute;top:196px;left:0;width:1080px;height:740px}
+.glow{position:absolute;left:140px;right:140px;top:60px;height:600px;background:radial-gradient(ellipse at 50% 50%,rgba(231,97,46,.28),transparent 68%);filter:blur(30px)}
+.ph{position:absolute;top:20px;width:346px;height:700px;border-radius:64px;padding:11px;background:linear-gradient(135deg,#e9e4df 0%,#8b8580 18%,#3a3633 45%,#a9a39d 70%,#4a4541 100%);box-shadow:0 60px 90px rgba(0,0,0,.75),0 0 0 1px rgba(255,255,255,.18) inset,0 0 60px rgba(231,97,46,.12)}
+.ph.l{left:170px}.ph.r{left:564px}
+.bz{width:100%;height:100%;border-radius:54px;background:#000;padding:7px}
+.sc{position:relative;width:100%;height:100%;border-radius:47px;overflow:hidden;background:radial-gradient(circle at 50% 42%,#FFD9A8 0%,#F59A55 48%,#E7612E 100%)}
+.sc.b2{background:radial-gradient(circle at 50% 42%,#FFE9C8 0%,#F7B16A 45%,#B5371F 110%)}
+.sc svg.bg{position:absolute;left:-6px;top:150px;width:340px;height:340px}
+.isl{position:absolute;top:14px;left:50%;width:100px;height:30px;margin-left:-50px;border-radius:20px;background:#000;z-index:3}
+.tm{position:absolute;top:16px;left:34px;font-size:20px;font-weight:600;color:#3a1a0c;z-index:3}
+.lab{position:absolute;bottom:64px;left:0;right:0;text-align:center;font-size:24px;font-weight:600;letter-spacing:.14em;color:#4a1f0e;text-transform:uppercase}
+.bar{position:absolute;bottom:16px;left:50%;width:120px;height:6px;margin-left:-60px;border-radius:4px;background:rgba(58,26,12,.7)}
+.gl{position:absolute;inset:0;background:linear-gradient(115deg,rgba(255,255,255,.34) 0%,rgba(255,255,255,.08) 28%,transparent 29%);z-index:4;border-radius:47px;pointer-events:none}
+.btn{position:absolute;width:5px;border-radius:3px;background:linear-gradient(#bbb,#666)}
+.floor{position:absolute;left:170px;right:170px;top:730px;height:120px;background:radial-gradient(ellipse at 50% 0%,rgba(231,97,46,.22),transparent 70%);}
+.refl{position:absolute;top:722px;width:346px;height:110px;border-radius:0 0 64px 64px;background:linear-gradient(rgba(255,255,255,.10),transparent);transform:scaleY(1);filter:blur(1px);-webkit-mask-image:linear-gradient(#000,transparent)}
+.refl.l{left:170px}.refl.r{left:564px}
+.hinge{position:absolute;left:516px;top:120px;width:48px;height:520px;background:linear-gradient(90deg,#2a2725,#9a948e 50%,#2a2725);border-radius:10px;z-index:0}
+.ph{z-index:1}
+</style></head><body>
+<svg width="0" height="0" style="position:absolute"><defs>
+<symbol id="burger" viewBox="0 0 340 340">
+ <ellipse cx="170" cy="304" rx="128" ry="16" fill="rgba(90,30,10,.28)"/>
+ <g stroke="#3b1a0c" stroke-width="7" stroke-linejoin="round" stroke-linecap="round">
+  <path d="M52 250 Q52 292 96 292 L244 292 Q288 292 288 250 Z" fill="#E8A24C"/>
+  <path d="M46 214 Q46 246 74 246 L266 246 Q294 246 294 214 Z" fill="#6b3418"/>
+  <path d="M46 214 Q46 196 66 196 L274 196 Q294 196 294 214 Q294 216 293 218 Q170 238 47 218 Q46 216 46 214Z" fill="#5a2a12" stroke="none"/>
+  <path d="M40 194 Q40 178 60 178 L280 178 Q300 178 300 194 Q300 214 280 214 L60 214 Q40 214 40 194Z" fill="#8a4522"/>
+  <path d="M56 160 L284 160 L284 176 L56 176Z" fill="#E8412E"/>
+  <path d="M38 160 L302 160 L302 176 Q290 194 274 178 Q258 196 240 178 Q222 196 204 178 Q186 196 168 178 Q150 196 132 178 Q114 196 96 178 Q78 196 60 178 Q44 192 38 176Z" fill="#7BC043"/>
+  <path d="M50 152 L290 152 L290 166 L262 166 L252 196 L236 166 L110 166 L98 208 L84 166 L50 166Z" fill="#FFC928"/>
+  <path d="M40 146 Q34 60 170 46 Q306 60 300 146 Q300 158 280 158 L60 158 Q40 158 40 146Z" fill="#F0A64E"/>
+ </g>
+ <path d="M78 128 Q84 90 130 72" fill="none" stroke="rgba(255,255,255,.55)" stroke-width="10" stroke-linecap="round"/>
+ <g fill="#FFF4E6" stroke="#3b1a0c" stroke-width="3">
+  <ellipse cx="130" cy="92" rx="10" ry="5.5" transform="rotate(-25 130 92)"/><ellipse cx="180" cy="80" rx="10" ry="5.5" transform="rotate(8 180 80)"/>
+  <ellipse cx="228" cy="100" rx="10" ry="5.5" transform="rotate(30 228 100)"/><ellipse cx="150" cy="122" rx="10" ry="5.5" transform="rotate(-8 150 122)"/>
+  <ellipse cx="206" cy="128" rx="10" ry="5.5" transform="rotate(18 206 128)"/><ellipse cx="100" cy="126" rx="9" ry="5" transform="rotate(-35 100 126)"/>
+  <ellipse cx="256" cy="130" rx="9" ry="5" transform="rotate(38 256 130)"/>
+ </g>
+</symbol>
+<symbol id="ph" viewBox="0 0 1 1"></symbol>
+</defs></svg>
+
+<div class="s" id="s1">
+ <div class="n">1/2</div>
+ <div class="kick">Introducing</div>
+ <div class="dev">
+  <div class="glow"></div>
+  <div class="hinge"></div>
+  <div class="btn" style="left:164px;top:210px;height:70px"></div><div class="btn" style="left:164px;top:300px;height:70px"></div><div class="btn" style="left:916px;top:270px;height:110px"></div>
+  <div class="ph l"><div class="bz"><div class="sc"><div class="isl"></div><div class="tm">9:41</div><svg class="bg"><use href="#burger"/></svg><div class="lab">Jumbo</div><div class="bar"></div><div class="gl"></div></div></div></div>
+  <div class="ph r"><div class="bz"><div class="sc b2"><div class="isl"></div><div class="tm">9:41</div><svg class="bg"><use href="#burger"/></svg><div class="lab">Burger</div><div class="bar"></div><div class="gl"></div></div></div></div>
+  
+ </div>
+ <h1 style="top:960px;font-size:66px;line-height:1.08">This is how the <b style="font-weight:500;color:#FFF4E6">Jumbo Burger</b> will look on the new <b style="font-weight:500;color:#E7612E">Phone Duo.</b></h1>
+ <div class="wm">menva</div>
+ <div class="arr">swipe <svg viewBox="0 0 54 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M2 12H50M40 3L50 12L40 21"/></svg></div>
+</div>
+
+<div class="s" id="s2" style="background:radial-gradient(ellipse 800px 560px at 50% 46%,#3d1a12 0%,#1a0e0c 50%,#050505 85%),#050505">
+ <div class="n">2/2</div>
+ <div class="kick" style="color:#B5371F;color:#E7612E;opacity:.0">.</div>
+ <h1 style="top:430px;font-size:76px;line-height:1.16;white-space:nowrap;font-weight:200;letter-spacing:-.02em">Why are you looking?<br><span style="font-weight:600;font-size:76px;color:#E7612E">Can you afford it????</span></h1>
+ <div style="position:absolute;left:100px;right:100px;top:740px;text-align:center;font-size:40px;line-height:1.35;font-weight:300;color:#FFF4E6">Phone bhi nahi, burger bhi nahi.<br>Sirf photo dekh ke khush ho jao.</div>
+ <div style="position:absolute;left:0;right:0;top:1120px;text-align:center;font-size:27px;font-weight:300;letter-spacing:.02em;color:rgba(255,255,255,.55)">Madam ki Class, raat 8:30. Late aaye to absent.</div>
+ <div class="wm">menva</div>
+</div>
+</body></html>

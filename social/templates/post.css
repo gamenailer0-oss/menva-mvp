@@ -233,7 +233,7 @@ html.tall .l-phone .screen { border-radius: 56px; }
 .bg-chili .notes em, .bg-ink .notes em, .bg-chili .receipt em, .bg-ink .receipt em { color: var(--chili); }
 
 /* cover: a Reel's cover frame, full bleed */
-.l-cover { padding: 0; }
+.l-cover, .l-meme { padding: 0; }
 .cover-img { width: 1080px; height: 1350px; object-fit: cover; object-position: 50% 25%; display: block; }
 html.tall .cover-img { height: 1920px; }
 

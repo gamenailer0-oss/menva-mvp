@@ -56,6 +56,7 @@ cal.posts.forEach((p, i) => {
     if (!/^social\/reels\/out\/[\w-]+\.mp4$/.test(p.video || '') || !fs.existsSync(path.join(ROOT, p.video))) bad(p, `reel video "${p.video}" not found (make it with social/reels/make.mjs)`);
     if (!slides[0] || slides[0].layout !== 'cover') bad(p, 'a reel needs exactly one slide with layout "cover"');
   } else if (slides.some((s) => s.layout === 'cover')) bad(p, 'layout "cover" is only for reels');
+  slides.filter((s) => s.layout === 'meme').forEach((s) => { if (!s.img || !fs.existsSync(path.join(ROOT, s.img))) bad(p, `meme image "${s.img}" not found`); });
   slides.filter((s) => s.layout === 'cover').forEach((s) => { if (!s.img || !fs.existsSync(path.join(ROOT, s.img))) bad(p, `cover image "${s.img}" not found`); });
 
   const caption = [p.caption, (p.hashtags || []).join(' ')].filter(Boolean).join('\n\n');
@@ -91,17 +92,19 @@ cal.posts.forEach((p, i) => {
 });
 
 // Post ids must be unique across every calendar and series file: the server's "already posted" record
-// uses them. A series post must also land on a day no calendar posts on (one post a day).
+// uses them. A series post must also land on a day-and-time no other file posts on (a daytime meme and
+// the 8:30 pm Reel may share a day).
 const LIVE = /^(calendar(-\d+)?|series-[a-z0-9-]+)\.json$/;
 if (LIVE.test(NAME + '.json')) {
   const absDay = (f, d) => { const m = f.match(/^calendar-(\d+)\.json$/); return d + (m ? (Number(m[1]) - 1) * 100 : 0); };
-  const myDays = new Map(cal.posts.map((p) => [absDay(NAME + '.json', p.day), p.id]));
+  const slot = (c, p) => p.time || c.postTime || '20:30';
+  const myDays = new Map(cal.posts.map((p) => [absDay(NAME + '.json', p.day) + '@' + slot(cal, p), p.id]));
   for (const f of fs.readdirSync(path.dirname(CAL)).filter((x) => LIVE.test(x) && x !== NAME + '.json')) {
     const other = JSON.parse(fs.readFileSync(path.join(path.dirname(CAL), f), 'utf8'));
     for (const q of other.posts || []) {
       if (seenIds.has(q.id)) problems.push(`${q.id}: id also used in ${f} (ids must be unique across calendar and series files)`);
-      const clash = myDays.get(absDay(f, q.day));
-      if (clash && (SERIES || f.startsWith('series-'))) problems.push(`${clash}: same day as ${q.id} in ${f} (one post a day)`);
+      const clash = myDays.get(absDay(f, q.day) + '@' + slot(other, q));
+      if (clash && (SERIES || f.startsWith('series-'))) problems.push(`${clash}: same day and time as ${q.id} in ${f}`);
     }
   }
 }

@@ -59,9 +59,11 @@ if (trend && attemptsOf(trend.post.id) < MAX_ATTEMPTS) {
   const tp = trend.post;
   job = { n: 0, id: tp.id, format: 'single', trend: true, caption: [tp.caption, (tp.hashtags || []).join(' ')].filter(Boolean).join('\n\n'), alt: tp.alt || '', slides: tp.slides };
 } else {
-  const post = cal.posts.find((p) => dateOf(p) === now.date);
-  if (post && !done(post.id)) {
-    const [hh, mm] = String(post.time || env('POST_TIME', '20:30')).split(':').map(Number);
+  // Several posts can share a day (a daytime meme and the 8:30 pm Reel): take the earliest one still due.
+  const timeOf = (p) => String(p.time || env('POST_TIME', '20:30'));
+  const todays = cal.posts.filter((p) => dateOf(p) === now.date && !done(p.id)).sort((a, b) => timeOf(a).localeCompare(timeOf(b)));
+  for (const post of todays) {
+    const [hh, mm] = timeOf(post).split(':').map(Number);
     const due = now.hh > hh || (now.hh === hh && now.mm >= mm);
     if (due && attemptsOf(post.id) >= MAX_ATTEMPTS) {
       const k = post.id + '@' + now.date;
@@ -73,6 +75,7 @@ if (trend && attemptsOf(trend.post.id) < MAX_ATTEMPTS) {
       }
     } else if (due) {
       job = { n: post.n, id: post.id, format: post.format, prelaunch: post.day < 1, video: post.video || null, caption: [post.caption, (post.hashtags || []).join(' ')].filter(Boolean).join('\n\n'), alt: post.alt || '', slides: post.slides };
+      break;
     }
   }
 }
