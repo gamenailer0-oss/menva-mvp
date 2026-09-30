@@ -1,0 +1,70 @@
+{
+  "id": "hd-san-sebastian",
+  "source": {
+    "folder": "hd-san-sebastian",
+    "model": "hd-san-sebastian/hd-san-sebastian.glb",
+    "photo": null
+  },
+  "sourceHash": "6e146bd49db7",
+  "audit": "amber",
+  "dimensions_cm": {
+    "width": 26.1,
+    "height": 8,
+    "depth": 26.1
+  },
+  "scale": 1,
+  "triangles": 25000,
+  "vertices": 14582,
+  "textures": {
+    "albedo": "2048px jpeg q84 (AO baked)",
+    "normal": "1024px jpeg q85"
+  },
+  "roughness": 0.8,
+  "poster": "render",
+  "posterQuality": 82,
+  "spin": {
+    "frames": 36,
+    "frameWidth": 480,
+    "frameHeight": 360,
+    "columns": 6,
+    "rows": 6,
+    "quality": 60
+  },
+  "usdz": "model.usdz",
+  "usdzTextures": {
+    "size": 1024,
+    "quality": 84,
+    "normalMap": true
+  },
+  "files": {
+    "model.glb": {
+      "bytes": 610776,
+      "hash": "66b815fc4fcb"
+    },
+    "poster.webp": {
+      "bytes": 39494,
+      "hash": "f952a0aa378a"
+    },
+    "poster-blur.webp": {
+      "bytes": 710,
+      "hash": "45a301cccbe7"
+    },
+    "spin.webp": {
+      "bytes": 296370,
+      "hash": "18383d34462a"
+    },
+    "model.usdz": {
+      "bytes": 1613147,
+      "hash": "bdebd21a00dc"
+    }
+  },
+  "before": {
+    "hd-san-sebastian.glb": 1597352
+  },
+  "warnings": [
+    "plate_length_cm not confirmed — kept the scan's own scale (26.1 cm across). Photogrammetry scans are metric, but confirm the plate size.",
+    "AO baked into albedo (strength 0.6); AO slot dropped.",
+    "USDZ (iPhone AR) uses 1024px textures q84 to fit 1.80 MB."
+  ],
+  "budgetErrors": []
+}

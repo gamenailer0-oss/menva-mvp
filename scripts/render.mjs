@@ -69,6 +69,7 @@ export async function createRenderer() {
 
   return {
     logs,
+    page, // for one-off inspection scripts (e.g. picking 3D points under a pixel)
 
     // Poster: 1200×900 (4:3), shot with exactly the dish sheet's camera (see js/app.js) so the
     // poster → live 3D crossfade lines up instead of ghosting.

@@ -1,5 +1,5 @@
 {
-  "generated": "2026-09-27T10:44:28.186Z",
+  "generated": "2026-09-30T16:17:07.317Z",
   "restaurants": [
     {
       "id": "gauchos",
@@ -867,9 +867,30 @@
           "spice_level": null,
           "dietary": null,
           "nutrition": null,
-          "has3d": false,
-          "assets": null,
-          "dimensions_cm": null,
+          "has3d": true,
+          "assets": {
+            "glb": "/assets/dishes/hd-san-sebastian/model.glb?v=66b815fc4fcb",
+            "glbBytes": 610776,
+            "usdz": "/assets/dishes/hd-san-sebastian/model.usdz?v=bdebd21a00dc",
+            "usdzBytes": 1613147,
+            "poster": "/assets/dishes/hd-san-sebastian/poster.webp?v=f952a0aa378a",
+            "blur": "data:image/webp;base64,UklGRr4CAABXRUJQVlA4WAoAAAAQAAAAHwAAFwAAQUxQSCwBAAABkCvbtmlbY651bRuR7ftsI7YV27bt7H0DU0c2vuCGz95rzREcXeYRMQEYjo01fSTGhhXASh8Yi7CCul2dsBKDWAHyWkct27lx7ujX/LLWionKGsT13OgNGFYDz/sliJNIBqnbP/wjqS5UqQGfVMFIOIPRT6jqvCojquOPi7mQEIvV1MArY/SO9xIhgEHLZwbsQ/+PJyEQJD2hY5+q1y4Yg9H07OOAi2EtVvSd4w7YOJxl0HdnQjbT9d08WIPqz9S+cXyUCoHYQwy0Lxx/zBEBEFd5k87HpI5/thfEIzS98zap3ms4VXVe+Wl1dTLCmqKuDc89SXrnVRnq785syUNEW9oyee31178Z/l/v48urRtfnIErJqu0ZMWXehiNXz+7bu27x3AkjRlYnISxWUDggbAEAABAJAJ0BKiAAGAA+0VikS6glI6GwCAEAGglsAJ0y43V3s3Fjb3u6ngNtft/98tYQFcCgA9yqYB+oA7NfeA2GuXmGbp9nyw7tBcacULogFITlZAD+mNhQjdaKe0PlGVnkpW75nC5NFaH+8Xmf9TanoaNo3Rav/y1j7c/wEA2J3hfiE9pBgOL+/ECNsPtYhl9msYzuL2G0+g6F9uzBev0ZC5Ow501z5aO4PFPj75B2Oda1NDV7COBA5U3p+pi+MNOQFhFtLivIBSanl0FNeGoE7+9vn43DQCeYz+f5dbE/+St9lj7lhuzRFY62aDuxrIBNxEM7uyjxNxIoJnGzD5Uxcy7X7fNg1b9fN8I30D+Y2LSX/Y+fxePtNzBNdyQWwt3BG/Ns0S53fihpY/UbF2R7e/huNxJZcSXO2OzmWWDKWAF2sy0/JzVR0FByx63werxhyRuTeQXDk782DDHGZ0vkFSLJtpLeWzs2aN3wAAA=",
+            "spin": "/assets/dishes/hd-san-sebastian/spin.webp?v=18383d34462a",
+            "spinLayout": {
+              "frames": 36,
+              "frameWidth": 480,
+              "frameHeight": 360,
+              "columns": 6,
+              "rows": 6,
+              "quality": 60
+            },
+            "posterIsPhoto": false
+          },
+          "dimensions_cm": {
+            "width": 26.1,
+            "height": 8,
+            "depth": 26.1
+          },
           "confirmed_by": null,
           "origin": null,
           "tasting_notes": null,
@@ -889,9 +910,30 @@
           "spice_level": null,
           "dietary": null,
           "nutrition": null,
-          "has3d": false,
-          "assets": null,
-          "dimensions_cm": null,
+          "has3d": true,
+          "assets": {
+            "glb": "/assets/dishes/hd-matilda-cake/model.glb?v=7835ac951f91",
+            "glbBytes": 661252,
+            "usdz": "/assets/dishes/hd-matilda-cake/model.usdz?v=2cc06c2ccdfd",
+            "usdzBytes": 1687417,
+            "poster": "/assets/dishes/hd-matilda-cake/poster.webp?v=887bdacb64c6",
+            "blur": "data:image/webp;base64,UklGRoACAABXRUJQVlA4WAoAAAAQAAAAHwAAFwAAQUxQSBIBAAABkGrbtrI3+9wTZuZEZ8SSimPmqHhmUikzPkArq5hfgFxdFbeyUWXuvd/dP/+hB4iICcBBKym6OyqAkZ0ziuJTMzCyUyrofUseh8qOqKL2lvfW8hTUJCdGMLpNF9A7HoIYk4RKWuuVwDtP0gc8UweoJKLIuEnvAsZ2/H2nEUbiKRqe0VnP+M7z//kMSCxF7zdaz4S9tXyUDYky6PxDy6T9P16LIch/ScedtByCAoopWu6o43WYqJs7FfBVBkSAZ3Q79SEPAoOHO+X4GAIotmh3xnINCgjqtxnshOOLaggAwRIDl5zj9wkjiDYFl0nnEwscvy8WGsROrdj8yCQ8n0/WpCN+Wmnb1U/08Tw/nG2pyUQ0VlA4IEgBAAAQBwCdASogABgAPtFWpEuoJKOhsAgBABoJYgDKFQAmitGgbOtMA/WYdM51FBeXNpU8WwOPRf31R4PVCICDl5cuAAD+93mX/oijJa8ox6mkf/HiSBLVCJ6R/CSXiPIM62VA89aY/XX+/meTPHWgWUQc06jth1fpVjjqpst/Js/G4a9eZJ2rmZciP7dEuBuvK4uKB8umCtmSDEAo2mmL4vyw7aE8uQW4PFOnOS86DO9Of/f4b9+Cy+fd/x+S6KtuT2NVzjmcb1WidBPF4o+vjI5TX8r3Kqu3PIguj50U73q9/Jz2JlPpuXOowBnZd3hONKuqd+QR1F0PPuSQTFrTdnr8hjCr27hbH89/NM/PobpzSdcCSIEJl3VPG1xoQXf6/Nt6XAf1Z7rYCm+mHbFXlUjoX7AJcEU/4byR0Is5y07bttzaZ+mMvXAA",
+            "spin": "/assets/dishes/hd-matilda-cake/spin.webp?v=f209e575524a",
+            "spinLayout": {
+              "frames": 36,
+              "frameWidth": 480,
+              "frameHeight": 360,
+              "columns": 6,
+              "rows": 6,
+              "quality": 50
+            },
+            "posterIsPhoto": false
+          },
+          "dimensions_cm": {
+            "width": 25.6,
+            "height": 10.8,
+            "depth": 25.6
+          },
           "confirmed_by": null,
           "origin": null,
           "tasting_notes": null,
@@ -911,9 +953,30 @@
           "spice_level": null,
           "dietary": null,
           "nutrition": null,
-          "has3d": false,
-          "assets": null,
-          "dimensions_cm": null,
+          "has3d": true,
+          "assets": {
+            "glb": "/assets/dishes/hd-cookie-dough/model.glb?v=9540431fcc45",
+            "glbBytes": 724580,
+            "usdz": "/assets/dishes/hd-cookie-dough/model.usdz?v=93331b1cf67d",
+            "usdzBytes": 1728773,
+            "poster": "/assets/dishes/hd-cookie-dough/poster.webp?v=93fb14e3a5cd",
+            "blur": "data:image/webp;base64,UklGRoYCAABXRUJQVlA4WAoAAAAQAAAAHwAAFwAAQUxQSBYBAAABkGvb1rE9+znPb9vs/j+2jcp2pS59LoClWyeV3dlmZdvmgx2eN7qAiJgA/FettWL+gBEAMFZ+k7FG2o3q2pgKY36LCHJXMvLt2QWNsL9BUDTjKL0PDLxYAptI0P4qg49kDI5XW8ImMKi5xi+BP/c8WQWrE6znFyo973aDVVmsodfQ8VYTRDeYQUXPp61hFQalRxlUdNxljPkVjEz9wqii4zJoYCtXMOjouRBGgayulxh00XE0rEIyZieh4wIVTIdHjElmJkhfTqeK/NQRooHtfoNeEb9wbzr0UjThMV34SfSBL4bA6JBaMuYqY/TeB/Lz7jFFgqSphb03vWZk5Ktt01qWpiK5ZNcOmLXu4LY5w5oqcwU/BVZQOCBKAQAAcAcAnQEqIAAYAD7RXKNNKCUjIjAYCAEAGglqALbo2bABvE5XrG1/6a9gAKSuZmbpZEx2AUmWw9eOxGSswtXDmWUys4AA+dedcn4Z8TsdOK4XqkMXwOyCm+ylvgeXb8YOEbn+RxkBK54dvwQm5LrRewn9NqRci6jUp2ZfRn/c8QI+9VSAmIqYTvkRhPSjbr8N2/h6yPsbsPOUe43Z8DbC4jAGfSrWfUnYLdXX9JHg61DENMFWs410Dcnh9a30d/dAu8aclofZxyqAEGNV5O44ftNKP4f8v4Gq0XU7cFn44RsVUyMgRdjEEFQVNZ6JdwZFzQFvM20vXkU83Tz56YRlhyKL/9GPztoIWS13w/1CO4cgeW4ahFsqfmWtlLCsbFQRSuGV7g7fNE8HyA7qOnC5pILRGtbd9LcM2mBN2SpS1phRQ9WoLt+QAAAA",
+            "spin": "/assets/dishes/hd-cookie-dough/spin.webp?v=34406ef14de2",
+            "spinLayout": {
+              "frames": 36,
+              "frameWidth": 480,
+              "frameHeight": 360,
+              "columns": 6,
+              "rows": 6,
+              "quality": 45
+            },
+            "posterIsPhoto": false
+          },
+          "dimensions_cm": {
+            "width": 17.3,
+            "height": 6.7,
+            "depth": 28.5
+          },
           "confirmed_by": null,
           "origin": null,
           "tasting_notes": null,

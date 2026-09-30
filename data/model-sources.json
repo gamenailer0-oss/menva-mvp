@@ -11,5 +11,26 @@
     "placeholder": true,
     "decided": "2026-09-25",
     "why": "Pitch placeholder: an AI-generated model (Tripo) of Baraza's chicken pizza, supplied by the owner as pizza+3d+model+baraza.usdz (72 MB, 1.95M triangles). Pre-processed with scripts/prep-usdz.mjs to 40k triangles. Replace with the real scan after the pitch."
+  },
+  "hd-san-sebastian": {
+    "source": "hd-san-sebastian",
+    "unlit": false,
+    "roughness": 0.8,
+    "decided": "2026-09-30",
+    "why": "Real Apple Object Capture scan (Sab sabastein.zip). OBJ + 2K colour/normal/AO → scripts/prep-obj.mjs --grade 'sat=1.06,contrast=1.06,sharpen=0.6,warm=3'. Roughness 0.8: soft sheen on cream and sauce, not plastic."
+  },
+  "hd-cookie-dough": {
+    "source": "hd-cookie-dough",
+    "unlit": false,
+    "roughness": 0.8,
+    "decided": "2026-09-30",
+    "why": "Real Apple Object Capture scan (Cookie dough.zip). prep-obj --grade 'shadows=0.85,warmShadows=4,sat=1.06,contrast=1.06,sharpen=0.6'."
+  },
+  "hd-matilda-cake": {
+    "source": "hd-matilda-cake",
+    "unlit": false,
+    "roughness": 0.8,
+    "decided": "2026-09-30",
+    "why": "Real Apple Object Capture scan (Matilda.zip). Repairs: the chocolate top was crushed to near-black → shadow lift (--grade 'shadows=0.72,warmShadows=10,sat=1.06,contrast=1.04,sharpen=0.7'); a see-through tear in the foil wrap's back corner, just under the rim → closed with prep-obj --patch (ring mapped by picking a render at '-25deg 55deg 30%'; ring saved as incoming-models/hd-matilda-cake/tear-ring.json)."
   }
 }

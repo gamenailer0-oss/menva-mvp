@@ -1,0 +1,70 @@
+{
+  "id": "hd-matilda-cake",
+  "source": {
+    "folder": "hd-matilda-cake",
+    "model": "hd-matilda-cake/hd-matilda-cake.glb",
+    "photo": null
+  },
+  "sourceHash": "315da1d3dd74",
+  "audit": "amber",
+  "dimensions_cm": {
+    "width": 25.6,
+    "height": 10.8,
+    "depth": 25.6
+  },
+  "scale": 1,
+  "triangles": 25082,
+  "vertices": 14956,
+  "textures": {
+    "albedo": "2048px jpeg q84 (AO baked)",
+    "normal": "1024px jpeg q85"
+  },
+  "roughness": 0.8,
+  "poster": "render",
+  "posterQuality": 82,
+  "spin": {
+    "frames": 36,
+    "frameWidth": 480,
+    "frameHeight": 360,
+    "columns": 6,
+    "rows": 6,
+    "quality": 50
+  },
+  "usdz": "model.usdz",
+  "usdzTextures": {
+    "size": 1024,
+    "quality": 84,
+    "normalMap": true
+  },
+  "files": {
+    "model.glb": {
+      "bytes": 661252,
+      "hash": "7835ac951f91"
+    },
+    "poster.webp": {
+      "bytes": 46440,
+      "hash": "887bdacb64c6"
+    },
+    "poster-blur.webp": {
+      "bytes": 648,
+      "hash": "3e774ebde4e3"
+    },
+    "spin.webp": {
+      "bytes": 306738,
+      "hash": "f209e575524a"
+    },
+    "model.usdz": {
+      "bytes": 1687417,
+      "hash": "2cc06c2ccdfd"
+    }
+  },
+  "before": {
+    "hd-matilda-cake.glb": 1732608
+  },
+  "warnings": [
+    "plate_length_cm not confirmed — kept the scan's own scale (25.6 cm across). Photogrammetry scans are metric, but confirm the plate size.",
+    "AO baked into albedo (strength 0.6); AO slot dropped.",
+    "USDZ (iPhone AR) uses 1024px textures q84 to fit 1.80 MB."
+  ],
+  "budgetErrors": []
+}

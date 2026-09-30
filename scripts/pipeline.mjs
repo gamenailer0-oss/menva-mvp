@@ -297,7 +297,10 @@ async function processDish(row, io, getRenderer) {
   const unlit = !!sources[id]?.unlit;
   const material = doc.getRoot().listMaterials()[0];
   const origRoughness = material.getRoughnessFactor();
-  if (unlit) {
+  const fixedRoughness = sources[id]?.roughness; // model-sources.json: a chosen finish for this scan (skips the clay fix)
+  if (fixedRoughness != null && !unlit) {
+    material.setRoughnessFactor(fixedRoughness);
+  } else if (unlit) {
     material.setRoughnessFactor(1).setExtension('KHR_materials_unlit', doc.createExtension(KHRMaterialsUnlit).createUnlit());
     warnings.push('Unlit (model-sources.json): lighting comes from the texture; the USDZ uses a matte material.');
   } else if (origRoughness >= FLAT_ROUGHNESS && !hasRoughnessMap) {
