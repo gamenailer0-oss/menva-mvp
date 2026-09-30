@@ -1,5 +1,5 @@
-// Haute Dolci — Raya (private pitch demo, slug "haute-dolci", listed: false). Confirms the theme,
-// banner, Signatures-first menu ordering with the three featured desserts, noindex (pitch stage),
+// Haute Dolci — Raya (slug "haute-dolci", listed: true since 2026-09-30). Confirms the theme,
+// banner, Signatures-first menu ordering with the three featured desserts, listed on home + indexable,
 // that it stays off the home page, dark mode, SEO tags, and that other restaurants are unaffected.
 import { test, expect } from '@playwright/test';
 import { watch, openDish } from './helpers.mjs';
@@ -84,25 +84,25 @@ test('dish sheet: San Sebastián Cheesecake shows the real price and an honest, 
   expect(w.errors).toEqual([]);
 });
 
-test('home page: Haute Dolci is NOT listed (pitch stage)', async ({ page }) => {
+test('home page: Haute Dolci is listed alongside Gauchos and Baraza', async ({ page }) => {
   const w = watch(page);
   await page.goto('/');
-  await expect(page.locator('.restaurant-row-item[data-theme="haute-dolci"]')).toHaveCount(0);
-  await expect(page.locator('.pilot-card')).toHaveCount(2); // Gauchos + Baraza only
+  await expect(page.locator('.restaurant-row-item[data-theme="haute-dolci"]')).toHaveCount(1);
+  await expect(page.locator('.pilot-card')).toHaveCount(3); // Gauchos, Baraza, Haute Dolci
   expect(w.errors).toEqual([]);
   expect(w.external).toEqual([]);
 });
 
-test('Haute Dolci pages are noindex\'d (pitch stage, not yet approved to go live)', async ({ request }) => {
+test('Haute Dolci pages are indexable now it is listed', async ({ request }) => {
   const res = await request.get('/haute-dolci');
-  expect(res.headers()['x-robots-tag']).toContain('noindex');
+  expect(res.headers()['x-robots-tag'] ?? '').not.toContain('noindex');
 });
 
 test('SEO tags: title, canonical, robots meta and OG image are all present on the static page', async ({ request }) => {
   const res = await request.get('/haute-dolci');
   const html = await res.text();
   expect(html).toContain('<title>Haute Dolci — menu in 3D · MENVA</title>');
-  expect(html).toContain('<meta name="robots" content="noindex, nofollow">');
+  expect(html).not.toContain('content="noindex');
   expect(html).toMatch(/<link rel="canonical" href="[^"]*\/haute-dolci">/);
   expect(html).toMatch(/og-haute-dolci\.jpg/);
 });

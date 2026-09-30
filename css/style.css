@@ -213,7 +213,7 @@
   width: min(260px, 64vw);
   height: auto;
 }
-.theme-haute-dolci .band-logo-wide { filter: invert(1); } /* black band → white mark */
+html[data-mode="dark"] .theme-haute-dolci .band-logo-wide { filter: invert(1); } /* black mark → white on the dark band */
 .band-copy { min-width: 0; }
 .band-tagline {
   font-family: var(--font-display);

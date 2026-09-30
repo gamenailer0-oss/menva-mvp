@@ -34,7 +34,7 @@ const BARAZA_SAGE = '#8A9060';
 const BARAZA_OLIVE = '#4B5A2B';
 const BARAZA_ESPRESSO = '#10150F';
 const HD_PAPER = '#FAF3F2';
-const HD_BAND = '#141011'; // black, like their store front (matches the menu banner)
+const HD_BAND = '#E7C3C8'; // blush — matches the menu banner in light mode
 const HD_ACCENT = '#9C2F52';
 const HD_INK = '#1C1416';
 const HD_MUTED = '#6B5B57';
@@ -174,15 +174,17 @@ function ogBarazaHtml() {
 // kind. Blush band on the left (their "lavish pink and black" palette); their tagline set in
 // tracked-caps Jost (the OFL stand-in for their FuturaPT-Light brand type) on the right.
 function ogHauteDolciHtml() {
+  // Blush band with their black wordmark (the menu banner's light look); the San Sebastián scan on the right.
   return page(HD_PAPER, `<style>
     .band { position:absolute; left:0; top:0; width:360px; height:630px; background:${HD_BAND}; display:flex; flex-direction:column; align-items:center; justify-content:center; gap:26px; }
-    .band img { width:260px; height:auto; filter:invert(1); }
-    .band .loc { font-family:'Jost'; font-weight:500; font-size:19px; letter-spacing:0.12em; text-transform:uppercase; color:#F2D4D9; text-align:center; }
-    .tagline { position:absolute; left:416px; top:130px; width:740px; font-family:'Jost'; font-weight:300; font-size:76px; line-height:1.08; letter-spacing:0.01em; text-transform:uppercase; color:${HD_ACCENT}; }
-    .sub { position:absolute; left:418px; top:300px; width:700px; font-family:'DM Sans'; font-weight:500; font-size:23px; letter-spacing:0.03em; text-transform:uppercase; color:${HD_MUTED}; }
-    .signatures { position:absolute; left:418px; bottom:96px; width:720px; font-family:'DM Sans'; font-weight:400; font-size:20px; line-height:1.5; color:${HD_INK}; }
-    .signatures b { font-weight:600; }
-    .credit { position:absolute; left:0; width:360px; bottom:34px; text-align:center; font-family:'Instrument Serif'; font-size:23px; color:#F2D4D9; opacity:.75; }
+    .band img { width:260px; height:auto; }
+    .band .loc { font-family:'Jost'; font-weight:500; font-size:19px; letter-spacing:0.12em; text-transform:uppercase; color:${HD_INK}; text-align:center; }
+    .tagline { position:absolute; left:416px; top:58px; width:740px; font-family:'Jost'; font-weight:300; font-size:68px; line-height:1.05; letter-spacing:0.01em; text-transform:uppercase; color:${HD_ACCENT}; }
+    .sub { position:absolute; left:418px; top:150px; width:700px; font-family:'DM Sans'; font-weight:500; font-size:21px; letter-spacing:0.03em; text-transform:uppercase; color:${HD_MUTED}; }
+    .stage { position:absolute; left:416px; top:214px; width:728px; height:370px; border-radius:24px; background:#F2E7E0; display:flex; align-items:center; justify-content:center; }
+    .dish-name { position:absolute; left:26px; top:20px; font-family:'Jost'; font-weight:500; font-size:20px; color:${HD_INK}; z-index:2; }
+    ${PLATE_CSS}
+    .credit { position:absolute; left:0; width:360px; bottom:34px; text-align:center; font-family:'Instrument Serif'; font-size:23px; color:${HD_INK}; opacity:.7; }
   </style>
   <div class="band">
     <img src="${fileUrl('assets/restaurant/haute-dolci-logo-black.png')}">
@@ -190,7 +192,10 @@ function ogHauteDolciHtml() {
   </div>
   <div class="tagline">It's a must.</div>
   <div class="sub">Indulge, Capture, Share, Repeat.</div>
-  <div class="signatures"><b>Signatures —</b> San Sebasti&aacute;n cheesecake &middot; Matilda cake &middot; Cookie dough</div>
+  <div class="stage">
+    <div class="dish-name">San Sebasti&aacute;n cheesecake</div>
+    <div class="plate" style="width:62%;margin-top:26px"><img src="${dishUrl('hd-san-sebastian')}"></div>
+  </div>
   <div class="credit">menva.</div>`);
 }
 
@@ -244,7 +249,7 @@ const FAVICON_SVG = `<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 100 10
 </svg>`;
 
 // ─── Run ─────────────────────────────────────────────────────────────────
-await Promise.all(['steak-main', 'bz-chicken-pizza'].map(prepareDish));
+await Promise.all(['steak-main', 'bz-chicken-pizza', 'hd-san-sebastian'].map(prepareDish));
 const browser = await chromium.launch({ channel: 'chrome' });
 
 console.log('Rendering Open Graph images...');

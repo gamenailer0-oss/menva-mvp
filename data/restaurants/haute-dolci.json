@@ -6,7 +6,7 @@
   "logo": "/assets/restaurant/haute-dolci-logo-black.png",
   "theme": "haute-dolci",
   "pilot": false,
-  "listed": false,
+  "listed": true,
   "cuisine": "Desserts",
   "tagline": "It's a must.",
   "hours": "Daily, 9am–midnight (1am Fri–Sun)",
@@ -27,10 +27,25 @@
   },
   "quickNotes": [],
   "loaderLines": [
-    { "until": 25, "text": "Tempering the chocolate" },
-    { "until": 60, "text": "Setting the layers" },
-    { "until": 90, "text": "Dusting the finish" },
-    { "until": 99, "text": "Plating your slice" },
-    { "loaded": true, "text": "Served." }
+    {
+      "until": 25,
+      "text": "Tempering the chocolate"
+    },
+    {
+      "until": 60,
+      "text": "Setting the layers"
+    },
+    {
+      "until": 90,
+      "text": "Dusting the finish"
+    },
+    {
+      "until": 99,
+      "text": "Plating your slice"
+    },
+    {
+      "loaded": true,
+      "text": "Served."
+    }
   ]
 }

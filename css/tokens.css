@@ -91,8 +91,8 @@
   --accent: #9C2F52;
   --accent-ink: #FFFFFF;
   --stage: #F2E7E0;
-  --brand-band: #141011;      /* black, like their store front */
-  --brand-band-ink: #F2D4D9;  /* blush on black: 13:1 */
+  --brand-band: #E7C3C8;      /* blush — their pink */
+  --brand-band-ink: #1C1416;
   --font-display: 'Jost', 'Arial Narrow', sans-serif;
 }
 
@@ -150,8 +150,8 @@ html[data-mode="dark"] [data-theme="haute-dolci"] {
   --accent: #E58AA8;
   --accent-ink: #1A1113;
   --stage: #221619;
-  --brand-band: #0C0809;
-  --brand-band-ink: #F2D4D9;
+  --brand-band: #4A1F2B;      /* deep plum, after hours */
+  --brand-band-ink: #F5E9E7;
 }
 
 /* ═══ Type Scale ═══ */

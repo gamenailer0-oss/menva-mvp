@@ -84,7 +84,7 @@ test('home page: Baraza is listed alongside Gauchos', async ({ page }) => {
 
   await test.step('Gauchos card still shows, unchanged, and comes first (pilot)', async () => {
     const cards = page.locator('.pilot-card');
-    await expect(cards).toHaveCount(2);
+    await expect(cards).toHaveCount(3); // Gauchos, Baraza, Haute Dolci
     await expect(cards.first()).toBeVisible();
     await expect(cards.first()).toHaveAttribute('href', '/g');
   });
