@@ -9,7 +9,7 @@
   display: inline-flex;
   align-items: center;
   min-height: 44px;
-  font-family: var(--font-display);
+  font-family: var(--font-brand);
   font-size: 22px;
   letter-spacing: -0.02em;
   line-height: 1;
@@ -210,10 +210,10 @@
    second file, since it is a flat monochrome mark. */
 .band-logo-wide {
   flex: none;
-  width: min(220px, 46vw);
+  width: min(260px, 64vw);
   height: auto;
 }
-html[data-mode="dark"] .theme-haute-dolci .band-logo-wide { filter: invert(1); }
+.theme-haute-dolci .band-logo-wide { filter: invert(1); } /* black band → white mark */
 .band-copy { min-width: 0; }
 .band-tagline {
   font-family: var(--font-display);

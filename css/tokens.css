@@ -41,6 +41,7 @@
   --shadow: 0 1px 2px rgba(30, 26, 22, 0.04), 0 6px 20px rgba(30, 26, 22, 0.05);
   --shadow-lg: 0 8px 30px rgba(30, 26, 22, 0.12);
   --font-display: 'Instrument Serif', Georgia, 'Times New Roman', serif;
+  --font-brand: 'Instrument Serif', Georgia, 'Times New Roman', serif; /* MENVA's own wordmark — never themed */
   --font-body: 'DM Sans', system-ui, -apple-system, 'Segoe UI', Roboto, 'Helvetica Neue', Arial, sans-serif;
   --font-condensed: 'Barlow Condensed', 'Arial Narrow', sans-serif;
 
@@ -90,8 +91,8 @@
   --accent: #9C2F52;
   --accent-ink: #FFFFFF;
   --stage: #F2E7E0;
-  --brand-band: #E7C3C8;
-  --brand-band-ink: #1C1416;
+  --brand-band: #141011;      /* black, like their store front */
+  --brand-band-ink: #F2D4D9;  /* blush on black: 13:1 */
   --font-display: 'Jost', 'Arial Narrow', sans-serif;
 }
 
@@ -149,8 +150,8 @@ html[data-mode="dark"] [data-theme="haute-dolci"] {
   --accent: #E58AA8;
   --accent-ink: #1A1113;
   --stage: #221619;
-  --brand-band: #4A1F2B;
-  --brand-band-ink: #F5E9E7;
+  --brand-band: #0C0809;
+  --brand-band-ink: #F2D4D9;
 }
 
 /* ═══ Type Scale ═══ */

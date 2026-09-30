@@ -34,7 +34,7 @@ const BARAZA_SAGE = '#8A9060';
 const BARAZA_OLIVE = '#4B5A2B';
 const BARAZA_ESPRESSO = '#10150F';
 const HD_PAPER = '#FAF3F2';
-const HD_BAND = '#E7C3C8';
+const HD_BAND = '#141011'; // black, like their store front (matches the menu banner)
 const HD_ACCENT = '#9C2F52';
 const HD_INK = '#1C1416';
 const HD_MUTED = '#6B5B57';
@@ -176,13 +176,13 @@ function ogBarazaHtml() {
 function ogHauteDolciHtml() {
   return page(HD_PAPER, `<style>
     .band { position:absolute; left:0; top:0; width:360px; height:630px; background:${HD_BAND}; display:flex; flex-direction:column; align-items:center; justify-content:center; gap:26px; }
-    .band img { width:220px; height:auto; }
-    .band .loc { font-family:'Jost'; font-weight:500; font-size:19px; letter-spacing:0.12em; text-transform:uppercase; color:${HD_INK}; text-align:center; }
+    .band img { width:260px; height:auto; filter:invert(1); }
+    .band .loc { font-family:'Jost'; font-weight:500; font-size:19px; letter-spacing:0.12em; text-transform:uppercase; color:#F2D4D9; text-align:center; }
     .tagline { position:absolute; left:416px; top:130px; width:740px; font-family:'Jost'; font-weight:300; font-size:76px; line-height:1.08; letter-spacing:0.01em; text-transform:uppercase; color:${HD_ACCENT}; }
     .sub { position:absolute; left:418px; top:300px; width:700px; font-family:'DM Sans'; font-weight:500; font-size:23px; letter-spacing:0.03em; text-transform:uppercase; color:${HD_MUTED}; }
     .signatures { position:absolute; left:418px; bottom:96px; width:720px; font-family:'DM Sans'; font-weight:400; font-size:20px; line-height:1.5; color:${HD_INK}; }
     .signatures b { font-weight:600; }
-    .credit { position:absolute; left:0; width:360px; bottom:34px; text-align:center; font-family:'Instrument Serif'; font-size:23px; color:${HD_INK}; opacity:.7; }
+    .credit { position:absolute; left:0; width:360px; bottom:34px; text-align:center; font-family:'Instrument Serif'; font-size:23px; color:#F2D4D9; opacity:.75; }
   </style>
   <div class="band">
     <img src="${fileUrl('assets/restaurant/haute-dolci-logo-black.png')}">
