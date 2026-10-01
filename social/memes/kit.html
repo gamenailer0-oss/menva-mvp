@@ -1,0 +1,203 @@
+<!doctype html><html><head><meta charset="utf-8"><style>
+/* MENVA meme kit: one 1080x1350 slide per render, drawn from window.SPEC by make.mjs.
+   Templates: jumbo, nokia, chat, notes, tier, bingo, text. */
+@font-face{font-family:D;font-weight:400;src:url(../../vendor/fonts/dm-sans-400.woff2)}
+@font-face{font-family:D;font-weight:500;src:url(../../vendor/fonts/dm-sans-500.woff2)}
+@font-face{font-family:D;font-weight:600;src:url(../../vendor/fonts/dm-sans-600.woff2)}
+@font-face{font-family:S;src:url(../../vendor/fonts/instrument-serif-400.woff2)}
+@font-face{font-family:S;font-style:italic;src:url(../../vendor/fonts/instrument-serif-400-italic.woff2)}
+:root{--orange:#E7612E;--chili:#B5371F;--cream:#FFF4E6;--ink:#1A1714;--mustard:#F2B33D;--teal:#2f5d62}
+*{margin:0;padding:0;box-sizing:border-box}
+html,body{width:1080px;height:1350px;overflow:hidden;background:#000}
+.s{position:relative;width:1080px;height:1350px;overflow:hidden;font-family:D;color:var(--ink)}
+.n{position:absolute;top:56px;right:64px;padding:8px 22px;border-radius:30px;background:rgba(0,0,0,.22);color:#fff;font:500 28px D;z-index:9}
+.wm{position:absolute;bottom:56px;left:72px;font:italic 56px S;z-index:9}.wm b{color:var(--orange);font-style:normal}
+.s.on-orange em{color:var(--ink)}.wm.light{color:#fff}.wm.dark{color:var(--ink)}
+em{font-style:normal;color:var(--orange)}
+
+/* jumbo: big caption + the mascot */
+.t-jumbo{display:flex;flex-direction:column;padding:120px 80px 0}
+.t-jumbo .kick{font:600 30px D;letter-spacing:.18em;text-transform:uppercase;opacity:.75;margin-bottom:22px}
+.t-jumbo h1{font:600 84px/1.02 D;letter-spacing:-.035em;position:relative;z-index:3}
+.t-jumbo .sub{font:400 38px/1.3 D;margin-top:24px;opacity:.85;position:relative;z-index:3}
+.t-jumbo .stage{position:absolute;left:0;right:0;bottom:0;height:820px;display:flex;align-items:flex-end;justify-content:center}
+.t-jumbo .stage svg{display:block}
+.bubble{position:absolute;background:#fff;color:var(--ink);border:6px solid var(--ink);border-radius:46px;padding:26px 36px;font:600 44px/1.15 D;max-width:560px;z-index:4;box-shadow:10px 10px 0 var(--ink)}
+.bubble:after{content:"";position:absolute;bottom:-46px;left:90px;border:22px solid transparent;border-top:26px solid var(--ink)}
+.label{position:absolute;font:600 34px D;letter-spacing:.1em;text-transform:uppercase;padding:10px 22px;border-radius:12px;background:var(--ink);color:#fff;z-index:4}
+
+/* nokia: an old phone SMS screen */
+.t-nokia{background:#9fb7a0;display:flex;align-items:center;justify-content:center}
+.t-nokia .lcd{position:absolute;inset:0;background:linear-gradient(180deg,#b6cdb4,#93ad95);font-family:Unifont,monospace;color:#1c2b1e;padding:64px 64px}
+.t-nokia .lcd:before{content:"";position:absolute;inset:0;background:repeating-linear-gradient(0deg,rgba(0,0,0,.05) 0 2px,transparent 2px 6px),repeating-linear-gradient(90deg,rgba(0,0,0,.04) 0 2px,transparent 2px 6px);pointer-events:none}
+.t-nokia .bar{display:flex;justify-content:space-between;align-items:flex-end;font-size:64px;border-bottom:6px solid #1c2b1e;padding-bottom:18px;margin-bottom:46px}
+.t-nokia .sig{display:flex;gap:8px;align-items:flex-end;margin-right:24px}.t-nokia .sig i{display:block;width:12px;background:#1c2b1e}
+.t-nokia .msg{font-size:112px;line-height:1.25;margin-top:60px;white-space:pre-wrap;letter-spacing:.01em}
+.t-nokia .cur{display:inline-block;width:8px;height:84px;background:#1c2b1e;vertical-align:-10px;margin-left:6px}
+.t-nokia .keys{position:absolute;left:64px;right:64px;bottom:58px;display:flex;justify-content:space-between;font-size:72px;border-top:6px solid #1c2b1e;padding-top:14px}
+.t-nokia .wm{bottom:170px;left:auto;right:64px;font-size:46px;color:#1c2b1e;opacity:.8}.t-nokia .wm b{color:#1c2b1e}
+
+/* chat: a group chat screenshot, with optional red-pen marks */
+.t-chat{background:#efe7dc}
+.t-chat .top{height:178px;background:#1f2c33;color:#fff;display:flex;align-items:center;padding:40px 40px 0;gap:26px}
+.t-chat .top .gpic{width:96px;height:96px;border-radius:50%;background:var(--orange);display:flex;align-items:center;justify-content:center;font:600 46px D;color:#fff}
+.t-chat .top b{display:block;font:600 42px D}.t-chat .top span{font:400 28px D;opacity:.7}
+.t-chat .wall{position:absolute;top:178px;bottom:0;left:0;right:0;padding:34px 40px 60px;display:flex;flex-direction:column;justify-content:center;gap:calc(20px*var(--k,1));background:radial-gradient(circle at 20% 30%,rgba(0,0,0,.025) 0 30px,transparent 31px) 0 0/120px 120px,#efe7dc}
+.t-chat .row{display:flex;gap:16px;align-items:flex-end;position:relative}
+.t-chat .row.me{justify-content:flex-end}
+.t-chat .av{width:76px;height:76px;border-radius:50%;background:#fff;overflow:hidden;flex:none}
+.t-chat .av svg{width:76px;height:76px}
+.t-chat .b{position:relative;max-width:760px;background:#fff;border-radius:26px;padding:calc(16px*var(--k,1)) 26px calc(14px*var(--k,1));font:400 calc(40px*var(--k,1))/1.3 D;box-shadow:0 2px 0 rgba(0,0,0,.08)}
+.t-chat .me .b{background:#d9fdd3}
+.t-chat .who{font:600 28px D;margin-bottom:4px}
+.t-chat .time{font:400 22px D;opacity:.5;text-align:right;margin-top:2px}
+.t-chat .sys{align-self:center;background:#fff6c9;border-radius:16px;padding:10px 24px;font:500 28px D;color:#5b5236}
+.t-chat .pen{position:absolute;border:7px solid #e0261b;border-radius:48%;transform:rotate(-4deg);pointer-events:none;z-index:5}
+.t-chat .note{position:absolute;font:600 50px/1 "Courier 10 Pitch",D;color:#e0261b;transform:rotate(-6deg);z-index:6;white-space:nowrap;font-style:italic}
+.t-chat .wm{bottom:auto;top:62px;left:auto;right:70px;color:#fff}.t-chat .n{top:auto;bottom:40px;right:40px}
+
+/* notes: a phone notes page with struck items */
+.t-notes{background:#fffdf6;padding:80px 90px 0}
+.t-notes .back{color:#d79b16;font:500 36px D;margin-bottom:30px}
+.t-notes .date{font:400 28px D;opacity:.5;text-align:center;margin-bottom:30px}
+.t-notes h2{font:600 78px/1.05 D;letter-spacing:-.03em;margin-bottom:40px}
+.t-notes li{list-style:none;font:400 50px/1.2 D;margin-bottom:28px;padding-left:52px;position:relative}
+.t-notes li:before{content:"";position:absolute;left:0;top:18px;width:34px;height:34px;border-radius:50%;border:3px solid #c7c2b6}
+.t-notes li.done:before{background:#d79b16;border-color:#d79b16}
+.t-notes s{text-decoration-thickness:4px;opacity:.55}
+.t-notes .end{font:600 60px/1.15 D;color:var(--chili);margin-top:40px;padding-left:52px}
+
+/* tier: an S-to-F tier list */
+.t-tier{background:#141414;color:#fff;padding:90px 56px}
+.t-tier h2{font:600 72px/1.05 D;margin-bottom:50px;letter-spacing:-.02em}
+.t-tier .r{display:flex;min-height:190px;margin-bottom:10px}
+.t-tier .k{width:160px;flex:none;display:flex;align-items:center;justify-content:center;font:600 84px D;color:#141414}
+.t-tier .v{flex:1;background:#262626;display:flex;align-items:center;padding:20px 34px;font:500 46px/1.2 D}
+
+/* bingo: a 3x3 card with a free centre */
+.t-bingo{background:var(--mustard);padding:90px 60px}
+.t-bingo h2{font:600 66px/1.02 D;letter-spacing:-.03em;margin-bottom:36px;text-align:center}
+.t-bingo .g{display:grid;grid-template-columns:repeat(3,1fr);gap:14px}
+.t-bingo .c{background:var(--cream);height:320px;border:5px solid var(--ink);display:flex;align-items:center;justify-content:center;text-align:center;padding:22px;font:500 38px/1.2 D;position:relative}
+.t-bingo .c.free{background:var(--chili);color:#fff;font-weight:600}
+.t-bingo .c.x:after{content:"";position:absolute;inset:26px;border:8px solid rgba(224,38,27,.85);border-radius:50%}
+
+/* text: a plain bold meme slide */
+.t-text{display:flex;flex-direction:column;justify-content:center;padding:0 90px}
+.t-text h1{font:600 104px/1 D;letter-spacing:-.04em;text-transform:uppercase}
+.t-text .sub{font:400 40px/1.3 D;margin-top:40px;opacity:.9}
+</style></head><body><div id="root"></div>
+<script>
+const S = window.SPEC;
+const esc = (t) => String(t ?? '').replace(/&/g, '&amp;').replace(/</g, '&lt;').replace(/>/g, '&gt;');
+const rich = (t) => esc(t).replace(/\*(.+?)\*/g, '<em>$1</em>').replace(/\n/g, '<br>');
+const BG = { orange: ['#E7612E', '#fff'], chili: ['#B5371F', '#fff'], cream: ['#FFF4E6', '#1A1714'], mustard: ['#F2B33D', '#1A1714'], ink: ['#1A1714', '#fff'], teal: ['#2f5d62', '#fff'] };
+const wm = (tone) => `<div class="wm ${tone}">menva<b>.</b></div>`;
+const num = S.n ? `<div class="n">${esc(S.n)}</div>` : '';
+
+// Jumbo: the menu-photo burger who always lies about his size. mood: smug | caught | crying | flex.
+function jumbo(mood = 'smug', size = 640) {
+  const eyes = {
+    smug: '<path d="M62 92 q10 -8 20 0" stroke="#1A1714" stroke-width="5" fill="none" stroke-linecap="round"/><path d="M118 92 q10 -8 20 0" stroke="#1A1714" stroke-width="5" fill="none" stroke-linecap="round"/><path d="M58 80 l26 4 M116 84 l26 -4" stroke="#1A1714" stroke-width="5" stroke-linecap="round"/>',
+    caught: '<circle cx="72" cy="90" r="13" fill="#fff" stroke="#1A1714" stroke-width="4"/><circle cx="128" cy="90" r="13" fill="#fff" stroke="#1A1714" stroke-width="4"/><circle cx="74" cy="92" r="5" fill="#1A1714"/><circle cx="126" cy="92" r="5" fill="#1A1714"/>',
+    crying: '<path d="M60 88 q12 10 24 0 M116 88 q12 10 24 0" stroke="#1A1714" stroke-width="5" fill="none" stroke-linecap="round"/><path d="M66 98 q-6 24 2 40" stroke="#5ab3e8" stroke-width="8" fill="none" stroke-linecap="round"/><path d="M134 98 q6 24 -2 40" stroke="#5ab3e8" stroke-width="8" fill="none" stroke-linecap="round"/>',
+    flex: '<rect x="54" y="80" width="40" height="20" rx="6" fill="#1A1714"/><rect x="106" y="80" width="40" height="20" rx="6" fill="#1A1714"/><rect x="92" y="86" width="16" height="5" fill="#1A1714"/>'
+  }[mood];
+  const mouth = {
+    smug: '<path d="M84 122 q22 14 40 -4" stroke="#1A1714" stroke-width="5" fill="none" stroke-linecap="round"/>',
+    caught: '<ellipse cx="100" cy="126" rx="12" ry="10" fill="#1A1714"/>',
+    crying: '<path d="M80 132 q20 -16 40 0" stroke="#1A1714" stroke-width="5" fill="none" stroke-linecap="round"/>',
+    flex: '<path d="M78 118 q22 22 44 0 z" fill="#1A1714"/>'
+  }[mood];
+  const sweat = mood === 'caught' ? '<path d="M160 52 q8 14 0 20 q-8 -6 0 -20z" fill="#5ab3e8"/><path d="M40 60 q7 12 0 17 q-7 -5 0 -17z" fill="#5ab3e8"/>' : '';
+  const arms = mood === 'flex'
+    ? '<path d="M14 150 q-30 -10 -28 -50" stroke="#1A1714" stroke-width="7" fill="none" stroke-linecap="round"/><circle cx="-16" cy="96" r="12" fill="#F2A64A" stroke="#1A1714" stroke-width="5"/><path d="M186 150 q30 -10 28 -50" stroke="#1A1714" stroke-width="7" fill="none" stroke-linecap="round"/><circle cx="216" cy="96" r="12" fill="#F2A64A" stroke="#1A1714" stroke-width="5"/>'
+    : mood === 'caught' ? '<path d="M14 150 q-26 0 -30 30" stroke="#1A1714" stroke-width="7" fill="none" stroke-linecap="round"/><path d="M186 150 q26 0 30 30" stroke="#1A1714" stroke-width="7" fill="none" stroke-linecap="round"/>'
+    : '<path d="M14 150 q-24 20 -18 46" stroke="#1A1714" stroke-width="7" fill="none" stroke-linecap="round"/><path d="M186 150 q30 -6 34 -40" stroke="#1A1714" stroke-width="7" fill="none" stroke-linecap="round"/>';
+  return `<svg width="${size}" height="${size * 1.25}" viewBox="-40 0 280 300">
+    <ellipse cx="100" cy="286" rx="96" ry="10" fill="rgba(0,0,0,.18)"/>
+    <path d="M58 250 v26 h-16 M142 250 v26 h16" stroke="#1A1714" stroke-width="7" fill="none" stroke-linecap="round"/>
+    ${arms}
+    <path d="M10 118 Q10 26 100 26 Q190 26 190 118 Z" fill="#F2A64A" stroke="#1A1714" stroke-width="6"/>
+    <path d="M40 60 q20 -22 46 -20" stroke="#fff" stroke-width="7" fill="none" stroke-linecap="round" opacity=".55"/>
+    <g fill="#fff6d8" stroke="#1A1714" stroke-width="2.5"><ellipse cx="70" cy="50" rx="7" ry="4"/><ellipse cx="104" cy="42" rx="7" ry="4"/><ellipse cx="138" cy="54" rx="7" ry="4"/><ellipse cx="160" cy="76" rx="6" ry="3.5"/></g>
+    <path d="M4 118 q16 16 32 0 q16 16 32 0 q16 16 32 0 q16 16 32 0 q16 16 32 0 q16 16 32 0 v10 h-192z" fill="#7FB85A" stroke="#1A1714" stroke-width="5" stroke-linejoin="round"/>
+    <path d="M8 128 h184 l-14 26 l-10 -16 l-12 22 l-10 -18 h-130z" fill="#F4CF4A" stroke="#1A1714" stroke-width="5" stroke-linejoin="round"/>
+    <rect x="4" y="140" width="192" height="46" rx="20" fill="#6b3418" stroke="#1A1714" stroke-width="6"/>
+    <rect x="10" y="186" width="180" height="16" rx="6" fill="#D9412B" stroke="#1A1714" stroke-width="5"/>
+    <path d="M10 202 h180 q0 50 -90 50 q-90 0 -90 -50z" fill="#E89B3E" stroke="#1A1714" stroke-width="6"/>
+    <g transform="translate(0,-6)">${eyes}${mouth}${sweat}</g>
+  </svg>`;
+}
+
+const T = {
+  jumbo() {
+    const [bg, fg] = BG[S.bg || 'cream'];
+    const big = S.size || 640;
+    return `<div class="s t-jumbo${S.bg === 'orange' ? ' on-orange' : ''}" style="background:${bg};color:${fg}">${num}
+      ${S.kick ? `<div class="kick">${rich(S.kick)}</div>` : ''}<h1 style="${S.hsize ? `font-size:${S.hsize}px` : ''}">${rich(S.h)}</h1>${S.sub ? `<div class="sub">${rich(S.sub)}</div>` : ''}
+      <div class="stage" style="${S.stageY ? `bottom:${S.stageY}px` : ''}">${jumbo(S.mood, big)}</div>
+      ${S.bubble ? `<div class="bubble" style="left:${S.bubble.x}px;top:${S.bubble.y}px">${rich(S.bubble.t)}</div>` : ''}
+      ${(S.labels || []).map((l) => `<div class="label" style="left:${l.x}px;top:${l.y}px">${esc(l.t)}</div>`).join('')}
+      ${wm(fg === '#fff' ? 'light' : 'dark')}</div>`;
+  },
+  nokia() {
+    return `<div class="s t-nokia"><div class="lcd">
+      <div class="bar"><span style="display:flex;align-items:flex-end"><span class="sig"><i style="height:18px"></i><i style="height:30px"></i><i style="height:42px"></i><i style="height:54px"></i></span>abc</span><span>${esc(S.count || '160/1')}</span></div>
+      <div class="msg">${esc(S.text)}<span class="cur"></span></div>
+      <div class="keys"><span>Options</span><span>Clear</span></div></div>${wm('')}</div>`;
+  },
+  chat() {
+    const msgs = S.msgs.map((m) => {
+      if (m.sys) return `<div class="sys">${rich(m.sys)}</div>`;
+      const me = m.from === S.me;
+      const av = me ? '' : `<div class="av">${window.AV[m.as || m.from] || `<div style="width:76px;height:76px;display:flex;align-items:center;justify-content:center;background:${window.COL[m.from] || '#888'};color:#fff;font:600 34px D">${esc((m.name || m.from)[0].toUpperCase())}</div>`}</div>`;
+      const name = me ? '' : `<div class="who" style="color:${window.COL[m.from] || '#555'}">${esc(m.name || m.from[0].toUpperCase() + m.from.slice(1))}</div>`;
+      return `<div class="row${me ? ' me' : ''}" ${m.id ? `id="${m.id}"` : ''}>${av}<div class="b">${name}${rich(m.t)}<div class="time">${esc(m.at || '')}</div></div></div>`;
+    }).join('');
+    return `<div class="s t-chat">${num}<div class="top"><div class="gpic">${esc((S.group || 'K')[0])}</div><div><b>${esc(S.group || 'Khana Group')}</b><span>${esc(S.members || 'Ayesha, Hamza, Sara, Zain')}</span></div></div>
+      <div class="wall">${msgs}</div>${wm('dark')}</div>`;
+  },
+  notes() {
+    return `<div class="s t-notes"><div class="back">&lsaquo; Notes</div><div class="date">${esc(S.date || '')}</div><h2>${rich(S.h)}</h2>
+      <ul>${S.items.map((it) => `<li class="${/^~~/.test(it) ? 'done' : ''}">${rich(it).replace(/~~(.+?)~~/g, '<s>$1</s>')}</li>`).join('')}</ul>
+      ${S.end ? `<div class="end">${rich(S.end)}</div>` : ''}${wm('dark')}</div>`;
+  },
+  tier() {
+    const col = { S: '#ff7f7f', A: '#ffbf7f', B: '#ffdf7f', C: '#bfff7f', F: '#7fbfff' };
+    return `<div class="s t-tier"><h2>${rich(S.h)}</h2>${S.rows.map(([k, v]) => `<div class="r"><div class="k" style="background:${col[k] || '#ccc'}">${k}</div><div class="v">${rich(v)}</div></div>`).join('')}${wm('light')}</div>`;
+  },
+  bingo() {
+    return `<div class="s t-bingo"><h2>${rich(S.h)}</h2><div class="g">${S.cells.map((c, i) => `<div class="c${i === 4 ? ' free' : ''}${(S.x || []).includes(i) ? ' x' : ''}">${rich(c)}</div>`).join('')}</div>${wm('dark')}</div>`;
+  },
+  text() {
+    const [bg, fg] = BG[S.bg || 'chili'];
+    return `<div class="s t-text${S.bg === 'orange' ? ' on-orange' : ''}" style="background:${bg};color:${fg}">${num}<h1 style="${S.hsize ? `font-size:${S.hsize}px` : ''}">${rich(S.h)}</h1>${S.sub ? `<div class="sub">${rich(S.sub)}</div>` : ''}${wm(fg === '#fff' ? 'light' : 'dark')}</div>`;
+  }
+};
+
+document.getElementById('root').innerHTML = T[S.tpl]();
+// Chat slides: red-pen notes go beside a bubble when there is room, else in a gap opened under it.
+// Then the text shrinks until every message fits, and the circles and notes are drawn.
+if (S.tpl === 'chat') {
+  const w = document.querySelector('.wall'), sl = document.querySelector('.s');
+  const pens = (S.pen || []).map((p) => ({ ...p, row: document.getElementById(p.id) })).filter((p) => p.row);
+  for (const p of pens) { const r = p.row.querySelector('.b').getBoundingClientRect(); p.left = r.left > 300; if ((p.left ? r.left : 1080 - r.right) < 330) { p.below = true; p.row.style.marginBottom = '74px'; } }
+  for (let k = 1; k > 0.6 && w.scrollHeight > w.clientHeight + 1; k -= 0.03) w.style.setProperty('--k', k.toFixed(2));
+  for (const p of pens) {
+    const r = p.row.querySelector('.b').getBoundingClientRect();
+    const c = document.createElement('div'); c.className = 'pen';
+    const cw = Math.min(r.width * 1.22 + 30, 1060), ch = r.height * 1.42 + 10, cx = Math.min(Math.max(r.left + r.width / 2, cw / 2 + 10), 1070 - cw / 2);
+    Object.assign(c.style, { left: cx - cw / 2 + 'px', top: r.top + r.height / 2 - ch / 2 + 'px', width: cw + 'px', height: ch + 'px' }); sl.appendChild(c);
+    if (!p.note) continue;
+    const n = document.createElement('div'); n.className = 'note'; n.textContent = p.note; sl.appendChild(n);
+    if (p.below) Object.assign(n.style, { top: r.bottom + 26 + 'px', ...(p.left ? { left: Math.max(40, r.left - 40) + 'px' } : { right: Math.max(40, 1080 - r.right - 40) + 'px' }) });
+    else {
+      const free = (p.left ? r.left : 1080 - r.right) - r.width * 0.11 - 40;
+      Object.assign(n.style, { width: free - 20 + 'px', whiteSpace: 'normal', textAlign: 'center', lineHeight: '1.05', [p.left ? 'left' : 'right']: '30px' });
+      n.style.top = r.top + r.height / 2 - n.offsetHeight / 2 + 'px';
+    }
+  }
+}
+document.fonts.ready.then(() => { window.__ready = true; });
+</script></body></html>

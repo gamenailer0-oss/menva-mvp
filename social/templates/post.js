@@ -164,7 +164,7 @@
     cover: (d) => /^social\/reels\/out\/[\w-]+\.jpg$/.test(d.img || '') ? `<img class="cover-img" src="../../${esc(d.img)}" alt="">` : (fail('cover needs img = social/reels/out/<name>-cover.jpg'), ''),
 
     // meme: a finished meme slide, full bleed (img = social/memes/<name>.png or .jpg), no overlay.
-    meme: (d) => /^social\/memes\/[\w-]+\.(png|jpg)$/.test(d.img || '') ? `<img class="cover-img" src="../../${esc(d.img)}" alt="">` : (fail('meme needs img = social/memes/<name>.png'), ''),
+    meme: (d) => /^social\/memes\/(out\/)?[\w-]+\.(png|jpg)$/.test(d.img || '') ? `<img class="cover-img" src="../../${esc(d.img)}" alt="">` : (fail('meme needs img = social/memes/<name>.png'), ''),
 
     // riddle: the pre-launch treasure hunt. pattern: the answer's letters as boxes ('_' a letter, '?' the one
     // that counts, ' ' a gap). board: the 10-letter code so far ('_' unknown, '?' tonight's slot, letters found).

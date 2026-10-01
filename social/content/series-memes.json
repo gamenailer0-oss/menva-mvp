@@ -1,6 +1,6 @@
 {
   "version": 1,
-  "about": "Daytime meme carousels (social/memes/), posted at 3 pm on days that also carry the 8:30 pm Reel. Pre-launch ones tease only: no product explanation.",
+  "about": "Daily volume posts (Crumble-style, meme-first): 1 pm meme, 5 pm Khana Group chat carousel, 10:30 pm Madam ki Class bonus Reel. Pre-launch ones tease only. Slides are made by social/memes/make.mjs from social/memes/specs.mjs.",
   "defaultStart": "2026-10-05",
   "handle": "@eatmenva",
   "posts": [
@@ -61,6 +61,613 @@
           "layout": "meme",
           "img": "social/memes/duo-s2.png",
           "h": "Why are you looking? Can you afford it?"
+        }
+      ]
+    },
+    {
+      "n": 3,
+      "day": -1,
+      "time": "13:00",
+      "id": "meme-03-kachori",
+      "series": "Daily memes",
+      "pillar": "tease",
+      "audience": "diners",
+      "format": "single",
+      "caption": "2006 mein bhi yehi masla tha, 2026 mein bhi.\n\nForward karo us dost ko jo abhi bhi photo dekh ke order karta hai.\n\nMadam ki Class, raat 8:30. Late aaye to absent.",
+      "hashtags": [
+        "#menva",
+        "#lahorefood",
+        "#foodmemes",
+        "#pakistanimemes"
+      ],
+      "alt": "An old phone SMS screen that reads: ek kachori, do samosa, menu photo ka kya bharosa.",
+      "slides": [
+        {
+          "layout": "meme",
+          "img": "social/memes/out/nokia-01-kachori.png",
+          "h": "ek kachori, do samosa, menu photo ka kya bharosa"
+        }
+      ]
+    },
+    {
+      "n": 4,
+      "day": 0,
+      "time": "13:00",
+      "id": "meme-04-meet-jumbo",
+      "series": "Daily memes",
+      "pillar": "tease",
+      "audience": "diners",
+      "format": "carousel",
+      "caption": "Meet Jumbo. Har menu pe rehta hai. Har plate pe chhota ho jata hai.\n\nTag karo us dost ko jo Jumbo pe har dafa bharosa karta hai.\n\nMadam ki Class, raat 8:30. Late aaye to absent.",
+      "hashtags": [
+        "#menva",
+        "#lahorefood",
+        "#foodmemes",
+        "#pakistanimemes"
+      ],
+      "alt": "A cartoon burger called Jumbo. Slide 1: huge, wearing sunglasses, saying he is 12 inch on the menu. Slide 2: tiny on the plate, saying it was the camera angle.",
+      "slides": [
+        {
+          "layout": "meme",
+          "img": "social/memes/out/jumbo-01-meet-1.png",
+          "h": "Meet Jumbo. Menu pe: main 12 inch ka hun."
+        },
+        {
+          "layout": "meme",
+          "img": "social/memes/out/jumbo-01-meet-2.png",
+          "h": "Plate pe: camera angle tha bhai."
+        }
+      ]
+    },
+    {
+      "n": 5,
+      "day": 1,
+      "time": "13:00",
+      "id": "meme-05-jumbo-caught",
+      "series": "Daily memes",
+      "pillar": "relatable",
+      "audience": "diners",
+      "format": "single",
+      "caption": "Jumbo ka bura din shuru.\n\nAb partner restaurants pe table ka QR scan karo aur dish order se pehle apni table pe asli size mein dekho.\n\nBhejo us dost ko jo Jumbo se dhoka kha chuka hai.",
+      "hashtags": [
+        "#menva",
+        "#lahorefood",
+        "#foodmemes",
+        "#lahore"
+      ],
+      "alt": "Jumbo the cartoon burger looks shocked and sweaty, finding out people can now see the dish on their table before ordering.",
+      "slides": [
+        {
+          "layout": "meme",
+          "img": "social/memes/out/jumbo-02-launch.png",
+          "h": "Jumbo jab pata chale ke ab log order se pehle dish table pe dekh sakte hain"
+        }
+      ]
+    },
+    {
+      "n": 6,
+      "day": 1,
+      "time": "17:00",
+      "id": "meme-chat-01-launch",
+      "series": "Daily memes",
+      "pillar": "relatable",
+      "audience": "diners",
+      "format": "carousel",
+      "caption": "Har group mein ek Hamza hota hai. Aur ek Ayesha jo chashma pehen leti hai.\n\nKhana Group, episode 1. Apne group ko bhejo, dekhte hain kaun Hamza hai.",
+      "hashtags": [
+        "#menva",
+        "#lahorefood",
+        "#khanagroup",
+        "#foodmemes",
+        "#pakistanimemes"
+      ],
+      "alt": "A group chat where Hamza admits he ordered three platters because they looked small in the photo, and Ayesha turns into Madam.",
+      "slides": [
+        {
+          "layout": "meme",
+          "img": "social/memes/out/chat-01-launch-1.png",
+          "h": "Hamza aur teen platter"
+        },
+        {
+          "layout": "meme",
+          "img": "social/memes/out/chat-01-launch-2.png",
+          "h": "Hamza aur teen platter (2)"
+        }
+      ]
+    },
+    {
+      "n": 7,
+      "day": 1,
+      "time": "22:30",
+      "id": "madam-bonus-foodie-bhai",
+      "series": "Madam ki Class bonus",
+      "pillar": "relatable",
+      "audience": "diners",
+      "format": "reel",
+      "video": "social/reels/out/table-extra-foodie-bhai.mp4",
+      "caption": "Madam ki Class, bonus: jab food vlogger chakhe baghair review kare.\n\nUs dost ko bhejo jo review dekh ke order karta hai.\n\nMENVA: partner restaurants pe table ka QR scan karo, asli dish 3D mein dekho, phir order karo.",
+      "hashtags": [
+        "#menva",
+        "#madamkiclass",
+        "#lahorefood",
+        "#pakistanicomedy"
+      ],
+      "alt": "An animated skit: four friends at a restaurant table and a parody guest; Ayesha turns into Madam, a strict teacher. Jab food vlogger chakhe baghair review kare.",
+      "slides": [
+        {
+          "layout": "cover",
+          "img": "social/reels/out/table-extra-foodie-bhai-cover.jpg",
+          "h": "Jab food vlogger chakhe baghair review kare"
+        }
+      ]
+    },
+    {
+      "n": 8,
+      "day": 2,
+      "time": "13:00",
+      "id": "meme-06-tier-excuses",
+      "series": "Daily memes",
+      "pillar": "relatable",
+      "audience": "diners",
+      "format": "single",
+      "caption": "S tier wala har group mein hota hai. Tumhare group mein kaun hai?\n\nComment mein naam likho, hum nahi batayenge.",
+      "hashtags": [
+        "#menva",
+        "#lahorefood",
+        "#foodmemes",
+        "#pakistanimemes",
+        "#lahore"
+      ],
+      "alt": "A tier list of dinner lies: S, bas halka sa kuch lunga. A, main share kar lunga. B, mera to diet hai. C, jo tum log lo. F, photo mein to bara lag raha tha.",
+      "slides": [
+        {
+          "layout": "meme",
+          "img": "social/memes/out/tier-01-excuses.png",
+          "h": "Dinner ke sab se bare jhooth"
+        }
+      ]
+    },
+    {
+      "n": 9,
+      "day": 2,
+      "time": "17:00",
+      "id": "meme-chat-02-plan",
+      "series": "Daily memes",
+      "pillar": "relatable",
+      "audience": "diners",
+      "format": "carousel",
+      "caption": "7 baje: kahan chalein. 9:40: abhi bhi kahan chalein.\n\nKhana Group, episode 2. Is chat mein tum kaun ho?",
+      "hashtags": [
+        "#menva",
+        "#lahorefood",
+        "#khanagroup",
+        "#foodmemes",
+        "#pakistanimemes"
+      ],
+      "alt": "A group chat that takes 2 hours 40 minutes to decide where to eat until Ayesha decides for everyone.",
+      "slides": [
+        {
+          "layout": "meme",
+          "img": "social/memes/out/chat-02-plan-1.png",
+          "h": "Kahan chalein: 2 ghante 40 minute"
+        },
+        {
+          "layout": "meme",
+          "img": "social/memes/out/chat-02-plan-2.png",
+          "h": "Kahan chalein: 2 ghante 40 minute (2)"
+        }
+      ]
+    },
+    {
+      "n": 10,
+      "day": 2,
+      "time": "22:30",
+      "id": "madam-bonus-har-hafte",
+      "series": "Madam ki Class bonus",
+      "pillar": "relatable",
+      "audience": "diners",
+      "format": "reel",
+      "video": "social/reels/out/table-extra-har-hafte.mp4",
+      "caption": "Madam ki Class, bonus: har hafte yahi hota hai.\n\nApne group ki Ayesha ko bhejo.\n\nMENVA: partner restaurants pe table ka QR scan karo, asli dish 3D mein dekho, phir order karo.",
+      "hashtags": [
+        "#menva",
+        "#madamkiclass",
+        "#lahorefood",
+        "#pakistanicomedy"
+      ],
+      "alt": "An animated skit: four friends at a restaurant table and a parody guest; Ayesha turns into Madam, a strict teacher. Har hafte yahi hota hai.",
+      "slides": [
+        {
+          "layout": "cover",
+          "img": "social/reels/out/table-extra-har-hafte-cover.jpg",
+          "h": "Har hafte yahi hota hai"
+        }
+      ]
+    },
+    {
+      "n": 11,
+      "day": 3,
+      "time": "13:00",
+      "id": "meme-07-notes-trust",
+      "series": "Daily memes",
+      "pillar": "relatable",
+      "audience": "diners",
+      "format": "single",
+      "caption": "List lambi thi, sirf yehi likhne ki himmat hui.\n\nAb menu photo ki jagah dish khud dekho: partner restaurants pe table ka QR scan karo.\n\nTumhari list mein kya hai? Comment karo.",
+      "hashtags": [
+        "#menva",
+        "#lahorefood",
+        "#foodmemes",
+        "#relatable"
+      ],
+      "alt": "A phone notes page titled things I trusted and regretted, with weather app, 5 minute mein pohanch raha hun, halki si mirch hai and menu ki photo struck out, and apni aankhein left.",
+      "slides": [
+        {
+          "layout": "meme",
+          "img": "social/memes/out/notes-01-trust.png",
+          "h": "Cheezein jin pe bharosa kiya, aur pachtaya"
+        }
+      ]
+    },
+    {
+      "n": 12,
+      "day": 3,
+      "time": "17:00",
+      "id": "meme-chat-03-photo",
+      "series": "Daily memes",
+      "pillar": "relatable",
+      "audience": "diners",
+      "format": "carousel",
+      "caption": "Zain ne aaj sab se samajhdar baat ki. Hamza ne phir bhi nahi suna.\n\nKhana Group, episode 3. Partner restaurants pe: QR scan, dish table pe dekho, phir order.",
+      "hashtags": [
+        "#menva",
+        "#lahorefood",
+        "#khanagroup",
+        "#foodmemes",
+        "#pakistanimemes"
+      ],
+      "alt": "A group chat where Sara gets excited about a burger photo, Zain says it is a photo not a plate, and Ayesha explains scanning the table QR to see the dish first.",
+      "slides": [
+        {
+          "layout": "meme",
+          "img": "social/memes/out/chat-03-photo-1.png",
+          "h": "Sara ye photo hai, plate nahi"
+        },
+        {
+          "layout": "meme",
+          "img": "social/memes/out/chat-03-photo-2.png",
+          "h": "Sara ye photo hai, plate nahi (2)"
+        }
+      ]
+    },
+    {
+      "n": 13,
+      "day": 3,
+      "time": "22:30",
+      "id": "madam-bonus-budget-baji",
+      "series": "Madam ki Class bonus",
+      "pillar": "relatable",
+      "audience": "diners",
+      "format": "reel",
+      "video": "social/reels/out/table-extra-budget-baji.mp4",
+      "caption": "Madam ki Class, bonus: jab budget reviewer bite gin ke review kare.\n\nUs dost ko bhejo jo har plate ka hisaab lagata hai.\n\nMENVA: partner restaurants pe table ka QR scan karo, asli dish 3D mein dekho, phir order karo.",
+      "hashtags": [
+        "#menva",
+        "#madamkiclass",
+        "#lahorefood",
+        "#pakistanicomedy"
+      ],
+      "alt": "An animated skit: four friends at a restaurant table and a parody guest; Ayesha turns into Madam, a strict teacher. Jab budget reviewer bite gin ke review kare.",
+      "slides": [
+        {
+          "layout": "cover",
+          "img": "social/reels/out/table-extra-budget-baji-cover.jpg",
+          "h": "Jab budget reviewer bite gin ke review kare"
+        }
+      ]
+    },
+    {
+      "n": 14,
+      "day": 4,
+      "time": "13:00",
+      "id": "meme-08-jhoota-thursday",
+      "series": "Daily memes",
+      "pillar": "relatable",
+      "audience": "diners",
+      "format": "single",
+      "caption": "Har Thursday, Jumbo ka ek jhooth.\n\nIs hafte: \"Serves 2\". Tum ne kaunsa jhooth suna hai menu pe? Comment karo, agle Thursday wala tumhara ho sakta hai.",
+      "hashtags": [
+        "#menva",
+        "#lahorefood",
+        "#jhootathursday",
+        "#foodmemes"
+      ],
+      "alt": "Jumbo the cartoon burger looking smug, with the text: wake up babe, it's Jhoota Thursday. This week's lie: serves 2.",
+      "slides": [
+        {
+          "layout": "meme",
+          "img": "social/memes/out/jumbo-03-thursday.png",
+          "h": "Wake up babe, it's Jhoota Thursday"
+        }
+      ]
+    },
+    {
+      "n": 15,
+      "day": 4,
+      "time": "17:00",
+      "id": "meme-chat-04-share",
+      "series": "Daily memes",
+      "pillar": "relatable",
+      "audience": "diners",
+      "format": "carousel",
+      "caption": "\"Main share kar lunga\" sun ke apni fries bachao.\n\nKhana Group, episode 4. Tag karo apne group ke sharing tax wale ko.",
+      "hashtags": [
+        "#menva",
+        "#lahorefood",
+        "#khanagroup",
+        "#foodmemes",
+        "#pakistanimemes"
+      ],
+      "alt": "A group chat where Hamza says he will share fries and then eats everyone's, calling it sharing tax.",
+      "slides": [
+        {
+          "layout": "meme",
+          "img": "social/memes/out/chat-04-share-1.png",
+          "h": "Main share kar lunga"
+        },
+        {
+          "layout": "meme",
+          "img": "social/memes/out/chat-04-share-2.png",
+          "h": "Main share kar lunga (2)"
+        }
+      ]
+    },
+    {
+      "n": 16,
+      "day": 4,
+      "time": "22:30",
+      "id": "madam-bonus-reaction-wala",
+      "series": "Madam ki Class bonus",
+      "pillar": "relatable",
+      "audience": "diners",
+      "format": "reel",
+      "video": "social/reels/out/table-extra-reaction-wala.mp4",
+      "caption": "Madam ki Class, bonus: jab koi tumhari table pe live reaction de.\n\nUs dost ko bhejo jo har cheez pe react karta hai.\n\nMENVA: partner restaurants pe table ka QR scan karo, asli dish 3D mein dekho, phir order karo.",
+      "hashtags": [
+        "#menva",
+        "#madamkiclass",
+        "#lahorefood",
+        "#pakistanicomedy"
+      ],
+      "alt": "An animated skit: four friends at a restaurant table and a parody guest; Ayesha turns into Madam, a strict teacher. Jab koi tumhari table pe live reaction de.",
+      "slides": [
+        {
+          "layout": "cover",
+          "img": "social/reels/out/table-extra-reaction-wala-cover.jpg",
+          "h": "Jab koi tumhari table pe live reaction de"
+        }
+      ]
+    },
+    {
+      "n": 17,
+      "day": 5,
+      "time": "13:00",
+      "id": "meme-09-kuch-bhi",
+      "series": "Daily memes",
+      "pillar": "relatable",
+      "audience": "diners",
+      "format": "single",
+      "caption": "Friday ka sab se khatarnak jumla.\n\nTag karo us dost ko jo har dafa \"kuch bhi\" bolta hai aur phir kuch bhi pasand nahi karta.",
+      "hashtags": [
+        "#menva",
+        "#lahorefood",
+        "#fridaynight",
+        "#foodmemes",
+        "#pakistanimemes"
+      ],
+      "alt": "Bold text: POV, tum ne kuch bhi mangwa lo bola, aur ab poori table tumhe aise dekh rahi hai jaise bill tum doge.",
+      "slides": [
+        {
+          "layout": "meme",
+          "img": "social/memes/out/text-01-kuch-bhi.png",
+          "h": "POV: tum ne \"kuch bhi mangwa lo\" bola"
+        }
+      ]
+    },
+    {
+      "n": 18,
+      "day": 5,
+      "time": "17:00",
+      "id": "meme-chat-05-bill",
+      "series": "Daily memes",
+      "pillar": "relatable",
+      "audience": "diners",
+      "format": "carousel",
+      "caption": "Friday raat ka asli boss fight: bill split.\n\nKhana Group, episode 5. Tum barabar split karte ho ya plates gin ke?",
+      "hashtags": [
+        "#menva",
+        "#lahorefood",
+        "#khanagroup",
+        "#foodmemes",
+        "#pakistanimemes"
+      ],
+      "alt": "A group chat arguing over splitting the bill equally when Sara only had water.",
+      "slides": [
+        {
+          "layout": "meme",
+          "img": "social/memes/out/chat-05-bill-1.png",
+          "h": "Chaar mein barabar?"
+        },
+        {
+          "layout": "meme",
+          "img": "social/memes/out/chat-05-bill-2.png",
+          "h": "Chaar mein barabar? (2)"
+        }
+      ]
+    },
+    {
+      "n": 19,
+      "day": 5,
+      "time": "22:30",
+      "id": "madam-bonus-drama-queen",
+      "series": "Madam ki Class bonus",
+      "pillar": "relatable",
+      "audience": "diners",
+      "format": "reel",
+      "video": "social/reels/out/table-extra-drama-queen.mp4",
+      "caption": "Madam ki Class, bonus: jab burger chhota ho aur dost drama kare.\n\nUs dost ko bhejo jo har plate pe drama karti hai.\n\nMENVA: partner restaurants pe table ka QR scan karo, asli dish 3D mein dekho, phir order karo.",
+      "hashtags": [
+        "#menva",
+        "#madamkiclass",
+        "#lahorefood",
+        "#pakistanicomedy"
+      ],
+      "alt": "An animated skit: four friends at a restaurant table and a parody guest; Ayesha turns into Madam, a strict teacher. Jab burger chhota ho aur dost drama kare.",
+      "slides": [
+        {
+          "layout": "cover",
+          "img": "social/reels/out/table-extra-drama-queen-cover.jpg",
+          "h": "Jab burger chhota ho aur dost drama kare"
+        }
+      ]
+    },
+    {
+      "n": 20,
+      "day": 6,
+      "time": "13:00",
+      "id": "meme-10-naan-shayari",
+      "series": "Daily memes",
+      "pillar": "relatable",
+      "audience": "diners",
+      "format": "single",
+      "caption": "Saturday shayari, 2006 edition.\n\nApni food shayari comment mein likho. Best wali agle Nokia post pe.",
+      "hashtags": [
+        "#menva",
+        "#lahorefood",
+        "#shayari",
+        "#foodmemes",
+        "#pakistanimemes"
+      ],
+      "alt": "An old phone SMS screen with a poem: roses are red, naan hai garam, menu ki photo thori besharam.",
+      "slides": [
+        {
+          "layout": "meme",
+          "img": "social/memes/out/nokia-02-naan.png",
+          "h": "roses are red, naan hai garam, menu ki photo thori besharam"
+        }
+      ]
+    },
+    {
+      "n": 21,
+      "day": 6,
+      "time": "17:00",
+      "id": "meme-chat-06-diet",
+      "series": "Daily memes",
+      "pillar": "relatable",
+      "audience": "diners",
+      "format": "carousel",
+      "caption": "Diet Monday se, fried chicken salad aaj.\n\nKhana Group, episode 6. Tag karo apne group ke diet wale ko.",
+      "hashtags": [
+        "#menva",
+        "#lahorefood",
+        "#khanagroup",
+        "#foodmemes",
+        "#pakistanimemes"
+      ],
+      "alt": "A group chat where Zain says he is on a diet and orders a salad with fried chicken on top and fries on the side.",
+      "slides": [
+        {
+          "layout": "meme",
+          "img": "social/memes/out/chat-06-diet-1.png",
+          "h": "Mera diet hai, main sirf salad"
+        },
+        {
+          "layout": "meme",
+          "img": "social/memes/out/chat-06-diet-2.png",
+          "h": "Mera diet hai, main sirf salad (2)"
+        }
+      ]
+    },
+    {
+      "n": 22,
+      "day": 6,
+      "time": "22:30",
+      "id": "madam-bonus-camera-cousin",
+      "series": "Madam ki Class bonus",
+      "pillar": "relatable",
+      "audience": "diners",
+      "format": "reel",
+      "video": "social/reels/out/table-extra-camera-cousin.mp4",
+      "caption": "Madam ki Class, bonus: har group mein ek \"pehle photo\" wala hota hai.\n\nUs dost ko bhejo jo khane se pehle photo leta hai.\n\nMENVA: partner restaurants pe table ka QR scan karo, asli dish 3D mein dekho, phir order karo.",
+      "hashtags": [
+        "#menva",
+        "#madamkiclass",
+        "#lahorefood",
+        "#pakistanicomedy"
+      ],
+      "alt": "An animated skit: four friends at a restaurant table and a parody guest; Ayesha turns into Madam, a strict teacher. Har group mein ek \"pehle photo\" wala hota hai.",
+      "slides": [
+        {
+          "layout": "cover",
+          "img": "social/reels/out/table-extra-camera-cousin-cover.jpg",
+          "h": "Har group mein ek \"pehle photo\" wala hota hai"
+        }
+      ]
+    },
+    {
+      "n": 23,
+      "day": 7,
+      "time": "13:00",
+      "id": "meme-11-sunday-bingo",
+      "series": "Daily memes",
+      "pillar": "relatable",
+      "audience": "diners",
+      "format": "single",
+      "caption": "Aaj kitne box cross hue? Screenshot lo, apne cousins ko bhejo.\n\nHamara score: teen. Chacha abhi bol nahi chuke.",
+      "hashtags": [
+        "#menva",
+        "#lahorefood",
+        "#sundayfunday",
+        "#desifamily",
+        "#foodmemes"
+      ],
+      "alt": "A bingo card for Sunday family dinner with squares like Abbu saying bill main dunga, Chacha saying ye to ghar pe ban sakta tha, and itna sa.",
+      "slides": [
+        {
+          "layout": "meme",
+          "img": "social/memes/out/bingo-01-sunday.png",
+          "h": "Sunday family dinner bingo"
+        }
+      ]
+    },
+    {
+      "n": 24,
+      "day": 7,
+      "time": "17:00",
+      "id": "meme-chat-07-ammi",
+      "series": "Daily memes",
+      "pillar": "relatable",
+      "audience": "diners",
+      "format": "carousel",
+      "caption": "Ghalti se Ammi ko group mein add kar diya. Hamza ab tak wapas nahi aaya.\n\nKhana Group, episode 7. Ammi ki last line pe sab agree?",
+      "hashtags": [
+        "#menva",
+        "#lahorefood",
+        "#khanagroup",
+        "#foodmemes",
+        "#pakistanimemes"
+      ],
+      "alt": "A group chat where Sara accidentally adds Ammi, who says there is food at home and that a photo should match the plate.",
+      "slides": [
+        {
+          "layout": "meme",
+          "img": "social/memes/out/chat-07-ammi-1.png",
+          "h": "Sara added Ammi"
+        },
+        {
+          "layout": "meme",
+          "img": "social/memes/out/chat-07-ammi-2.png",
+          "h": "Sara added Ammi (2)"
         }
       ]
     }

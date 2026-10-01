@@ -44,8 +44,11 @@ cal.posts.forEach((p, i) => {
   // Series may also run before launch (day 0 = the day before START_DATE, -8 = nine days before).
   const MIN_DAY = SERIES ? -30 : 1;
   if (!(p.day >= MIN_DAY && p.day <= MAX_DAY)) bad(p, `day must be ${MIN_DAY}–${MAX_DAY}`);
-  if (seenDays.has(p.day)) bad(p, `two posts on day ${p.day}`); seenDays.add(p.day);
-  if (i && p.day <= cal.posts[i - 1].day) bad(p, 'days must go up');
+  // Several posts may share a day if their times differ (a 1 pm meme, a 5 pm chat, a late Reel).
+  const at = (q) => q.day + '@' + (q.time || cal.postTime || '20:30');
+  if (seenDays.has(at(p))) bad(p, `two posts on day ${p.day} at the same time`); seenDays.add(at(p));
+  const prev = cal.posts[i - 1];
+  if (prev && (p.day < prev.day || (p.day === prev.day && (p.time || cal.postTime || '20:30') <= (prev.time || cal.postTime || '20:30')))) bad(p, 'posts must go up by day, then time');
 
   if (p.time !== undefined && !/^([01]\d|2[0-3]):[0-5]\d$/.test(p.time)) bad(p, `time "${p.time}" must be HH:MM (24h, Pakistan time)`);
   const slides = p.slides || [];
