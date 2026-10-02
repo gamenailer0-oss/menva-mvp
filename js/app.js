@@ -12,6 +12,9 @@
   const arrow = '<svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round"><path d="M4 12h15M13 6l6 6-6 6"/></svg>';
   const closeIcon = '<svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round"><path d="m6 6 12 12M18 6 6 18"/></svg>';
   const resetIcon = '<svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round"><path d="M4 10a8 8 0 1 1 1 8M4 4v6h6"/></svg>';
+  const heartIcon = '<svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.6" stroke-linecap="round" stroke-linejoin="round"><path d="M12 20.5s-7.5-4.6-7.5-10.2A4.3 4.3 0 0 1 12 7.6a4.3 4.3 0 0 1 7.5 2.7c0 5.6-7.5 10.2-7.5 10.2Z"/></svg>';
+  // "A dish drops onto a table" — the AR button's mark (animation in css/sheet.css)
+  const dropIcon = '<svg class="ar-drop" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.6" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M2.5 20h19"/><ellipse class="ar-drop-shadow" cx="12" cy="20" rx="6.5" ry="1.2" fill="currentColor" stroke="none"/><g class="ar-drop-dish"><path d="M5 15.5a7 7 0 0 1 14 0Z"/><path d="M3.5 15.5h17"/><path d="M12 7.2V6"/></g></svg>';
   const shareIcon = '<svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round"><path d="M4 8a2 2 0 0 1 2-2h12a2 2 0 0 1 2 2v9a2 2 0 0 1-2 2H6a2 2 0 0 1-2-2Z"/><path d="M4 13h16M8 6V4m8 2V4"/></svg>';
   const arIcon = '<svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round"><path d="M3 7V5a2 2 0 0 1 2-2h2M17 3h2a2 2 0 0 1 2 2v2M21 17v2a2 2 0 0 1-2 2h-2M7 21H5a2 2 0 0 1-2-2v-2"/><path d="M7 12h10M7 8h10M7 16h6"/></svg>';
 
@@ -274,6 +277,20 @@
   }
 
   // ─── Restaurant Page ──────────────────────────────────────────
+  // Menu cards: "it's an object, not a photo". Each 3D dish photo turns a couple of degrees as it first
+  // scrolls into view (once; transform only, see css/sheet.css). Reduced motion: nothing moves.
+  function initPhotoTurn(root) {
+    if (matchMedia('(prefers-reduced-motion: reduce)').matches || !('IntersectionObserver' in window)) return;
+    const io = new IntersectionObserver((entries) => {
+      entries.forEach((entry) => {
+        if (!entry.isIntersecting) return;
+        entry.target.classList.add('is-turned');
+        io.unobserve(entry.target);
+      });
+    }, { threshold: 0.4 });
+    root.querySelectorAll('.dish-card .dish-photo').forEach((el) => io.observe(el));
+  }
+
   function restaurantPage(r, table) {
     activeRestaurant = r;
     currentTable = table;
@@ -290,6 +307,7 @@
           return `<button class="dish-card" data-preview="true" data-dish="${esc(d.id)}" aria-label="${esc(d.name)} — see it on your table">
             <div class="dish-photo" style="background-image:url('${d.assets.blur}')">
               <img src="${esc(d.assets.poster)}" alt="" width="1200" height="900" loading="lazy" decoding="async">
+              <span class="ar-tag" aria-hidden="true">AR</span>
               <span class="see-mark">${arIcon} See it on your table</span>
             </div>
             ${line}${desc}
@@ -302,22 +320,20 @@
     }).join('');
     const catNav = r.categories.length > 1 ? `<nav class="cat-nav" aria-label="Menu categories"><div class="cat-nav-scroll"><div class="cat-nav-indicator" aria-hidden="true"></div>${r.categories.map((cat, i) => `<a href="#${catId(cat, i)}" class="cat-link">${esc(cat)}</a>`).join('')}</div></nav>` : '';
 
-    // One identity block: the restaurant's own logo is the page heading (no name repeated four times),
-    // the table number sits with it, and the first dish is in view sooner.
-    // Restaurants with an `hours` field (e.g. Baraza) get a full-width brand band with a round logo
-    // and pills instead of the printed cover card — Gauchos has no `hours` and keeps its card unchanged.
+    // One identity block, the same for every restaurant: a full-width brand band holding the
+    // restaurant's own logo (the page's h1), its own tagline and quiet pills (hours / area / table —
+    // only the ones the restaurant has given us). Each brand supplies its own tokens, logo and display
+    // font (css/tokens.css, css/sheet.css); the structure never changes.
     const themeClass = `theme-${esc(r.theme || 'default')}`;
-    const hasBand = !!r.hours;
     const name = esc(r.displayName || r.name);
-    const heading = r.logo ? `<img src="${esc(r.logo)}" alt="${name}" class="restaurant-logo-svg" width="200" height="80">` : name;
     const subtitle = r.showCheffy ? cheffy('wave', esc(r.menuSubtitle)) : `<span>${esc(r.menuSubtitle || '')}</span>`;
-
-    const bandHTML = hasBand ? `<section class="restaurant-band ${themeClass}">
+    const bandLogo = r.logoRound ? `<img src="${esc(r.logoRound)}" alt="${name}" class="band-logo" width="88" height="88">`
+      : r.logo ? `<img src="${esc(r.logo)}" alt="${name}" class="band-logo-wide" width="220" height="27">`
+      : `<span class="band-name">${name}</span>`;
+    const bandHTML = `<section class="restaurant-band ${themeClass}">
       <div class="band-inner">
-        ${r.logoRound ? `<img src="${esc(r.logoRound)}" alt="${name}" class="band-logo" width="88" height="88">`
-          : r.logo ? `<img src="${esc(r.logo)}" alt="${name}" class="band-logo-wide" width="220" height="27">` : ''}
+        <h1 class="band-heading">${bandLogo}</h1>
         <div class="band-copy">
-          <h1 class="sr-only">${name}</h1>
           ${r.tagline ? `<p class="band-tagline">${esc(r.tagline)}</p>` : ''}
           <div class="band-pills">
             ${r.hours ? `<span class="pill">${esc(r.hours)}</span>` : ''}
@@ -326,22 +342,10 @@
           </div>
         </div>
       </div>
-    </section>` : '';
-    const coverHTML = hasBand ? '' : `<section class="restaurant-cover">
-        <div class="cover-card">
-          <h1 class="cover-heading">${heading}</h1>
-          <div class="cover-copy">
-            <div class="cover-meta">
-              <span class="overline">${esc(r.area)} · ${esc(r.location)}</span>
-              ${table ? `<span class="table-chip">Table ${esc(table)}</span>` : ''}
-            </div>
-            <p>${esc(r.tagline)}</p>
-          </div>
-        </div>
-      </section>`;
+    </section>`;
 
-    app.innerHTML = header() + bandHTML + `<main class="restaurant-page ${themeClass}">
-      ${coverHTML}
+    app.innerHTML = header() + bandHTML + `<div class="loyalty-slot" data-loyalty></div>
+    <main class="restaurant-page ${themeClass}">
       ${r.description ? `<p class="menu-intro">${esc(r.description)}</p>` : ''}
       ${catNav}
       <section class="menu-section">
@@ -391,6 +395,7 @@
 
     initMotion(app);
     initTilt(app);
+    initPhotoTurn(app);
 
     const dialog = app.querySelector('dialog');
     dialog.querySelector('.close-dialog').addEventListener('click', () => dialog.close());
@@ -601,6 +606,19 @@
     });
   }
 
+  // ─── Favourites ──────────────────────────────────────────────
+  // The same on-device list the Table Card reads (js/sharecard.js): menva.favs.<restaurant> = [dish ids].
+  // No account, nothing leaves the phone; every call is safe without localStorage.
+  const favKey = (rid) => `menva.favs.${rid}`;
+  function readFavs(rid) { try { const v = JSON.parse(localStorage.getItem(favKey(rid)) || '[]'); return Array.isArray(v) ? v : []; } catch { return []; } }
+  const isFav = (rid, did) => readFavs(rid).includes(did);
+  function toggleFav(rid, did) {
+    const favs = readFavs(rid);
+    const next = favs.includes(did) ? favs.filter((x) => x !== did) : [...favs, did].slice(-200);
+    try { localStorage.setItem(favKey(rid), JSON.stringify(next)); } catch {}
+    return next.includes(did);
+  }
+
   // ─── Dish Sheet ──────────────────────────────────────────────
   // Order: price → description → halal → allergens → spice → dietary → ingredients → nutrition.
   const LOAD_LIMIT_MS = 12000; // past this, show the 360° view while the full view keeps loading
@@ -618,7 +636,7 @@
 
     // The Pass: blur-up poster paints instantly (inline base64, zero network), then focuses as the GLB loads.
     // model-viewer's own AR button is replaced by an empty slot; ours sits below the stage (thumb reach).
-    const modelViewer = dish.has3d ? `<model-viewer id="dish-viewer" camera-controls touch-action="pan-y" camera-orbit="${esc(a.orbit || DEFAULT_ORBIT)}"${a.target ? ` camera-target="${esc(a.target)}"` : ''} shadow-intensity="1" shadow-softness="0.6" environment-image="neutral" interaction-prompt="auto" alt="${esc(dish.name)} — 3D scan">
+    const modelViewer = dish.has3d ? `<model-viewer id="dish-viewer" camera-controls touch-action="pan-y" camera-orbit="${esc(a.orbit || DEFAULT_ORBIT)}"${a.target ? ` camera-target="${esc(a.target)}"` : ''} shadow-intensity="1" shadow-softness="0.6" environment-image="neutral" interaction-prompt="none" auto-rotate-delay="0" rotation-per-second="30deg" alt="${esc(dish.name)} — close-up view">
             <span slot="ar-button" hidden></span>
             <div slot="ar-prompt" class="ar-prompt">
               <svg viewBox="0 0 120 80" aria-hidden="true"><ellipse cx="60" cy="62" rx="44" ry="12"/><g class="ar-prompt-phone"><rect x="50" y="8" width="20" height="34" rx="4"/><line x1="57" y1="13" x2="63" y2="13"/></g></svg>
@@ -626,25 +644,27 @@
             </div>
           </model-viewer>` : '';
 
+    // Three calm zones (css/sheet.css): 1 the dish — stage, name, price and the one filled button;
+    // 2 "Add to my table"; 3 a slim row of quiet extras — then the details.
+    // The AR slot keeps its height from the first frame, so the button arriving never moves anything.
+    const faved = isFav(activeRestaurant.id, dish.id);
     content.innerHTML = `
       ${dish.has3d ? `<div class="dish-stage${dish.serve === 'iced' ? ' iced' : ''}">
           ${MenvaLoader.markup(dish, modelViewer)}
           <button id="reset-view" class="reset-view" hidden aria-label="Reset the view">${resetIcon}</button>
-          <div class="stage-actions">
-            <button type="button" class="ar-btn" hidden>${arIcon} <span class="ar-btn-label">See it on your table</span></button>
-            <button type="button" class="share-pill" hidden>${shareIcon} Share my table card</button>
-            <p id="viewer-status" class="stage-status" role="status"></p>
-            ${MenvaCaps.inApp ? `<p class="inapp-note">For the table view, open this page in Chrome or Safari. <button type="button" class="copy-link">Copy link</button></p>` : ''}
-          </div>
         </div>` : ''}
       <section class="dish-detail">
-        <p class="overline">${esc(activeRestaurant.name)} / ${esc(dish.category)}</p>
-        <h2 id="dish-title">${esc(dish.name)}${serveTag(dish.serve)}</h2>
-        <p class="detail-price${dish.price_pkr == null ? ' fact-unconfirmed' : ''}">${esc(formatPrice(dish.price_pkr))}</p>
-        ${dish.description ? `<p>${esc(dish.description)}</p>` : ''}
-        ${beanFacts(dish)}
-        ${dishFacts(dish)}
-        <div class="tray-add">
+        <div class="zone zone-dish">
+          <p class="overline">${esc(activeRestaurant.name)} / ${esc(dish.category)}</p>
+          <h2 id="dish-title">${esc(dish.name)}${serveTag(dish.serve)}</h2>
+          <p class="detail-price${dish.price_pkr == null ? ' fact-unconfirmed' : ''}">${esc(formatPrice(dish.price_pkr))}</p>
+          ${dish.has3d ? `<div class="ar-slot">
+            <button type="button" class="ar-btn" hidden>${dropIcon} <span class="ar-btn-label">See it on your table</span></button>
+            <p id="viewer-status" class="stage-status" role="status"></p>
+          </div>
+          ${MenvaCaps.inApp ? `<p class="inapp-note">For the table view, open this page in Chrome or Safari. <button type="button" class="copy-link">Copy link</button></p>` : ''}` : ''}
+        </div>
+        <div class="zone tray-add">
           <div class="tray-stepper">
             <button type="button" class="tray-step" data-step="-1" aria-label="Fewer">−</button>
             <output class="tray-qty" aria-live="polite">1</output>
@@ -654,6 +674,15 @@
           ${activeRestaurant.quickNotes?.length ? `<div class="quick-notes">${activeRestaurant.quickNotes.map(n => `<button type="button" class="quick-note-chip" data-note="${esc(n)}">${esc(n)}</button>`).join('')}</div>` : ''}
           <button type="button" class="tray-add-btn">Add to my table</button>
           <p class="tray-add-status" role="status" aria-live="polite"></p>
+        </div>
+        ${dish.has3d ? `<div class="extras" role="group" aria-label="More for this dish">
+          <button type="button" class="share-pill" hidden>${shareIcon}<span>Share my table card</span></button>
+          <button type="button" class="fav-btn" aria-pressed="${faved}">${heartIcon}<span>My fav</span></button>
+        </div>` : ''}
+        <div class="zone-details">
+          ${dish.description ? `<p class="dish-desc">${esc(dish.description)}</p>` : ''}
+          ${beanFacts(dish)}
+          ${dishFacts(dish)}
         </div>
         <button class="back-menu">Back to menu ${arrow}</button>
       </section>
@@ -672,6 +701,13 @@
     const arButton = content.querySelector('.ar-btn');
     const resetBtn = document.getElementById('reset-view');
     const sharePill = content.querySelector('.share-pill');
+    const favBtn = content.querySelector('.fav-btn');
+    const slot = content.querySelector('.ar-slot');
+    favBtn.addEventListener('click', () => {
+      const on = toggleFav(activeRestaurant.id, dish.id);
+      favBtn.setAttribute('aria-pressed', String(on));
+      MenvaTrack('fav_toggle', { dish: dish.id, on });
+    });
     sharePill.addEventListener('click', () => {
       window.MenvaShare?.open({ restaurant: activeRestaurant, dish, table: currentTable, isNew: firstOpen, trigger: sharePill });
     });
@@ -693,13 +729,23 @@
       if (t === tier || !stage.isConnected) return;
       tier = t;
       stage.dataset.tier = t;
+      slot.dataset.tier = t;
       showSharePill(false);
       MenvaTrack('tier_assigned', { dish: dish.id, tier: t, ...(reason && { reason }) });
     };
 
     // Start The Pass before model-viewer's script arrives so the diner sees progress copy at once.
+    // The dish is "alive": once the live 3D is on screen it turns by itself from its best angle until the
+    // diner touches it, and the first dish of a visit shows a one-time "Drag to turn" hint.
+    let hint = null;
+    const turner = MenvaViewer.autoTurn(viewer, { onTouch: () => hint?.dismiss() });
     const pass = MenvaLoader.start(content, viewer, {
       lines: activeRestaurant.loaderLines,
+      onLive: () => {
+        if (!stage.isConnected || tier === 4 || tier === 5) return;
+        turner.start();
+        hint = MenvaViewer.dragHint(stage.querySelector('.pass'));
+      },
       spin,
       onStall: () => MenvaTrack('model_progress_stalled', { dish: dish.id }),
       onFallback: (t, reason) => setTier(t, reason),
@@ -812,7 +858,15 @@
       viewer.cameraTarget = a.target || 'auto auto auto';
       viewer.fieldOfView = 'auto';
       viewer.jumpCameraToGoal?.();
+      turner.resume(); // back to the dish's own angle, turning again
     });
+
+    // The AR button's light sweep and icon only run while it is actually on screen.
+    if ('IntersectionObserver' in window) {
+      const seen = new IntersectionObserver(([e]) => arButton.classList.toggle('is-seen', e.isIntersecting), { threshold: 0.6 });
+      seen.observe(arButton);
+      dialog.addEventListener('close', () => seen.disconnect(), { once: true });
+    }
   }
 
   // In-app browsers (Instagram, Facebook, TikTok…) can't open AR; help the diner move to a real browser.

@@ -56,6 +56,9 @@
 /* Restaurant pages keep their own accent — never MENVA's on a restaurant screen */
 [data-theme="gauchos"] {
   --accent: #7C2A1C;
+  /* Brand band: oxblood, with the cream of the printed menu on it */
+  --brand-band: #7C2A1C;
+  --brand-band-ink: #FBF6EC;
 }
 
 /* Baraza Coffee — cream & deep olive, a calm specialty-coffee register */
@@ -119,6 +122,8 @@ html[data-mode="dark"] body {
 }
 html[data-mode="dark"] [data-theme="gauchos"] {
   --accent: #E2896D;
+  --brand-band: #3F1710;      /* oxblood by candlelight */
+  --brand-band-ink: #F5EFE4;
 }
 /* Baraza — "espresso by night" */
 html[data-mode="dark"] [data-theme="baraza"] {

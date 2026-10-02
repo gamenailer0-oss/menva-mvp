@@ -116,139 +116,6 @@
   margin: 0 auto;
   padding: 0 20px;
 }
-.restaurant-cover {
-  padding: 20px 0 16px;
-  display: flex;
-  justify-content: center;
-}
-.cover-card {
-  width: 100%;
-  max-width: 460px;
-  padding: 24px 24px 20px;
-  text-align: center;
-  background: var(--cover-paper);
-  color: var(--cover-ink);
-  border-radius: var(--radius);
-  border: 1px solid var(--gold);
-  outline: 1px solid var(--gold);
-  outline-offset: -5px;
-}
-.cover-heading {
-  margin: 0 0 14px;
-  line-height: 0;
-}
-.cover-heading .restaurant-logo-svg {
-  display: block;
-  width: min(180px, 60%);
-  height: auto;
-  margin: 0 auto;
-}
-.cover-copy .cover-meta {
-  display: flex;
-  align-items: center;
-  justify-content: center;
-  gap: 10px;
-  flex-wrap: wrap;
-}
-.cover-copy .overline { color: #6B6056; }
-.table-chip {
-  flex: none;
-  display: inline-flex;
-  align-items: center;
-  padding: 3px 11px;
-  border: 1px solid var(--gold);
-  border-radius: 999px;
-  color: var(--cover-ink);
-  font-size: var(--text-xs);
-  font-weight: 500;
-  letter-spacing: 0.02em;
-}
-.cover-copy p {
-  margin-top: 10px;
-  font-family: var(--font-display);
-  font-style: italic;
-  font-size: var(--text-lg);
-  color: color-mix(in srgb, var(--cover-ink) 88%, transparent);
-}
-
-/* ═══ Restaurant brand band (e.g. Baraza) — full-width, sits above the padded page ═══ */
-.restaurant-band {
-  background: var(--brand-band);
-  color: var(--brand-band-ink);
-  position: relative;
-  overflow: hidden;
-}
-.restaurant-band::before {
-  content: '';
-  position: absolute;
-  inset: 0;
-  opacity: 0.06;
-  pointer-events: none;
-  background-image: url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' width='40' height='40'%3E%3Cpath d='M0 20 L20 0 L40 20 L20 40 Z' fill='none' stroke='%23000000' stroke-width='1'/%3E%3C/svg%3E");
-}
-.band-inner {
-  position: relative;
-  z-index: 1;
-  max-width: 1120px;
-  margin: 0 auto;
-  padding: 20px 20px 22px;
-  display: flex;
-  align-items: center;
-  gap: 16px;
-}
-.band-logo {
-  flex: none;
-  width: 112px;
-  height: 112px;
-  border-radius: 50%;
-  object-fit: cover;
-  background: #fff;
-  box-shadow: var(--shadow);
-}
-/* Wide wordmark lockup (e.g. Haute Dolci — a horizontal mark, never forced into a circle crop).
-   The source PNG is black-on-transparent; dark mode inverts it to white rather than shipping a
-   second file, since it is a flat monochrome mark. */
-.band-logo-wide {
-  flex: none;
-  width: min(260px, 64vw);
-  height: auto;
-}
-html[data-mode="dark"] .theme-haute-dolci .band-logo-wide { filter: invert(1); } /* black mark → white on the dark band */
-.band-copy { min-width: 0; }
-.band-tagline {
-  font-family: var(--font-display);
-  font-style: italic;
-  font-size: var(--text-base);
-  line-height: 1.4;
-  color: var(--brand-band-ink);
-}
-.band-pills {
-  display: flex;
-  flex-wrap: wrap;
-  align-items: center;
-  gap: 8px;
-  margin-top: 10px;
-}
-.band-pills .pill {
-  display: inline-flex;
-  align-items: center;
-  min-height: 26px;
-  padding: 3px 11px;
-  border: 1px solid color-mix(in srgb, var(--brand-band-ink) 35%, transparent);
-  border-radius: var(--radius-pill);
-  font-size: var(--text-xs);
-  font-weight: 500;
-  color: var(--brand-band-ink);
-}
-.band-pills .table-chip {
-  border-color: color-mix(in srgb, var(--brand-band-ink) 55%, transparent);
-  color: var(--brand-band-ink);
-}
-@media (max-width: 480px) {
-  .band-inner { flex-direction: column; text-align: center; }
-  .band-pills { justify-content: center; }
-}
-
 /* One quiet line about the restaurant, then straight to the food */
 .menu-intro {
   max-width: 56ch;
@@ -298,8 +165,7 @@ html[data-mode="dark"] .theme-haute-dolci .band-logo-wide { filter: invert(1); }
 }
 /* Haute Dolci: their brand tagline is tracked caps, never italic — override the generic serif
    cover styling (which italicises quotes) so "It's a must." reads in their own register. */
-.theme-haute-dolci .band-tagline,
-.theme-haute-dolci .cover-copy p {
+.theme-haute-dolci .band-tagline {
   font-style: normal;
   text-transform: uppercase;
   letter-spacing: 0.1em;
@@ -376,26 +242,6 @@ html[data-mode="dark"] .theme-haute-dolci .band-logo-wide { filter: invert(1); }
 }
 .dish-photo svg { width: 13px; height: 13px; flex: none; color: var(--accent); }
 
-/* A soft light sweep across the pill every ~6s, only while the card is in view (reduced motion: none) */
-.see-mark::after {
-  content: '';
-  position: absolute;
-  inset: 0;
-  z-index: 1;
-  pointer-events: none;
-  transform: translateX(-120%) skewX(-20deg);
-  background: linear-gradient(90deg, transparent, color-mix(in srgb, #fff 55%, transparent), transparent);
-}
-html.js-motion .see-mark.in-view::after {
-  animation: see-mark-sweep 6s ease-in-out infinite;
-}
-@keyframes see-mark-sweep {
-  0%, 8% { transform: translateX(-120%) skewX(-20deg); }
-  22%, 100% { transform: translateX(220%) skewX(-20deg); }
-}
-@media (prefers-reduced-motion: reduce) {
-  .see-mark.in-view::after { animation: none; }
-}
 .dish-line {
   display: flex;
   align-items: baseline;
@@ -552,18 +398,6 @@ dialog[open] {
   height: 460px;
   object-fit: cover;
 }
-.stage-actions {
-  display: grid;
-  gap: 8px;
-  padding: 12px 20px 20px;
-}
-.stage-status {
-  min-height: 1.4em;
-  font-size: var(--text-xs);
-  color: var(--muted);
-  text-align: center;
-}
-.stage-status:empty { display: none; }
 .reset-view {
   position: absolute;
   top: 12px;
@@ -595,49 +429,6 @@ dialog[open] {
   font-weight: 500;
 }
 
-/* "See it on your table": full width, oxblood, shown once the model has loaded */
-.ar-btn {
-  display: flex;
-  align-items: center;
-  justify-content: center;
-  gap: 10px;
-  width: 100%;
-  min-height: 52px;
-  padding: 12px 20px;
-  background: var(--accent);
-  color: var(--accent-ink);
-  border-radius: var(--radius-pill);
-  font-size: var(--text-base);
-  font-weight: 600;
-  animation: ar-ready 350ms var(--ease) both;
-  transition: background var(--ease-fast), transform var(--dur-fast) var(--ease-out);
-}
-.ar-btn[hidden] { display: none; }
-/* iPhone: while the AR file comes down, the button fills with real progress, then turns live */
-.ar-btn.is-preparing {
-  position: relative;
-  overflow: hidden;
-  isolation: isolate;
-  background: var(--surface-2);
-  color: var(--ink);
-  cursor: progress;
-}
-.ar-btn.is-preparing::before {
-  content: '';
-  position: absolute;
-  inset: 0;
-  z-index: -1;
-  background: color-mix(in srgb, var(--accent) 22%, transparent);
-  transform: scaleX(var(--prep, 0));
-  transform-origin: 0 50%;
-  transition: transform 200ms linear;
-}
-.ar-btn-label { font-variant-numeric: tabular-nums; }
-.ar-btn:hover { background: color-mix(in srgb, var(--accent) 88%, black); }
-.ar-btn:active { transform: scale(0.97); }
-.ar-btn svg { width: 18px; height: 18px; flex: none; }
-@keyframes ar-ready { from { opacity: 0; transform: translateY(4px); } }
-
 /* AR placement prompt (WebXR, slot="ar-prompt") */
 .ar-prompt {
   position: absolute;
@@ -663,29 +454,6 @@ dialog[open] {
 .ar-prompt p { font-size: var(--text-sm); line-height: 1.4; }
 
 /* ═══ Dish Detail (right side of modal) ═══ */
-.dish-detail {
-  padding: 52px 28px 32px;
-}
-.dish-detail .overline { display: block; margin-bottom: 6px; }
-.dish-detail h2 {
-  font-size: var(--text-2xl);
-  margin: 0 0 8px;
-  color: var(--ink);
-}
-.dish-detail > .detail-price {
-  font-size: var(--text-base);
-  color: var(--accent);
-  padding-bottom: 16px;
-  border-bottom: 1px solid var(--line);
-  margin-bottom: 18px;
-}
-.dish-detail > p {
-  font-size: var(--text-sm);
-  color: var(--muted);
-  line-height: 1.6;
-  margin-bottom: 20px;
-}
-
 /* Dish facts: halal → allergens → spice → dietary → ingredients — a quiet definition list */
 .facts {
   display: grid;
@@ -770,99 +538,6 @@ details.nutrition[open] summary::after { transform: rotate(45deg); }
 .bean-facts .fact { border-bottom: 0; padding: 6px 0; }
 .bean-facts .fact:first-child { padding-top: 0; }
 .bean-facts .fact:last-child { padding-bottom: 0; }
-
-/* ═══ "Add to my table" (CLAUDE.md Phase 7) ═══ */
-.tray-add {
-  display: grid;
-  gap: 12px;
-  margin-top: 20px;
-  padding-top: 20px;
-  border-top: 1px solid var(--line);
-}
-.tray-stepper {
-  display: flex;
-  align-items: center;
-  justify-content: center;
-  gap: 4px;
-  width: fit-content;
-  margin: 0 auto;
-  background: var(--surface-2);
-  border-radius: var(--radius-pill);
-  padding: 4px;
-}
-.tray-step {
-  width: 44px;
-  height: 44px;
-  display: grid;
-  place-items: center;
-  border-radius: 50%;
-  color: var(--ink);
-  font-size: 20px;
-  line-height: 1;
-  font-weight: 600;
-}
-.tray-step:active { transform: scale(0.94); }
-.tray-qty {
-  min-width: 32px;
-  text-align: center;
-  font-variant-numeric: tabular-nums;
-  font-weight: 600;
-  color: var(--ink);
-}
-.tray-note {
-  width: 100%;
-  min-height: 44px;
-  padding: 0 14px;
-  border: 1px solid var(--line);
-  border-radius: var(--radius-pill);
-  background: var(--surface);
-  color: var(--ink);
-  font-size: var(--text-sm);
-  font-family: var(--font-body);
-}
-.tray-note::placeholder { color: var(--faint); }
-.quick-notes {
-  display: flex;
-  flex-wrap: wrap;
-  gap: 8px;
-  margin-top: -4px;
-}
-.quick-note-chip {
-  min-height: 36px;
-  padding: 0 14px;
-  border: 1px solid var(--line);
-  border-radius: var(--radius-pill);
-  background: var(--surface-2);
-  color: var(--ink);
-  font-size: var(--text-xs);
-  font-weight: 500;
-  transition: background var(--ease-fast), transform var(--dur-fast) var(--ease-out);
-}
-.quick-note-chip:hover { background: var(--surface); }
-.quick-note-chip:active { transform: scale(0.96); }
-.tray-add-btn {
-  display: flex;
-  align-items: center;
-  justify-content: center;
-  width: 100%;
-  min-height: 52px;
-  padding: 0 20px;
-  background: var(--accent);
-  color: var(--accent-ink);
-  border-radius: var(--radius-pill);
-  font-size: var(--text-base);
-  font-weight: 600;
-  transition: background var(--ease-fast), transform var(--dur-fast) var(--ease-out);
-}
-.tray-add-btn:hover { background: color-mix(in srgb, var(--accent) 88%, black); }
-.tray-add-btn:active { transform: scale(0.97); }
-.tray-add-status {
-  min-height: 1.4em;
-  text-align: center;
-  font-size: var(--text-xs);
-  color: var(--muted);
-}
-.tray-add-status:empty { display: none; }
 
 /* ═══ Floating tray pill ═══ */
 .tray-pill {
@@ -982,27 +657,6 @@ details.nutrition[open] summary::after { transform: rotate(45deg); }
   text-decoration: underline;
   text-underline-offset: 3px;
 }
-
-.back-menu {
-  display: flex;
-  align-items: center;
-  justify-content: center;
-  width: 100%;
-  min-height: 52px;
-  margin-top: 24px;
-  background: transparent;
-  color: var(--ink);
-  border: 1px solid var(--ink);
-  border-radius: var(--radius-pill);
-  padding: 12px 18px;
-  gap: 10px;
-  font-size: var(--text-sm);
-  font-weight: 600;
-  transition: background var(--ease-fast), border-color var(--ease-fast), transform var(--dur-fast) var(--ease-out);
-}
-.back-menu:active { transform: scale(0.98); }
-.back-menu:hover { background: var(--surface-2); border-color: var(--faint); }
-.back-menu svg { width: 16px; height: 16px; transform: rotate(180deg); }
 
 /* ═══ Published Menu / Listing (secondary pages — same quiet palette) ═══ */
 .published-menu { padding: 32px 0; border-bottom: 1px solid var(--line); }
@@ -1307,7 +961,6 @@ footer small {
   .detail-photo { height: 260px; }
   .dish-detail { padding: 24px 20px 28px; }
   .nutrition-grid { grid-template-columns: repeat(4, 1fr); gap: 8px; }
-  .cover-card { max-width: 100%; padding: 20px 20px 16px; }
   footer { flex-wrap: wrap; gap: 10px; }
   footer small { width: 100%; max-width: none; margin: 0; text-align: left; }
 }
@@ -1372,31 +1025,6 @@ html.js-motion .menu-heading.is-in {
 .dish-line .price-ask { color: var(--muted); font-size: var(--text-sm); white-space: nowrap; }
 
 /* ═══ Table Card (js/sharecard.js): the pill on the dish sheet + the share sheet ═══ */
-.share-pill {
-  display: flex;
-  align-items: center;
-  justify-content: center;
-  gap: 10px;
-  width: 100%;
-  min-height: 48px;
-  padding: 10px 20px;
-  background: transparent;
-  color: var(--accent);
-  border: 1.5px solid var(--accent);
-  border-radius: var(--radius-pill);
-  font-size: var(--text-sm);
-  font-weight: 600;
-  animation: ar-ready 350ms var(--ease) both;
-  transition: background var(--ease-fast), color var(--ease-fast), transform var(--dur-fast) var(--ease-out);
-}
-.share-pill[hidden] { display: none; }
-.share-pill svg { width: 18px; height: 18px; flex: none; }
-.share-pill:hover { background: var(--accent); color: var(--accent-ink); }
-.share-pill:active { transform: scale(0.97); }
-.share-pill.is-nudge { animation: share-nudge 900ms var(--ease-out) 2; }
-@keyframes share-nudge { 0%, 100% { box-shadow: 0 0 0 0 transparent; } 40% { box-shadow: 0 0 0 7px color-mix(in srgb, var(--accent) 24%, transparent); } }
-@media (prefers-reduced-motion: reduce) { .share-pill, .share-pill.is-nudge { animation: none; } }
-
 @media (min-width: 769px) { dialog.share-dialog { max-width: 460px; } }
 @media (max-width: 768px) { dialog.share-dialog { height: auto; max-height: 96svh; } }
 .share-body { padding: 28px 20px 24px; display: grid; gap: 14px; justify-items: center; }

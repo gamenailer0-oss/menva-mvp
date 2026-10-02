@@ -166,7 +166,62 @@
     return true;
   }
 
+  // ─── "It's not a picture": the dish turns by itself ──────────────
+  // From the dish's own best angle, about one turn every 12 s (model-viewer's auto-rotate, 30deg/s),
+  // until the diner touches it. Their hands win at once; after ~5 s without a touch it turns again.
+  // Never under prefers-reduced-motion. start() once the live 3D is on screen; resume() = back to the
+  // dish's own angle (the reset button). onTouch fires on the diner's first touch.
+  function autoTurn(viewer, { idleMs = 5000, onTouch } = {}) {
+    const reduced = () => matchMedia('(prefers-reduced-motion: reduce)').matches;
+    let timer = 0, held = false, live = false;
+    const turn = (on) => { if (viewer.isConnected) viewer.autoRotate = on; };
+    const later = () => { clearTimeout(timer); timer = setTimeout(() => { if (live && !held && !reduced()) turn(true); }, idleMs); };
+    const touched = () => { turn(false); onTouch?.(); };
+
+    viewer.addEventListener('pointerdown', () => {
+      held = true;
+      clearTimeout(timer);
+      touched();
+      const release = () => { held = false; later(); };
+      window.addEventListener('pointerup', release, { once: true });
+      window.addEventListener('pointercancel', release, { once: true });
+    });
+    // Wheel, keyboard and pinch also arrive as camera changes from the diner.
+    viewer.addEventListener('camera-change', (e) => {
+      if (e.detail?.source !== 'user-interaction') return;
+      touched();
+      if (!held) later();
+    });
+    const hide = () => { if (!viewer.isConnected) return document.removeEventListener('visibilitychange', hide); if (document.hidden) { clearTimeout(timer); turn(false); } else if (live && !held && !reduced()) later(); };
+    document.addEventListener('visibilitychange', hide);
+
+    return {
+      start() { live = true; if (!reduced()) turn(true); },
+      resume() { clearTimeout(timer); held = false; if (live && !reduced()) turn(true); },
+    };
+  }
+
+  // One-time "Drag to turn" hint: a finger glides across the stage, then fades. First 3D dish of a
+  // visit only (sessionStorage; if that is blocked it shows once per sheet open at worst — never nags).
+  // Under reduced motion it stays still and simply fades. Returns { dismiss } or null if already shown.
+  const HINT_KEY = 'menva.turnHint';
+  function dragHint(stage) {
+    try { if (sessionStorage.getItem(HINT_KEY)) return null; sessionStorage.setItem(HINT_KEY, '1'); } catch {}
+    if (!stage?.isConnected) return null;
+    const el = document.createElement('div');
+    el.className = 'turn-hint';
+    el.setAttribute('aria-hidden', 'true');
+    el.innerHTML = '<span class="turn-hint-hand"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.6" stroke-linecap="round" stroke-linejoin="round"><path d="M9 12.5V5.5a1.6 1.6 0 0 1 3.2 0v5l3.1.6a2.4 2.4 0 0 1 1.9 2.8l-.7 3.6A4 4 0 0 1 12.6 21H11a4.5 4.5 0 0 1-3.4-1.6L4.3 15.6a1.5 1.5 0 0 1 2.3-1.9Z"/></svg></span><span class="turn-hint-text">Drag to turn</span>';
+    stage.append(el);
+    const gone = () => el.remove();
+    el.addEventListener('animationend', (e) => { if (e.animationName === 'turn-hint-out') gone(); });
+    setTimeout(gone, 6000); // safety net where animations don't run
+    return { dismiss() { el.classList.add('is-done'); setTimeout(gone, 250); } };
+  }
+
   window.MenvaViewer = {
+    autoTurn,
+    dragHint,
     load,
     download,
     absolute,

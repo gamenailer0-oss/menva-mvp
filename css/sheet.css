@@ -1,1 +1,456 @@
-/* MENVA — sheet (owned by one helper in the "wave" build; see the plan) */
+/* ─────────────────────────────────────────────────────────────
+   MENVA — restaurant pages + the dish sheet ("sheet" in the wave build)
+   One family: every restaurant page uses the same band, rhythm and cards; each brand only
+   brings its own tokens (css/tokens.css), logo and display font.
+   The dish sheet has three calm zones and exactly one filled button: "See it on your table".
+   Motion: transform + opacity only; loops run only while visible; reduced motion = static.
+   ───────────────────────────────────────────────────────────── */
+
+/* ═══ Restaurant brand band — the same component for every restaurant ═══ */
+.restaurant-band {
+  background: var(--brand-band);
+  color: var(--brand-band-ink);
+  position: relative;
+  overflow: hidden;
+}
+.restaurant-band::before { /* faint lattice, like a printed menu's border */
+  content: '';
+  position: absolute;
+  inset: 0;
+  opacity: 0.06;
+  pointer-events: none;
+  background-image: url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' width='40' height='40'%3E%3Cpath d='M0 20 L20 0 L40 20 L20 40 Z' fill='none' stroke='%23000000' stroke-width='1'/%3E%3C/svg%3E");
+}
+html[data-mode="dark"] .restaurant-band::before { filter: invert(1); opacity: 0.05; }
+.band-inner {
+  position: relative;
+  z-index: 1;
+  max-width: 1120px;
+  margin: 0 auto;
+  padding: 24px 20px 26px;
+  display: flex;
+  align-items: center;
+  gap: 20px;
+}
+.band-heading { flex: none; margin: 0; line-height: 0; }
+.band-name { font-family: var(--font-display); font-size: var(--text-2xl); line-height: 1.1; }
+.band-logo {
+  width: 104px;
+  height: 104px;
+  border-radius: 50%;
+  object-fit: cover;
+  background: #fff; /* the round logo carries its own white roundel, in both modes */
+  box-shadow: 0 0 0 4px color-mix(in srgb, var(--brand-band-ink) 16%, transparent), var(--shadow);
+}
+/* Wide wordmark lockups are never forced into a circle crop. */
+.band-logo-wide {
+  display: block;
+  width: min(240px, 62vw);
+  height: auto;
+}
+/* Haute Dolci: black mark on blush; on the after-hours plum band it is inverted to white. */
+html[data-mode="dark"] .theme-haute-dolci .band-logo-wide { filter: invert(1); }
+/* Gauchos: the real oxblood SVG, untouched. The band is oxblood (light) / deep oxblood (dark), so
+   the one-colour mark is drawn light on it — brightness(0) invert(1) turns it to the band's cream. */
+.theme-gauchos .band-logo-wide {
+  width: min(200px, 54vw);
+  aspect-ratio: 240 / 100;
+  filter: brightness(0) invert(1);
+  opacity: 0.96;
+}
+.band-copy { min-width: 0; }
+.band-tagline {
+  font-family: var(--font-display);
+  font-style: italic;
+  font-size: var(--text-lg);
+  line-height: 1.35;
+  color: var(--brand-band-ink);
+}
+.band-pills {
+  display: flex;
+  flex-wrap: wrap;
+  align-items: center;
+  gap: 8px;
+  margin-top: 12px;
+}
+.band-pills .pill,
+.band-pills .table-chip {
+  display: inline-flex;
+  align-items: center;
+  min-height: 28px;
+  padding: 3px 12px;
+  border: 1px solid color-mix(in srgb, var(--brand-band-ink) 38%, transparent);
+  border-radius: var(--radius-pill);
+  font-size: var(--text-xs);
+  font-weight: 500;
+  color: var(--brand-band-ink);
+}
+.band-pills .table-chip {
+  border-color: var(--brand-band-ink);
+  font-weight: 600;
+  letter-spacing: 0.02em;
+}
+@media (max-width: 480px) {
+  .band-inner { flex-direction: column; text-align: center; gap: 14px; padding: 22px 20px 24px; }
+  .band-pills { justify-content: center; }
+}
+
+/* ═══ Menu rhythm — the same on every restaurant page ═══ */
+.restaurant-band + .restaurant-page .menu-intro { padding-top: 20px; }
+.menu-intro { padding-bottom: 12px; }
+.cat-nav + .menu-section .menu-heading { border-top: 0; margin-top: 0; padding-top: 28px; }
+.menu-category { padding: 24px 0 8px; }
+.menu-category + .menu-category { border-top: 1px solid var(--line); margin-top: 20px; padding-top: 28px; }
+.menu-category > h3 { padding-bottom: 12px; }
+.dish-grid { gap: 22px 20px; }
+.dish-grid .dish-row { margin: 0; }
+/* Text-only dishes sit as one printed list: tight rows, no card gap between them */
+.dish-grid > .dish-row + .dish-row { margin-top: -22px; }
+.dish-row { padding: 16px 0; }
+
+/* ═══ Menu cards: a small "AR" tag, and the photo turns a couple of degrees as it arrives ═══ */
+.ar-tag {
+  position: absolute;
+  top: 10px;
+  right: 10px;
+  display: inline-flex;
+  align-items: center;
+  min-height: 24px;
+  padding: 0 9px;
+  border-radius: var(--radius-pill);
+  background: color-mix(in srgb, var(--surface) 90%, transparent);
+  border: 1px solid color-mix(in srgb, var(--line) 90%, transparent);
+  color: var(--accent);
+  font-size: 10.5px;
+  font-weight: 700;
+  letter-spacing: 0.1em;
+}
+.dish-photo.is-turned { animation: photo-turn 900ms var(--ease-out) backwards; animation-delay: calc(var(--i, 0) * 60ms + 120ms); }
+@keyframes photo-turn {
+  from { transform: perspective(800px) rotateX(2.6deg) rotateY(-3deg) scale(0.985); }
+  to { transform: perspective(800px) rotateX(0deg) rotateY(0deg) scale(1); }
+}
+@media (prefers-reduced-motion: reduce) { .dish-photo.is-turned { animation: none; } }
+
+/* ═══ Dish sheet — three calm zones ═══ */
+/* Desktop: the stage column fills the sheet; the dish itself stays in view while the details scroll */
+@media (min-width: 769px) {
+  .dish-stage > .pass { position: sticky; top: 0; }
+}
+.dish-detail {
+  padding: 52px 28px 28px;
+  display: flex;
+  flex-direction: column;
+  gap: 18px;
+}
+@media (max-width: 768px) { .dish-detail { padding: 22px 20px 28px; } }
+.dish-detail .overline { display: block; margin-bottom: 6px; }
+.dish-detail h2 { font-size: var(--text-2xl); line-height: 1.08; margin: 0 0 6px; color: var(--ink); }
+.dish-detail .detail-price { font-size: var(--text-base); color: var(--accent); margin: 0; }
+.dish-detail .detail-price.fact-unconfirmed { color: var(--muted); font-style: italic; }
+
+/* Zone 1 — the dish: stage, name, price, and the one filled button */
+.zone-dish { display: grid; gap: 0; }
+.ar-slot {
+  /* Space for the button is held from the first frame, so nothing moves when it arrives. */
+  position: relative;
+  display: grid;
+  align-items: center;
+  min-height: 56px;
+  margin-top: 16px;
+}
+.ar-slot[data-tier="5"] { min-height: 0; }
+.ar-slot:not([data-tier])::before { /* a calm placeholder while the dish loads */
+  content: '';
+  position: absolute;
+  inset: 2px 0;
+  border-radius: var(--radius-pill);
+  background: var(--surface-2);
+  opacity: 0.55;
+}
+.stage-status { min-height: 0; margin: 0; font-size: var(--text-xs); line-height: 1.5; color: var(--muted); text-align: center; }
+.stage-status:empty { display: none; }
+/* When the button is up it says everything; the status stays for screen readers only */
+.ar-slot:has(.ar-btn:not([hidden])) .stage-status {
+  position: absolute; width: 1px; height: 1px; overflow: hidden; clip-path: inset(50%); white-space: nowrap;
+}
+.inapp-note { margin-top: 12px; font-size: var(--text-xs); color: var(--ink); text-align: center; line-height: 1.5; }
+.copy-link { min-height: 44px; padding: 0 10px; text-decoration: underline; text-underline-offset: 4px; color: var(--accent); font-weight: 500; }
+
+/* "See it on your table" — the star, and the only filled button on the sheet */
+.ar-btn {
+  position: relative;
+  overflow: hidden;
+  isolation: isolate;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  gap: 12px;
+  width: 100%;
+  min-height: 56px;
+  padding: 12px 22px;
+  background: var(--accent);
+  color: var(--accent-ink);
+  border-radius: var(--radius-pill);
+  font-size: var(--text-base);
+  font-weight: 600;
+  letter-spacing: 0.005em;
+  box-shadow: 0 8px 22px color-mix(in srgb, var(--accent) 30%, transparent), 0 1px 2px color-mix(in srgb, var(--accent) 40%, transparent);
+  animation: ar-rise 300ms var(--ease-out) both; /* rises and settles when the dish is ready */
+  transition: background var(--ease-fast), transform var(--dur-fast) var(--ease-out);
+}
+.ar-btn[hidden] { display: none; }
+.ar-btn:hover { background: color-mix(in srgb, var(--accent) 88%, black); }
+.ar-btn:active { transform: scale(0.97); }
+@keyframes ar-rise {
+  from { opacity: 0; transform: translateY(14px) scale(0.97); }
+  to { opacity: 1; transform: none; }
+}
+/* a light sweep every ~6 s, only while the button is on screen */
+.ar-btn::after {
+  content: '';
+  position: absolute;
+  top: 0; bottom: 0; left: 0;
+  width: 38%;
+  z-index: 1;
+  pointer-events: none;
+  background: color-mix(in srgb, #fff 24%, transparent);
+  transform: translateX(-150%) skewX(-20deg);
+}
+.ar-btn.is-seen:not(:disabled)::after { animation: ar-glint 6s ease-in-out 1.2s infinite; }
+@keyframes ar-glint {
+  0%, 8% { transform: translateX(-150%) skewX(-20deg); }
+  24%, 100% { transform: translateX(340%) skewX(-20deg); }
+}
+/* the mark: a dish drops onto a table, then does it again */
+.ar-drop { width: 24px; height: 24px; flex: none; overflow: visible; }
+.ar-drop-dish, .ar-drop-shadow { transform-box: fill-box; transform-origin: 50% 100%; }
+.ar-drop-shadow { transform-origin: 50% 50%; opacity: 0.35; }
+.ar-btn.is-seen:not(:disabled) .ar-drop-dish { animation: ar-drop 2.8s var(--ease-out) infinite; }
+.ar-btn.is-seen:not(:disabled) .ar-drop-shadow { animation: ar-land 2.8s var(--ease-out) infinite; }
+@keyframes ar-drop {
+  0% { transform: translateY(-9px); opacity: 0; }
+  14% { opacity: 1; }
+  34% { transform: translateY(0) scaleY(1); }
+  40% { transform: translateY(0) scaleY(0.9); }
+  48%, 84% { transform: translateY(0) scaleY(1); opacity: 1; }
+  100% { transform: translateY(0); opacity: 0; }
+}
+@keyframes ar-land {
+  0%, 24% { transform: scaleX(0.3); opacity: 0; }
+  40% { transform: scaleX(1.15); opacity: 0.4; }
+  50%, 84% { transform: scaleX(1); opacity: 0.35; }
+  100% { transform: scaleX(1); opacity: 0; }
+}
+/* iPhone: while the AR file comes down, the button fills with real progress, then turns live */
+.ar-btn.is-preparing {
+  background: var(--surface-2);
+  color: var(--ink);
+  box-shadow: none;
+  cursor: progress;
+}
+.ar-btn.is-preparing::before {
+  content: '';
+  position: absolute;
+  inset: 0;
+  z-index: -1;
+  background: color-mix(in srgb, var(--accent) 22%, transparent);
+  transform: scaleX(var(--prep, 0));
+  transform-origin: 0 50%;
+  transition: transform 200ms linear;
+}
+.ar-btn-label { font-variant-numeric: tabular-nums; }
+@media (prefers-reduced-motion: reduce) {
+  .ar-btn { animation: none; box-shadow: 0 0 0 4px color-mix(in srgb, var(--accent) 26%, transparent), 0 6px 18px color-mix(in srgb, var(--accent) 24%, transparent); }
+  .ar-btn.is-preparing { box-shadow: none; }
+  .ar-btn::after { display: none; }
+  .ar-btn.is-seen:not(:disabled) .ar-drop-dish, .ar-btn.is-seen:not(:disabled) .ar-drop-shadow { animation: none; }
+}
+
+/* "Drag to turn" — once per visit, a finger glides across the stage and fades */
+.turn-hint {
+  position: absolute;
+  left: 50%;
+  bottom: 12%;
+  z-index: 4;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  gap: 8px;
+  margin-left: -60px;
+  width: 120px;
+  opacity: 0;
+  pointer-events: none;
+  animation: turn-hint-out 3.8s ease-in-out forwards;
+}
+.turn-hint.is-done { display: none; }
+.turn-hint-hand {
+  display: grid;
+  place-items: center;
+  width: 40px;
+  height: 40px;
+  border-radius: 50%;
+  background: color-mix(in srgb, var(--surface) 88%, transparent);
+  color: var(--ink);
+  box-shadow: var(--shadow);
+  animation: turn-hint-glide 1.6s var(--ease-in-out) 2 both;
+}
+.turn-hint-hand svg { width: 22px; height: 22px; }
+.turn-hint-text {
+  padding: 5px 13px;
+  border-radius: var(--radius-pill);
+  background: color-mix(in srgb, var(--ink) 74%, transparent);
+  color: var(--paper);
+  font-size: 12px;
+  font-weight: 500;
+  white-space: nowrap;
+}
+@keyframes turn-hint-glide {
+  from { transform: translateX(-40px) rotate(-8deg); }
+  to { transform: translateX(40px) rotate(8deg); }
+}
+@keyframes turn-hint-out {
+  0% { opacity: 0; }
+  10%, 78% { opacity: 1; }
+  100% { opacity: 0; }
+}
+@media (prefers-reduced-motion: reduce) { .turn-hint-hand { animation: none; } }
+
+/* Zone 2 — "Add to my table": its own quiet card, secondary button */
+.tray-add {
+  display: grid;
+  gap: 12px;
+  padding: 16px;
+  background: var(--surface);
+  border: 1px solid var(--line);
+  border-radius: var(--radius);
+  box-shadow: var(--shadow);
+}
+.tray-stepper {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  gap: 4px;
+  width: fit-content;
+  margin: 0 auto;
+  background: var(--surface-2);
+  border-radius: var(--radius-pill);
+  padding: 4px;
+}
+.tray-step { width: 44px; height: 44px; display: grid; place-items: center; border-radius: 50%; color: var(--ink); font-size: 20px; line-height: 1; font-weight: 600; }
+.tray-step:active { transform: scale(0.94); }
+.tray-qty { min-width: 32px; text-align: center; font-variant-numeric: tabular-nums; font-weight: 600; color: var(--ink); }
+.tray-note {
+  width: 100%;
+  min-height: 44px;
+  padding: 0 16px;
+  border: 1px solid var(--line);
+  border-radius: var(--radius-pill);
+  background: var(--paper);
+  color: var(--ink);
+  font-size: var(--text-sm);
+  font-family: var(--font-body);
+}
+.tray-note::placeholder { color: var(--muted); opacity: 0.85; }
+.quick-notes { display: flex; flex-wrap: wrap; gap: 8px; }
+.quick-note-chip {
+  min-height: 44px;
+  padding: 0 14px;
+  border: 1px solid var(--line);
+  border-radius: var(--radius-pill);
+  background: transparent;
+  color: var(--ink);
+  font-size: var(--text-xs);
+  font-weight: 500;
+  transition: background var(--ease-fast), transform var(--dur-fast) var(--ease-out);
+}
+.quick-note-chip:hover { background: var(--surface-2); }
+.quick-note-chip:active { transform: scale(0.96); }
+.tray-add-btn {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  width: 100%;
+  min-height: 52px;
+  padding: 0 20px;
+  background: transparent;
+  color: var(--ink);
+  border: 1.5px solid var(--ink);
+  border-radius: var(--radius-pill);
+  font-size: var(--text-base);
+  font-weight: 600;
+  transition: background var(--ease-fast), transform var(--dur-fast) var(--ease-out);
+}
+.tray-add-btn:hover { background: var(--surface-2); }
+.tray-add-btn:active { transform: scale(0.98); }
+.tray-add-status { min-height: 0; margin: 0; text-align: center; font-size: var(--text-xs); color: var(--muted); }
+.tray-add-status:empty { display: none; }
+
+/* Zone 3 — extras: quiet icon + label items on a hairline, never competing pills */
+.extras {
+  display: flex;
+  align-items: stretch;
+  border-top: 1px solid var(--line);
+  border-bottom: 1px solid var(--line);
+}
+.extras > button {
+  flex: 1 1 0;
+  min-width: 0;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  gap: 9px;
+  min-height: 52px;
+  padding: 0 10px;
+  background: transparent;
+  color: var(--ink);
+  border: 0;
+  border-radius: 0;
+  font-size: var(--text-sm);
+  font-weight: 500;
+  white-space: nowrap;
+  transition: background var(--ease-fast), color var(--ease-fast);
+}
+.extras > button + button { border-left: 1px solid var(--line); }
+.extras > button:hover { background: var(--surface-2); }
+.extras > button:active { background: var(--surface-2); }
+.extras svg { width: 19px; height: 19px; flex: none; color: var(--muted); transition: color var(--ease-fast); }
+.extras > button:hover svg { color: var(--accent); }
+.extras .share-pill[hidden] { display: flex; visibility: hidden; } /* keeps the row's shape while the dish loads */
+.share-pill { animation: none; }
+.share-pill.is-nudge svg { animation: share-nudge 900ms var(--ease-out) 2; }
+@keyframes share-nudge { 0%, 100% { transform: scale(1); } 45% { transform: scale(1.25); } }
+.fav-btn[aria-pressed="true"] svg { color: var(--accent); fill: var(--accent); animation: fav-pop 320ms var(--ease-out); }
+@keyframes fav-pop { 0% { transform: scale(0.8); } 55% { transform: scale(1.22); } 100% { transform: scale(1); } }
+@media (prefers-reduced-motion: reduce) {
+  .share-pill.is-nudge svg, .fav-btn[aria-pressed="true"] svg { animation: none; }
+}
+@media (max-width: 400px) {
+  .extras > button { gap: 7px; padding: 0 6px; font-size: var(--text-xs); }
+}
+
+/* Details — description, halal, allergens, spice, dietary, ingredients, nutrition */
+.zone-details { display: grid; }
+.dish-desc { font-size: var(--text-sm); line-height: 1.65; color: var(--muted); margin: 0 0 14px; }
+.zone-details .facts { margin: 0 0 12px; }
+.zone-details details.nutrition { margin-bottom: 4px; }
+
+/* Back to menu: a quiet text button, not another outlined pill */
+.back-menu {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  gap: 8px;
+  width: 100%;
+  min-height: 48px;
+  margin-top: 4px;
+  background: transparent;
+  color: var(--muted);
+  border: 0;
+  border-radius: var(--radius-pill);
+  font-size: var(--text-sm);
+  font-weight: 500;
+  transition: background var(--ease-fast), color var(--ease-fast);
+}
+.back-menu:hover { background: var(--surface-2); color: var(--ink); }
+.back-menu svg { width: 16px; height: 16px; transform: rotate(180deg); }
