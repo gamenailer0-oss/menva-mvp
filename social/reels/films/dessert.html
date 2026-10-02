@@ -1,0 +1,236 @@
+<!doctype html><html><head><meta charset="utf-8">
+<!--
+  Film 1: DESSERT, toon 3D. 13.5 s at 120 BPM (beat 0.5 s).
+  Story: the menu shows a perfect cake. The plate brings a tiny, sweating one. Scan the QR: the cake you saw lands for real.
+  Every cake here is a cartoon (toon-shaded, ink outlines): no dessert scan exists yet, and no food is ever made to look real.
+  Motion language: kinetic + soft (Playful). Squash and stretch on every landing, playful springs with overshoot on objects,
+  titles land with a small eBack punch. Base unit 0.25 s. Transitions: card flip into 3D, pink iris out to the end card.
+-->
+<style>html,body{margin:0;width:1080px;height:1920px;overflow:hidden;background:#FBD3DC}canvas{position:absolute;left:0;top:0}</style>
+<script type="importmap">{"imports":{"three":"/node_modules/three/build/three.module.js","three/addons/":"/node_modules/three/examples/jsm/"}}</script>
+</head><body>
+<canvas id="gl" width="1080" height="1920"></canvas>
+<canvas id="ui" width="1080" height="1920"></canvas>
+<script type="module">
+import * as THREE from 'three';
+import { W, H, INK, clamp, lerp, inv, eO, eI, eIO, eBack, spring, SPRING, hash, rng, loadFonts, T, drawQR, endCard, cues, grainLayer } from './common.js';
+await loadFonts('toon', 'round', 'roundR');
+
+const PINK = '#FBD3DC', BERRY = '#E8456B', CREAM = '#FFF7F0', MINT = '#BFE8D8';
+const ui = document.getElementById('ui').getContext('2d');
+const C = cues(); const cue = C.add;
+
+// ---------- three: toon world ----------
+const r = new THREE.WebGLRenderer({ canvas: document.getElementById('gl'), antialias: true, preserveDrawingBuffer: true });
+r.setPixelRatio(1); r.setSize(W, H, false); r.outputColorSpace = THREE.SRGBColorSpace;
+const scene = new THREE.Scene(); scene.background = new THREE.Color(PINK);
+const cam = new THREE.PerspectiveCamera(40, W / H, 0.01, 20);
+const ramp = new THREE.DataTexture(new Uint8Array([110, 110, 110, 255, 190, 190, 190, 255, 255, 255, 255, 255]), 3, 1);
+ramp.minFilter = ramp.magFilter = THREE.NearestFilter; ramp.needsUpdate = true;
+const toon = (c, map) => new THREE.MeshToonMaterial({ color: c, gradientMap: ramp, ...(map ? { map } : {}) });
+const inkMat = (th) => new THREE.ShaderMaterial({ uniforms: { th: { value: th } }, side: THREE.BackSide,
+  vertexShader: 'uniform float th; void main(){ vec3 p = position + normal * th; gl_Position = projectionMatrix * modelViewMatrix * vec4(p, 1.0); }',
+  fragmentShader: 'void main(){ gl_FragColor = vec4(0.13, 0.07, 0.09, 1.0); }' });
+const OUT = inkMat(0.0032), OUT_T = inkMat(0.006);
+function M(geo, mat, out = OUT) { const m = new THREE.Mesh(geo, mat); if (out) m.add(new THREE.Mesh(geo, out)); return m; }
+scene.add(new THREE.AmbientLight(0xffffff, 0.9));
+const sun = new THREE.DirectionalLight(0xffffff, 1.6); sun.position.set(-0.6, 1.4, 0.9); scene.add(sun);
+
+// gingham tablecloth
+const ging = (() => { const c = document.createElement('canvas'); c.width = c.height = 512; const x = c.getContext('2d');
+  x.fillStyle = '#fff'; x.fillRect(0, 0, 512, 512); x.fillStyle = 'rgba(232,69,107,.45)';
+  for (let i = 0; i < 8; i++) { x.fillRect(i * 64, 0, 32, 512); x.fillRect(0, i * 64, 512, 32); }
+  const t = new THREE.CanvasTexture(c); t.colorSpace = THREE.SRGBColorSpace; t.wrapS = t.wrapT = THREE.RepeatWrapping; t.repeat.set(9, 9); t.anisotropy = 8; return t; })();
+const cloth = new THREE.Mesh(new THREE.PlaneGeometry(3, 3), toon(0xffffff, ging)); cloth.rotation.x = -Math.PI / 2; scene.add(cloth);
+const plate = M(new THREE.CylinderGeometry(0.17, 0.155, 0.014, 64), toon(0xffffff)); plate.position.y = 0.007; scene.add(plate);
+const plateRim = M(new THREE.TorusGeometry(0.165, 0.006, 12, 64), toon(0xF6EDEE)); plateRim.rotation.x = Math.PI / 2; plateRim.position.y = 0.014; scene.add(plateRim);
+
+// QR card on the table (real code)
+const qrTex = (() => { const c = document.createElement('canvas'); c.width = 600; c.height = 720; const x = c.getContext('2d');
+  x.fillStyle = BERRY; x.beginPath(); x.roundRect(0, 0, 600, 720, 60); x.fill(); x.fillStyle = '#fff'; x.beginPath(); x.roundRect(30, 30, 540, 540, 36); x.fill();
+  drawQR(x, 60, 60, 480, INK, '#fff', 0.02); x.fillStyle = '#fff'; x.textAlign = 'center'; x.font = '400 64px Toon'; x.fillText('SCAN KARO', 300, 668);
+  const t = new THREE.CanvasTexture(c); t.colorSpace = THREE.SRGBColorSpace; t.anisotropy = 8; return t; })();
+const qrCard = M(new THREE.BoxGeometry(0.1, 0.004, 0.12), [toon(0xE8456B), toon(0xE8456B), toon(0xffffff, qrTex), toon(0xE8456B), toon(0xE8456B), toon(0xE8456B)]);
+qrCard.position.set(0.2, 0.002, 0.13); qrCard.rotation.y = -0.35; scene.add(qrCard);
+
+// the cake: built once, shown twice (tiny and true)
+function makeCake(seed) {
+  const R = rng(seed), g = new THREE.Group(), body = new THREE.Group(); g.add(body);
+  const layer = (rad, h, y, col) => { const m = M(new THREE.CylinderGeometry(rad, rad, h, 64), toon(col)); m.position.y = y + h / 2; body.add(m); return m; };
+  layer(0.11, 0.045, 0.014, 0xF2C27E); layer(0.112, 0.014, 0.059, 0xF27BA0); layer(0.11, 0.038, 0.073, 0xF2C27E);
+  layer(0.115, 0.018, 0.111, 0xFFF4EC);
+  for (let i = 0; i < 16; i++) {            // frosting drips
+    const a = i / 16 * Math.PI * 2 + R() * 0.15, len = 0.008 + R() * 0.03;
+    const d = M(new THREE.CapsuleGeometry(0.011, len, 6, 12), toon(0xFFF4EC)); d.position.set(Math.cos(a) * 0.112, 0.118 - len / 2, Math.sin(a) * 0.112); body.add(d);
+  }
+  for (let i = 0; i < 10; i++) {            // piped rosettes and cherries
+    const a = i / 10 * Math.PI * 2, ro = M(new THREE.SphereGeometry(0.017, 20, 14), toon(0xFFFFFF)); ro.scale.y = 0.75;
+    ro.position.set(Math.cos(a) * 0.088, 0.133, Math.sin(a) * 0.088); body.add(ro);
+    if (i % 2 === 0) { const ch = M(new THREE.SphereGeometry(0.011, 20, 14), toon(0xD7263D)); ch.position.set(Math.cos(a) * 0.088, 0.149, Math.sin(a) * 0.088); body.add(ch); }
+  }
+  const cols = [0xFF8FB1, 0xFFD54F, 0x7FD1F5, 0x8EE07A, 0xC79BF2];
+  for (let i = 0; i < 46; i++) {            // sprinkles on top
+    const rr = Math.sqrt(R()) * 0.07, a = R() * 7, s = M(new THREE.CapsuleGeometry(0.0022, 0.008, 4, 8), toon(cols[i % 5]), null);
+    s.position.set(Math.cos(a) * rr, 0.13, Math.sin(a) * rr); s.rotation.set(Math.PI / 2, 0, R() * 7); body.add(s);
+  }
+  const cherry = new THREE.Group(); const cb = M(new THREE.SphereGeometry(0.028, 28, 20), toon(0xD7263D), OUT_T); cherry.add(cb);
+  const stem = M(new THREE.TubeGeometry(new THREE.CatmullRomCurve3([new THREE.Vector3(0, 0.02, 0), new THREE.Vector3(0.008, 0.045, 0), new THREE.Vector3(0.025, 0.06, 0)]), 12, 0.003, 6), toon(0x3E7D3A));
+  cherry.add(stem); const gl = new THREE.Mesh(new THREE.SphereGeometry(0.007, 12, 10), new THREE.MeshBasicMaterial({ color: 0xffffff })); gl.position.set(-0.01, 0.012, 0.022); cherry.add(gl);
+  cherry.position.y = 0.168; g.add(cherry);
+  return { g, body, cherry };
+}
+const big = makeCake(3), tiny = makeCake(5);
+scene.add(big.g, tiny.g);
+// the tiny one has a face, and it sweats
+const eyes = new THREE.Group();
+for (const x of [-0.03, 0.03]) { const e = new THREE.Mesh(new THREE.SphereGeometry(0.009, 12, 10), new THREE.MeshBasicMaterial({ color: 0x221418 })); e.position.set(x, 0.07, 0.112); eyes.add(e); }
+tiny.body.add(eyes);
+const sweat = []; for (let i = 0; i < 2; i++) { const s = M(new THREE.SphereGeometry(0.01, 14, 12), toon(0x9BD8F5)); s.scale.y = 1.4; tiny.g.add(s); sweat.push(s); }
+// falling sprinkles when the true cake lands
+const fall = []; { const R = rng(17), cols = [0xFF8FB1, 0xFFD54F, 0x7FD1F5, 0x8EE07A, 0xC79BF2];
+  for (let i = 0; i < 70; i++) { const s = M(new THREE.CapsuleGeometry(0.0028, 0.01, 4, 8), toon(cols[i % 5]), null);
+    fall.push({ s, x: (R() - 0.5) * 0.7, z: (R() - 0.5) * 0.5, d: R() * 0.9, ry: R() * 7, rx: R() * 7 }); scene.add(s); } }
+
+// ---------- timeline (pure functions of t) ----------
+const B = 0.5;
+const TL = { flip: 2.5, tinyLand: 3.0, phone: 4.25, beep: 5.0, tap: 5.5, shove: 5.75, drop: 6.0, land: 6.5, cap2: 7.0, iris: 10.0, end: 10.4 };
+cue(0.25, 'pop', { m: 84 }); cue(1.25, 'scribble', { len: 0.5 }); cue(TL.flip - 0.1, 'whoosh', { len: 0.5 });
+cue(TL.tinyLand, 'boing', { g: 0.35 }); cue(3.6, 'squelch', { g: 0.4 }); cue(TL.phone, 'pop', { m: 79 }); cue(TL.phone + 0.05, 'whoosh', { len: 0.45, g: 0.4 });
+cue(TL.beep, 'beep', { g: 0.5 }); cue(TL.tap, 'tap', { g: 0.5 }); cue(TL.shove, 'whoosh', { len: 0.5, g: 0.5 }); cue(TL.drop - 0.5, 'riser', { len: 1.0, g: 0.45 });
+cue(TL.land, 'drop'); cue(TL.land, 'impact', { big: 0.7, g: 0.5 }); cue(TL.land + 0.02, 'splat', { g: 0.6 }); cue(TL.land + 0.42, 'boing', { g: 0.45 });
+cue(TL.cap2, 'pop', { m: 88 }); cue(TL.cap2 + 0.5, 'pop', { m: 91 }); cue(TL.iris, 'whoosh', { len: 0.6, g: 0.4 }); cue(TL.end, 'end'); cue(TL.end + 0.25, 'ting', { m: 84, g: 0.5 });
+
+function squash(t, t0, amt = 0.28, f = 11, decay = 5) { const lt = t - t0; if (lt < 0) return 1; return 1 - amt * Math.exp(-lt * decay) * Math.cos(lt * f); }
+
+function world(t) {
+  // camera: a slow drift, a push when the true cake lands, then an orbit
+  const orbit = lerp(-0.18, 0.32, eIO(inv(TL.land, TL.iris + 0.5, t)));
+  const push = 1.18 - 0.06 * eO(inv(TL.land, TL.land + 1.0, t));
+  const tg = new THREE.Vector3(lerp(0.06, 0, eIO(inv(TL.phone, TL.drop, t))), 0.12, lerp(0.05, 0, eIO(inv(TL.phone, TL.drop, t))));
+  const dist = 0.78 * push, pitch = 0.74;
+  cam.position.set(tg.x + Math.sin(orbit) * Math.cos(pitch) * dist, Math.sin(pitch) * dist + 0.02, tg.z + Math.cos(orbit) * Math.cos(pitch) * dist);
+  cam.lookAt(tg);
+  // tiny cake: drops in, sweats, deflates, gets shoved off the plate
+  const tl0 = TL.tinyLand - 0.35;
+  const fallK = eI(inv(tl0, TL.tinyLand, t));
+  const shove = eI(inv(TL.shove, TL.shove + 0.5, t));
+  tiny.g.visible = t >= tl0 && t < TL.shove + 0.6;
+  const ts = 0.32;
+  tiny.g.position.set(-0.0 - shove * 0.9, lerp(0.35, 0.014, fallK) + shove * 0.05, 0);
+  tiny.g.rotation.z = shove * 1.2;
+  const sq = squash(t, TL.tinyLand, 0.3, 14, 6) * (1 - 0.12 * eO(inv(3.6, 3.9, t)));
+  tiny.g.scale.set(ts / Math.sqrt(sq), ts * sq, ts / Math.sqrt(sq));
+  sweat.forEach((s, i) => { const st = 3.35 + i * 0.35, k = inv(st, st + 0.6, t);
+    s.visible = k > 0 && k < 1 && tiny.g.visible; s.position.set(i ? -0.09 : 0.1, 0.16 - k * 0.12, 0.08); s.scale.set(1, 1.4, 1).multiplyScalar(1 - k * 0.3); });
+  // the true cake: falls, lands with squash and stretch, cherry pops and settles
+  const bf = eI(inv(TL.drop, TL.land, t));
+  big.g.visible = t >= TL.drop;
+  big.g.position.y = lerp(0.9, 0.014, bf);
+  const st = t < TL.land ? 1 + 0.18 * bf : squash(t, TL.land, 0.26, 12, 4.5);
+  big.g.scale.set(1 / Math.sqrt(st), st, 1 / Math.sqrt(st));
+  big.g.rotation.y = 0.2 + 0.25 * eO(inv(TL.land, TL.iris, t));
+  const cj = t - TL.land;
+  big.cherry.position.y = 0.168 + (cj > 0 ? Math.max(0, Math.sin(Math.min(cj, 0.42) / 0.42 * Math.PI)) * 0.09 : 0);
+  big.cherry.rotation.z = cj > 0 ? Math.sin(cj * 9) * Math.exp(-cj * 3) * 0.5 : 0;
+  // sprinkles shower down after the landing and settle on the cloth
+  fall.forEach((f) => { const k = inv(TL.land + f.d * 0.5, TL.land + f.d * 0.5 + 0.55, t);
+    f.s.visible = k > 0; const y = lerp(0.7, 0.003, eI(k)); f.s.position.set(f.x, y, f.z); f.s.rotation.set(f.rx + (1 - k) * 6, f.ry, Math.PI / 2 * k); });
+  plate.scale.set(1, t >= TL.land ? squash(t, TL.land, 0.5, 18, 8) : 1, 1);
+  r.render(scene, cam);
+}
+
+// ---------- 2D layer: menu card, captions, phone, iris, end card ----------
+const io = (t, a, b) => (t < a ? 0 : t < b ? clamp((t - a) / 0.35, 0, 1.0001) : clamp(1 - (t - b) / 0.2));
+function toonText(s, x, y, z, p, { fill = '#fff', stroke = INK, al = 'center', rot = 0 } = {}) {
+  if (p <= 0) return; ui.save(); ui.translate(x, y); ui.rotate(rot); const k = p >= 1 ? 1 : eBack(clamp(p), 2.2); ui.scale(k, k);
+  ui.font = `400 ${z}px Toon`; ui.textAlign = al; ui.textBaseline = 'middle'; ui.lineJoin = 'round';
+  ui.lineWidth = z * 0.2; ui.strokeStyle = stroke; ui.strokeText(s, 0, z * 0.06 + 10); ui.strokeText(s, 0, 0); ui.fillStyle = fill; ui.fillText(s, 0, 0); ui.restore();
+}
+function drawPerfectCake(cx, cy, s) {           // the "menu photo": a flawless, glossy illustration
+  ui.save(); ui.translate(cx, cy); ui.scale(s, s); ui.lineWidth = 8; ui.strokeStyle = INK; ui.lineJoin = 'round';
+  const rr = (x, y, w, h, r, c) => { ui.fillStyle = c; ui.beginPath(); ui.roundRect(x, y, w, h, r); ui.fill(); ui.stroke(); };
+  ui.fillStyle = '#fff'; ui.beginPath(); ui.ellipse(0, 150, 300, 60, 0, 0, 7); ui.fill(); ui.stroke();
+  rr(-230, -40, 460, 180, 40, '#F2C27E'); rr(-232, 20, 464, 34, 14, '#F27BA0');
+  ui.fillStyle = '#FFF4EC'; ui.beginPath(); ui.moveTo(-240, -40); ui.quadraticCurveTo(-240, -110, 0, -110); ui.quadraticCurveTo(240, -110, 240, -40);
+  for (let i = 0; i <= 8; i++) { const x = 240 - i * 60; ui.quadraticCurveTo(x - 15, -40 + (i % 2 ? 60 : 30), x - 30, -40); } ui.closePath(); ui.fill(); ui.stroke();
+  for (let i = 0; i < 6; i++) { const x = -175 + i * 70; ui.fillStyle = '#fff'; ui.beginPath(); ui.arc(x, -112, 30, 0, 7); ui.fill(); ui.stroke(); if (i % 2 === 0) { ui.fillStyle = '#D7263D'; ui.beginPath(); ui.arc(x, -146, 20, 0, 7); ui.fill(); ui.stroke(); } }
+  ui.fillStyle = '#D7263D'; ui.beginPath(); ui.arc(0, -190, 46, 0, 7); ui.fill(); ui.stroke(); ui.fillStyle = 'rgba(255,255,255,.8)'; ui.beginPath(); ui.arc(-16, -206, 12, 0, 7); ui.fill();
+  ui.strokeStyle = '#3E7D3A'; ui.lineWidth = 10; ui.beginPath(); ui.moveTo(0, -232); ui.quadraticCurveTo(10, -290, 60, -300); ui.stroke();
+  ui.restore();
+}
+function sparkle(x, y, s, a) { if (a <= 0) return; ui.save(); ui.globalAlpha = a; ui.translate(x, y); ui.scale(s, s); ui.fillStyle = '#fff'; ui.strokeStyle = INK; ui.lineWidth = 5;
+  ui.beginPath(); for (let i = 0; i < 8; i++) { const r = i % 2 ? 12 : 44, an = i / 8 * Math.PI * 2; ui.lineTo(Math.cos(an) * r, Math.sin(an) * r); } ui.closePath(); ui.fill(); ui.stroke(); ui.restore(); }
+function card(t) {
+  if (t >= TL.flip + 0.25) return;
+  const fk = eI(inv(TL.flip, TL.flip + 0.25, t));
+  ui.fillStyle = PINK; ui.fillRect(0, 0, W, H);
+  ui.fillStyle = 'rgba(255,255,255,.55)'; for (let y = 0; y < H; y += 120) for (let x = (y / 120) % 2 ? 60 : 0; x < W; x += 120) { ui.beginPath(); ui.arc(x, y, 16, 0, 7); ui.fill(); }
+  ui.save(); ui.translate(W / 2, 1060); ui.scale(1 - fk, 1); ui.rotate(-0.03);
+  const cin = spring(t, ...SPRING.playful);
+  ui.translate(0, (1 - cin) * 300);
+  ui.fillStyle = '#fff'; ui.strokeStyle = INK; ui.lineWidth = 10; ui.beginPath(); ui.roundRect(-400, -520, 800, 1040, 56); ui.fill(); ui.stroke();
+  ui.fillStyle = '#FFE3EA'; ui.beginPath(); ui.roundRect(-350, -470, 700, 600, 36); ui.fill();
+  drawPerfectCake(0, -150, 0.92 + 0.02 * Math.sin(t * 4));
+  [[-260, -390, 0.0], [270, -320, 0.4], [230, 30, 0.8], [-280, 40, 1.2]].forEach(([x, y, d]) => sparkle(x, y, 0.8 + 0.25 * Math.sin(t * 7 + d * 5), 0.9));
+  ui.fillStyle = '#F4C7D2'; ui.beginPath(); ui.roundRect(-350, 175, 440, 48, 24); ui.fill(); ui.beginPath(); ui.roundRect(-350, 250, 620, 30, 15); ui.fill(); ui.beginPath(); ui.roundRect(-350, 300, 520, 30, 15); ui.fill();
+  T(ui, '*Picture for illustration purposes only.', -350, 430, { z: 34, f: 'Round', w: 400, c: '#7A5560' });
+  // a marker circle lands on the fine print
+  const mk = eO(inv(1.25, 1.75, t));
+  if (mk > 0) { ui.strokeStyle = BERRY; ui.lineWidth = 9; ui.lineCap = 'round'; ui.beginPath(); ui.ellipse(-20, 418, 380, 48, -0.03, -0.4, -0.4 + mk * Math.PI * 2.1); ui.stroke(); }
+  ui.restore();
+  toonText('MENU PE CAKE:', W / 2, 330, 118, io(t, 0.25, 9), { rot: -0.04 });
+  toonText('chhoti si line dekhi?', W / 2, 470, 70, io(t, 1.5, 9), { fill: '#FFE3EA', rot: 0.02 });
+}
+function phone(t) {
+  const a = t - TL.phone, out = eI(inv(TL.shove - 0.25, TL.shove + 0.2, t));
+  if (a < 0 || out >= 1) return;
+  const k = spring(a, ...SPRING.playful), y = lerp(2300, 1080, k) + out * 1300, rot = lerp(0.25, -0.05, k) + out * 0.3;
+  ui.save(); ui.translate(W / 2 + 40, y); ui.rotate(rot);
+  ui.fillStyle = '#2B1D22'; ui.strokeStyle = INK; ui.lineWidth = 10; ui.beginPath(); ui.roundRect(-250, -470, 500, 940, 90); ui.fill(); ui.stroke();
+  ui.fillStyle = '#FFF7F0'; ui.beginPath(); ui.roundRect(-222, -442, 444, 884, 70); ui.fill();
+  ui.fillStyle = '#2B1D22'; ui.beginPath(); ui.roundRect(-60, -425, 120, 34, 17); ui.fill();
+  const scanned = t >= TL.beep;
+  if (!scanned) {
+    drawQR(ui, -150, -230, 300, INK, '#fff', 0.04);
+    const pulse = 1 + 0.04 * Math.sin(a * 12);
+    ui.strokeStyle = BERRY; ui.lineWidth = 12; ui.lineCap = 'round';
+    for (const [sx, sy] of [[-1, -1], [1, -1], [-1, 1], [1, 1]]) { const cx = sx * 175 * pulse, cy = -80 + sy * 175 * pulse; ui.beginPath(); ui.moveTo(cx, cy - sy * 60); ui.lineTo(cx, cy); ui.lineTo(cx - sx * 60, cy); ui.stroke(); }
+    T(ui, 'scan ho raha hai...', 0, 230, { z: 40, f: 'Round', w: 600, c: INK, al: 'center' });
+  } else {
+    const p = spring(t - TL.beep, ...SPRING.playful);
+    ui.save(); ui.translate(0, -80); ui.scale(p * 0.55, p * 0.55); drawPerfectCake(0, 60, 1); ui.restore();
+    const tap = t >= TL.tap ? 0.94 + 0.06 * spring(t - TL.tap, ...SPRING.snappy) : 1;
+    ui.save(); ui.translate(0, 300); ui.scale(tap, tap); ui.fillStyle = BERRY; ui.strokeStyle = INK; ui.lineWidth = 7; ui.beginPath(); ui.roundRect(-190, -50, 380, 100, 50); ui.fill(); ui.stroke();
+    T(ui, 'Table pe dekho', 0, 14, { z: 40, f: 'Round', w: 600, c: '#fff', al: 'center' }); ui.restore();
+    const tk = inv(TL.tap, TL.tap + 0.25, t); if (tk > 0 && tk < 1) { ui.fillStyle = `rgba(255,255,255,${0.7 * (1 - tk)})`; ui.beginPath(); ui.arc(40, 300, 40 + tk * 120, 0, 7); ui.fill(); }
+  }
+  ui.restore();
+}
+const grain = grainLayer(0.035);
+function overlay(t) {
+  ui.clearRect(0, 0, W, H);
+  card(t);
+  if (t >= TL.flip && t < TL.iris + 0.6) {
+    const flipIn = eO(inv(TL.flip + 0.25, TL.flip + 0.5, t));
+    if (flipIn < 1) { ui.fillStyle = PINK; ui.fillRect(0, 0, W, H * (1 - flipIn) * 0); }
+    toonText('PLATE PE CAKE:', W / 2, 330, 118, io(t, TL.flip + 0.3, TL.phone - 0.2), { rot: 0.03, fill: '#FFE3EA' });
+    toonText('itna sa?', W / 2, 470, 84, io(t, 3.6, TL.phone - 0.2), { rot: -0.03 });
+    toonText('scan karo', W / 2, 330, 112, io(t, TL.phone + 0.2, TL.shove), { rot: -0.02, fill: '#FFE3EA' });
+    phone(t);
+    toonText('JAISA DIKHA,', W / 2, 330, 112, io(t, TL.cap2, TL.iris), { rot: -0.03 });
+    toonText('WAISA AAYA.', W / 2, 470, 112, io(t, TL.cap2 + 0.5, TL.iris), { fill: '#FFE3EA', rot: 0.03 });
+  }
+  // the iris: a pink disc grows from the cake into the end card
+  const ir = eIO(inv(TL.iris, TL.iris + 0.5, t));
+  if (ir > 0) { ui.fillStyle = PINK; ui.beginPath(); ui.arc(W / 2, 1150, ir * 2300, 0, 7); ui.fill(); }
+  if (t >= TL.end - 0.1) { ui.fillStyle = PINK; ui.fillRect(0, 0, W, H); endCard(ui, t, TL.end, { ink: INK, sub: '#7A5560' }); }
+  grain(ui, t);
+}
+
+window.DUR = 13.5;
+window.FILM = { preset: 'toon', bpm: 120, cover: 12.5 };
+window.CUES = C.list;
+window.seek = (t) => { if (t < TL.end) world(t); overlay(t); return true; };
+window.seek(0);
+window.__ready = true;
+</script></body></html>

@@ -1,0 +1,167 @@
+<!doctype html><html><head><meta charset="utf-8">
+<!--
+  Film 2: PIXEL, an 8-bit arcade level. 12.5 s at 140 BPM.
+  Story: LEVEL 1, THE MENU. The boss is JUMBO PHOTO, a giant burger poster that lies ("SERVES 2!"). Hit the ? block,
+  get the QR power-up, scan: the photo shrinks to the burger's true size. STAGE CLEAR. HIGH SCORE: NO REGRETS.
+  Drawn at 180x320 and scaled 6x with nearest-neighbour, NES-like palette, Press Start 2P on the pixel grid.
+  Motion language: game physics, not eases. Gravity arcs for jumps, 2-frame walk cycles, hard cuts and blinking,
+  screen shake on hits, integer pixel positions only. The end card is the one smooth thing: the logo is never pixelated.
+-->
+<style>html,body{margin:0;width:1080px;height:1920px;overflow:hidden;background:#0f0f2a}canvas{position:absolute;left:0;top:0;image-rendering:pixelated}</style>
+</head><body>
+<canvas id="lo" width="180" height="320" style="width:1080px;height:1920px"></canvas>
+<canvas id="hi" width="1080" height="1920"></canvas>
+<script type="module">
+import { W, H, INK, PAPER, EMBER, clamp, lerp, inv, eO, eIO, spring, SPRING, hash, loadFonts, endCard, cues } from './common.js';
+await loadFonts('pixel');
+const lo = document.getElementById('lo').getContext('2d'), hi = document.getElementById('hi').getContext('2d');
+lo.imageSmoothingEnabled = false;
+const C = cues(), cue = C.add;
+const P = { bg: '#0f0f2a', sky: '#3cbcfc', sky2: '#0058f8', floor: '#c84c0c', floor2: '#fc9838', brick: '#881400', ink: '#000000', white: '#fcfcfc',
+  yel: '#f8b800', red: '#d82800', grn: '#00a800', lgrn: '#b8f818', skin: '#fca044', brown: '#7c4400', bun: '#e45c10', bunL: '#fca044', pink: '#f878f8', grey: '#bcbcbc', dgrey: '#7c7c7c' };
+const B = 60 / 140;
+
+// ---------- sprites (each char is one pixel) ----------
+const PAL = { k: P.ink, s: P.skin, h: P.brown, r: P.red, b: P.sky2, w: P.white, y: P.yel, g: P.grn, o: P.bun, l: P.bunL, n: '#a83c00', c: P.yel, p: P.pink, e: P.grey };
+const HERO = [[
+  '....kkkk....', '...khhhhk...', '..khhhhhhk..', '..kssswssk..', '..ksskskssk.', '..kssssssk..', '...kssssk...', '..krrrrrrk..',
+  '.krrrrrrrrk.', 'kssrrrrrrssk', 'kssrrrrrrssk', '.kkbbbbbbkk.', '..kbbkkbbk..', '..kbbk.kbbk.', '.kkkk..kkkk.', '............'],
+  ['....kkkk....', '...khhhhk...', '..khhhhhhk..', '..kssswssk..', '..ksskskssk.', '..kssssssk..', '...kssssk...', '..krrrrrrk..',
+  '.krrrrrrrrk.', 'kssrrrrrrssk', 'kssrrrrrrssk', '.kkbbbbbbkk.', '..kbbbbbbk..', '...kbbbbk...', '..kkkkkkkk..', '............']];
+function spr(rows, x, y, flip = false, pal = PAL, k = 2) {
+  for (let j = 0; j < rows.length; j++) for (let i = 0; i < rows[j].length; i++) {
+    const ch = rows[j][flip ? rows[j].length - 1 - i : i]; if (ch === '.') continue;
+    lo.fillStyle = pal[ch] || ch; lo.fillRect(Math.round(x) + i * k, Math.round(y) + j * k, k, k);
+  }
+}
+function px(x, y, w, h, c) { lo.fillStyle = c; lo.fillRect(Math.round(x), Math.round(y), Math.round(w), Math.round(h)); }
+// pixel burger at any integer scale: s = 1 tiny (true size), s = 4 the giant poster lie
+function burger(cx, by, s) {
+  const w = 22 * s, x = Math.round(cx - w / 2), y = Math.round(by);
+  const row = (dy, h, inset, c) => px(x + inset * s, y + dy * s, w - inset * 2 * s, h * s, c);
+  row(0, 5, 2, P.ink); row(1, 4, 3, P.bun); row(1, 1, 5, P.bunL);
+  for (let i = 0; i < 4; i++) px(x + (5 + i * 4) * s, y + 2 * s, s, s, P.white);
+  row(5, 2, 1, P.ink); row(5, 1, 1, P.lgrn); row(6, 1, 2, P.yel);
+  row(7, 3, 1, P.ink); row(7, 2, 2, P.brown); row(10, 1, 1, P.red); row(11, 3, 2, P.ink); row(11, 2, 3, P.bun);
+}
+// pixel text on the low-res grid (Press Start 2P is drawn at multiples of 8)
+function ptext(s, x, y, c = P.white, z = 8, al = 'left', shadow = true) {
+  lo.font = `${z}px Pixel`; lo.textAlign = al; lo.textBaseline = 'top';
+  if (shadow) { lo.fillStyle = P.ink; lo.fillText(s, Math.round(x) + 1, Math.round(y) + 1); }
+  lo.fillStyle = c; lo.fillText(s, Math.round(x), Math.round(y));
+}
+function qrSprite(x, y, s = 1) {
+  const Q = window.QR; px(x - s, y - s, (Q.size + 2) * s, (Q.size + 2) * s, P.white);
+  for (let r = 0; r < Q.size; r++) for (let c = 0; c < Q.size; c++) if (Q.data[r * Q.size + c]) px(x + c * s, y + r * s, s, s, P.ink);
+}
+
+// ---------- timeline ----------
+const S = { title: 0, walk: 1.71, boss: 3.0, lie: 3.43, block: 4.71, item: 5.14, grab: 5.79, scan: 6.43, shrink: 6.86, clear: 8.14, score: 8.57, end: 10.0 };
+cue(0.0, 'power', { g: 0.35 }); cue(S.walk, 'drop'); cue(S.boss, 'hit8', { g: 0.4 }); cue(S.lie, 'impact', { big: 0.5, g: 0.35 });
+cue(S.block - 0.2, 'coin', { g: 0.3 }); cue(S.block, 'hit8', { g: 0.4 }); cue(S.item, 'power', { g: 0.4 }); cue(S.grab, 'coin', { g: 0.45 });
+cue(S.scan, 'beep', { g: 0.4 }); cue(S.shrink, 'rewind', { len: 0.8, g: 0.5 }); cue(S.shrink + 0.85, 'hit8', { g: 0.5 }); cue(S.clear, 'power', { g: 0.5 });
+for (let i = 0; i < 6; i++) cue(S.score + 0.2 + i * 0.12, 'coin', { g: 0.18 }); cue(S.end, 'end'); cue(S.end + 0.3, 'ting', { m: 84, g: 0.45 });
+
+function level(t) {
+  // sky, clouds, bricks, floor
+  px(0, 0, 180, 320, P.sky);
+  const cam = Math.round(lerp(0, 120, eIO(inv(S.walk, S.boss, t))));
+  for (let i = 0; i < 6; i++) { const cx = ((i * 70 - cam * 0.3) % 420 + 420) % 420 - 60, cy = 40 + (i % 3) * 22;
+    px(cx, cy, 30, 8, P.white); px(cx + 6, cy - 6, 16, 6, P.white); px(cx, cy + 8, 30, 1, P.grey); }
+  for (let x = -cam % 16 - 16; x < 180; x += 16) { px(x, 236, 16, 84, P.floor); px(x, 236, 16, 2, P.floor2); px(x, 236, 1, 84, P.brick); px(x, 252, 16, 1, P.brick); px(x + 8, 252, 1, 16, P.brick); px(x, 268, 16, 1, P.brick); }
+  // the boss's frame on the wall: a "menu photo" poster
+  const shrinkK = eIO(inv(S.shrink, S.shrink + 0.85, t));
+  const bx = 250 - cam, s = Math.max(1, Math.round(lerp(4, 1, shrinkK)));
+  const fw = 22 * 4 + 12, fh = 14 * 4 + 22;
+  const glitch = t > S.shrink && t < S.shrink + 0.85 ? Math.round((hash(Math.floor(t * 30)) - 0.5) * 6) : 0;
+  if (shrinkK < 1) {
+    px(bx - fw / 2 + glitch, 120, fw, fh, P.ink); px(bx - fw / 2 + 2 + glitch, 122, fw - 4, fh - 4, P.yel);
+    px(bx - fw / 2 + 4 + glitch, 124, fw - 8, fh - 8, '#fff8d0');
+    ptext('MENU PHOTO', bx + glitch, 126, P.red, 8, 'center', false);
+  }
+  burger(bx + glitch, lerp(140, 222, shrinkK), s);
+  if (shrinkK >= 1) ptext('TRUE SIZE', bx, 206, P.white, 8, 'center');
+  // boss HP bar
+  if (t >= S.boss && t < S.clear) {
+    const hp = 1 - eIO(inv(S.shrink, S.shrink + 0.85, t));
+    ptext('JUMBO PHOTO', 8, 20, P.white, 8); px(8, 32, 102, 8, P.ink); px(9, 33, Math.round(100 * hp), 6, P.red);
+  }
+  // ? block with the QR power-up
+  const qx = 162 - cam, qy = 150;
+  const bump = t > S.block ? -Math.round(4 * Math.sin(Math.min(1, (t - S.block) / 0.18) * Math.PI)) : 0;
+  px(qx, qy + bump, 16, 16, P.ink); px(qx + 1, qy + 1 + bump, 14, 14, t > S.block ? P.brown : P.yel);
+  if (t <= S.block) ptext('?', qx + 4, qy + 4, Math.floor(t * 4) % 2 ? P.white : P.brown, 8, 'left', false);
+  // the item rises out, then flies to the hero
+  const it = inv(S.item, S.item + 0.35, t), gk = inv(S.grab - 0.3, S.grab, t);
+  // hero: walk, stop, jump to hit the block, land, grab
+  let hy = 204;
+  const hx = Math.round(10 + 120 * eIO(inv(S.walk, S.boss, t)) - cam + (t > S.boss ? Math.round(20 * inv(S.lie + 0.6, S.block - 0.22, t)) : 0));
+  const jt = inv(S.block - 0.22, S.block + 0.22, t);
+  if (jt > 0 && jt < 1) hy = 204 - Math.round(22 * Math.sin(jt * Math.PI));
+  const walking = (t > S.walk && t < S.boss) || (t > S.lie + 0.6 && t < S.block - 0.22);
+  const frame = walking ? Math.floor(t / (B / 2)) % 2 : 0;
+  const powered = t >= S.grab;
+  if (powered && Math.floor(t * 12) % 2 === 0 && t < S.scan) spr(HERO[frame], hx, hy, false, { ...PAL, r: P.yel, h: P.red });
+  else spr(HERO[frame], hx, hy, false);
+  if (it > 0 && gk < 1) { const ix = lerp(qx - 4, hx, eO(gk)), iy = lerp(qy - 4 - 14 * it, hy - 4, eO(gk)); qrSprite(Math.round(ix), Math.round(iy), 0.5 + 0 * it); }
+  // the scan beam
+  if (t >= S.scan && t < S.shrink + 0.85) { const k = inv(S.scan, S.scan + 0.3, t); for (let x = hx + 24; x < lerp(hx + 24, bx - 46, k); x += 4) px(x, 220 + Math.round(Math.sin(x * 0.4 + t * 30)), 3, 2, Math.floor(x / 4 + t * 20) % 2 ? P.lgrn : P.white); }
+  // the lie
+  if (t >= S.lie && t < S.block) {
+    const bb = Math.floor((t - S.lie) * 8) % 2 ? 0 : 1;
+    px(bx - 46, 94 - bb, 80, 18, P.ink); px(bx - 45, 95 - bb, 78, 16, P.white); px(bx - 10, 112 - bb, 6, 6, P.ink);
+    ptext('SERVES 2!', bx - 6, 99 - bb, P.red, 8, 'center', false);
+  }
+  // hero's hearts drop when the lie hits
+  const hearts = t >= S.lie + 0.2 && t < S.grab ? 1 : 3;
+  for (let i = 0; i < 3; i++) { const c = i < hearts ? P.red : P.dgrey; const x = 130 + i * 14, y = 20; px(x, y + 2, 10, 4, c); px(x + 1, y, 3, 2, c); px(x + 6, y, 3, 2, c); px(x + 2, y + 6, 6, 2, c); px(x + 4, y + 8, 2, 1, c); }
+  // coins counter
+  ptext('x' + String(t >= S.grab ? 1 : 0).padStart(2, '0'), 130, 34, P.yel, 8);
+}
+function titleScreen(t) {
+  px(0, 0, 180, 320, P.bg);
+  for (let i = 0; i < 40; i++) { const x = Math.floor(hash(i) * 180), y = Math.floor(hash(i + 50) * 320); if (Math.floor(t * 6 + i) % 5) px(x, y, 1, 1, P.white); }
+  const k = spring(t, ...SPRING.snappy);
+  ptext('LEVEL 1', 90, Math.round(lerp(-20, 100, k)), P.yel, 16, 'center');
+  ptext('THE MENU', 90, Math.round(lerp(340, 126, k)), P.white, 16, 'center');
+  if (Math.floor(t * 3) % 2 === 0) ptext('PRESS START', 90, 196, P.lgrn, 8, 'center');
+  ptext('© MENVA', 90, 290, P.dgrey, 8, 'center', false);
+}
+function clearScreen(t) {
+  px(0, 0, 180, 320, P.bg);
+  const k = spring(t - S.clear, ...SPRING.snappy);
+  ptext('STAGE', 90, Math.round(lerp(-30, 70, k)), P.yel, 16, 'center');
+  ptext('CLEAR!', 90, Math.round(lerp(-30, 92, k)), P.yel, 16, 'center');
+  const sk = inv(S.score, S.score + 0.8, t);
+  ptext('HIGH SCORE', 90, 150, P.white, 8, 'center');
+  if (sk > 0) ptext('NO REGRETS', 90, 166, P.lgrn, 8, 'center');
+  ptext('PLATE = PHOTO', 90, 200, P.white, 8, 'center');
+  burger(90, 230, 2);
+  for (let i = 0; i < 6; i++) { const c = inv(S.score + 0.2 + i * 0.12, S.score + 0.5 + i * 0.12, t); if (c > 0 && c < 1) px(30 + i * 22, 260 - Math.round(30 * Math.sin(c * Math.PI)), 6, 8, P.yel); }
+}
+
+const DUR = 12.5;
+function draw(t) {
+  lo.clearRect(0, 0, 180, 320); hi.clearRect(0, 0, W, H);
+  // screen shake on hits
+  const sh = (a, d) => (t > a && t < a + d ? Math.round((hash(Math.floor(t * 60)) - 0.5) * 4) : 0);
+  const shake = sh(S.lie, 0.25) + sh(S.shrink + 0.85, 0.3);
+  lo.save(); lo.translate(shake, 0);
+  if (t < S.walk) titleScreen(t); else if (t < S.clear) level(t); else clearScreen(t);
+  lo.restore();
+  // hard flash cuts between screens
+  if ((t >= S.walk && t < S.walk + 0.06) || (t >= S.clear && t < S.clear + 0.06)) px(0, 0, 180, 320, P.white);
+  // pixel-dissolve into the end card, then the smooth logo on top
+  if (t >= S.end - 0.4) {
+    const k = inv(S.end - 0.4, S.end, t);
+    for (let y = 0; y < 320; y += 4) for (let x = 0; x < 180; x += 4) if (hash(x * 13 + y * 7) < k) px(x, y, 4, 4, P.bg);
+  }
+  if (t >= S.end) endCard(hi, t, S.end, { ink: PAPER, sub: '#bcbcbc' });
+}
+window.DUR = DUR;
+window.FILM = { preset: 'chip', bpm: 140, cover: 12.0 };
+window.CUES = C.list;
+window.seek = (t) => { draw(t); return true; };
+window.seek(0);
+window.__ready = true;
+</script></body></html>

@@ -1,0 +1,123 @@
+<!doctype html><html><head><meta charset="utf-8">
+<!--
+  Film 7: NEON, synthwave night drive. 12.5 s at 100 BPM (beat 0.6 s).
+  Story: "Raat 2 baje. Bhook?" A neon road toward a striped sun and a skyline of domes and minarets. A neon QR flickers on.
+  A wireframe dish rises out of the grid; a scan line sweeps up it and turns the wireframe into the REAL pizza scan.
+  "Dekh ke order karo." "Asli scan. Asli size."
+  three.js: neon grid floor, gradient sun, skyline silhouette, UnrealBloomPass; the real GLB twice (wireframe + textured)
+  split by a moving clipping plane. Motion language: steady forward drive, slow floats, neon flicker on entrances,
+  glow rather than motion for emphasis. 2D overlay for the Monoton titles (with glow) and the end card.
+-->
+<style>html,body{margin:0;width:1080px;height:1920px;overflow:hidden;background:#0B0221}canvas{position:absolute;left:0;top:0}</style>
+<script type="importmap">{"imports":{"three":"/node_modules/three/build/three.module.js","three/addons/":"/node_modules/three/examples/jsm/"}}</script>
+</head><body><canvas id="gl" width="1080" height="1920"></canvas><canvas id="ui" width="1080" height="1920"></canvas>
+<script type="module">
+import * as THREE from 'three';
+import { GLTFLoader } from 'three/addons/loaders/GLTFLoader.js';
+import { DRACOLoader } from 'three/addons/loaders/DRACOLoader.js';
+import { RoomEnvironment } from 'three/addons/environments/RoomEnvironment.js';
+import { EffectComposer } from 'three/addons/postprocessing/EffectComposer.js';
+import { RenderPass } from 'three/addons/postprocessing/RenderPass.js';
+import { UnrealBloomPass } from 'three/addons/postprocessing/UnrealBloomPass.js';
+import { OutputPass } from 'three/addons/postprocessing/OutputPass.js';
+import { W, H, PAPER, clamp, lerp, inv, eO, eI, eIO, spring, SPRING, hash, loadFonts, T, drawQR, endCard, cues } from './common.js';
+await loadFonts('neon');
+const ui = document.getElementById('ui').getContext('2d');
+const C = cues(), cue = C.add;
+const MAG = 0xff2bd6, CYN = 0x22e6ff;
+
+const r = new THREE.WebGLRenderer({ canvas: document.getElementById('gl'), antialias: true, preserveDrawingBuffer: true });
+r.setPixelRatio(1); r.setSize(W, H, false); r.outputColorSpace = THREE.SRGBColorSpace; r.localClippingEnabled = true;
+const scene = new THREE.Scene(); scene.background = new THREE.Color(0x0B0221); scene.fog = new THREE.Fog(0x0B0221, 6, 30);
+scene.environment = new THREE.PMREMGenerator(r).fromScene(new RoomEnvironment(), 0.04).texture;
+const cam = new THREE.PerspectiveCamera(55, W / H, 0.05, 80);
+
+// sky gradient + striped sun
+const skyTex = (() => { const c = document.createElement('canvas'); c.width = 4; c.height = 512; const x = c.getContext('2d'); const g = x.createLinearGradient(0, 0, 0, 512);
+  g.addColorStop(0, '#0B0221'); g.addColorStop(0.55, '#3A0B5C'); g.addColorStop(0.85, '#B0186E'); g.addColorStop(1, '#FF5E3A'); x.fillStyle = g; x.fillRect(0, 0, 4, 512);
+  const t = new THREE.CanvasTexture(c); t.colorSpace = THREE.SRGBColorSpace; return t; })();
+const sky = new THREE.Mesh(new THREE.PlaneGeometry(80, 26), new THREE.MeshBasicMaterial({ map: skyTex, fog: false })); sky.position.set(0, 10, -40); scene.add(sky);
+const sunTex = (() => { const c = document.createElement('canvas'); c.width = c.height = 512; const x = c.getContext('2d'); const g = x.createLinearGradient(0, 0, 0, 512);
+  g.addColorStop(0, '#FFE66D'); g.addColorStop(0.5, '#FF7A45'); g.addColorStop(1, '#FF2BD6'); x.fillStyle = g; x.beginPath(); x.arc(256, 256, 250, 0, 7); x.fill();
+  x.globalCompositeOperation = 'destination-out'; for (let i = 0; i < 9; i++) { const y = 300 + i * 24, h = 4 + i * 2.2; x.fillRect(0, y, 512, h); }
+  const t = new THREE.CanvasTexture(c); t.colorSpace = THREE.SRGBColorSpace; return t; })();
+const sun = new THREE.Mesh(new THREE.PlaneGeometry(16, 16), new THREE.MeshBasicMaterial({ map: sunTex, transparent: true, fog: false })); sun.position.set(0, 4.5, -38); scene.add(sun);
+// skyline: blocks, domes and minarets in silhouette
+const sil = new THREE.MeshBasicMaterial({ color: 0x14062E, fog: false });
+const city = new THREE.Group(); scene.add(city);
+for (let i = -18; i <= 18; i++) { const h = 0.6 + hash(i + 40) * 2.4, w = 0.8 + hash(i) * 0.9; const b = new THREE.Mesh(new THREE.BoxGeometry(w, h, 0.5), sil); b.position.set(i * 1.05, h / 2, -32); city.add(b); }
+for (const xx of [-6, 5.5]) { const d = new THREE.Mesh(new THREE.SphereGeometry(1.4, 24, 12, 0, Math.PI * 2, 0, Math.PI / 2), sil); d.position.set(xx, 2.6, -31.5); city.add(d);
+  const base = new THREE.Mesh(new THREE.BoxGeometry(3.4, 2.6, 0.6), sil); base.position.set(xx, 1.3, -31.5); city.add(base);
+  for (const m of [-2.2, 2.2]) { const mi = new THREE.Mesh(new THREE.CylinderGeometry(0.16, 0.22, 5.5, 10), sil); mi.position.set(xx + m, 2.75, -31.5); city.add(mi);
+    const cap = new THREE.Mesh(new THREE.ConeGeometry(0.26, 0.6, 10), sil); cap.position.set(xx + m, 5.8, -31.5); city.add(cap); } }
+// neon grid floor
+const grid = new THREE.GridHelper(80, 80, MAG, MAG); grid.material.transparent = true; grid.material.opacity = 0.9; scene.add(grid);
+const floor = new THREE.Mesh(new THREE.PlaneGeometry(80, 80), new THREE.MeshBasicMaterial({ color: 0x0B0221 })); floor.rotation.x = -Math.PI / 2; floor.position.y = -0.002; scene.add(floor);
+// neon QR sign
+const qrTex = (() => { const c = document.createElement('canvas'); c.width = c.height = 512; const x = c.getContext('2d'); x.fillStyle = '#000'; x.fillRect(0, 0, 512, 512); drawQR(x, 16, 16, 480, '#22e6ff', '#000', 0.04);
+  const t = new THREE.CanvasTexture(c); t.colorSpace = THREE.SRGBColorSpace; return t; })();
+const qr = new THREE.Mesh(new THREE.PlaneGeometry(1.2, 1.2), new THREE.MeshBasicMaterial({ map: qrTex, transparent: true, fog: false })); scene.add(qr);
+const qrFrame = new THREE.LineSegments(new THREE.EdgesGeometry(new THREE.PlaneGeometry(1.34, 1.34)), new THREE.LineBasicMaterial({ color: MAG })); qr.add(qrFrame);
+
+// the real dish, twice: neon wireframe and the textured scan, split by a clipping plane
+const gltf = await new GLTFLoader().setDRACOLoader(new DRACOLoader().setDecoderPath('/vendor/draco/')).loadAsync('/assets/dishes/bz-chicken-pizza/model.glb');
+const real = gltf.scene, wire = real.clone(true);
+const up = new THREE.Plane(new THREE.Vector3(0, -1, 0), 0), down = new THREE.Plane(new THREE.Vector3(0, 1, 0), 0);
+real.traverse((o) => { if (o.isMesh) { o.material = o.material.clone(); o.material.clippingPlanes = [up]; } });
+wire.traverse((o) => { if (o.isMesh) o.material = new THREE.MeshBasicMaterial({ color: MAG, wireframe: true, transparent: true, opacity: 0.55, clippingPlanes: [down] }); });
+const dish = new THREE.Group(); dish.add(real, wire); dish.scale.setScalar(4.2); scene.add(dish);
+const key = new THREE.DirectionalLight(0xffd6f0, 1.1); key.position.set(-2, 4, 3); scene.add(key); scene.add(new THREE.HemisphereLight(0xffc4ee, 0x2a0a4a, 0.6));
+const scanRing = new THREE.Mesh(new THREE.RingGeometry(0.98, 1.0, 96), new THREE.MeshBasicMaterial({ color: CYN, side: THREE.DoubleSide, transparent: true })); scanRing.rotation.x = -Math.PI / 2; scene.add(scanRing);
+
+const composer = new EffectComposer(r); composer.addPass(new RenderPass(scene, cam));
+const bloom = new UnrealBloomPass(new THREE.Vector2(W / 2, H / 2), 0.75, 0.5, 0.82); composer.addPass(bloom); composer.addPass(new OutputPass());
+
+const S = { cap1: 0.3, cap2: 1.2, qr: 2.4, dish: 4.8, scan: 6.0, cap3: 7.2, cap4: 8.4, end: 9.6 };
+cue(0, 'drop'); cue(S.cap1, 'pop', { m: 81 }); cue(S.cap2, 'pop', { m: 84 }); cue(S.qr, 'flash', { g: 0.4 }); cue(S.qr + 0.6, 'beep', { g: 0.4 });
+cue(S.dish, 'riser', { len: 1.2, g: 0.4 }); cue(S.scan, 'scribble', { len: 1.2, g: 0.5 }); cue(S.cap3, 'impact', { big: 0.5, g: 0.4 }); cue(S.cap4, 'pop', { m: 88 }); cue(S.end, 'end'); cue(S.end + 0.3, 'ting', { m: 84, g: 0.45 });
+
+function neonText(s, x, y, z, p, col = '#FF2BD6', font = 'Neon', flickSeed = 0) {
+  if (p <= 0) return;
+  // a neon tube flickers on: a few dark frames before it holds
+  const lt = p, on = lt > 0.35 || [0.05, 0.12, 0.22].some((a) => lt > a && lt < a + 0.05);
+  ui.save(); ui.font = `400 ${z}px ${font}`; ui.textAlign = 'center'; ui.textBaseline = 'middle';
+  ui.globalAlpha = on ? 1 : 0.18; ui.shadowColor = col; ui.shadowBlur = 40; ui.fillStyle = col; ui.fillText(s, x, y); ui.shadowBlur = 12; ui.fillStyle = '#fff'; ui.globalAlpha *= 0.85; ui.fillText(s, x, y);
+  ui.restore();
+}
+function world(t) {
+  const drive = t * 2.6;                              // the road moves toward us
+  grid.position.z = drive % 1;
+  const settle = eIO(inv(S.qr, S.dish + 0.6, t));
+  cam.position.set(Math.sin(t * 0.4) * 0.15, lerp(1.6, 2.4, settle), lerp(6, 5.4, settle));
+  cam.lookAt(0, lerp(2.4, 1.2, settle), lerp(-6, 0, settle));
+  const qk = inv(S.qr, S.qr + 0.6, t), qout = eI(inv(S.dish, S.dish + 0.6, t));
+  qr.visible = qk > 0 && qout < 1; qr.position.set(lerp(0.45, 3.2, qout), 1.75 + Math.sin(t * 2) * 0.05, 2.6); qr.rotation.y = -0.15;
+  qr.material.opacity = (qk > 0.35 || [0.05, 0.15].some((a) => qk > a && qk < a + 0.06)) ? 1 : 0.15;
+  const dk = spring(t - S.dish, ...SPRING.heavy);
+  dish.visible = t >= S.dish;
+  dish.position.set(0, lerp(-1.0, 0.9, dk), 1.3); dish.rotation.set(0.35, t * 0.5, 0);
+  // the scan plane climbs from below the dish to above it (world height)
+  const sk = eIO(inv(S.scan, S.scan + 1.2, t)), yPlane = lerp(0.3, 1.6, sk);
+  up.constant = yPlane; down.constant = -yPlane;
+  scanRing.visible = sk > 0 && sk < 1; scanRing.position.set(0, yPlane, 1.3); scanRing.scale.setScalar(1.0);
+  bloom.strength = 0.75 + 0.05 * Math.sin(t * 3);
+  composer.render();
+}
+function overlay(t) {
+  ui.clearRect(0, 0, W, H);
+  const out = (a) => (t > a ? 0 : 1);
+  if (t < S.qr) { neonText('Raat 2 baje.', W / 2, 360, 120, (t - S.cap1) * out(S.qr), '#22E6FF'); neonText('BHOOK?', W / 2, 560, 170, (t - S.cap2) * out(S.qr)); }
+  else if (t < S.dish) { neonText('SCAN', W / 2, 360, 170, t - S.qr - 0.2); T(ui, 'table ka QR', W / 2, 500, { z: 54, f: 'D', w: 600, c: '#ffd6f6', al: 'center', a: inv(S.qr + 0.5, S.qr + 0.8, t) }); }
+  else {
+    if (t >= S.cap3) { neonText('Dekh ke', W / 2, 330, 130, t - S.cap3, '#22E6FF'); neonText('ORDER KARO.', W / 2, 500, 128, t - S.cap3 - 0.3); }
+    if (t >= S.cap4) T(ui, 'Asli scan. Asli size.', W / 2, 1520, { z: 64, f: 'D', w: 600, c: '#ffd6f6', al: 'center', a: inv(S.cap4, S.cap4 + 0.3, t) });
+  }
+  if (t >= S.end) { ui.fillStyle = '#0B0221'; ui.fillRect(0, 0, W, H); endCard(ui, t, S.end, { ink: PAPER, sub: '#c9a8e6' }); }
+}
+window.DUR = 12.6;
+window.FILM = { preset: 'synth', bpm: 100, cover: 12.1 };
+window.CUES = C.list;
+window.seek = (t) => { if (t < S.end) world(t); overlay(t); return true; };
+window.seek(0);
+window.__ready = true;
+</script></body></html>

@@ -1,0 +1,120 @@
+<!doctype html><html><head><meta charset="utf-8">
+<!--
+  Film 10: SILENT, a 1920s melodrama. 13.2 s, ragtime at 100 BPM, projected at 12 fps.
+  Story: leader countdown. Title card: THE TRAGEDY OF THE TINY BURGER. A gentleman, a waiter, a cloche: a tiny burger.
+  He faints. Title card: ACT II. A HERO ARRIVES: THE QR CODE. He scans; the real dish (the pizza scan render, in
+  monochrome like everything else) appears at true size. He tips his hat. Title card: AND THEY ORDERED HAPPILY EVER AFTER.
+  Iris out to the end card (clean: the logo is never aged).
+  Look: black and white with a sepia tone, ornate title-card borders, Special Elite type, iris wipes, gate weave,
+  flicker, scratches, dust, vignette. Motion language: pantomime. Big readable poses, held; quick undercranked moves.
+-->
+<style>html,body{margin:0;width:1080px;height:1920px;overflow:hidden;background:#000}canvas{position:absolute;left:0;top:0}</style>
+</head><body><canvas id="c" width="1080" height="1920"></canvas>
+<script type="module">
+import { W, H, INK, PAPER, clamp, lerp, inv, eO, eI, eIO, spring, SPRING, hash, rng, loadFonts, T, drawQR, endCard, cues } from './common.js';
+await loadFonts('type');
+const out = document.getElementById('c').getContext('2d');
+const sc = document.createElement('canvas'); sc.width = W; sc.height = H; const x = sc.getContext('2d');
+const C = cues(), cue = C.add;
+const pizza = new Image(); pizza.src = '/assets/dishes/bz-chicken-pizza/poster.webp'; await pizza.decode();
+let FR = 0;
+const G = (v) => `rgb(${v},${v},${v})`;
+
+function card(lines, sub) {
+  x.fillStyle = '#0d0d0d'; x.fillRect(0, 0, W, H);
+  x.strokeStyle = G(220); x.lineWidth = 6; x.strokeRect(90, 520, 900, 880); x.lineWidth = 2; x.strokeRect(116, 546, 848, 828);
+  for (const [cx, cy, sx, sy] of [[116, 546, 1, 1], [964, 546, -1, 1], [116, 1374, 1, -1], [964, 1374, -1, -1]]) { x.save(); x.translate(cx, cy); x.scale(sx, sy);
+    x.beginPath(); x.moveTo(0, 70); x.quadraticCurveTo(0, 0, 70, 0); x.moveTo(20, 70); x.quadraticCurveTo(20, 20, 70, 20); x.stroke(); x.beginPath(); x.arc(34, 34, 8, 0, 7); x.fillStyle = G(220); x.fill(); x.restore(); }
+  lines.forEach((l, i) => T(x, l, W / 2, 900 + i * 110 - (lines.length - 1) * 55, { z: 84, f: 'Type', c: G(235), al: 'center', fit: 780 }));
+  if (sub) T(x, sub, W / 2, 1260, { z: 44, f: 'Type', c: G(170), al: 'center' });
+  x.strokeStyle = G(200); x.lineWidth = 3; x.beginPath(); x.moveTo(380, 640); x.lineTo(700, 640); x.moveTo(380, 1290); x.lineTo(700, 1290); x.stroke();
+}
+function leader(t) {
+  x.fillStyle = G(150); x.fillRect(0, 0, W, H);
+  const n = 3 - Math.floor(t / 0.4), f = (t % 0.4) / 0.4;
+  x.strokeStyle = G(40); x.lineWidth = 8; x.beginPath(); x.moveTo(0, 960); x.lineTo(W, 960); x.moveTo(540, 0); x.lineTo(540, H); x.stroke();
+  x.beginPath(); x.arc(540, 960, 400, 0, 7); x.stroke(); x.beginPath(); x.arc(540, 960, 330, 0, 7); x.stroke();
+  x.fillStyle = 'rgba(30,30,30,.45)'; x.beginPath(); x.moveTo(540, 960); x.arc(540, 960, 400, -Math.PI / 2, -Math.PI / 2 + f * Math.PI * 2); x.closePath(); x.fill();
+  T(x, String(Math.max(1, n)), 540, 1080, { z: 330, f: 'Type', c: G(20), al: 'center' });
+}
+function set(t) {   // the restaurant: curtains, a table, a hanging lamp
+  const g = x.createLinearGradient(0, 0, 0, H); g.addColorStop(0, G(70)); g.addColorStop(1, G(30)); x.fillStyle = g; x.fillRect(0, 0, W, H);
+  for (let i = 0; i < 14; i++) { x.fillStyle = i % 2 ? G(58) : G(48); x.fillRect(i * 80, 0, 80, 1100); }
+  x.fillStyle = G(200); x.beginPath(); x.ellipse(540, 1300, 470, 90, 0, 0, 7); x.fill(); x.fillStyle = G(170); x.fillRect(70, 1300, 940, 90); x.fillStyle = G(150); x.beginPath(); x.ellipse(540, 1390, 470, 60, 0, 0, Math.PI); x.fill();
+  x.fillStyle = G(25); x.fillRect(150, 1400, 40, 520); x.fillRect(890, 1400, 40, 520);
+  x.strokeStyle = G(20); x.lineWidth = 4; x.beginPath(); x.moveTo(540, 0); x.lineTo(540, 200); x.stroke(); x.fillStyle = G(30); x.beginPath(); x.moveTo(470, 260); x.lineTo(610, 260); x.lineTo(570, 200); x.lineTo(510, 200); x.fill();
+}
+function gent(cx, cy, tilt, hatUp, happy) {
+  x.save(); x.translate(cx, cy + 360); x.rotate(tilt); x.translate(0, -360);
+  x.fillStyle = G(20); x.beginPath(); x.roundRect(-120, -60, 240, 420, 60); x.fill();             // coat
+  x.fillStyle = G(235); x.beginPath(); x.moveTo(-40, -60); x.lineTo(0, 80); x.lineTo(40, -60); x.fill(); x.fillStyle = G(20); x.beginPath(); x.moveTo(-26, -50); x.lineTo(0, -30); x.lineTo(26, -50); x.lineTo(0, -70); x.fill();
+  x.fillStyle = G(205); x.beginPath(); x.ellipse(0, -170, 95, 110, 0, 0, 7); x.fill();             // face
+  x.fillStyle = G(15); x.beginPath(); x.moveTo(-70, -120); x.quadraticCurveTo(0, -150, 70, -120); x.quadraticCurveTo(80, -100, 40, -112); x.quadraticCurveTo(0, -125, -40, -112); x.quadraticCurveTo(-80, -100, -70, -120); x.fill(); // moustache
+  for (const s of [-1, 1]) { x.beginPath(); if (happy) { x.strokeStyle = G(15); x.lineWidth = 7; x.arc(s * 36, -185, 16, Math.PI + 0.4, -0.4); x.stroke(); } else { x.fillStyle = G(15); x.arc(s * 36, -185, 10, 0, 7); x.fill(); } }
+  x.save(); x.translate(0, -270 - hatUp * 90); x.rotate(-hatUp * 0.4); x.fillStyle = G(12); x.fillRect(-120, 0, 240, 22); x.fillRect(-75, -150, 150, 155); x.fillStyle = G(90); x.fillRect(-75, -30, 150, 18); x.restore();
+  x.restore();
+}
+function waiter(cx, cy, lift) {
+  x.fillStyle = G(15); x.beginPath(); x.roundRect(cx - 90, cy - 40, 180, 520, 50); x.fill();
+  x.fillStyle = G(220); x.fillRect(cx - 36, cy - 30, 72, 200);
+  x.fillStyle = G(190); x.beginPath(); x.ellipse(cx, cy - 140, 75, 90, 0, 0, 7); x.fill(); x.fillStyle = G(15); x.fillRect(cx - 80, cy - 230, 160, 40);
+  // the cloche on a plate at the table
+  x.fillStyle = G(230); x.beginPath(); x.ellipse(540, 1240, 170, 30, 0, 0, 7); x.fill();
+  x.save(); x.translate(540, 1240 - lift * 260); x.fillStyle = G(180); x.beginPath(); x.arc(0, 0, 150, Math.PI, 0); x.fill(); x.fillStyle = G(230); x.fillRect(-20, -170, 40, 24); x.restore();
+}
+function tiny(a) { if (a <= 0) return; x.globalAlpha = a; x.fillStyle = G(140); x.beginPath(); x.roundRect(518, 1205, 44, 18, 9); x.fill(); x.fillStyle = G(90); x.fillRect(516, 1222, 48, 8); x.fillStyle = G(150); x.beginPath(); x.roundRect(518, 1229, 44, 10, 5); x.fill(); x.globalAlpha = 1; }
+
+const S = { card1: 1.2, scene1: 3.0, card2: 5.4, scene2: 6.8, card3: 9.0, end: 10.4 };
+cue(0.0, 'projector'); cue(S.card1, 'drop'); cue(S.scene1 + 0.8, 'ting', { m: 79, g: 0.3 }); cue(S.scene1 + 1.3, 'boing', { g: 0.35 }); cue(S.scene2 + 0.5, 'beep', { g: 0.3 });
+cue(S.scene2 + 0.9, 'impact', { big: 0.5, g: 0.35 }); cue(S.scene2 + 1.4, 'pop', { m: 84 }); cue(S.end, 'end'); cue(S.end + 0.3, 'ting', { m: 84, g: 0.45 });
+
+function scene(t) {
+  if (t < S.card1) return leader(t);
+  if (t < S.scene1) return card(['THE TRAGEDY', 'OF THE', 'TINY BURGER'], 'a picture in seven seconds');
+  if (t < S.card2) { const lt = t - S.scene1; set(t);
+    waiter(lerp(1300, 820, eO(inv(0, 0.5, lt))), 1000, eIO(inv(0.7, 1.0, lt))); tiny(inv(0.8, 0.9, lt));
+    gent(260, 1000, -eI(inv(1.3, 1.7, lt)) * 0.5, 0, false);
+    if (lt > 1.0) { T(x, '(the burger)', 560, 1150, { z: 44, f: 'Type', c: G(230), al: 'center' }); x.strokeStyle = G(230); x.lineWidth = 4; x.beginPath(); x.moveTo(560, 1162); x.lineTo(545, 1198); x.stroke(); }
+    if (lt > 1.7) T(x, '*faints*', 240, 640, { z: 60, f: 'Type', c: G(230), al: 'center' });
+    return; }
+  if (t < S.scene2) return card(['ACT II.', 'A HERO ARRIVES:', 'THE QR CODE'], '');
+  if (t < S.card3) { const lt = t - S.scene2; set(t);
+    const q = spring(lt, ...SPRING.default);
+    x.save(); x.translate(540, 1210 - q * 30); x.fillStyle = G(240); x.fillRect(-90, -200, 180, 200); x.globalAlpha = 1; drawQR(x, -75, -185, 150, G(15), G(240), 0.03);
+    x.strokeStyle = 'rgba(255,255,255,.35)'; x.lineWidth = 6; for (let i = 0; i < 10; i++) { const a = -Math.PI / 2 + (i - 4.5) * 0.22; x.beginPath(); x.moveTo(Math.cos(a) * 160, -100 + Math.sin(a) * 160); x.lineTo(Math.cos(a) * (240 + 30 * Math.sin(lt * 9 + i)), -100 + Math.sin(a) * (240 + 30 * Math.sin(lt * 9 + i))); x.stroke(); } x.restore();
+    const dk = lt > 0.9 ? spring(lt - 0.9, ...SPRING.default) : 0;
+    if (dk > 0) { x.save(); x.filter = 'grayscale(1) contrast(1.2)'; x.globalAlpha = clamp(dk); const iw = 900 * clamp(dk), ih = iw * pizza.height / pizza.width; x.drawImage(pizza, 640 - iw / 2, 1150 - ih / 2, iw, ih); x.restore(); }
+    gent(230, 1000, 0, eO(inv(1.4, 1.8, lt)), lt > 1.0);
+    if (lt > 0.3 && lt < 0.9) { x.fillStyle = G(30); x.beginPath(); x.roundRect(330, 760, 110, 190, 14); x.fill(); x.fillStyle = G(220); x.fillRect(340, 772, 90, 160); }
+    return; }
+  if (t < S.end) return card(['AND THEY', 'ORDERED', 'HAPPILY EVER AFTER.'], 'THE END?');
+}
+function project(t) {
+  FR = Math.floor(t * 12);
+  out.save(); out.fillStyle = '#000'; out.fillRect(0, 0, W, H);
+  const weave = [(hash(FR) - 0.5) * 6, (hash(FR + 3) - 0.5) * 8], flick = 0.9 + hash(FR + 9) * 0.16;
+  out.filter = `grayscale(1) sepia(0.35) brightness(${flick}) contrast(1.15)`;
+  out.drawImage(sc, weave[0], weave[1]); out.filter = 'none';
+  // scratches, dust, hairs
+  const R = rng(FR * 13 + 1);
+  for (let i = 0; i < 3; i++) if (R() < 0.6) { out.strokeStyle = `rgba(255,255,255,${0.2 + R() * 0.35})`; out.lineWidth = 1 + R() * 2; const sx = R() * W; out.beginPath(); out.moveTo(sx, 0); out.lineTo(sx + (R() - 0.5) * 40, H); out.stroke(); }
+  for (let i = 0; i < 14; i++) { out.fillStyle = R() < 0.5 ? 'rgba(0,0,0,.6)' : 'rgba(255,255,255,.5)'; out.beginPath(); out.arc(R() * W, R() * H, 1 + R() * 4, 0, 7); out.fill(); }
+  if (R() < 0.3) { out.strokeStyle = 'rgba(0,0,0,.5)'; out.lineWidth = 2; out.beginPath(); const hx = R() * W, hy = R() * H; out.moveTo(hx, hy); out.bezierCurveTo(hx + 60, hy - 40, hx + 90, hy + 60, hx + 150, hy + 20); out.stroke(); }
+  const v = out.createRadialGradient(W / 2, H / 2, 380, W / 2, H / 2, 1150); v.addColorStop(0, 'rgba(0,0,0,0)'); v.addColorStop(1, 'rgba(0,0,0,.75)'); out.fillStyle = v; out.fillRect(0, 0, W, H);
+  // iris wipes on scene changes (open in, close out)
+  const irisAt = (a, b) => { const o = eO(inv(a, a + 0.35, t)), c = eI(inv(b - 0.35, b, t)); return Math.min(o, 1 - c); };
+  let ir = 1; if (t >= S.scene1 && t < S.card2) ir = irisAt(S.scene1, S.card2); if (t >= S.scene2 && t < S.card3) ir = irisAt(S.scene2, S.card3); if (t >= S.card3 && t < S.end) ir = 1 - eI(inv(S.end - 0.4, S.end, t));
+  if (ir < 1) { out.fillStyle = '#000'; out.beginPath(); out.rect(0, 0, W, H); out.arc(W / 2, 1050, Math.max(1, ir * 1200), 0, 7, true); out.fill('evenodd'); }
+  out.restore();
+}
+function draw(t) {
+  if (t >= S.end) { out.fillStyle = '#EDE3D1'; out.fillRect(0, 0, W, H); endCard(out, t, S.end, { ink: INK, sub: '#6B5E4C' }); return; }
+  scene(t); project(t);
+}
+window.DUR = 13.2;
+window.FILM = { preset: 'rag', bpm: 100, fps: 12, cover: 12.7 };
+window.CUES = C.list;
+window.seek = (t) => { draw(t); return true; };
+window.seek(0);
+window.__ready = true;
+</script></body></html>

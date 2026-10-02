@@ -1,0 +1,133 @@
+<!doctype html><html><head><meta charset="utf-8">
+<!--
+  Film 8: DOODLE, a marker-on-notebook explainer. 12.7 s at 112 BPM. The how-it-works in 3 steps:
+  1 scan the table QR, 2 see the dish on your table (true size), 3 show the waiter. Then: no app, no login.
+  Look: ruled notebook paper with a red margin, marker colours, Caveat handwriting, real sketchy strokes from roughjs.
+  Motion language: things are DRAWN on (dash-offset draw-on, left-to-right handwriting reveals), the line boils
+  (3 seeds cycling at 8 per second, like hand-drawn animation), arrows swoop in, ticks get scribbled. No slides, no fades.
+-->
+<style>html,body{margin:0;width:1080px;height:1920px;overflow:hidden;background:#FBF8F0}canvas{position:absolute;left:0;top:0}</style>
+</head><body><canvas id="c" width="1080" height="1920"></canvas>
+<script type="module">
+import rough from '/social/reels/node_modules/roughjs/bundled/rough.esm.js';
+import { W, H, INK, EMBER, clamp, lerp, inv, eO, eIO, spring, SPRING, hash, loadFonts, T, drawQR, endCard, cues } from './common.js';
+await loadFonts('hand', 'handR');
+const x = document.getElementById('c').getContext('2d');
+const gen = rough.generator();
+const C = cues(), cue = C.add;
+const BLUE = '#1F4FBF', RED = '#D9362B', GRN = '#1F8A4C', ORG = '#F08A24', PEN = '#22223A';
+let boil = 0;
+const cache = new Map();
+// draw a roughjs shape, revealed by p (0..1) along its strokes; L = approximate stroke length
+function sk(key, make, p = 1, L = 3000) {
+  if (p <= 0) return;
+  const id = key + '#' + boil;
+  if (!cache.has(id)) cache.set(id, gen.toPaths(make(1 + (hash(key.length * 7 + boil) * 1000 | 0))));
+  for (const d of cache.get(id)) {
+    const path = new Path2D(d.d);
+    if (d.fill && d.fill !== 'none') { x.fillStyle = d.fill; x.globalAlpha = clamp(p * 1.5 - 0.5); x.fill(path); x.globalAlpha = 1; }
+    if (d.stroke && d.stroke !== 'none') { x.strokeStyle = d.stroke; x.lineWidth = d.strokeWidth; x.lineCap = 'round'; x.lineJoin = 'round';
+      x.setLineDash(p < 1 ? [L, L] : []); x.lineDashOffset = L * (1 - p); x.stroke(path); x.setLineDash([]); }
+  }
+}
+const o = (stroke, more = {}) => (seed) => ({ seed, stroke, strokeWidth: 6, roughness: 1.6, bowing: 1.2, ...more });
+// handwriting revealed left to right
+function hand(s, xx, y, z, p, col = PEN, w = 700) {
+  if (p <= 0) return; x.save(); x.font = `${w} ${z}px Hand`; const m = x.measureText(s).width;
+  x.beginPath(); x.rect(xx - 10, y - z, (m + 20) * clamp(p), z * 1.4); x.clip(); T(x, s, xx, y, { z, f: 'Hand', w, c: col }); x.restore();
+}
+function paper() {
+  x.fillStyle = '#FBF8F0'; x.fillRect(0, 0, W, H);
+  x.strokeStyle = 'rgba(60,110,200,.22)'; x.lineWidth = 2; for (let y = 220; y < H; y += 72) { x.beginPath(); x.moveTo(0, y); x.lineTo(W, y); x.stroke(); }
+  x.strokeStyle = 'rgba(217,54,43,.45)'; x.lineWidth = 3; x.beginPath(); x.moveTo(120, 0); x.lineTo(120, H); x.stroke();
+  for (let i = 0; i < 9; i++) { x.fillStyle = '#E8E1D2'; x.beginPath(); x.arc(56, 260 + i * 190, 16, 0, 7); x.fill(); }
+}
+const B = 60 / 112;
+const S = { title: 0.2, s1: 1.6, s2: 4.3, s3: 7.0, ticks: 9.6, end: 10.7 };
+cue(S.title, 'scribble', { len: 0.8 }); cue(S.s1, 'scribble', { len: 0.5 }); cue(S.s1 + 0.6, 'scribble', { len: 0.9, g: 0.5 }); cue(S.s1 + 1.7, 'beep', { g: 0.35 });
+cue(S.s2, 'scribble', { len: 0.5 }); cue(S.s2 + 0.5, 'pop', { m: 81 }); cue(S.s2 + 1.2, 'scribble', { len: 0.7, g: 0.5 }); cue(S.s3, 'scribble', { len: 0.5 }); cue(S.s3 + 1.4, 'pop', { m: 86 });
+cue(S.ticks, 'scribble', { len: 0.4 }); cue(S.ticks + 0.45, 'scribble', { len: 0.4 }); cue(S.end, 'end'); cue(S.end + 0.3, 'ting', { m: 83, g: 0.45 });
+
+function number(n, cx, cy, p, col) { sk('num' + n, o(col, { strokeWidth: 7 }) && ((seed) => gen.circle(cx, cy, 120, o(col, { strokeWidth: 7 })(seed))), p, 420); hand(String(n), cx - 18, cy + 26, 84, clamp(p * 2 - 1), col); }
+function step1(t) {
+  const lt = t - S.s1;
+  number(1, 210, 400, inv(0, 0.5, lt), BLUE);
+  hand('Table ka QR scan karo', 300, 432, 90, inv(0.2, 1.0, lt));
+  x.save(); x.translate(540, 1050); x.scale(1.3, 1.3); x.translate(-540, -1000);
+  // table + QR card + phone
+  sk('table1', (s) => gen.rectangle(160, 1150, 780, 40, o(PEN, { fill: '#E9C99B', fillStyle: 'hachure', hachureGap: 14, fillWeight: 3 })(s)), inv(0.5, 1.1, lt), 2200);
+  sk('qrcard', (s) => gen.rectangle(640, 880, 200, 260, o(PEN, { strokeWidth: 5 })(s)), inv(0.7, 1.1, lt), 1200);
+  if (lt > 1.0) { x.globalAlpha = inv(1.0, 1.3, lt); drawQR(x, 660, 900, 160, PEN, '#FBF8F0', 0.03); x.globalAlpha = 1; }
+  const ph = eO(inv(1.2, 1.6, lt));
+  x.save(); x.translate(lerp(-300, 330, ph), 820); x.rotate(-0.12);
+  sk('phone1', (s) => gen.rectangle(0, 0, 230, 420, o(PEN, { strokeWidth: 7, fill: '#fff', fillStyle: 'solid' })(s)), ph, 1500);
+  if (ph > 0.95) { drawQR(x, 40, 120, 150, PEN, '#fff', 0.04); x.strokeStyle = ORG; x.lineWidth = 6; x.strokeRect(30, 110, 170, 170); hand('scan...', 50, 340, 48, inv(1.5, 1.8, lt), BLUE, 400); }
+  if (lt > 1.7) { sk('beam', (s) => gen.linearPath([[230, 150], [330, 160], [360, 180]], o(ORG, { strokeWidth: 8 })(s)), inv(1.7, 2.0, lt), 400); hand('beep!', 260, 120, 60, inv(1.75, 2.0, lt), ORG); }
+  x.restore();
+  x.restore();
+}
+function step2(t) {
+  const lt = t - S.s2;
+  number(2, 210, 400, inv(0, 0.5, lt), RED);
+  hand('Dish apni table pe dekho', 300, 432, 90, inv(0.2, 1.0, lt));
+  x.save(); x.translate(540, 1050); x.scale(1.3, 1.3); x.translate(-540, -1000);
+  sk('table2', (s) => gen.rectangle(160, 1150, 780, 40, o(PEN, { fill: '#E9C99B', fillStyle: 'hachure', hachureGap: 14, fillWeight: 3 })(s)), 1, 2200);
+  // a sketched pizza on its board, landing
+  const k = spring(lt - 0.5, ...SPRING.playful), y0 = lerp(700, 1000, clamp(k));
+  x.save(); x.translate(0, y0 - 1000);
+  sk('board', (s) => gen.rectangle(250, 960, 560, 200, o(PEN, { fill: '#D9A86A', fillStyle: 'hachure', hachureGap: 12 })(s)), inv(0.5, 0.9, lt), 1800);
+  sk('pizza', (s) => gen.ellipse(530, 1040, 470, 150, o(ORG, { fill: '#F5C26B', fillStyle: 'cross-hatch', hachureGap: 16 })(s)), inv(0.6, 1.0, lt), 1300);
+  [[420, 1030], [530, 1060], [640, 1025], [480, 1000], [600, 1075]].forEach(([px, py], i) => sk('pep' + i, (s) => gen.circle(px, py, 46, o(RED, { fill: RED, fillStyle: 'solid', strokeWidth: 4 })(s)), inv(0.9 + i * 0.05, 1.1 + i * 0.05, lt), 200));
+  x.restore();
+  // measure arrow: true size
+  const m = inv(1.2, 1.7, lt);
+  sk('arrow', (s) => gen.linearPath([[250, 1270], [810, 1270]], o(GRN, { strokeWidth: 7 })(s)), m, 700);
+  sk('ah1', (s) => gen.linearPath([[280, 1240], [250, 1270], [280, 1300]], o(GRN, { strokeWidth: 7 })(s)), m, 200);
+  sk('ah2', (s) => gen.linearPath([[780, 1240], [810, 1270], [780, 1300]], o(GRN, { strokeWidth: 7 })(s)), m, 200);
+  hand('asli size!', 400, 1380, 84, inv(1.5, 2.1, lt), GRN);
+  x.restore();
+}
+function step3(t) {
+  const lt = t - S.s3;
+  number(3, 210, 400, inv(0, 0.5, lt), GRN);
+  hand('Waiter ko dikhao', 300, 432, 90, inv(0.2, 1.0, lt));
+  x.save(); x.translate(540, 1050); x.scale(1.3, 1.3); x.translate(-540, -1000);
+  // phone with the list, turned to a doodled waiter
+  x.save(); x.translate(240, 720); x.rotate(-0.05);
+  sk('phone3', (s) => gen.rectangle(0, 0, 300, 520, o(PEN, { strokeWidth: 7, fill: '#fff', fillStyle: 'solid' })(s)), inv(0.3, 0.7, lt), 1700);
+  hand('My table', 30, 80, 54, inv(0.6, 0.9, lt), BLUE);
+  hand('1 x pizza', 30, 170, 50, inv(0.8, 1.1, lt)); hand('note: extra', 30, 240, 46, inv(0.9, 1.2, lt), '#666', 400); hand('     cheese', 30, 290, 46, inv(0.95, 1.25, lt), '#666', 400);
+  x.restore();
+  x.translate(-70, 0);
+  const wp = inv(1.0, 1.5, lt);
+  sk('wHead', (s) => gen.circle(800, 760, 160, o(PEN)(s)), wp, 600);
+  sk('wBody', (s) => gen.rectangle(700, 850, 200, 330, o(PEN, { fill: '#2F3B4C', fillStyle: 'hachure', hachureGap: 12 })(s)), wp, 1300);
+  sk('wTie', (s) => gen.polygon([[760, 860], [800, 885], [840, 860], [840, 910], [800, 885], [760, 910]], o(RED, { fill: RED, fillStyle: 'solid' })(s)), inv(1.3, 1.6, lt), 300);
+  sk('wSmile', (s) => gen.arc(800, 770, 80, 60, 0.3, Math.PI - 0.3, false, o(PEN, { strokeWidth: 5 })(s)), inv(1.4, 1.7, lt), 200);
+  hand('Theek hai!', 700, 640, 64, inv(1.5, 1.9, lt), RED);
+  sk('dash3', (s) => gen.linearPath([[560, 950], [690, 950]], o(ORG, { strokeWidth: 6, strokeLineDash: [16, 14] })(s)), inv(1.3, 1.6, lt), 300);
+  x.restore();
+}
+function ticks(t) {
+  const lt = t - S.ticks;
+  hand('No app.', 300, 900, 120, inv(0, 0.4, lt)); sk('t1', (s) => gen.linearPath([[220, 860], [250, 900], [290, 820]], o(GRN, { strokeWidth: 9 })(s)), inv(0.1, 0.4, lt), 300);
+  hand('No login.', 300, 1080, 120, inv(0.45, 0.85, lt)); sk('t2', (s) => gen.linearPath([[220, 1040], [250, 1080], [290, 1000]], o(GRN, { strokeWidth: 9 })(s)), inv(0.55, 0.85, lt), 300);
+  sk('under', (s) => gen.curve([[300, 1130], [520, 1150], [760, 1120]], o(RED, { strokeWidth: 8 })(s)), inv(0.8, 1.0, lt), 600);
+}
+function draw(t) {
+  boil = Math.floor(t * 8) % 3;
+  paper();
+  if (t < S.s1) { hand('Kaise kaam karta hai?', 170, 820, 104, inv(S.title, S.title + 0.9, t)); hand('3 steps. Bas.', 170, 960, 104, inv(S.title + 0.7, S.title + 1.2, t), RED); }
+  else if (t < S.s2) step1(t);
+  else if (t < S.s3) step2(t);
+  else if (t < S.ticks) step3(t);
+  else if (t < S.end) ticks(t);
+  else endCard(x, t, S.end, {});
+}
+window.DUR = 13.2;
+window.FILM = { preset: 'uke', bpm: 112, cover: 12.7 };
+window.CUES = C.list;
+window.seek = (t) => { draw(t); return true; };
+window.seek(0);
+window.__ready = true;
+</script></body></html>

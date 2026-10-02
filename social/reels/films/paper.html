@@ -1,0 +1,132 @@
+<!doctype html><html><head><meta charset="utf-8">
+<!--
+  Film 9: PAPER, cut-out collage. 12.6 s at 90 BPM (a waltz feel), drawn at 12 fps like stop-motion paper.
+  Story: a family of four at one table, each with a "?" bubble over the menu. One scan; the phone goes round the table;
+  every "?" turns into a tick, and the dish (a paper cut-out) slides onto the table. "Poori family, ek table,
+  sab ko pata kya aayega." The dish is paper: an illustration, never a real food photo.
+  Look: kraft background, pastel card stock, hard paper edges with a white cut border, layered drop shadows for depth,
+  a little jitter in every drawing. Motion language: paper slides and flips on a held 12 fps, pieces pop up on hinges.
+-->
+<style>html,body{margin:0;width:1080px;height:1920px;overflow:hidden;background:#C9A77C}canvas{position:absolute;left:0;top:0}</style>
+</head><body><canvas id="c" width="1080" height="1920"></canvas>
+<script type="module">
+import { W, H, INK, EMBER, clamp, lerp, inv, eO, eIO, spring, SPRING, hash, rng, loadFonts, T, drawQR, endCard, cues } from './common.js';
+await loadFonts('round');
+const x = document.getElementById('c').getContext('2d');
+const C = cues(), cue = C.add;
+let FR = 0;
+const kraft = (() => { const c = document.createElement('canvas'); c.width = c.height = 512; const g = c.getContext('2d'), R = rng(2);
+  g.fillStyle = '#C9A77C'; g.fillRect(0, 0, 512, 512); for (let i = 0; i < 9000; i++) { g.fillStyle = `rgba(${R() > .5 ? 255 : 60},${R() > .5 ? 230 : 40},${R() > .5 ? 200 : 20},${R() * 0.08})`; g.fillRect(R() * 512, R() * 512, 1 + R() * 3, 1); }
+  for (let i = 0; i < 60; i++) { g.strokeStyle = `rgba(90,60,30,${0.05 + R() * 0.06})`; g.lineWidth = 1; g.beginPath(); const y = R() * 512; g.moveTo(0, y); g.bezierCurveTo(170, y + R() * 20, 340, y - R() * 20, 512, y + R() * 10); g.stroke(); }
+  return x.createPattern(c, 'repeat'); })();
+const fibre = (() => { const c = document.createElement('canvas'); c.width = c.height = 256; const g = c.getContext('2d'), R = rng(8); for (let i = 0; i < 2500; i++) { g.fillStyle = `rgba(0,0,0,${R() * 0.05})`; g.fillRect(R() * 256, R() * 256, 2, 1); } return x.createPattern(c, 'repeat'); })();
+const j = (k, a = 1) => (hash(k * 17 + FR * 7) - 0.5) * a;     // stop-motion jitter, new each drawing
+// a cut paper piece: white cut border, colour, fibre, depth shadow
+function piece(pathFn, col, depth = 1, k = 0) {
+  x.save(); x.translate(j(k, 3), j(k + 1, 3)); x.rotate(j(k + 2, 0.006));
+  x.save(); x.shadowColor = 'rgba(50,30,10,.35)'; x.shadowBlur = 10 * depth; x.shadowOffsetX = 5 * depth; x.shadowOffsetY = 8 * depth; pathFn(); x.fillStyle = '#FFFDF7'; x.fill(); x.restore();
+  x.save(); x.scale(1, 1); pathFn(); x.lineWidth = 9; x.strokeStyle = '#FFFDF7'; x.stroke(); x.fillStyle = col; x.fill(); x.clip(); x.fillStyle = fibre; x.fillRect(-2000, -2000, 5000, 5000); x.restore();
+  x.restore();
+}
+const P = (fn) => () => { x.beginPath(); fn(); };
+const circle = (cx, cy, r) => P(() => x.arc(cx, cy, r, 0, 7));
+const rrect = (a, b, w, h, r) => P(() => x.roundRect(a, b, w, h, r));
+const poly = (pts) => P(() => { x.moveTo(...pts[0]); for (const p of pts.slice(1)) x.lineTo(...p); x.closePath(); });
+
+const FAM = [
+  { x: 190, body: '#8FB8DE', skin: '#E6B48E', hair: '#3A2A20', h: 0, kind: 'abbu' },
+  { x: 420, body: '#F2A7B7', skin: '#EDC2A0', hair: '#2E211A', h: -20, kind: 'ammi' },
+  { x: 650, body: '#B9D98F', skin: '#E2AE88', hair: '#E9E4DA', h: 10, kind: 'dadi' },
+  { x: 880, body: '#F7D06B', skin: '#EBBE98', hair: '#3A2A20', h: 90, kind: 'kid' },
+];
+function person(p, i, t, happy) {
+  const by = 1080 + p.h, pop = spring(t - 0.15 * i, ...SPRING.playful);
+  x.save(); x.translate(0, (1 - clamp(pop)) * 500);
+  piece(rrect(p.x - 110, by - 40, 220, 420, 90), p.body, 1.2, i * 10);
+  if (p.kind === 'ammi') piece(P(() => { x.moveTo(p.x - 120, by - 120); x.quadraticCurveTo(p.x, by - 330, p.x + 120, by - 120); x.lineTo(p.x + 130, by + 120); x.lineTo(p.x - 130, by + 120); x.closePath(); }), '#E5738E', 1, i * 10 + 1);
+  piece(circle(p.x, by - 130, 92), p.skin, 1, i * 10 + 2);
+  if (p.kind !== 'ammi') piece(P(() => { x.arc(p.x, by - 150, 94, Math.PI * 1.05, Math.PI * 1.95); x.closePath(); }), p.hair, 0.6, i * 10 + 3);
+  if (p.kind === 'abbu') piece(P(() => { x.ellipse(p.x, by - 85, 50, 18, 0, 0, Math.PI); x.closePath(); }), '#3A2A20', 0.4, i * 10 + 4);
+  if (p.kind === 'dadi') { x.save(); x.strokeStyle = '#3A2A20'; x.lineWidth = 6; x.beginPath(); x.arc(p.x - 34, by - 135, 22, 0, 7); x.arc(p.x + 34, by - 135, 22, 0, 7); x.stroke(); x.restore(); }
+  x.save(); x.fillStyle = '#2B1D18'; for (const s of [-1, 1]) { x.beginPath(); x.arc(p.x + s * 34, by - 135, 9, 0, 7); x.fill(); }
+  x.strokeStyle = '#2B1D18'; x.lineWidth = 6; x.lineCap = 'round'; x.beginPath(); if (happy) x.arc(p.x, by - 105, 30, 0.2, Math.PI - 0.2); else { x.moveTo(p.x - 20, by - 88); x.lineTo(p.x + 20, by - 92); } x.stroke(); x.restore();
+  x.restore();
+}
+function bubble(cx, cy, s, kind, k) {
+  if (s <= 0) return;
+  x.save(); x.translate(cx, cy); x.scale(s, s); x.rotate(j(k, 0.05));
+  piece(P(() => { x.ellipse(0, 0, 80, 66, 0, 0, 7); x.moveTo(-20, 50); x.lineTo(-40, 100); x.lineTo(10, 60); }), '#FFFDF7', 0.8, k);
+  if (kind === '?') { T(x, '?', 0, 32, { z: 100, f: 'Round', w: 600, c: EMBER, al: 'center' }); }
+  else { x.save(); x.strokeStyle = '#2F8F4E'; x.lineWidth = 16; x.lineCap = 'round'; x.lineJoin = 'round'; x.beginPath(); x.moveTo(-34, 2); x.lineTo(-8, 28); x.lineTo(38, -26); x.stroke(); x.restore(); }
+  x.restore();
+}
+function pizzaCut(cx, cy, s, k) {
+  x.save(); x.translate(cx, cy); x.scale(s, s);
+  piece(rrect(-230, -90, 460, 180, 40), '#A77B4F', 1, k);
+  piece(rrect(-205, -72, 410, 144, 56), '#F2C46D', 0.6, k + 1);
+  piece(rrect(-185, -56, 370, 112, 46), '#FBE6A6', 0.3, k + 2);
+  [[-120, -10], [-30, 20], [60, -18], [140, 16], [10, -30]].forEach(([a, b], i) => piece(circle(a, b, 22), '#D9493A', 0.3, k + 3 + i));
+  [[-80, 30], [100, -34], [30, 30]].forEach(([a, b], i) => piece(circle(a, b, 12), '#4E8A3E', 0.2, k + 9 + i));
+  x.restore();
+}
+function phone(cx, cy, rot, k, screen) {
+  x.save(); x.translate(cx, cy); x.rotate(rot);
+  piece(rrect(-90, -160, 180, 320, 30), '#2B2B33', 1.2, k);
+  piece(rrect(-74, -142, 148, 284, 18), '#FFFDF7', 0.2, k + 1);
+  if (screen === 'qr') drawQR(x, -60, -60, 120, INK, '#FFFDF7', 0.04); else { x.save(); x.translate(0, -20); x.scale(0.28, 0.28); pizzaCut(0, 0, 1, k + 30); x.restore(); T(x, 'table pe', 0, 100, { z: 30, f: 'Round', w: 600, c: INK, al: 'center' }); }
+  x.restore();
+}
+function caption(s, y, p, z = 84, col = INK) {
+  if (p <= 0) return; const k = spring(p, ...SPRING.playful);
+  x.save(); x.translate(W / 2, y); x.rotate(-0.02 + j(y, 0.01)); x.scale(1, clamp(k, 0, 1.2));
+  x.font = `600 ${z}px Round`; const m = x.measureText(s).width;
+  piece(rrect(-m / 2 - 40, -z * 0.85, m + 80, z * 1.35, 12), '#FFFDF7', 0.8, y);
+  T(x, s, 0, z * 0.2, { z, f: 'Round', w: 600, c: col, al: 'center' }); x.restore();
+}
+
+const S = { fam: 0.0, q: 1.3, scan: 3.3, pass: 4.6, dish: 8.0, cap: 8.7, end: 10.0 };
+cue(0.1, 'paper'); cue(0.25, 'paper'); cue(0.4, 'paper'); cue(0.55, 'paper');
+[0, 1, 2, 3].forEach((i) => cue(S.q + i * 0.2, 'pop', { m: 76 + i * 3 }));
+cue(S.scan, 'paper'); cue(S.scan + 0.6, 'beep', { g: 0.35 });
+[0, 1, 2, 3].forEach((i) => { cue(S.pass + i * 0.85, 'paper'); cue(S.pass + i * 0.85 + 0.35, 'pop', { m: 84 + i * 2 }); });
+cue(S.dish, 'whoosh', { len: 0.5, g: 0.4 }); cue(S.dish + 0.4, 'paper'); cue(S.cap, 'pop', { m: 88 }); cue(S.end, 'end'); cue(S.end + 0.3, 'ting', { m: 81, g: 0.45 });
+
+function draw(t) {
+  FR = Math.floor(t * 12);
+  x.fillStyle = kraft; x.fillRect(0, 0, W, H);
+  // wallpaper strip and a lamp
+  piece(rrect(-40, 0, W + 80, 560, 0), '#F3E6CF', 0.5, 900);
+  for (let i = 0; i < 8; i++) piece(circle(80 + i * 140, 420, 26), '#EBD3AE', 0.2, 910 + i);
+  piece(P(() => { x.moveTo(440, 0); x.lineTo(640, 0); x.lineTo(700, 180); x.lineTo(380, 180); x.closePath(); }), '#E97F5C', 1, 950);
+  // the family
+  const ticks = FAM.map((_, i) => t >= S.pass + i * 0.85 + 0.35);
+  FAM.forEach((p, i) => person(p, i, t, ticks[i]));
+  // the table
+  piece(rrect(30, 1280, 1020, 160, 30), '#9E6B43', 1.5, 960);
+  piece(rrect(70, 1440, 70, 400, 10), '#7E5333', 1, 961); piece(rrect(940, 1440, 70, 400, 10), '#7E5333', 1, 962);
+  // bubbles: ? -> tick, as the phone reaches each person
+  FAM.forEach((p, i) => { const by = 1080 + p.h - 320, s = spring(t - S.q - i * 0.2, ...SPRING.playful);
+    if (t < S.dish + 1.2) bubble(p.x + 40, by, clamp(s, 0, 1.15), ticks[i] ? 'tick' : '?', 970 + i); });
+  // the phone goes round the table
+  if (t >= S.scan && t < S.dish) {
+    const seg = clamp((t - S.pass) / 0.85, -1, 3.999), i = Math.max(0, Math.floor(seg)), f = seg < 0 ? 0 : eIO(seg - i);
+    const from = seg < 0 ? 540 : FAM[i].x, to = seg < 0 ? FAM[0].x : FAM[Math.min(3, i + 1)].x;
+    const px = seg < 0 ? lerp(540, FAM[0].x, eIO(inv(S.scan, S.pass, t))) : lerp(FAM[i].x, FAM[Math.min(3, i + 1)].x, f * (i < 3 ? 1 : 0));
+    const lift = Math.sin(f * Math.PI) * 80;
+    phone(px, 1180 - lift, -0.15 + f * 0.3, 990, t < S.scan + 0.6 ? 'qr' : 'dish');
+  }
+  // the dish slides onto the table
+  if (t >= S.dish) { const k = spring(t - S.dish, ...SPRING.default); pizzaCut(lerp(-400, 540, k), 1250, 1.05, 1000); }
+  // captions
+  if (t < S.scan) caption('Sab soch rahe hain...', 300, t - S.q - 0.4, 78);
+  else if (t < S.dish) caption('Ek scan. Sab ne dekha.', 300, t - S.pass, 78);
+  else { caption('Poori family, ek table:', 260, t - S.cap, 72); caption('sab ko pata kya aayega.', 400, t - S.cap - 0.35, 72, EMBER); }
+  if (t >= S.end) { x.fillStyle = '#F3E6CF'; x.fillRect(0, 0, W, H); x.fillStyle = fibre; x.fillRect(0, 0, W, H); endCard(x, t, S.end, { ink: INK, sub: '#6E5640' }); }
+}
+window.DUR = 12.8;
+window.FILM = { preset: 'paper', bpm: 90, fps: 12, cover: 12.3 };
+window.CUES = C.list;
+window.seek = (t) => { draw(t); return true; };
+window.seek(0);
+window.__ready = true;
+</script></body></html>

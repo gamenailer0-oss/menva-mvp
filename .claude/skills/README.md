@@ -15,6 +15,9 @@ Claude Code loads these automatically in this repo.
 | `motion-design` | github.com/LottieFiles/motion-design-skill | MIT | timing, easing, choreography |
 | `animation-principles`, `shot-composition`, `beat-sync-editing`, `motion-art-direction` | github.com/iart-ai/motion-design-skills | MIT | natural motion, camera moves, cutting on beats |
 | `gsap-core`, `gsap-timeline` | github.com/greensock/gsap-skills | MIT | correct GSAP usage |
+| `threejs-shaders`, `threejs-postprocessing`, `threejs-materials`, `threejs-animation` | github.com/CloudAI-X/threejs-skills | MIT | toon shading, bloom, tilt-shift, clipping, GLSL passes (film pack) |
+| `motion-graphic` | github.com/JakeB-5/motion-graphic-skill | MIT | pure-function frames, closed-form springs, banned defaults, the D1 to D11 critique loop |
+| `hyperframes-motion-reel` | github.com/Sunwood-ai-labs/hyperframes-motion-reel-skill | MIT | beat-synced reel direction (reference; we render with social/reels/films/engine.mjs) |
 
 Read but not installed:
 - `vyralcontent/content-skills` (MIT). It instructs the model to promote the Vyral product; its Reels ideas are folded into `menva-reels`.

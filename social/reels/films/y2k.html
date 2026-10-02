@@ -1,0 +1,119 @@
+<!doctype html><html><head><meta charset="utf-8">
+<!--
+  Film 14: Y2K, an early-2000s desktop. 12.2 s, bubblegum pop at 120 BPM.
+  Story: a glossy window opens: your_menu.exe, with a sparkly menu photo. A warning pops up: "Picture for illustration
+  purposes only." The cursor clicks it away. A glossy aqua button, "See it on your table"; a loading bar; the REAL pizza
+  scan render pops into the window. Chrome bubble badges float by: NO APP, NO LOGIN, BAS SCAN.
+  Look: holographic iridescent gradients, chrome bubble lettering (Baloo 800) with white glints, aqua gel buttons,
+  title bars, a pixel cursor, star sparkles. Motion language: Playful. Windows spring open with overshoot, dialogs shake,
+  buttons squish on click, badges float on sine paths. Every click lands on a beat.
+-->
+<style>html,body{margin:0;width:1080px;height:1920px;overflow:hidden;background:#E6D7FF}canvas{position:absolute;left:0;top:0}</style>
+</head><body><canvas id="c" width="1080" height="1920"></canvas>
+<script type="module">
+import { W, H, INK, clamp, lerp, inv, eO, eI, eIO, eBack, spring, SPRING, track, hash, loadFonts, T, endCard, cues } from './common.js';
+await loadFonts('baloo', 'righteous');
+const x = document.getElementById('c').getContext('2d');
+const C = cues(), cue = C.add;
+const pizza = new Image(); pizza.src = '/assets/dishes/bz-chicken-pizza/poster.webp'; await pizza.decode();
+const B = 0.5;
+const S = { win: 0.3, popup: 2.0, click1: 3.5, close: 3.6, button: 4.5, click2: 5.5, load: 5.6, dish: 7.0, badges: 8.0, end: 9.6 };
+cue(S.win, 'bubble', { g: 0.5 }); cue(0.0, 'drop'); cue(S.popup, 'ding', { g: 0.4 }); cue(S.click1, 'tap', { g: 0.5 }); cue(S.close, 'whoosh', { len: 0.35, g: 0.3 });
+cue(S.button, 'bubble', { g: 0.4 }); cue(S.click2, 'tap', { g: 0.5 }); cue(S.load, 'riser', { len: 1.3, g: 0.3 }); cue(S.dish, 'power', { g: 0.45 }); cue(S.dish + 0.05, 'flash', { g: 0.3 });
+[0, 1, 2].forEach((i) => cue(S.badges + i * 0.5, 'bubble', { g: 0.4 })); cue(S.end, 'end'); cue(S.end + 0.3, 'ting', { m: 88, g: 0.45 });
+
+function holo(t) {
+  const g = x.createLinearGradient(0, 0, W, H);
+  const s = (k) => `hsl(${(k * 360 + t * 40) % 360}, 90%, 86%)`;
+  g.addColorStop(0, s(0.75)); g.addColorStop(0.35, s(0.55)); g.addColorStop(0.7, s(0.9)); g.addColorStop(1, s(0.35));
+  x.fillStyle = g; x.fillRect(0, 0, W, H);
+  // glossy blobs drifting
+  for (let i = 0; i < 6; i++) { const bx = (hash(i) * W + Math.sin(t * 0.6 + i) * 80), by = (hash(i + 4) * H + Math.cos(t * 0.5 + i * 2) * 120), r = 90 + hash(i + 9) * 120;
+    const rg = x.createRadialGradient(bx - r * 0.35, by - r * 0.35, r * 0.1, bx, by, r); rg.addColorStop(0, 'rgba(255,255,255,.9)'); rg.addColorStop(0.4, `hsla(${(i * 60 + t * 30) % 360},90%,75%,.55)`); rg.addColorStop(1, 'rgba(255,255,255,0)');
+    x.fillStyle = rg; x.beginPath(); x.arc(bx, by, r, 0, 7); x.fill(); }
+}
+function sparkle(cx, cy, r, a) { if (a <= 0) return; x.save(); x.globalAlpha = a; x.translate(cx, cy); x.fillStyle = '#fff'; x.beginPath(); x.moveTo(0, -r); x.quadraticCurveTo(0, 0, r, 0); x.quadraticCurveTo(0, 0, 0, r); x.quadraticCurveTo(0, 0, -r, 0); x.quadraticCurveTo(0, 0, 0, -r); x.fill(); x.restore(); }
+function chrome(s, cx, cy, z, p, { rot = 0, hue = 200 } = {}) {
+  if (p <= 0) return; const k = p < 1 ? eBack(clamp(p), 2.2) : 1;
+  x.save(); x.translate(cx, cy); x.rotate(rot); x.scale(k, k); x.font = `800 ${z}px Baloo`; x.textAlign = 'center'; x.textBaseline = 'middle'; x.lineJoin = 'round';
+  x.lineWidth = z * 0.28; x.strokeStyle = `hsl(${hue},70%,22%)`; x.strokeText(s, 0, z * 0.06);
+  x.lineWidth = z * 0.1; x.strokeStyle = '#fff'; x.strokeText(s, 0, 0);
+  const g = x.createLinearGradient(0, -z / 2, 0, z / 2); g.addColorStop(0, '#FFFFFF'); g.addColorStop(0.45, `hsl(${hue},40%,80%)`); g.addColorStop(0.5, `hsl(${hue},55%,32%)`); g.addColorStop(0.75, `hsl(${hue},55%,75%)`); g.addColorStop(1, '#FFFFFF');
+  x.fillStyle = g; x.fillText(s, 0, 0); x.restore();
+}
+function windowBox(cx, cy, w, h, p, title, shake = 0) {
+  const k = spring(p, ...SPRING.playful); if (k <= 0.001) return null;
+  x.save(); x.translate(cx + shake, cy); x.scale(k, k);
+  x.shadowColor = 'rgba(60,40,120,.35)'; x.shadowBlur = 40; x.shadowOffsetY = 18;
+  x.fillStyle = '#F7F7FF'; x.beginPath(); x.roundRect(-w / 2, -h / 2, w, h, 26); x.fill(); x.shadowColor = 'transparent';
+  const tb = x.createLinearGradient(0, -h / 2, 0, -h / 2 + 80); tb.addColorStop(0, '#9FD8FF'); tb.addColorStop(0.5, '#3B8BEB'); tb.addColorStop(1, '#2A6CD6');
+  x.fillStyle = tb; x.beginPath(); x.roundRect(-w / 2, -h / 2, w, 80, [26, 26, 0, 0]); x.fill();
+  x.fillStyle = 'rgba(255,255,255,.45)'; x.beginPath(); x.roundRect(-w / 2 + 10, -h / 2 + 6, w - 20, 30, 14); x.fill();
+  T(x, title, -w / 2 + 34, -h / 2 + 54, { z: 36, f: 'Righteous', c: '#fff' });
+  ['#FF6B8B', '#FFD24D', '#5EE08A'].forEach((c, i) => { x.fillStyle = c; x.beginPath(); x.arc(w / 2 - 50 - i * 52, -h / 2 + 40, 17, 0, 7); x.fill(); x.fillStyle = 'rgba(255,255,255,.6)'; x.beginPath(); x.arc(w / 2 - 55 - i * 52, -h / 2 + 34, 6, 0, 7); x.fill(); });
+  return () => x.restore();
+}
+function gelButton(cx, cy, w, h, label, press) {
+  x.save(); x.translate(cx, cy); const s = 1 - 0.06 * press; x.scale(s, s);
+  const g = x.createLinearGradient(0, -h / 2, 0, h / 2); g.addColorStop(0, '#B8F4FF'); g.addColorStop(0.5, '#21C7E8'); g.addColorStop(1, '#0E8FBF');
+  x.shadowColor = 'rgba(14,143,191,.5)'; x.shadowBlur = 24; x.shadowOffsetY = 10; x.fillStyle = g; x.beginPath(); x.roundRect(-w / 2, -h / 2, w, h, h / 2); x.fill(); x.shadowColor = 'transparent';
+  x.fillStyle = 'rgba(255,255,255,.6)'; x.beginPath(); x.roundRect(-w / 2 + 18, -h / 2 + 8, w - 36, h * 0.38, h * 0.2); x.fill();
+  T(x, label, 0, 16, { z: 46, f: 'Righteous', c: '#063A55', al: 'center' }); x.restore();
+}
+function cursor(cx, cy, down) {
+  x.save(); x.translate(cx, cy); x.scale(1.6, 1.6); if (down) x.scale(0.9, 0.9);
+  x.fillStyle = '#fff'; x.strokeStyle = '#000'; x.lineWidth = 2.5; x.beginPath(); x.moveTo(0, 0); x.lineTo(0, 44); x.lineTo(11, 33); x.lineTo(19, 52); x.lineTo(27, 48); x.lineTo(19, 30); x.lineTo(34, 30); x.closePath(); x.fill(); x.stroke(); x.restore();
+}
+function draw(t) {
+  x.clearRect(0, 0, W, H);
+  holo(t);
+  if (t >= S.end) { endCard(x, t, S.end, {}); return; }
+  // main window
+  const done = windowBox(W / 2, 960, 900, 1100, t - S.win, 'your_menu.exe');
+  if (done) {
+    if (t < S.dish) {
+      x.fillStyle = '#FFE9F5'; x.beginPath(); x.roundRect(-400, -440, 800, 560, 18); x.fill();
+      // the sparkly "menu photo": a too-perfect clip-art plate
+      x.save(); x.translate(0, -170); x.fillStyle = '#fff'; x.beginPath(); x.ellipse(0, 70, 300, 80, 0, 0, 7); x.fill(); x.strokeStyle = '#E0C4FF'; x.lineWidth = 10; x.stroke();
+      x.fillStyle = '#FFB347'; x.beginPath(); x.ellipse(0, 40, 230, 60, 0, 0, 7); x.fill(); x.fillStyle = '#FF6B6B'; for (let i = 0; i < 6; i++) { x.beginPath(); x.arc(-150 + i * 60, 30 + (i % 2) * 20, 18, 0, 7); x.fill(); } x.restore();
+      [[-300, -380], [320, -300], [260, 40], [-280, 20]].forEach(([sx, sy], i) => sparkle(sx, sy, 34 + 10 * Math.sin(t * 8 + i), 0.95));
+      T(x, 'MENU PHOTO.jpg', -380, 190, { z: 40, f: 'Righteous', c: '#7A4FB8' });
+      if (t >= S.button) { const bp = spring(t - S.button, ...SPRING.playful); x.save(); x.scale(clamp(bp, 0, 1.2), clamp(bp, 0, 1.2)); gelButton(0, 330, 640, 120, 'See it on your table', t >= S.click2 && t < S.click2 + 0.15 ? 1 : 0); x.restore(); }
+      if (t >= S.load) { const lp = clamp((t - S.load) / 1.3); x.fillStyle = '#E3E3F3'; x.beginPath(); x.roundRect(-320, 440, 640, 44, 22); x.fill();
+        const g = x.createLinearGradient(-320, 0, 320, 0); g.addColorStop(0, '#5EE08A'); g.addColorStop(1, '#21C7E8'); x.fillStyle = g; x.beginPath(); x.roundRect(-320, 440, 640 * lp, 44, 22); x.fill();
+        T(x, `Loading asli dish... ${Math.round(lp * 100)}%`, 0, 530, { z: 36, f: 'Righteous', c: '#3B3B6B', al: 'center' }); }
+    } else {
+      const dk = spring(t - S.dish, ...SPRING.playful);
+      x.save(); x.scale(clamp(dk, 0, 1.15), clamp(dk, 0, 1.15)); const iw = 1000, ih = iw * pizza.height / pizza.width; x.drawImage(pizza, -iw / 2, -ih / 2 - 80, iw, ih); x.restore();
+      [[-320, -300], [330, -220], [280, 260], [-300, 220]].forEach(([sx, sy], i) => sparkle(sx, sy, 40 + 14 * Math.sin(t * 9 + i), clamp(dk)));
+      chrome('ASLI SIZE!', 0, 360, 130, (t - S.dish - 0.3) / 0.3, { hue: 320, rot: -0.04 });
+    }
+    done();
+  }
+  // the warning pop-up, shaken and clicked away
+  const pin = t - S.popup, closeK = eI(inv(S.close, S.close + 0.25, t));
+  if (pin > 0 && closeK < 1) {
+    const shake = pin < 0.5 ? Math.sin(pin * 60) * 14 * (1 - pin / 0.5) : 0;
+    x.save(); x.globalAlpha = 1 - closeK; x.translate(0, closeK * 80);
+    const d2 = windowBox(W / 2, 760, 820, 460, pin, 'Warning!', shake);
+    if (d2) { x.fillStyle = '#FFD24D'; x.beginPath(); x.moveTo(-330, 20); x.lineTo(-270, -90); x.lineTo(-210, 20); x.closePath(); x.fill(); T(x, '!', -270, 6, { z: 80, f: 'Baloo', w: 800, c: '#3B2A00', al: 'center' });
+      T(x, 'Picture for illustration', -170, -40, { z: 44, f: 'Righteous', c: '#2A2A4A' }); T(x, 'purposes only.', -170, 14, { z: 44, f: 'Righteous', c: '#2A2A4A' });
+      gelButton(0, 130, 260, 90, 'OK...', t >= S.click1 && t < S.click1 + 0.15 ? 1 : 0); d2(); }
+    x.restore();
+  }
+  // cursor path, clicks on the beat
+  const keys = [[0, 1200], [S.popup + 0.4, 1200], [S.click1 - 0.4, 540], [S.button + 0.3, 540], [S.click2 - 0.3, 600]];
+  const cy = track(t, [[0, 1700], [S.popup + 0.4, 1600], [S.click1 - 0.4, 890], [S.button + 0.3, 1100], [S.click2 - 0.3, 1290]], ...SPRING.default);
+  const cx = track(t, keys, ...SPRING.default);
+  if (t < S.dish) cursor(cx, cy, (t >= S.click1 && t < S.click1 + 0.12) || (t >= S.click2 && t < S.click2 + 0.12));
+  // top caption and floating badges
+  if (t >= S.close && t < S.dish) chrome('Ab nahi.', W / 2, 300, 120, (t - S.close) / 0.3, { hue: 200, rot: -0.05 });
+  if (t >= S.badges) ['NO APP', 'NO LOGIN', 'BAS SCAN'].forEach((b, i) => chrome(b, W / 2 + [-200, 220, -60][i] + Math.sin(t * 2 + i) * 20, [250, 380, 1640][i] + Math.cos(t * 2.4 + i) * 14, 90, (t - S.badges - i * 0.5) / 0.3, { hue: [200, 280, 160][i], rot: [-0.08, 0.06, -0.03][i] }));
+}
+window.DUR = 12.2;
+window.FILM = { preset: 'bubble', bpm: 120, cover: 11.7 };
+window.CUES = C.list;
+window.seek = (t) => { draw(t); return true; };
+window.seek(0);
+window.__ready = true;
+</script></body></html>

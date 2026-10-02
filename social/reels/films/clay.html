@@ -1,0 +1,173 @@
+<!doctype html><html><head><meta charset="utf-8">
+<!--
+  Film 3: CLAY, stop-motion. 13 s at 100 BPM, drawn at 12 fps (each drawing held for 2.5 frames, like real stop-motion).
+  Story (the value: the waiter stays in charge): a clay diner can't decide, scans the table QR, the dish pops up on the
+  table, adds it to the list with a note, then turns the phone to the clay waiter. Waiter nods, writes, thumbs up.
+  The dessert is clay: a cartoon, never a real dish.
+  Look: every shape is a lumpy clay blob with soft shading, a fingerprint texture and edges that "boil" (re-jittered
+  every drawing). Motion language: stepped, chunky, slightly imperfect; squash on landings; moves in held poses.
+-->
+<style>html,body{margin:0;width:1080px;height:1920px;overflow:hidden;background:#D9825B}canvas{position:absolute;left:0;top:0}</style>
+</head><body><canvas id="c" width="1080" height="1920"></canvas>
+<script type="module">
+import { W, H, INK, clamp, lerp, inv, eO, eIO, spring, SPRING, hash, rng, loadFonts, T, drawQR, endCard, cues } from './common.js';
+await loadFonts('round', 'roundR');
+const x = document.getElementById('c').getContext('2d');
+const C = cues(), cue = C.add;
+const COL = { bg: '#D9825B', wall: '#E9A47E', table: '#7FB8A4', tableD: '#5E9886', skin: '#E7B48E', skin2: '#B77D58', shirt: '#F2C14E', waiter: '#2F3B4C', white: '#F6EFE4', jamun: '#7A3416', syrup: '#C9762E', bowl: '#F3E3C8', phone: '#2A2524', red: '#C8462D' };
+let FR = 0;   // current drawing number (12 fps), seeds the boil
+
+// fingerprint texture, made once
+const fp = (() => { const c = document.createElement('canvas'); c.width = c.height = 512; const g = c.getContext('2d'), R = rng(4);
+  g.strokeStyle = 'rgba(0,0,0,.5)'; g.lineWidth = 1.2;
+  for (let n = 0; n < 26; n++) { const cx = R() * 512, cy = R() * 512; for (let k = 3; k < 22; k += 3) { g.beginPath(); g.ellipse(cx, cy, k * 1.6, k, R() * 3, R() * 3, R() * 3 + 4); g.stroke(); } }
+  for (let i = 0; i < 1500; i++) { g.fillStyle = `rgba(${R() > .5 ? 255 : 0},${R() > .5 ? 255 : 0},${R() > .5 ? 255 : 0},.12)`; g.fillRect(R() * 512, R() * 512, 2, 2); }
+  return c; })();
+const fpPat = x.createPattern(fp, 'repeat');
+
+// a lumpy, boiling ellipse path
+function lump(cx, cy, rx, ry, seed, rot = 0, n = 26, boil = 3) {
+  const pts = [];
+  for (let i = 0; i < n; i++) {
+    const a = i / n * Math.PI * 2;
+    const wob = 1 + 0.035 * Math.sin(a * 3 + seed) + 0.02 * Math.sin(a * 5 + seed * 2);
+    const j = (hash(seed * 31 + i * 7 + FR * 13) - 0.5) * boil;
+    const px = Math.cos(a) * (rx * wob + j), py = Math.sin(a) * (ry * wob + j);
+    pts.push([cx + px * Math.cos(rot) - py * Math.sin(rot), cy + px * Math.sin(rot) + py * Math.cos(rot)]);
+  }
+  x.beginPath();
+  for (let i = 0; i < n; i++) { const p = pts[i], q = pts[(i + 1) % n], m = [(p[0] + q[0]) / 2, (p[1] + q[1]) / 2]; i ? x.quadraticCurveTo(p[0], p[1], m[0], m[1]) : x.moveTo(m[0], m[1]); }
+  const p = pts[0], q = pts[1]; x.quadraticCurveTo(p[0], p[1], (p[0] + q[0]) / 2, (p[1] + q[1]) / 2); x.closePath();
+}
+// paint the current path as clay: base, contact shadow, soft light, darker rim, fingerprints
+function clay(col, cx, cy, rx, ry, { shadow = true, shine = 0.35 } = {}) {
+  if (shadow) { x.save(); x.filter = 'blur(14px)'; x.fillStyle = 'rgba(40,15,5,.28)'; x.translate(10, 16); x.fill(); x.restore(); }
+  x.save(); x.fillStyle = col; x.fill(); x.clip();
+  const g = x.createRadialGradient(cx - rx * 0.4, cy - ry * 0.5, 4, cx, cy, Math.max(rx, ry) * 1.25);
+  g.addColorStop(0, `rgba(255,248,235,${shine})`); g.addColorStop(0.45, 'rgba(255,240,220,0)'); g.addColorStop(1, 'rgba(40,10,0,.35)');
+  x.fillStyle = g; x.fillRect(cx - rx * 2, cy - ry * 2, rx * 4, ry * 4);
+  x.globalCompositeOperation = 'overlay'; x.globalAlpha = 0.35; x.fillStyle = fpPat; x.fillRect(cx - rx * 2, cy - ry * 2, rx * 4, ry * 4);
+  x.restore();
+}
+const blob = (col, cx, cy, rx, ry, seed, o = {}) => { lump(cx, cy, rx, ry, seed, o.rot || 0, o.n || 26, o.boil ?? 3); clay(col, cx, cy, rx, ry, o); };
+function claySlab(col, cx, cy, w, h, r, seed, o = {}) {   // rounded rectangle in clay
+  const j = (k) => (hash(seed + k + FR * 3) - 0.5) * 3;
+  x.beginPath(); x.roundRect(cx - w / 2 + j(1), cy - h / 2 + j(2), w + j(3), h + j(4), r); clay(col, cx, cy, w / 2, h / 2, o);
+}
+
+// ---------- characters ----------
+function diner(cx, cy, pose) {      // pose: { arm: 0..1 phone up, turn: 0..1 toward waiter, squint }
+  blob(COL.shirt, cx, cy + 160, 150, 190, 11);                                  // body
+  blob(COL.skin, cx + pose.turn * 30, cy - 90, 118, 128, 12);                   // head
+  blob('#3B2418', cx + pose.turn * 30, cy - 190, 110, 52, 13, { shadow: false, shine: 0.2 }); // hair
+  const ex = cx + pose.turn * 60;
+  for (const s of [-1, 1]) { const sq = pose.squint ? 0.25 : 1;
+    blob(COL.white, ex + s * 42, cy - 95, 24, 26 * sq + 2, 20 + s, { shadow: false, boil: 1.5 });
+    if (!pose.squint) blob('#1A1210', ex + s * 42 + 6 + pose.turn * 6, cy - 92, 11, 12, 22 + s, { shadow: false, boil: 1, shine: 0.6 }); }
+  x.save(); x.strokeStyle = '#6A3A26'; x.lineWidth = 9; x.lineCap = 'round'; x.beginPath();
+  if (pose.smile) x.arc(ex, cy - 50, 34, 0.2, Math.PI - 0.2); else { x.moveTo(ex - 26, cy - 34); x.quadraticCurveTo(ex, cy - 44 + (pose.squint ? 10 : 0), ex + 26, cy - 34); } x.stroke(); x.restore();
+  // arm + phone
+  const ax = cx + lerp(120, 90, pose.arm) + pose.turn * 80, ay = cy + lerp(170, 30, pose.arm);
+  blob(COL.shirt, cx + 120, cy + 120, 48, 80, 14, { rot: lerp(0.2, -0.6, pose.arm) });
+  blob(COL.skin, ax, ay, 42, 40, 15);
+  return { ax, ay };
+}
+function waiter(cx, cy, pose) {     // pose: { nod, write, thumb }
+  blob(COL.waiter, cx, cy + 170, 150, 200, 31);
+  blob(COL.white, cx, cy + 70, 60, 70, 32, { shadow: false });                  // shirt front
+  blob(COL.red, cx - 34, cy + 22, 34, 22, 33, { shadow: false }); blob(COL.red, cx + 34, cy + 22, 34, 22, 34, { shadow: false }); blob(COL.red, cx, cy + 22, 18, 18, 35, { shadow: false }); // bow tie
+  const hy = cy - 90 + pose.nod * 18;
+  blob(COL.skin2, cx, hy, 112, 122, 36);
+  blob('#20140E', cx, hy - 108, 98, 38, 37, { shadow: false, shine: 0.15 });
+  for (const s of [-1, 1]) { blob(COL.white, cx + s * 40, hy - 10, 20, 22, 38 + s, { shadow: false, boil: 1.5 }); blob('#100A08', cx + s * 40 - 6, hy - 6 + pose.nod * 4, 9, 10, 40 + s, { shadow: false, boil: 1 }); }
+  blob('#20140E', cx - 34, hy + 42, 44, 16, 42, { shadow: false, rot: 0.15 }); blob('#20140E', cx + 34, hy + 42, 44, 16, 43, { shadow: false, rot: -0.15 }); // moustache
+  // notepad arm
+  const wx = cx - 150, wy = cy + 120 + Math.sin(pose.write * 30) * 6 * (pose.write > 0 && pose.write < 1 ? 1 : 0);
+  claySlab(COL.white, wx, wy, 110, 140, 14, 44);
+  x.save(); x.strokeStyle = '#7A6E62'; x.lineWidth = 5; for (let i = 0; i < 4; i++) { const k = clamp(pose.write * 4 - i); if (k > 0) { x.beginPath(); x.moveTo(wx - 38, wy - 40 + i * 26); x.lineTo(wx - 38 + 76 * k, wy - 40 + i * 26); x.stroke(); } } x.restore();
+  blob(COL.skin2, wx + 40, wy + 50, 34, 30, 45);
+  if (pose.thumb > 0) { const k = spring(pose.thumb, ...SPRING.playful); blob(COL.skin2, cx + 150, cy + 60 - k * 60, 44, 40, 46); blob(COL.skin2, cx + 150, cy + 10 - k * 80, 16, 34 * k + 1, 47); }
+}
+function bowl(cx, cy, s, wob) {
+  x.save(); x.translate(cx, cy); x.scale(s, s * (1 - wob * 0.12)); x.translate(-cx, -cy);
+  blob(COL.bowl, cx, cy + 30, 190, 80, 51);
+  blob(COL.syrup, cx, cy, 170, 46, 52, { shadow: false, shine: 0.6 });
+  [[-80, -10], [0, -22], [80, -10], [-38, 10], [42, 12]].forEach(([dx, dy], i) => blob(COL.jamun, cx + dx, cy + dy - 24 - Math.sin(i + wob * 6) * wob * 10, 50, 46, 60 + i, { shine: 0.5 }));
+  x.restore();
+}
+function phoneScreen(px_, py, rot, scale, mode, t) {
+  x.save(); x.translate(px_, py); x.rotate(rot); x.scale(scale, scale);
+  claySlab(COL.phone, 0, 0, 300, 560, 46, 70);
+  x.fillStyle = '#FBF6EE'; x.beginPath(); x.roundRect(-128, -250, 256, 500, 30); x.fill();
+  if (mode === 'scan') { drawQR(x, -100, -150, 200, INK, '#fff', 0.04); T(x, 'scan karo', 0, 120, { z: 34, f: 'Round', w: 600, c: INK, al: 'center' }); }
+  if (mode === 'dish') {
+    x.fillStyle = '#F1E6D6'; x.beginPath(); x.roundRect(-108, -220, 216, 220, 22); x.fill();
+    x.save(); x.translate(0, -100); x.scale(0.45, 0.45); x.translate(-520, -1100); bowl(520, 1100, 1, 0); x.restore();
+    T(x, 'Gulab jamun', 0, 50, { z: 30, f: 'Round', w: 600, c: INK, al: 'center' });
+    const k = t >= S.add ? 0.94 : 1; x.save(); x.translate(0, 152); x.scale(k, k); x.fillStyle = COL.red; x.beginPath(); x.roundRect(-108, -32, 216, 64, 32); x.fill(); T(x, 'Add to my table', 0, 10, { z: 24, f: 'Round', w: 600, c: '#fff', al: 'center' }); x.restore();
+  }
+  if (mode === 'list') {
+    T(x, 'My table', -100, -190, { z: 34, f: 'Round', w: 600, c: INK });
+    x.fillStyle = '#F1E6D6'; x.beginPath(); x.roundRect(-108, -150, 216, 150, 18); x.fill();
+    T(x, 'Gulab jamun x2', -92, -100, { z: 26, f: 'Round', w: 600, c: INK }); T(x, 'note: garam', -92, -60, { z: 24, f: 'Round', w: 400, c: '#7A6E62' });
+    x.fillStyle = COL.red; x.beginPath(); x.roundRect(-108, 120, 216, 64, 32); x.fill(); T(x, 'Show the waiter', 0, 162, { z: 25, f: 'Round', w: 600, c: '#fff', al: 'center' });
+  }
+  if (mode === 'waiter') {
+    x.fillStyle = INK; x.beginPath(); x.roundRect(-128, -250, 256, 500, 30); x.fill();
+    T(x, 'Table 12', 0, -170, { z: 30, f: 'Round', w: 600, c: '#F2C14E', al: 'center' });
+    T(x, 'Gulab jamun', 0, -60, { z: 40, f: 'Round', w: 600, c: '#fff', al: 'center' }); T(x, 'x2', 0, 0, { z: 60, f: 'Round', w: 600, c: '#fff', al: 'center' });
+    T(x, 'garam', 0, 70, { z: 34, f: 'Round', w: 400, c: '#cfc6ba', al: 'center' });
+  }
+  x.restore();
+}
+
+// ---------- timeline (beat 0.6 s) ----------
+const S = { think: 0.0, phone: 1.8, beep: 3.0, pop: 3.6, add: 5.4, waiterIn: 7.2, show: 8.1, nod: 8.7, thumb: 10.2, end: 11.0 };
+cue(0.3, 'pop', { m: 79 }); cue(S.phone, 'squelch', { g: 0.4 }); cue(S.beep, 'beep', { g: 0.45 }); cue(S.pop, 'drop'); cue(S.pop, 'splat', { g: 0.55 }); cue(S.pop + 0.3, 'boing', { g: 0.35 });
+cue(S.add, 'tap', { g: 0.5 }); cue(S.add + 0.1, 'pop', { m: 84 }); cue(S.waiterIn, 'whoosh', { len: 0.6, g: 0.4 }); cue(S.show, 'squelch', { g: 0.35 }); cue(S.nod, 'scribble', { len: 1.0, g: 0.6 });
+cue(S.thumb, 'pop', { m: 88 }); cue(S.end, 'end'); cue(S.end + 0.3, 'ting', { m: 81, g: 0.5 });
+function caption(s, y, p, z = 92) { if (p <= 0) return; x.save(); const k = spring(p, ...SPRING.playful); x.translate(W / 2, y); x.scale(k, k);
+  x.font = `600 ${z}px Round`; x.textAlign = 'center'; x.textBaseline = 'middle'; x.lineJoin = 'round';
+  x.lineWidth = 22; x.strokeStyle = '#5A2A16'; x.strokeText(s, 0, 6); x.lineWidth = 16; x.strokeStyle = COL.white; x.strokeText(s, 0, 0); x.fillStyle = '#5A2A16'; x.fillText(s, 0, 0); x.restore(); }
+const win = (t, a, b) => (t >= a && t < b ? t - a : 0);
+
+function draw(t) {
+  FR = Math.floor(t * 12);
+  x.clearRect(0, 0, W, H);
+  // set: a clay wall and a mint table, with a lumpy horizon
+  x.fillStyle = COL.wall; x.fillRect(0, 0, W, H);
+  blob(COL.table, W / 2, 1650, 900, 420, 1, { shadow: false, shine: 0.25, boil: 4 });
+  // the waiter enters from the right
+  const wIn = eO(inv(S.waiterIn, S.waiterIn + 0.6, t)), wx = lerp(1500, 860, wIn);
+  const turn = eIO(inv(S.show - 0.3, S.show, t));
+  if (wIn > 0) waiter(wx, 860, { nod: t > S.nod && t < S.nod + 1.2 ? Math.abs(Math.sin((t - S.nod) * 5)) : 0, write: inv(S.nod, S.nod + 1.2, t), thumb: t > S.thumb ? t - S.thumb : 0 });
+  const dx = lerp(400, 240, wIn);
+  const armUp = eO(inv(S.phone, S.phone + 0.5, t)) * (1 - 0.0 * turn);
+  const hand = diner(dx, 900, { arm: armUp, turn, squint: t < S.phone, smile: t > S.pop + 0.3 });
+  // the dessert pops out of the phone onto the table
+  const pk = t >= S.pop ? spring(t - S.pop, ...SPRING.jelly) : 0;
+  if (pk > 0) bowl(lerp(520, 560, 1), lerp(1100, 1440, clamp(pk)), clamp(pk * 1.05, 0, 1.1), t - S.pop < 1.5 ? Math.exp(-(t - S.pop) * 3) * Math.cos((t - S.pop) * 18) : 0);
+  // the QR stand on the table
+  x.save(); claySlab(COL.white, 860, 1380, 170, 200, 20, 80); drawQR(x, 790, 1300, 140, INK, COL.white, 0.03); x.restore();
+  // the phone in the diner's hand
+  if (armUp > 0) {
+    const mode = t < S.beep ? 'scan' : t < S.add + 0.25 ? 'dish' : t < S.waiterIn + 0.4 ? 'list' : 'waiter';
+    const showK = eIO(inv(S.show - 0.3, S.show + 0.2, t));
+    phoneScreen(lerp(hand.ax + 150, 470, showK), lerp(hand.ay + 10, 760, showK), lerp(-0.1, 0.05, showK) + (1 - armUp) * 0.4, lerp(0.8, 1.05, showK) * armUp, mode, t);
+  }
+  // captions
+  caption('Kya mangwaun?', 330, win(t, 0.3, S.phone - 0.1) && (t - 0.3) / 0.6 * 1.0 + 0.0001);
+  caption('Scan karo,', 280, win(t, S.phone + 0.3, S.add - 0.2) && (t - S.phone - 0.3) + 0.0001);
+  caption('dish table pe.', 400, win(t, S.pop + 0.2, S.add - 0.2) && (t - S.pop - 0.2) + 0.0001);
+  caption('List banao,', 280, win(t, S.add, S.waiterIn + 0.4) && (t - S.add) + 0.0001);
+  caption('waiter ko dikhao.', 280, win(t, S.show, S.end) && (t - S.show) + 0.0001, 86);
+  caption('Waiter hi boss hai.', 400, win(t, S.thumb - 0.2, S.end) && (t - S.thumb + 0.2) + 0.0001, 80);
+  if (t >= S.end) { x.fillStyle = '#CDE7D9'; x.fillRect(0, 0, W, H); endCard(x, t, S.end, { ink: INK, sub: '#4C6B60' }); }
+}
+window.DUR = 13.5;
+window.FILM = { preset: 'clay', bpm: 100, fps: 12, cover: 12.8 };
+window.CUES = C.list;
+window.seek = (t) => { draw(t); return true; };
+window.seek(0);
+window.__ready = true;
+</script></body></html>

@@ -1,0 +1,176 @@
+<!doctype html><html><head><meta charset="utf-8">
+<!--
+  Film 4: ANIME, a TV-opening parody. 13 s at 150 BPM (beat 0.4 s).
+  Story: EPISODE 1, THE ORDER. The hero's eyes go wide at the menu photo ("JUMBO?!"). Doubt. The phone powers up: SCAN!
+  Impact frame: the REAL dish (the pizza scan's render, the one real food in this film) lands on the table. "ASLI. SIZE."
+  Look: black, paper white and ember red, halftone shading, radial speed lines, hard cel shading, Bangers lettering.
+  Motion language: smash zooms (scale in 2 frames, then hold), freeze frames, impact frames (inverted flash),
+  camera shake on every hit, held poses between hits. Every hit lands on a beat.
+-->
+<style>html,body{margin:0;width:1080px;height:1920px;overflow:hidden;background:#000}canvas{position:absolute;left:0;top:0}</style>
+</head><body><canvas id="c" width="1080" height="1920"></canvas>
+<script type="module">
+import { W, H, PAPER, EMBER, INK, clamp, lerp, inv, eO, eI, eIO, eBack, spring, SPRING, hash, rng, loadFonts, T, drawQR, endCard, cues } from './common.js';
+await loadFonts('bangers');
+const x = document.getElementById('c').getContext('2d');
+const C = cues(), cue = C.add;
+const RED = '#E0262B', CREAM = '#F4EDE2', SKIN = '#F6D2B8', SKIN2 = '#E3A989', HAIR = '#1B1B2F';
+const pizza = new Image(); pizza.src = '/assets/dishes/bz-chicken-pizza/poster.webp'; await pizza.decode();
+const B = 0.4;
+
+// halftone pattern
+const dots = (() => { const c = document.createElement('canvas'); c.width = c.height = 24; const g = c.getContext('2d'); g.fillStyle = '#000'; g.beginPath(); g.arc(12, 12, 5, 0, 7); g.fill(); return x.createPattern(c, 'repeat'); })();
+function halftone(a, rect = [0, 0, W, H]) { x.save(); x.globalAlpha = a; x.fillStyle = dots; x.fillRect(...rect); x.restore(); }
+function speedLines(cx, cy, t, col = '#fff', n = 90, inner = 260) {
+  x.save(); x.fillStyle = col; const f = Math.floor(t * 30);
+  for (let i = 0; i < n; i++) { const a = hash(i * 3 + f * 0.37) * Math.PI * 2, w = 0.004 + hash(i + f) * 0.012, r0 = inner + hash(i * 7 + f) * 220;
+    x.beginPath(); x.moveTo(cx + Math.cos(a) * r0, cy + Math.sin(a) * r0); x.lineTo(cx + Math.cos(a - w) * 2400, cy + Math.sin(a - w) * 2400); x.lineTo(cx + Math.cos(a + w) * 2400, cy + Math.sin(a + w) * 2400); x.fill(); }
+  x.restore();
+}
+function shout(s, cx, cy, z, p, { fill = '#fff', rot = -0.06, stroke = '#000' } = {}) {
+  if (p <= 0) return; const k = p < 1 ? lerp(2.4, 1, eO(p)) : 1;
+  x.save(); x.translate(cx, cy); x.rotate(rot); x.scale(k, k); x.font = `400 ${z}px Bangers`; x.textAlign = 'center'; x.textBaseline = 'middle'; x.lineJoin = 'round'; x.letterSpacing = '4px';
+  x.lineWidth = z * 0.16; x.strokeStyle = stroke; x.strokeText(s, 0, 0); x.fillStyle = fill; x.fillText(s, 0, 0); x.restore();
+}
+const io = (t, a, b, d = 0.08) => (t < a || t >= b ? 0 : clamp((t - a) / d, 0, 1.0001));
+
+// ---------- shots ----------
+function titleCard(t) {
+  x.fillStyle = '#000'; x.fillRect(0, 0, W, H);
+  const slash = eO(inv(0.1, 0.35, t));
+  x.save(); x.fillStyle = RED; x.translate(W / 2, 980); x.rotate(-0.12); x.fillRect(-W, -90, W * 2 * slash, 180); x.restore();
+  shout('EPISODE 1', W / 2, 760, 120, io(t, 0.3, 9), { fill: CREAM, rot: -0.04 });
+  shout('THE ORDER', W / 2, 990, 230, io(t, 0.8, 9), { fill: '#fff', rot: -0.12 });
+  T(x, 'sach ya jhooth?', W / 2, 1220, { z: 54, f: 'Bangers', c: CREAM, al: 'center', a: inv(1.2, 1.4, t), ls: 6 });
+}
+function eyes(t, lt) {
+  // extreme close-up letterbox: two big anime eyes, the irises shake
+  x.fillStyle = '#000'; x.fillRect(0, 0, W, H);
+  const band = [0, 640, W, 640];
+  x.save(); x.beginPath(); x.rect(...band); x.clip();
+  x.fillStyle = SKIN; x.fillRect(...band);
+  speedLines(W / 2, 960, t, 'rgba(255,255,255,.35)', 50, 520);
+  const shake = (hash(Math.floor(t * 30)) - 0.5) * 8 * (lt > 0.8 ? 1 : 0.3);
+  for (const s of [-1, 1]) {
+    const cx = W / 2 + s * 250, cy = 980;
+    x.save(); x.translate(cx, cy); x.scale(s, 1);
+    // upper lid line and lashes
+    x.fillStyle = HAIR; x.beginPath(); x.moveTo(-200, -40); x.quadraticCurveTo(-20, -190, 190, -70); x.lineTo(200, -40); x.quadraticCurveTo(-10, -150, -190, -20); x.fill();
+    // white of the eye
+    x.fillStyle = '#fff'; x.beginPath(); x.moveTo(-180, -20); x.quadraticCurveTo(-10, -150, 185, -50); x.quadraticCurveTo(160, 90, 0, 110); x.quadraticCurveTo(-150, 90, -180, -20); x.fill();
+    x.save(); x.clip();
+    const ix = shake * s, iy = 10;
+    const g = x.createLinearGradient(0, -120, 0, 120); g.addColorStop(0, '#2B1408'); g.addColorStop(0.55, '#8A3A10'); g.addColorStop(1, '#E58A2E');
+    x.fillStyle = g; x.beginPath(); x.ellipse(ix, iy, 95, 125, 0, 0, 7); x.fill();
+    x.fillStyle = '#000'; x.beginPath(); x.ellipse(ix, iy, 38 * (lt > 0.8 ? 0.6 : 1), 56 * (lt > 0.8 ? 0.6 : 1), 0, 0, 7); x.fill();
+    x.fillStyle = '#fff'; x.beginPath(); x.ellipse(ix - 40, iy - 50, 28, 36, -0.4, 0, 7); x.fill(); x.beginPath(); x.arc(ix + 36, iy + 50, 12, 0, 7); x.fill();
+    x.restore();
+    x.strokeStyle = HAIR; x.lineWidth = 7; x.beginPath(); x.moveTo(-170, 30); x.quadraticCurveTo(0, 125, 160, 60); x.stroke();
+    // eyebrow, angled with worry
+    x.fillStyle = HAIR; x.beginPath(); x.moveTo(-170, -200 + (lt > 0.8 ? -20 : 0)); x.quadraticCurveTo(0, -260, 170, -230 + (lt > 0.8 ? 30 : 0)); x.lineTo(170, -205 + (lt > 0.8 ? 30 : 0)); x.quadraticCurveTo(0, -232, -170, -180); x.fill();
+    x.restore();
+  }
+  // a sweat drop
+  if (lt > 0.8) { const k = inv(0.8, 1.6, lt); x.save(); x.translate(W / 2 + 470, 760 + k * 120); x.fillStyle = '#9FD3F2'; x.strokeStyle = '#000'; x.lineWidth = 5; x.beginPath(); x.moveTo(0, -50); x.quadraticCurveTo(36, 10, 0, 30); x.quadraticCurveTo(-36, 10, 0, -50); x.fill(); x.stroke(); x.restore(); }
+  x.restore();
+  halftone(0.12, band);
+  shout('menu photo...', W / 2, 480, 96, io(t, 1.7, 9), { fill: CREAM, rot: -0.03 });
+  shout('sach hai?', W / 2, 1480, 120, io(t, 2.5, 9), { fill: RED, rot: 0.04 });
+}
+function poster(t, lt) {
+  x.fillStyle = CREAM; x.fillRect(0, 0, W, H);
+  speedLines(W / 2, 900, t, '#000', 120, 420);
+  // the menu photo looms, low angle, smash-zoomed
+  const z = lt < 0.08 ? lerp(0.4, 1.12, lt / 0.08) : lerp(1.12, 1.18, inv(0.08, 1.6, lt));
+  x.save(); x.translate(W / 2, 920); x.scale(z, z); x.transform(1, 0, -0.12, 1, 0, 0); x.rotate(-0.06);
+  x.fillStyle = '#fff'; x.strokeStyle = '#000'; x.lineWidth = 12; x.fillRect(-330, -380, 660, 760); x.strokeRect(-330, -380, 660, 760);
+  x.fillStyle = '#FFE3A3'; x.fillRect(-290, -340, 580, 560);
+  const L = (yy, h, inset, c) => { x.fillStyle = c; x.beginPath(); x.roundRect(-250 + inset, yy, 500 - inset * 2, h, h / 2.5); x.fill(); x.stroke(); };
+  x.lineWidth = 8; L(-280, 170, 20, '#E89B3E'); L(-120, 40, 0, '#5BAA4A'); L(-90, 34, 10, '#FFC93C'); L(-60, 90, 0, '#6B3418'); L(30, 30, 10, '#D9412B'); L(60, 110, 20, '#E89B3E');
+  x.font = '400 70px Bangers'; x.fillStyle = RED; x.textAlign = 'center'; x.fillText('JUMBO!', 0, 320);
+  x.restore();
+  halftone(0.18);
+  shout('JUMBO?!', W / 2, 1560, 210, io(t, 3.7, 9), { fill: RED, rot: -0.1 });
+}
+function scanShot(t, lt) {
+  x.fillStyle = '#0B0B14'; x.fillRect(0, 0, W, H);
+  // power-up: light rays from the phone, growing
+  const glow = eO(inv(0.3, 1.0, lt));
+  x.save(); x.translate(W / 2, 860); x.globalCompositeOperation = 'lighter';
+  for (let i = 0; i < 24; i++) { const a = i / 24 * Math.PI * 2 + lt * 0.8, w = 0.06; x.fillStyle = `rgba(255,${120 + (i % 3) * 40},60,${0.18 * glow})`;
+    x.beginPath(); x.moveTo(0, 0); x.lineTo(Math.cos(a - w) * 1800, Math.sin(a - w) * 1800); x.lineTo(Math.cos(a + w) * 1800, Math.sin(a + w) * 1800); x.fill(); }
+  const rg = x.createRadialGradient(0, 0, 10, 0, 0, 700); rg.addColorStop(0, `rgba(255,220,160,${0.9 * glow})`); rg.addColorStop(1, 'rgba(255,80,40,0)'); x.fillStyle = rg; x.fillRect(-900, -900, 1800, 1800);
+  x.restore();
+  // hand + phone, low angle, held up
+  const up = spring(lt, ...SPRING.snappy);
+  x.save(); x.translate(W / 2, lerp(1700, 980, up)); x.rotate(-0.08);
+  x.fillStyle = '#111'; x.strokeStyle = '#000'; x.lineWidth = 10; x.beginPath(); x.roundRect(-210, -400, 420, 800, 60); x.fill(); x.stroke();
+  x.fillStyle = '#fff'; x.beginPath(); x.roundRect(-185, -375, 370, 750, 44); x.fill();
+  drawQR(x, -150, -260, 300, '#000', '#fff', 0.03);
+  x.strokeStyle = RED; x.lineWidth = 14; x.lineCap = 'square';
+  const pulse = 1 + 0.05 * Math.sin(lt * 25);
+  for (const [sx, sy] of [[-1, -1], [1, -1], [-1, 1], [1, 1]]) { const cx = sx * 170 * pulse, cy = -110 + sy * 170 * pulse; x.beginPath(); x.moveTo(cx, cy - sy * 60); x.lineTo(cx, cy); x.lineTo(cx - sx * 60, cy); x.stroke(); }
+  x.fillStyle = SKIN; x.strokeStyle = '#000'; x.lineWidth = 8;
+  for (const [dx, dy] of [[-230, 120], [-230, 210], [215, 60], [215, 160]]) { x.beginPath(); x.ellipse(dx, dy, 52, 40, 0, 0, 7); x.fill(); x.stroke(); }
+  x.beginPath(); x.roundRect(-160, 380, 320, 400, 60); x.fill(); x.stroke();
+  x.restore();
+  shout('SCAN!', W / 2, 360, 250, io(t, 5.6, 9), { fill: '#FFD34D', rot: -0.08 });
+}
+function reveal(t, lt) {
+  // impact frame: inverted black/white for 2 beats-worth of frames, then the real dish in colour
+  const impact = lt < 0.13;
+  x.fillStyle = impact ? '#000' : CREAM; x.fillRect(0, 0, W, H);
+  speedLines(W / 2, 1000, t, impact ? '#fff' : 'rgba(0,0,0,.85)', 140, 520);
+  const k = lt < 0.08 ? lerp(1.6, 1.02, lt / 0.08) : lerp(1.02, 1.08, inv(0.08, 2.4, lt));
+  const iw = 1750 * k, ih = iw * pizza.height / pizza.width;
+  x.save(); x.translate(W / 2 + (lt < 0.4 ? (hash(Math.floor(t * 60)) - 0.5) * 22 : 0), 1020);
+  if (impact) x.filter = 'grayscale(1) contrast(3) invert(1)';
+  x.drawImage(pizza, -iw / 2, -ih / 2, iw, ih); x.restore();
+  if (!impact) { halftone(0.06); }
+  shout('ASLI.', W / 2 - 150, 430, 220, io(t, 7.2, 9), { fill: RED, rot: -0.1 });
+  shout('SIZE.', W / 2 + 160, 640, 220, io(t, 7.6, 9), { fill: '#fff', rot: -0.1 });
+  shout('jaisi table pe aayegi', W / 2, 1560, 80, io(t, 8.2, 9), { fill: CREAM, rot: -0.04 });
+}
+function smile(t, lt) {
+  x.fillStyle = '#FFE3EA'; x.fillRect(0, 0, W, H);
+  // sparkle background and a big satisfied grin (cel-shaded, close-up)
+  for (let i = 0; i < 26; i++) { const sx = hash(i) * W, sy = hash(i + 9) * H, s = (0.5 + hash(i + 3)) * (0.8 + 0.3 * Math.sin(lt * 10 + i));
+    x.save(); x.translate(sx, sy); x.scale(s, s); x.fillStyle = i % 3 ? '#fff' : '#FFD34D'; x.beginPath(); for (let j = 0; j < 8; j++) { const r = j % 2 ? 8 : 34, a = j / 8 * Math.PI * 2; x.lineTo(Math.cos(a) * r, Math.sin(a) * r); } x.fill(); x.restore(); }
+  const bob = Math.sin(lt * 8) * 6;
+  x.save(); x.translate(W / 2, 1000 + bob);
+  x.fillStyle = SKIN; x.strokeStyle = '#000'; x.lineWidth = 10; x.beginPath(); x.ellipse(0, 0, 380, 440, 0, 0, 7); x.fill(); x.stroke();
+  x.fillStyle = SKIN2; x.beginPath(); x.ellipse(0, 40, 380, 440, 0, 0.1, Math.PI - 0.1); x.fill();
+  x.fillStyle = SKIN; x.beginPath(); x.ellipse(-20, -10, 360, 420, 0, 0, 7); x.fill();
+  x.fillStyle = HAIR; x.beginPath(); x.moveTo(-420, 40); x.quadraticCurveTo(-470, -560, 0, -560); x.quadraticCurveTo(470, -560, 420, 40);
+  for (let i = 0; i <= 9; i++) { const xx = 420 - i * 93; x.lineTo(xx - 46, i % 2 ? -250 : -130 - (i === 0 || i === 9 ? -120 : 0)); x.lineTo(xx - 93, -300); } x.closePath(); x.fill();
+  for (const s of [-1, 1]) { x.strokeStyle = '#000'; x.lineWidth = 16; x.lineCap = 'round'; x.beginPath(); x.arc(s * 140, 20, 60, Math.PI + 0.3, -0.3); x.stroke();
+    x.fillStyle = 'rgba(232,69,107,.55)'; x.beginPath(); x.ellipse(s * 210, 130, 70, 34, 0, 0, 7); x.fill(); }
+  x.fillStyle = '#fff'; x.strokeStyle = '#000'; x.lineWidth = 10; x.beginPath(); x.moveTo(-170, 170); x.quadraticCurveTo(0, 360, 170, 170); x.closePath(); x.fill(); x.stroke();
+  x.restore();
+  shout('Ab koi jhooth nahi.', W / 2, 400, 110, io(t, 9.4, 9.9 + 9), { fill: RED, rot: -0.05 });
+}
+
+const S = { title: 0, eyes: 1.6, poster: 3.6, scan: 4.8, beep: 6.0, reveal: 7.2, smile: 9.2, end: 10.4 };
+cue(0.3, 'taiko', { big: 1.1, g: 0.6 }); cue(0.8, 'taiko', { big: 1.3, g: 0.7 }); cue(S.eyes, 'sting', { g: 0.5 }); cue(S.eyes + 0.8, 'taiko', { big: 0.8, g: 0.5 });
+cue(S.poster, 'drop'); cue(S.poster, 'impact', { big: 0.8, g: 0.6 }); cue(S.scan, 'riser', { len: 1.2, g: 0.45 }); cue(5.6, 'sting', { g: 0.55 }); cue(S.beep, 'beep', { g: 0.5 });
+cue(S.reveal, 'impact', { big: 1.0, g: 0.7 }); cue(S.reveal + 0.02, 'flash', { g: 0.4 }); cue(7.6, 'taiko', { g: 0.5 }); cue(S.smile, 'pop', { m: 88 }); cue(S.end, 'end'); cue(S.end + 0.3, 'ting', { m: 86, g: 0.5 });
+
+function draw(t) {
+  x.clearRect(0, 0, W, H);
+  if (t < S.eyes) titleCard(t);
+  else if (t < S.poster) eyes(t, t - S.eyes);
+  else if (t < S.scan) poster(t, t - S.poster);
+  else if (t < S.reveal) scanShot(t, t - S.scan);
+  else if (t < S.smile) reveal(t, t - S.reveal);
+  else if (t < S.end) smile(t, t - S.smile);
+  else { x.fillStyle = '#0B0B14'; x.fillRect(0, 0, W, H); halftone(0.0); endCard(x, t, S.end, { ink: CREAM, sub: '#9b948a' }); }
+  // a white flash frame on every hard cut
+  for (const c of [S.eyes, S.poster, S.scan, S.smile, S.end]) if (t >= c && t < c + 1 / 30) { x.fillStyle = '#fff'; x.fillRect(0, 0, W, H); }
+}
+window.DUR = 13.0;
+window.FILM = { preset: 'anime', bpm: 150, cover: 12.4 };
+window.CUES = C.list;
+window.seek = (t) => { draw(t); return true; };
+window.seek(0);
+window.__ready = true;
+</script></body></html>

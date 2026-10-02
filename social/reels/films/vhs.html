@@ -1,0 +1,149 @@
+<!doctype html><html><head><meta charset="utf-8">
+<!--
+  Film 5: VHS, a 90s TV commercial. 12.5 s at 110 BPM.
+  Story: PLAY. A spinning starburst: "NAYA! NAYA!". The old way: a photo burger, a tiny real one, a red cross.
+  The tape rewinds on "photo wala burger... phir se?". The new way: scan the table QR, the real dish (pizza scan render)
+  on the table, a TV ticker: koi app nahi, koi login nahi. The end card is clean: the logo is never degraded.
+  Look: chroma split (tinted offset copies), scanlines, a rolling tracking band, soft blur, washed saturated colours,
+  on-screen display (PLAY, REW, SP timecode) in VT323. Motion language: cheesy 90s, hard cuts, zoom punches,
+  rotating starbursts, wipes; the tape itself wobbles.
+-->
+<style>html,body{margin:0;width:1080px;height:1920px;overflow:hidden;background:#000}canvas{position:absolute;left:0;top:0}</style>
+</head><body><canvas id="c" width="1080" height="1920"></canvas>
+<script type="module">
+import { W, H, PAPER, INK, clamp, lerp, inv, eO, eI, eIO, eBack, spring, SPRING, hash, loadFonts, T, drawQR, endCard, cues } from './common.js';
+await loadFonts('vhs', 'archivo', 'bangers');
+const out = document.getElementById('c').getContext('2d');
+const mk = () => { const c = document.createElement('canvas'); c.width = W; c.height = H; return [c, c.getContext('2d')]; };
+const [sc, x] = mk(), [tc, tx] = mk();
+const C = cues(), cue = C.add;
+const pizza = new Image(); pizza.src = '/assets/dishes/bz-chicken-pizza/poster.webp'; await pizza.decode();
+const YEL = '#FFE600', MAG = '#FF2E88', CY = '#22D3EE', NAVY = '#1C1F8A', RED = '#E3122B';
+
+function burst(cx, cy, r, n, rot, c1, c2) {
+  x.save(); x.translate(cx, cy); x.rotate(rot); x.fillStyle = c1; x.beginPath();
+  for (let i = 0; i < n * 2; i++) { const rr = i % 2 ? r * 0.72 : r, a = i / (n * 2) * Math.PI * 2; x.lineTo(Math.cos(a) * rr, Math.sin(a) * rr); } x.closePath(); x.fill();
+  x.lineWidth = 14; x.strokeStyle = c2; x.stroke(); x.restore();
+}
+function chunky(s, cx, cy, z, p, { fill = YEL, stroke = RED, rot = -0.05, font = 'Bangers' } = {}) {
+  if (p <= 0) return; const k = p < 1 ? eBack(clamp(p), 2.5) : 1;
+  x.save(); x.translate(cx, cy); x.rotate(rot); x.scale(k, k); x.font = `400 ${z}px ${font}`; x.textAlign = 'center'; x.textBaseline = 'middle'; x.lineJoin = 'round';
+  x.lineWidth = z * 0.22; x.strokeStyle = '#000'; x.strokeText(s, 6, 10); x.strokeStyle = stroke; x.lineWidth = z * 0.14; x.strokeText(s, 0, 0); x.fillStyle = fill; x.fillText(s, 0, 0); x.restore();
+}
+const io = (t, a, b) => (t < a || t >= b ? 0 : clamp((t - a) / 0.25, 0, 1.0001));
+function photoBurger(cx, cy, s) {
+  x.save(); x.translate(cx, cy); x.scale(s, s); x.lineWidth = 8; x.strokeStyle = '#000';
+  const L = (yy, h, inset, c) => { x.fillStyle = c; x.beginPath(); x.roundRect(-200 + inset, yy, 400 - inset * 2, h, h / 2.4); x.fill(); x.stroke(); };
+  L(-170, 150, 15, '#F0A23E'); L(-30, 36, 0, '#58B947'); L(-2, 30, 8, '#FFD23F'); L(26, 80, 0, '#6B3418'); L(104, 26, 8, '#E33B2B'); L(130, 100, 18, '#F0A23E');
+  x.restore();
+}
+
+const S = { play: 0, naya: 0.55, old: 4.09, rew: 5.18, neu: 6.27, ticker: 7.36, lahore: 9.0, end: 10.36 };
+cue(0.1, 'type', { g: 0.4 }); cue(S.naya, 'drop'); cue(S.naya, 'impact', { big: 0.6, g: 0.45 }); cue(S.naya + 0.55, 'pop', { m: 84 }); cue(S.naya + 1.6, 'pop', { m: 88 }); cue(S.naya + 2.4, 'flash', { g: 0.3 });
+cue(S.old + 0.55, 'hit8', { g: 0.5 }); cue(S.rew, 'rewind', { len: 0.9, g: 0.6 }); cue(S.neu, 'whoosh', { len: 0.5, g: 0.5 }); cue(S.neu + 0.6, 'beep', { g: 0.45 });
+cue(S.neu + 0.9, 'flash', { g: 0.4 }); cue(S.ticker, 'pop', { m: 79 }); cue(S.lahore, 'impact', { big: 0.5, g: 0.4 }); cue(S.end, 'end'); cue(S.end + 0.3, 'ting', { m: 84, g: 0.5 });
+
+function scene(t) {
+  x.clearRect(0, 0, W, H);
+  if (t < S.naya) {               // blue screen, PLAY
+    x.fillStyle = '#1430D8'; x.fillRect(0, 0, W, H);
+    return;
+  }
+  if (t < S.old) {                // NAYA! NAYA!
+    const lt = t - S.naya;
+    x.fillStyle = NAVY; x.fillRect(0, 0, W, H);
+    for (let i = 0; i < 14; i++) { x.fillStyle = i % 2 ? '#2A2FB0' : NAVY; x.beginPath(); x.moveTo(W / 2, 900); const a = i / 14 * Math.PI * 2 + lt * 0.6; x.lineTo(W / 2 + Math.cos(a) * 2400, 900 + Math.sin(a) * 2400); x.lineTo(W / 2 + Math.cos(a + 0.224) * 2400, 900 + Math.sin(a + 0.224) * 2400); x.fill(); }
+    const z = spring(lt, ...SPRING.playful);
+    burst(W / 2, 900, 470 * z, 18, lt * 1.6, YEL, RED);
+    chunky('NAYA!', W / 2, 800, 230, io(t, S.naya + 0.1, 99), { fill: RED, stroke: '#fff', rot: -0.1 });
+    chunky('NAYA!', W / 2, 1010, 230, io(t, S.naya + 0.55, 99), { fill: RED, stroke: '#fff', rot: 0.06 });
+    chunky('menu dekhne ka naya tareeqa', W / 2, 1520, 74, io(t, S.naya + 1.6, 99), { fill: '#fff', stroke: MAG, rot: -0.03 });
+    // a shine sweep across the burst
+    const sw = inv(S.naya + 2.4, S.naya + 3.0, t); if (sw > 0 && sw < 1) { x.save(); x.globalCompositeOperation = 'lighter'; const g = x.createLinearGradient(sw * 1600 - 400, 0, sw * 1600, 0); g.addColorStop(0, 'rgba(255,255,255,0)'); g.addColorStop(0.5, 'rgba(255,255,255,.5)'); g.addColorStop(1, 'rgba(255,255,255,0)'); x.fillStyle = g; x.fillRect(0, 0, W, H); x.restore(); }
+    return;
+  }
+  if (t < S.neu) {                // the old way, with a rewind
+    const rew = t >= S.rew && t < S.rew + 0.9, lt = rew ? (S.rew - S.old) * (1 - (t - S.rew) / 0.9) : t - S.old;
+    x.fillStyle = '#F4E3C3'; x.fillRect(0, 0, W, H);
+    chunky('PURANA TAREEQA:', W / 2, 330, 104, 1.0001, { fill: '#fff', stroke: NAVY, rot: -0.03 });
+    x.save(); x.translate(310, 860); x.rotate(-0.06); x.fillStyle = '#fff'; x.strokeStyle = '#000'; x.lineWidth = 8; x.fillRect(-230, -300, 460, 560); x.strokeRect(-230, -300, 460, 560); x.restore();
+    photoBurger(310, 830, 0.95);
+    T(x, 'menu photo', 310, 1180, { z: 64, f: 'VHS', c: '#000', al: 'center' });
+    x.fillStyle = '#fff'; x.strokeStyle = '#000'; x.lineWidth = 8; x.beginPath(); x.ellipse(780, 1000, 220, 70, 0, 0, 7); x.fill(); x.stroke();
+    photoBurger(780, 950, 0.28);
+    T(x, 'plate pe', 780, 1180, { z: 64, f: 'VHS', c: '#000', al: 'center' });
+    const xk = inv(0.5, 0.75, lt);
+    if (xk > 0) { x.save(); x.strokeStyle = RED; x.lineWidth = 40; x.lineCap = 'round'; const a = clamp(xk * 2), b = clamp(xk * 2 - 1); x.beginPath(); x.moveTo(120, 580); x.lineTo(120 + 380 * a, 580 + 540 * a); if (b > 0) { x.moveTo(500, 580); x.lineTo(500 - 380 * b, 580 + 540 * b); } x.stroke(); x.restore();
+      chunky('PHIR SE?', W / 2, 1460, 150, clamp((lt - 0.6) / 0.25), { fill: YEL, stroke: RED, rot: 0.05 }); }
+    return;
+  }
+  // the new way
+  const lt = t - S.neu;
+  x.fillStyle = '#FFF6E5'; x.fillRect(0, 0, W, H);
+  for (let i = 0; i < 12; i++) { x.fillStyle = i % 2 ? '#FFE9B8' : '#FFF6E5'; x.fillRect(0, i * 170 - (lt * 120) % 340, W, 170); }
+  chunky('NAYA TAREEQA:', W / 2, 330, 120, io(t, S.neu, 99), { fill: '#fff', stroke: MAG, rot: -0.04 });
+  const scan = lt > 0.6;
+  // phone
+  const pu = spring(lt, ...SPRING.snappy);
+  x.save(); x.translate(lerp(1400, 780, pu), 830); x.rotate(0.08);
+  x.fillStyle = '#222'; x.strokeStyle = '#000'; x.lineWidth = 8; x.beginPath(); x.roundRect(-150, -290, 300, 580, 40); x.fill(); x.stroke();
+  x.fillStyle = '#fff'; x.beginPath(); x.roundRect(-130, -270, 260, 540, 28); x.fill();
+  if (!scan) drawQR(x, -110, -110, 220, '#000', '#fff', 0.03); else { x.drawImage(pizza, -210, -180, 420, 315); T(x, 'Table pe dekho', 0, 180, { z: 46, f: 'VHS', c: '#000', al: 'center' }); }
+  x.restore();
+  // the real dish arrives on the table, left
+  const dk = scan ? spring(lt - 0.9, ...SPRING.playful) : 0;
+  if (dk > 0) { x.save(); x.translate(330, 1130); x.scale(dk, dk); x.drawImage(pizza, -380, -285, 760, 570); x.restore();
+    burst(140, 900, 120 * clamp(dk), 12, lt * 2, YEL, RED); T(x, 'ASLI', 140, 920, { z: 70, f: 'Bangers', c: RED, al: 'center', a: clamp(dk) }); }
+  // TV ticker
+  if (t >= S.ticker) {
+    x.fillStyle = RED; x.fillRect(0, 1380, W, 120); x.fillStyle = YEL; x.fillRect(0, 1380, 260, 120);
+    T(x, 'KHABAR', 130, 1460, { z: 64, f: 'Archivo', c: '#000', al: 'center' });
+    x.save(); x.beginPath(); x.rect(260, 1380, W - 260, 120); x.clip();
+    const msg = 'Koi app nahi   •   Koi login nahi   •   Bas table ka QR   •   Order se pehle dekh lo   •   ';
+    const off = (t - S.ticker) * 420; T(x, msg + msg, W - off, 1462, { z: 62, f: 'VHS', c: '#fff' }); x.restore();
+  }
+  if (t >= S.lahore) chunky('Lahore mein!', W / 2, 1610, 120, io(t, S.lahore, 99), { fill: YEL, stroke: MAG, rot: -0.06 });
+}
+
+// the tape: chroma split, scanlines, tracking band, wobble, OSD
+const lines = (() => { const c = document.createElement('canvas'); c.width = 4; c.height = 6; const g = c.getContext('2d'); g.fillStyle = 'rgba(0,0,0,.28)'; g.fillRect(0, 0, 4, 2); return out.createPattern(c, 'repeat'); })();
+function tint(col) { tx.clearRect(0, 0, W, H); tx.globalCompositeOperation = 'source-over'; tx.drawImage(sc, 0, 0); tx.globalCompositeOperation = 'multiply'; tx.fillStyle = col; tx.fillRect(0, 0, W, H); tx.globalCompositeOperation = 'destination-in'; tx.drawImage(sc, 0, 0); return tc; }
+function tape(t) {
+  const f = Math.floor(t * 30), rew = t >= S.rew && t < S.rew + 0.9;
+  out.save(); out.fillStyle = '#000'; out.fillRect(0, 0, W, H);
+  out.filter = 'blur(1.6px) saturate(1.35) contrast(1.05)';
+  const wob = Math.sin(t * 2.3) * 2 + (rew ? (hash(f) - 0.5) * 30 : 0);
+  out.drawImage(sc, wob, 0); out.filter = 'none';
+  out.globalCompositeOperation = 'screen'; out.globalAlpha = 0.55;
+  out.drawImage(tint('#ff0000'), wob + 7, 0); out.drawImage(tint('#0044ff'), wob - 7, 2);
+  out.globalAlpha = 1; out.globalCompositeOperation = 'source-over';
+  // rewind smear bands
+  if (rew) for (let i = 0; i < 9; i++) { const y = (hash(i + f * 3) * H) | 0, h = 20 + hash(i * 5 + f) * 60; out.drawImage(sc, 0, y, W, h, (hash(i + f) - 0.5) * 300, y, W, h); }
+  // rolling tracking band
+  const by = ((t * 380) % (H + 400)) - 200;
+  for (let i = 0; i < 40; i++) { const y = by + i * 4; out.fillStyle = `rgba(255,255,255,${0.05 + hash(i + f) * 0.12})`; out.fillRect((hash(i * 3 + f) - 0.5) * 60, y, W, 2); }
+  out.fillStyle = lines; out.fillRect(0, 0, W, H);
+  const v = out.createRadialGradient(W / 2, H / 2, 600, W / 2, H / 2, 1300); v.addColorStop(0, 'rgba(0,0,0,0)'); v.addColorStop(1, 'rgba(0,0,0,.55)'); out.fillStyle = v; out.fillRect(0, 0, W, H);
+  // OSD
+  out.font = '400 76px VHS'; out.fillStyle = '#fff'; out.shadowColor = 'rgba(0,0,0,.7)'; out.shadowOffsetX = 4; out.shadowOffsetY = 4;
+  const label = rew ? 'REW' : 'PLAY';
+  if (t < S.naya + 1.2 || rew) {
+    out.fillText(label, 110, 230);
+    out.beginPath(); if (rew) { for (const dx of [0, 46]) { out.moveTo(330 + dx, 175); out.lineTo(290 + dx, 200); out.lineTo(330 + dx, 225); } } else { out.moveTo(290, 175); out.lineTo(332, 200); out.lineTo(290, 225); } out.fill();
+  }
+  const secs = rew ? Math.max(0, S.rew - (t - S.rew) * 1.2) : t;
+  out.fillText(`SP  0:00:${String(Math.floor(secs)).padStart(2, '0')}`, 110, 1780);
+  out.restore();
+}
+
+function draw(t) {
+  if (t >= S.end) { out.fillStyle = '#101028'; out.fillRect(0, 0, W, H); out.fillStyle = lines; out.fillRect(0, 0, W, H); endCard(out, t, S.end, { ink: PAPER, sub: '#a9a6c9' }); return; }
+  scene(t); tape(t);
+}
+window.DUR = 12.5;
+window.FILM = { preset: 'vhs', bpm: 110, cover: 12.0 };
+window.CUES = C.list;
+window.seek = (t) => { draw(t); return true; };
+window.seek(0);
+window.__ready = true;
+</script></body></html>

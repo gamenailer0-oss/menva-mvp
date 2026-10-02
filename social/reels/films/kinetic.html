@@ -1,0 +1,86 @@
+<!doctype html><html><head><meta charset="utf-8">
+<!--
+  Film 6: KINETIC, Swiss/brutalist typography. 11 s at 124 BPM (beat 0.484 s). One word per beat.
+  MENU PHOTO / IS NOT / THE PLATE. NO APP. NO LOGIN. NO DOWNLOAD. BAS SCAN. (QR stamps) ASLI DISH, ASLI SIZE (the real
+  pizza scan render with a measure line). ORDER SE PEHLE / DEKH LO.
+  Look: 12-column grid, Bebas Neue display + Archivo Black, ink / paper / ember only, tiny mono index labels, hard edges.
+  Motion language: Energetic. Words slam in (scale 1.25 -> 1 over 2 frames, no overshoot), stack and push the previous
+  word up, colour blocks wipe the frame on each bar line. Nothing fades; everything cuts or wipes on the beat.
+-->
+<style>html,body{margin:0;width:1080px;height:1920px;overflow:hidden;background:#EFEBE2}canvas{position:absolute;left:0;top:0}</style>
+</head><body><canvas id="c" width="1080" height="1920"></canvas>
+<script type="module">
+import { W, H, PAPER, INK, EMBER, clamp, lerp, inv, eO, eI, eIO, spring, SPRING, track, hash, loadFonts, T, drawQR, endCard, cues } from './common.js';
+await loadFonts('bebas', 'archivo');
+const x = document.getElementById('c').getContext('2d');
+const C = cues(), cue = C.add;
+const pizza = new Image(); pizza.src = '/assets/dishes/bz-chicken-pizza/poster.webp'; await pizza.decode();
+const B = 60 / 124, bt = (n) => n * B;
+// [beat, word, font, size, colour, bg] ; bg changes are colour-block wipes
+const WORDS = [
+  [0, 'MENU', 'Bebas', 400, INK, PAPER], [1, 'PHOTO', 'Bebas', 360, INK, PAPER], [2, 'IS NOT', 'Archivo', 180, EMBER, PAPER], [3, 'THE PLATE.', 'Bebas', 300, INK, PAPER],
+  [4, 'NO APP.', 'Bebas', 330, PAPER, INK], [5, 'NO LOGIN.', 'Bebas', 300, PAPER, INK], [6, 'NO', 'Bebas', 330, PAPER, INK], [6.5, 'DOWNLOAD.', 'Bebas', 250, PAPER, INK],
+  [8, 'BAS', 'Bebas', 520, PAPER, EMBER], [9, 'SCAN.', 'Bebas', 470, INK, EMBER],
+];
+const SEG = { qr: bt(9.5), dish: bt(11), meas: bt(12), line1: bt(14), line2: bt(15), end: bt(17) };
+WORDS.forEach(([b], i) => cue(bt(b), i % 4 === 0 ? 'impact' : 'tap', { g: i % 4 === 0 ? 0.35 : 0.5, big: 0.5 }));
+cue(0, 'drop'); cue(SEG.qr, 'hit8', { g: 0.4 }); cue(SEG.dish, 'whoosh', { len: 0.45, g: 0.5 }); cue(SEG.meas, 'scribble', { len: 0.4, g: 0.6 });
+cue(SEG.line1, 'impact', { big: 0.6, g: 0.45 }); cue(SEG.line2, 'tap', { g: 0.5 }); cue(SEG.end, 'end'); cue(SEG.end + 0.3, 'ting', { m: 86, g: 0.45 });
+
+function grid(col) { x.save(); x.strokeStyle = col; x.globalAlpha = 0.14; x.lineWidth = 2; for (let i = 1; i < 12; i++) { const gx = 60 + i * 80; x.beginPath(); x.moveTo(gx, 0); x.lineTo(gx, H); x.stroke(); } x.restore(); }
+function label(s, xx, yy, col) { T(x, s, xx, yy, { z: 30, f: 'Archivo', c: col, ls: 3 }); }
+function slam(word, font, z, col, lt, y) {
+  const k = lt < 2 / 30 ? lerp(1.25, 1, lt * 15) : 1;                   // two-frame slam, no overshoot
+  x.save(); x.translate(60, y); x.scale(k, k);
+  x.font = `400 ${z}px ${font}`; x.textBaseline = 'alphabetic'; x.fillStyle = col;
+  const m = x.measureText(word).width, fit = Math.min(1, 960 / m);
+  x.scale(fit, 1); x.fillText(word, 0, 0); x.restore();
+}
+function draw(t) {
+  x.clearRect(0, 0, W, H);
+  if (t >= SEG.end) { x.fillStyle = PAPER; x.fillRect(0, 0, W, H); endCard(x, t, SEG.end, {}); return; }
+  // background: current colour block, wiped in from the left on change
+  const cur = WORDS.filter(([b]) => bt(b) <= t).pop() || WORDS[0];
+  let bg = t >= SEG.dish ? PAPER : cur[5];
+  if (t >= SEG.line1) bg = INK;
+  x.fillStyle = bg; x.fillRect(0, 0, W, H);
+  const prevBg = (() => { const i = WORDS.indexOf(cur); return i > 0 ? WORDS[i - 1][5] : bg; })();
+  const wipe = eIO(inv(bt(cur[0]), bt(cur[0]) + 0.18, t));
+  if (prevBg !== bg && wipe < 1 && t < SEG.dish) { x.fillStyle = prevBg; x.fillRect(W * wipe, 0, W * (1 - wipe), H); }
+  const ink = bg === PAPER ? INK : PAPER;
+  grid(ink);
+  if (t < SEG.dish) {
+    // the stack: the newest word at the anchor line, older ones pushed up by their own height
+    const shown = WORDS.filter(([b, , , , , wb]) => bt(b) <= t && wb === cur[5]);
+    let y = 1420;
+    for (let i = shown.length - 1; i >= 0; i--) {
+      const [b, w, f, z, c] = shown[i], lt = t - bt(b);
+      const push = shown.slice(i + 1).reduce((s, [bb, , , zz]) => s + zz * 0.84 * (t >= bt(bb) ? 1 : 0), 0);
+      slam(w, f, z, c === ink || c === EMBER ? c : ink, lt, y - push);
+    }
+    label(String(WORDS.indexOf(cur) + 1).padStart(2, '0') + ' / ' + String(WORDS.length).padStart(2, '0'), 60, 1500, ink);
+    label('FIELD NOTES / 01', 60, 210, ink);
+    if (t >= SEG.qr) { const k = spring(t - SEG.qr, ...SPRING.snappy); x.save(); x.translate(800, 1560); x.rotate(-0.08 * k); x.scale(k, k); drawQR(x, -170, -170, 340, INK, PAPER, 0.05); x.restore(); }
+  } else if (t < SEG.line1) {
+    // proof: the real dish, a measure line, two labels
+    const k = spring(t - SEG.dish, ...SPRING.default);
+    const iw = 1500, ih = iw * pizza.height / pizza.width;
+    x.drawImage(pizza, lerp(W, -230, k), 960 - ih / 2, iw, ih);
+    slam('ASLI DISH.', 'Bebas', 230, INK, t - SEG.dish, 520);
+    const m = eO(inv(SEG.meas, SEG.meas + 0.35, t));
+    if (m > 0) { x.save(); x.strokeStyle = EMBER; x.lineWidth = 10; x.beginPath(); x.moveTo(90, 1380); x.lineTo(90 + 900 * m, 1380); x.stroke(); x.fillStyle = EMBER; x.fillRect(84, 1350, 12, 60); if (m >= 1) x.fillRect(984, 1350, 12, 60); x.restore();
+      slam('ASLI SIZE.', 'Bebas', 230, EMBER, t - SEG.meas, 1640); }
+    label('REAL 3D SCAN', 60, 210, INK); label('ON YOUR TABLE', 60, 250, INK);
+  } else {
+    slam('ORDER SE PEHLE', 'Bebas', 260, PAPER, t - SEG.line1, 900);
+    if (t >= SEG.line2) slam('DEKH LO.', 'Bebas', 400, EMBER, t - SEG.line2, 1260);
+    label('NO APP  NO LOGIN  BAS SCAN', 60, 210, PAPER);
+  }
+}
+window.DUR = SEG.end + 3.0;
+window.FILM = { preset: 'house', bpm: 124, cover: SEG.end + 2.5 };
+window.CUES = C.list;
+window.seek = (t) => { draw(t); return true; };
+window.seek(0);
+window.__ready = true;
+</script></body></html>

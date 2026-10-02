@@ -1,0 +1,125 @@
+<!doctype html><html><head><meta charset="utf-8">
+<!--
+  Film 13: MINIATURE, in the style of a Mughal court painting. 13.2 s, sitar drone and tabla at 90 BPM.
+  Story: the gold border draws itself. "In the court of good food." The emperor frowns at a menu scroll that promises
+  a giant feast. The royal taster lifts a phone; a QR on a gold tablet; the true dish appears on the dastarkhwan.
+  The emperor smiles. "Jo dikha, wohi aaya." Gold-leaf end card.
+  Look: flat perspective, lapis and vermilion, gold leaf with a soft sheen, a wide floral border, cypress trees, arches,
+  figures in profile, text in cartouches (Cinzel Decorative and Amiri). The dish is painted: an illustration.
+  Motion language: Premium and calm. Gold lines draw on, figures move only a little (a hand, a smile), the camera is still,
+  sheen slides across the gold. No bounce.
+-->
+<style>html,body{margin:0;width:1080px;height:1920px;overflow:hidden;background:#F1E6C8}canvas{position:absolute;left:0;top:0}</style>
+</head><body><canvas id="c" width="1080" height="1920"></canvas>
+<script type="module">
+import { W, H, INK, PAPER, clamp, lerp, inv, eO, eI, eIO, spring, SPRING, hash, rng, loadFonts, T, drawQR, endCard, cues } from './common.js';
+await loadFonts('cinzel', 'amiri');
+const x = document.getElementById('c').getContext('2d');
+const C = cues(), cue = C.add;
+const LAPIS = '#1F3A93', VERM = '#C8402E', GOLD = '#C9A140', IVORY = '#F5ECD3', SAGE = '#7E9B6A', OCHRE = '#D9A441', SKIN = '#D8A27A', DARK = '#2A1E16';
+const S = { border: 0, cap1: 0.4, scene: 2.0, scroll: 2.6, cap2: 3.2, phone: 5.3, qr: 6.0, dish: 6.8, smile: 7.4, cap3: 8.2, end: 10.4 };
+cue(0.2, 'scribble', { len: 1.2, g: 0.35 }); cue(S.cap1, 'pop', { m: 74 }); cue(S.scroll, 'paper'); cue(S.cap2, 'pop', { m: 77 }); cue(S.phone, 'pop', { m: 81 });
+cue(S.qr, 'flash', { g: 0.35 }); cue(S.qr + 0.4, 'beep', { g: 0.3 }); cue(S.dish, 'gong', { g: 0.3 }); cue(S.smile, 'pop', { m: 86 }); cue(S.cap3, 'pop', { m: 88 }); cue(S.end, 'end'); cue(S.end + 0.3, 'ting', { m: 86, g: 0.45 });
+
+function goldFill(x0, y0, w, h, t) {
+  const g = x.createLinearGradient(x0, y0, x0 + w, y0 + h); const s = (t * 0.25) % 1.6 - 0.3;
+  g.addColorStop(0, '#B58A2E'); g.addColorStop(clamp(s - 0.12), '#C9A140'); g.addColorStop(clamp(s), '#F3DE8A'); g.addColorStop(clamp(s + 0.12), '#C9A140'); g.addColorStop(1, '#A47A24'); return g;
+}
+function border(t) {
+  const p = eIO(inv(S.border, S.border + 1.2, t));
+  x.fillStyle = '#E9D9B0'; x.fillRect(0, 0, W, H);
+  // floral margin: little flowers and vines on cream, revealed from the top
+  const R = rng(5);
+  x.save(); x.beginPath(); x.rect(0, 0, W, H * p); x.clip();
+  for (let i = 0; i < 70; i++) { const fx = R() * W, fy = R() * H; if (fx > 70 && fx < W - 70 && fy > 70 && fy < H - 70) continue;
+    x.fillStyle = [VERM, LAPIS, GOLD, SAGE][i % 4]; for (let k = 0; k < 5; k++) { x.beginPath(); x.ellipse(fx + Math.cos(k * 1.256) * 9, fy + Math.sin(k * 1.256) * 9, 7, 4, k * 1.256, 0, 7); x.fill(); } }
+  x.restore();
+  x.strokeStyle = goldFill(0, 0, W, H, t); x.lineWidth = 14;
+  const L = 2 * (W - 140 + H - 140); x.setLineDash([L, L]); x.lineDashOffset = L * (1 - p); x.strokeRect(70, 70, W - 140, H - 140); x.setLineDash([]);
+  x.lineWidth = 4; x.strokeStyle = LAPIS; if (p > 0.5) x.strokeRect(92, 92, W - 184, H - 184);
+}
+function cartouche(s, y, p, z = 54, font = 'Cinzel') {
+  if (p <= 0) return; x.save(); x.globalAlpha = clamp(p);
+  x.font = `700 ${z}px ${font}`; const m = Math.min(820, x.measureText(s).width + 120);
+  x.fillStyle = IVORY; x.strokeStyle = GOLD; x.lineWidth = 6; x.beginPath(); x.moveTo(W / 2 - m / 2, y); x.quadraticCurveTo(W / 2 - m / 2 - 40, y - z * 0.7, W / 2 - m / 2, y - z * 1.4); x.lineTo(W / 2 + m / 2, y - z * 1.4); x.quadraticCurveTo(W / 2 + m / 2 + 40, y - z * 0.7, W / 2 + m / 2, y); x.closePath(); x.fill(); x.stroke();
+  T(x, s, W / 2, y - z * 0.48, { z, f: font, w: 700, c: VERM, al: 'center', fit: m - 80 }); x.restore();
+}
+function court(t) {
+  // sky band, arches, cypresses, a patterned terrace in flat perspective
+  x.save(); x.beginPath(); x.rect(110, 110, W - 220, H - 220); x.clip();
+  const sky = x.createLinearGradient(0, 110, 0, 700); sky.addColorStop(0, '#2C4FA8'); sky.addColorStop(1, '#8FB3D9'); x.fillStyle = sky; x.fillRect(110, 110, W - 220, 600);
+  x.fillStyle = IVORY; x.fillRect(110, 360, W - 220, 520);
+  for (let i = 0; i < 3; i++) { const ax = 220 + i * 320; x.fillStyle = '#E3CFA3'; x.beginPath(); x.moveTo(ax - 110, 880); x.lineTo(ax - 110, 520); x.quadraticCurveTo(ax - 110, 410, ax, 380); x.quadraticCurveTo(ax + 110, 410, ax + 110, 520); x.lineTo(ax + 110, 880); x.fill();
+    x.strokeStyle = GOLD; x.lineWidth = 5; x.stroke(); x.fillStyle = '#3B5E3A'; x.beginPath(); x.ellipse(ax, 700, 30, 150, 0, 0, 7); x.fill(); }
+  // terrace carpet (tilted up, the miniature way)
+  x.fillStyle = VERM; x.fillRect(110, 880, W - 220, 940);
+  x.fillStyle = '#A8321F'; for (let r = 0; r < 9; r++) for (let c = 0; c < 6; c++) { const cx = 190 + c * 150 + (r % 2) * 75, cy = 940 + r * 100; x.beginPath(); x.moveTo(cx, cy - 34); x.lineTo(cx + 34, cy); x.lineTo(cx, cy + 34); x.lineTo(cx - 34, cy); x.fill(); }
+  x.strokeStyle = GOLD; x.lineWidth = 8; x.strokeRect(150, 920, W - 300, 860);
+  // the dastarkhwan
+  x.fillStyle = IVORY; x.fillRect(250, 1330, 580, 300); x.strokeStyle = GOLD; x.lineWidth = 6; x.strokeRect(266, 1346, 548, 268);
+  x.restore();
+}
+function emperor(t, smile) {     // seated, in profile facing right
+  x.save(); x.translate(330, 1180);
+  x.fillStyle = OCHRE; x.beginPath(); x.ellipse(0, 150, 170, 60, 0, 0, 7); x.fill();                                   // cushion
+  x.fillStyle = '#F7F0DC'; x.beginPath(); x.moveTo(-120, 150); x.quadraticCurveTo(-140, -40, -40, -90); x.lineTo(60, -90); x.quadraticCurveTo(140, 20, 130, 150); x.closePath(); x.fill(); // jama
+  x.strokeStyle = GOLD; x.lineWidth = 6; x.beginPath(); x.moveTo(-60, -60); x.lineTo(80, 140); x.stroke();
+  x.fillStyle = '#5A8A4A'; x.fillRect(-60, 0, 150, 26);                                                                  // patka
+  x.fillStyle = SKIN; x.beginPath(); x.moveTo(-10, -100); x.quadraticCurveTo(70, -110, 76, -160); x.lineTo(70, -200); x.quadraticCurveTo(40, -250, -20, -230); x.quadraticCurveTo(-50, -170, -10, -100); x.fill(); // face
+  x.fillStyle = DARK; x.beginPath(); x.moveTo(-14, -110); x.quadraticCurveTo(50, -80, 70, -150); x.quadraticCurveTo(40, -120, 0, -140); x.fill(); // beard
+  x.fillStyle = DARK; x.beginPath(); x.arc(46, -186, 6, 0, 7); x.fill();
+  x.strokeStyle = DARK; x.lineWidth = 4; x.beginPath(); if (smile) x.arc(58, -150, 12, 0.2, Math.PI - 0.6); else { x.moveTo(50, -146); x.lineTo(68, -150); } x.stroke();
+  x.fillStyle = '#F7F0DC'; x.beginPath(); x.ellipse(10, -250, 78, 46, -0.15, 0, 7); x.fill(); x.strokeStyle = GOLD; x.lineWidth = 5; x.stroke();  // turban
+  x.fillStyle = VERM; x.beginPath(); x.arc(40, -262, 12, 0, 7); x.fill(); x.strokeStyle = '#3B5E3A'; x.lineWidth = 6; x.beginPath(); x.moveTo(40, -270); x.quadraticCurveTo(90, -330, 60, -360); x.stroke(); // jewel + plume
+  x.restore();
+}
+function taster(t, lift) {    // standing attendant in profile facing left, holding the phone
+  x.save(); x.translate(800, 1120);
+  x.fillStyle = LAPIS; x.beginPath(); x.moveTo(-70, 260); x.lineTo(-50, -60); x.lineTo(50, -60); x.lineTo(80, 260); x.closePath(); x.fill();
+  x.fillStyle = SKIN; x.beginPath(); x.ellipse(-6, -110, 42, 54, 0, 0, 7); x.fill(); x.fillStyle = DARK; x.beginPath(); x.arc(-26, -116, 5, 0, 7); x.fill();
+  x.fillStyle = VERM; x.beginPath(); x.ellipse(0, -160, 52, 30, 0.1, 0, 7); x.fill();
+  const ay = lerp(60, -120, lift), ax = lerp(-60, -140, lift);
+  x.strokeStyle = LAPIS; x.lineWidth = 34; x.lineCap = 'round'; x.beginPath(); x.moveTo(-30, -20); x.lineTo(ax, ay); x.stroke();
+  x.fillStyle = '#2A2A2A'; x.save(); x.translate(ax - 20, ay - 70); x.rotate(-0.1); x.fillRect(-50, -90, 100, 180); x.fillStyle = '#FFF8E6'; x.fillRect(-42, -80, 84, 160);
+  if (t >= S.qr) { x.fillStyle = goldFill(-38, -60, 76, 76, t); x.fillRect(-38, -60, 76, 76); drawQR(x, -32, -54, 64, DARK, '#FFF3C4', 0.02); T(x, 'scan', 0, 54, { z: 22, f: 'Cinzel', w: 700, c: VERM, al: 'center' }); }
+  x.restore(); x.restore();
+}
+function platter(cx, cy, s, p) {  // a painted dish: a gold platter with the food as a painted illustration
+  if (p <= 0) return; x.save(); x.translate(cx, cy); x.scale(s * p, s * p); x.globalAlpha = clamp(p);
+  x.fillStyle = goldFill(-170, -40, 340, 80, 0); x.beginPath(); x.ellipse(0, 0, 170, 52, 0, 0, 7); x.fill();
+  x.fillStyle = '#E8B85A'; x.beginPath(); x.ellipse(0, -10, 130, 36, 0, 0, 7); x.fill();
+  [[-60, -14], [10, -24], [70, -8], [-10, 2], [40, 10]].forEach(([a, b], i) => { x.fillStyle = i % 2 ? '#B33A2A' : '#5E7D3A'; x.beginPath(); x.ellipse(a, b, 18, 8, 0, 0, 7); x.fill(); });
+  x.restore();
+}
+function scroll(t) {
+  const p = eO(inv(S.scroll, S.scroll + 0.6, t)), out = eI(inv(S.phone - 0.2, S.phone + 0.3, t));
+  if (p <= 0 || out >= 1) return;
+  x.save(); x.translate(640, 690 - out * 60); x.scale(0.85, 0.85); x.globalAlpha = 1 - out;
+  x.fillStyle = '#FFF6DC'; x.fillRect(-150, -170 * p, 300, 340 * p); x.fillStyle = OCHRE; x.fillRect(-170, -190 * p, 340, 24); x.fillRect(-170, 166 * p, 340, 24);
+  if (p > 0.7) { x.save(); x.scale(1.4, 1.4); platter(0, -20, 0.95, 1); x.restore(); T(x, 'a FEAST', 0, 110, { z: 34, f: 'Cinzel', w: 700, c: VERM, al: 'center' }); }
+  x.restore();
+}
+function draw(t) {
+  x.clearRect(0, 0, W, H);
+  if (t >= S.end) { border(99); x.fillStyle = IVORY; x.fillRect(110, 110, W - 220, H - 220); endCard(x, t, S.end, { ink: INK, sub: '#7A5E2E' }); return; }
+  border(t);
+  if (t < S.scene) { cartouche('In the court', 860, inv(S.cap1, S.cap1 + 0.4, t), 76, 'Amiri'); cartouche('of good food', 1010, inv(S.cap1 + 0.3, S.cap1 + 0.7, t), 76, 'Amiri'); return; }
+  const fade = inv(S.scene, S.scene + 0.5, t);
+  x.save(); x.globalAlpha = fade; court(t);
+  emperor(t, t >= S.smile);
+  taster(t, eIO(inv(S.phone, S.phone + 0.6, t)));
+  scroll(t);
+  platter(540, 1470, 1.35, eO(inv(S.dish, S.dish + 0.7, t)));
+  // a sheen of gold leaf crosses the dish when it arrives
+  x.restore();
+  if (t < S.phone) cartouche('The scroll promised a feast...', 300, inv(S.cap2, S.cap2 + 0.4, t), 46);
+  else if (t < S.cap3) cartouche('...so the taster checked it first.', 300, inv(S.phone + 0.2, S.phone + 0.6, t), 44);
+  else { cartouche('Jo dikha,', 300, inv(S.cap3, S.cap3 + 0.4, t), 62, 'Amiri'); cartouche('wohi aaya.', 430, inv(S.cap3 + 0.4, S.cap3 + 0.8, t), 62, 'Amiri'); }
+}
+window.DUR = 13.2;
+window.FILM = { preset: 'sitar', bpm: 90, cover: 12.7 };
+window.CUES = C.list;
+window.seek = (t) => { draw(t); return true; };
+window.seek(0);
+window.__ready = true;
+</script></body></html>
