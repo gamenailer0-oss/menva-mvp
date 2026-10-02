@@ -48,10 +48,25 @@ for (const [from, to] of Object.entries(RENAMED)) {
   copy(from, to);
 }
 
+// Google Search Console HTML-file verification: put the file Google gives you (google<token>.html)
+// in static/ at the repo root and it is published at the site root. Nothing else in static/ is copied.
+const STATIC_DIR = path.join(ROOT, 'static');
+if (fs.existsSync(STATIC_DIR)) {
+  for (const name of fs.readdirSync(STATIC_DIR).sort()) {
+    if (/^google[\w-]+\.html$/i.test(name)) { copy(path.join('static', name), name); console.log(`Search Console: published ${name} at the site root`); }
+  }
+}
+
 // Restaurant list, reused below for per-page SEO tags, noindex headers, redirects and the sitemap.
 const dishesPath = path.join(ROOT, 'data', 'build', 'dishes.json');
 if (!fs.existsSync(dishesPath)) { console.error(`${dishesPath} is missing — run npm run build-data.`); process.exit(1); }
 const { restaurants } = JSON.parse(fs.readFileSync(dishesPath, 'utf8'));
+// Routes the app itself owns. A restaurant slug equal to one of these would shadow the page (both the
+// router and dist/<slug>/index.html resolve it), so refuse to build rather than ship a collision.
+const RESERVED_SLUGS = ['for-restaurants'];
+for (const r of restaurants) {
+  if (RESERVED_SLUGS.includes(r.slug)) { console.error(`Restaurant "${r.name}" uses the reserved slug "${r.slug}" — pick another.`); process.exit(1); }
+}
 
 // ═══ SEO: static per-page <head> tags ═══════════════════════════════════════
 // Crawlers for link previews (WhatsApp, Facebook, X, LinkedIn, iMessage) and search engines do not
@@ -148,8 +163,8 @@ const noscript = (body) => `<noscript>${staticHeader}<main class="brand-page">${
 const homeImageRel = 'assets/social/og-menva.jpg';
 const homeImage = `${origin}/${homeImageRel}?v=${assetVersion(homeImageRel)}`;
 const homeHead = renderHead({
-  title: '3D & AR restaurant menus in Lahore — MENVA',
-  description: 'See the real dish in 3D and AR, at true size, before you order. Scan the QR at your table — MENVA restaurant menus in Lahore, no app to install.',
+  title: 'See restaurant dishes on your table in AR — Lahore | MENVA',
+  description: 'Scan the QR at your table and see the real dish in 3D and AR, at true size, before you order. Restaurant menus in Lahore. No app to install.',
   canonical: `${origin}/`,
   image: homeImage,
   imageAlt: 'MENVA — see real dishes in 3D and AR on your table.',
@@ -172,7 +187,47 @@ fs.writeFileSync(path.join(DIST, 'index.html'), withHead(baseHtml, homeHead, nos
   '<p class="overline">AR menus · Lahore</p>' +
   '<h1>See it on your table. Then <em>decide.</em></h1>' +
   '<p>MENVA puts restaurant menus in 3D and AR. Scan the QR at your table, see the real dish in front of you at true size, and judge the portion, the look and the value before you order. No app to install.</p>' +
-  (listed.length ? '<p class="overline">Our restaurants</p>' + restaurantLinks(listed) : ''))));
+  (listed.length ? '<p class="overline">Our restaurants</p>' + restaurantLinks(listed) : '') +
+  '<p><a href="/for-restaurants">For restaurants: AR menus for your tables</a></p>')));
+
+// ── For restaurants ── (dist/for-restaurants/index.html; the page is drawn by js/for-restaurants.js)
+const FR_WHATSAPP = `https://wa.me/923327270188?text=${encodeURIComponent("Hi MENVA — I'd like a free pilot for my restaurant.")}`;
+const frCanonical = `${origin}/for-restaurants`;
+const frTitle = 'AR menus for restaurants in Lahore — MENVA';
+const frDescription = 'MENVA is an AR menu: guests scan the QR on the table and see your real dishes at true size, on their own table. Free pilot for Lahore restaurants.';
+const frHead = renderHead({
+  title: frTitle,
+  description: frDescription,
+  canonical: frCanonical,
+  image: homeImage,
+  imageAlt: 'MENVA — an AR menu: real dishes at true size on your guests’ tables.',
+  themeColor: THEME_PAPER.default,
+  noindex: false,
+  jsonLd: [{
+    '@context': 'https://schema.org', '@type': 'Service', '@id': `${frCanonical}#service`, name: 'AR menus for restaurants',
+    serviceType: 'AR restaurant menu', url: frCanonical, description: frDescription,
+    provider: { '@type': 'Organization', '@id': `${origin}/#organization`, name: 'MENVA', url: `${origin}/`, telephone: '+92 332 7270188' },
+    areaServed: { '@type': 'City', name: 'Lahore' },
+  }],
+});
+// Order of the live examples: the same as the page (haute-dolci, baraza, g unless the data says otherwise).
+const frOrder = ['haute-dolci', 'baraza', 'g'];
+const frRank = (r) => (typeof r.homeOrder === 'number' ? r.homeOrder : 100 + (frOrder.indexOf(r.slug) >= 0 ? frOrder.indexOf(r.slug) : frOrder.length));
+const frExamples = [...listed].sort((a, b) => frRank(a) - frRank(b));
+fs.mkdirSync(path.join(DIST, 'for-restaurants'), { recursive: true });
+fs.writeFileSync(path.join(DIST, 'for-restaurants', 'index.html'), withHead(baseHtml, frHead, noscript(
+  '<p class="overline">For restaurants</p>' +
+  '<h1>Your dishes on every table — <em>before the order.</em></h1>' +
+  '<p>MENVA is an AR menu. Guests scan the QR on their table and see your real dishes at true size, on their own table. No app to install.</p>' +
+  `<a class="product-action" href="${escAttr(FR_WHATSAPP)}">Book a free pilot</a>` +
+  '<p class="overline">What you get</p>' +
+  '<ul class="static-list"><li>Your dishes scanned in 3D</li><li>A menu page in your own brand: colours, logo, your words</li><li>Table QR codes</li><li>A private results page</li><li>Branded Table Cards your guests share</li></ul>' +
+  '<p class="overline">How a pilot works</p>' +
+  '<ul class="static-list"><li>Day 0: we scan 3–4 signature dishes, about an hour in your restaurant.</li><li>Days 1–7: QR codes are live on your tables.</li><li>Day 8: we review the real numbers together.</li></ul>' +
+  '<p>Free for 7 days — can run up to 30. No commitment.</p>' +
+  '<p class="overline">Live examples</p>' + restaurantLinks(frExamples) +
+  '<p>Abdullah · MENVA · <a href="tel:+923327270188">+92 332 7270188</a></p>' +
+  '<p><a href="/">MENVA home</a></p>')));
 
 // ── Per restaurant ── (dist/<slug>/index.html; table URLs /<slug>/12 canonicalise to /<slug>)
 for (const r of restaurants) {
@@ -287,7 +342,7 @@ const build = hash.digest('hex').slice(0, 12);
 
 // Stamp local CSS/JS links with the build id. HTML is always revalidated, so after a deploy the
 // page asks for new URLs and the service worker can never pair old JavaScript with new data.
-for (const page of ['index.html', '404.html', 'stats/index.html', ...restaurants.map((r) => `${r.slug}/index.html`)]) {
+for (const page of ['index.html', '404.html', 'stats/index.html', 'for-restaurants/index.html', ...restaurants.map((r) => `${r.slug}/index.html`)]) {
   const file = path.join(DIST, page);
   if (!fs.existsSync(file)) continue;
   const html = fs.readFileSync(file, 'utf8').replace(/((?:href|src)="\/(?:css|js|stats)\/[^"?]+\.(?:css|js))"/g, `$1?v=${build}"`);
@@ -316,7 +371,7 @@ fs.writeFileSync(path.join(DIST, 'robots.txt'),
   `Sitemap: ${origin}/sitemap.xml\n`);
 
 const lastmod = new Date().toISOString().slice(0, 10);
-const sitemapUrls = [origin + '/', ...restaurants.filter((r) => r.listed === true).map((r) => `${origin}/${r.slug}`)];
+const sitemapUrls = [origin + '/', ...restaurants.filter((r) => r.listed === true).map((r) => `${origin}/${r.slug}`), frCanonical];
 fs.writeFileSync(path.join(DIST, 'sitemap.xml'),
   '<?xml version="1.0" encoding="UTF-8"?>\n' +
   '<urlset xmlns="http://www.sitemaps.org/schemas/sitemap/0.9">\n' +

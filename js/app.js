@@ -932,7 +932,16 @@
   function route() {
     const parts = location.pathname.split('/').filter(Boolean).map(decodeURIComponent);
 
-    if (parts.length === 0) {
+    if (parts[0] === 'for-restaurants') {
+      // Reserved slug: the owner-facing page (js/for-restaurants.js). It works without menu data.
+      if (parts.length === 1) {
+        document.title = 'AR menus for restaurants in Lahore — MENVA';
+        setTheme('default');
+        MenvaForRestaurants.render(app, data, { header: header(), footer });
+      } else {
+        notFound('Page not found');
+      }
+    } else if (parts.length === 0) {
       brandPage();
     } else if (!data) {
       dataUnavailable();

@@ -17,7 +17,8 @@ function jsonLdBlocks(html) {
 }
 
 const PAGES = [
-  { path: '/', canonicalPath: '/', title: '3D &amp; AR restaurant menus in Lahore — MENVA', ogImageName: 'og-menva.jpg', ldTypes: ['Organization', 'WebSite'] },
+  { path: '/', canonicalPath: '/', title: 'See restaurant dishes on your table in AR — Lahore | MENVA', ogImageName: 'og-menva.jpg', ldTypes: ['Organization', 'WebSite'] },
+  { path: '/for-restaurants', canonicalPath: '/for-restaurants', title: 'AR menus for restaurants in Lahore — MENVA', ogImageName: 'og-menva.jpg', ldTypes: ['Service'] },
   { path: '/g/12', canonicalPath: '/g', title: 'Gauchos — menu in 3D · MENVA', ogImageName: 'og-gauchos.jpg', ldTypes: ['Restaurant'] },
   { path: '/baraza/12', canonicalPath: '/baraza', title: 'Baraza Coffee — menu in 3D · MENVA', ogImageName: 'og-baraza.jpg', ldTypes: ['Restaurant'] },
 ];
@@ -57,7 +58,7 @@ for (const p of PAGES) {
 
     const description = tagContent(html, /<meta name="description" content="([^"]*)">/);
     expect(description).toBeTruthy();
-    if (p.path !== '/') expect(description.length).toBeLessThanOrEqual(160); // restaurant pages only
+    expect(description.length).toBeLessThanOrEqual(160);
 
     // Fetch the declared image from this same build (the tag's own origin may be unreachable from
     // a sandboxed test run — e.g. the default menva-ar.netlify.app fallback) and confirm it's a
@@ -194,7 +195,7 @@ test('/haute-dolci/12 serves the restaurant page with its own tags and canonical
 test('sitemap lists the home page and all three listed restaurants, each with a lastmod', async ({ request }) => {
   const text = await (await request.get('/sitemap.xml')).text();
   const urls = [...text.matchAll(/<url><loc>([^<]+)<\/loc><lastmod>(\d{4}-\d{2}-\d{2})<\/lastmod><\/url>/g)].map((m) => new URL(m[1]).pathname);
-  expect(urls).toEqual(['/', '/g', '/baraza', '/haute-dolci']);
+  expect(urls).toEqual(['/', '/g', '/baraza', '/haute-dolci', '/for-restaurants']);
 });
 
 // Crawlers that do not run JS still need real content: one h1, a description, links to every menu.
@@ -218,10 +219,12 @@ for (const p of [
 
 test('home: title and description target the search intent; Organization + WebSite JSON-LD', async ({ request }) => {
   const html = await (await request.get('/')).text();
-  expect(tagContent(html, /<title>([^<]*)<\/title>/)).toContain('restaurant menus in Lahore');
+  expect(tagContent(html, /<title>([^<]*)<\/title>/)).toBe('See restaurant dishes on your table in AR — Lahore | MENVA');
   const description = tagContent(html, /<meta name="description" content="([^"]*)">/);
   expect(description.length).toBeLessThanOrEqual(160);
   expect(description).toMatch(/3D and AR/);
+  expect(description).toMatch(/QR at your table/);
+  expect(description).toMatch(/true size/);
   const org = jsonLdBlocks(html).find((b) => b['@type'] === 'Organization');
   expect(org.url).toMatch(/\/$/);
   expect(org).not.toHaveProperty('aggregateRating');
