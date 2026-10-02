@@ -1,0 +1,25 @@
+{
+  "version": 1,
+  "about": "Brand films. The intro (social/reels/intro/, made by make.mjs from intro.html + score.py) opens launch day at 11 am, before the day's memes. It explains the product, so it must never move before 5 Oct.",
+  "defaultStart": "2026-10-05",
+  "handle": "@eatmenva",
+  "posts": [
+    {
+      "n": 1,
+      "day": 1,
+      "time": "11:00",
+      "id": "brand-intro",
+      "series": "Brand films",
+      "pillar": "see-it-first",
+      "audience": "diners",
+      "format": "reel",
+      "video": "social/reels/out/brand-intro.mp4",
+      "caption": "Har menu pe ek chhoti si line hoti hai: \"picture for illustration purposes only.\"\n\nMENVA pe illustration nahi hoti. Restaurant ki asli plate ka 3D scan, asli size mein, aapki apni table pe. Koi app nahi, bas table ka QR scan karo.\n\nSee it before you order it. Order se pehle dekh lo.\n\nUs dost ko bhejo jo har dafa menu photo pe bharosa karta hai.",
+      "hashtags": ["#menva", "#lahorefood", "#lahore", "#foodtech"],
+      "alt": "Animated brand film. A menu card's fine print reads picture for illustration purposes only, and its cartoon photo peels away. A phone scans a QR card on a wooden table, and a real 3D scan of a pizza rises out of the phone and lands on the table at true size. It turns slowly, then shrinks into the dot of the menva wordmark: see it before you order it.",
+      "slides": [
+        { "layout": "cover", "img": "social/reels/out/brand-intro-cover.jpg", "h": "See it before you order it." }
+      ]
+    }
+  ]
+}

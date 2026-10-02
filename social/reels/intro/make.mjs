@@ -73,7 +73,7 @@ try {
     execFileSync('python3', [path.join(HERE, 'score.py'), cueFile, path.join(work, 'score.wav')], { stdio: 'inherit' });
     const ff = execFileSync('python3', ['-c', 'import imageio_ffmpeg;print(imageio_ffmpeg.get_ffmpeg_exe())']).toString().trim();
     execFileSync(ff, ['-y', '-loglevel', 'error', '-framerate', String(FPS * SUB), '-i', path.join(work, 'f%05d.jpg'), '-i', path.join(work, 'score.wav'),
-      '-vf', `tmix=frames=${SUB},fps=${FPS},format=yuv420p`, '-c:v', 'libx264', '-preset', 'slow', '-crf', '16', '-profile:v', 'high',
+      '-vf', `tmix=frames=${SUB},fps=${FPS},format=yuv420p`, '-c:v', 'libx264', '-preset', 'slow', '-crf', '20', '-maxrate', '4.8M', '-bufsize', '9.6M', '-profile:v', 'high', // under jsDelivr's 20 MB file limit
       '-c:a', 'aac', '-b:a', '192k', '-shortest', '-movflags', '+faststart', path.join(OUT, 'brand-intro.mp4')], { stdio: 'inherit' });
     fs.rmSync(work, { recursive: true, force: true });
     console.log(`Wrote social/reels/out/brand-intro.mp4 in ${((Date.now() - t0) / 60000).toFixed(1)} min`);
