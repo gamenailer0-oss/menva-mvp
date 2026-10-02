@@ -215,8 +215,15 @@ if (errors.length) {
   process.exit(1);
 }
 
-// Pilot first, then alphabetical — readdir order otherwise puts "baraza" before "gauchos".
-const orderedRestaurants = [...restaurants].sort((a, b) => (a.id === pilot.id ? -1 : b.id === pilot.id ? 1 : a.id.localeCompare(b.id)));
+// Home-page order: `homeOrder` ascending (the restaurants row on / shows the listed ones in this order,
+// Haute Dolci first); anything without one goes last, alphabetically. `pilot` is unrelated to order.
+for (const r of restaurants) {
+  if (r.homeOrder !== undefined && !Number.isInteger(r.homeOrder)) {
+    console.error(`\n✗ data/restaurants/${r.id}.json: "homeOrder" must be a whole number.\n`);
+    process.exit(1);
+  }
+}
+const orderedRestaurants = [...restaurants].sort((a, b) => ((a.homeOrder ?? 999) - (b.homeOrder ?? 999)) || a.id.localeCompare(b.id));
 
 const out = {
   generated: new Date().toISOString(),

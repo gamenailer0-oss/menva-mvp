@@ -6,6 +6,7 @@
   "logo": "/assets/restaurant/gauchos-logo.svg",
   "theme": "gauchos",
   "pilot": true,
+  "homeOrder": 3,
   "listed": true,
   "loyalty": { "enabled": true, "visits": 8, "gift": null },
   "cuisine": "Steakhouse",

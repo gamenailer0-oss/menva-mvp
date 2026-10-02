@@ -78,25 +78,24 @@ test('dish sheet: bean card only when the fields exist, serve tags, no steam on 
   expect(w.errors).toEqual([]);
 });
 
-test('home page: Baraza is listed alongside Gauchos', async ({ page }) => {
+test('home page: Baraza is listed alongside Haute Dolci and Gauchos', async ({ page }) => {
   const w = watch(page);
   await page.goto('/');
 
-  await test.step('Gauchos card still shows, unchanged, and comes first (pilot)', async () => {
-    const cards = page.locator('.pilot-card');
-    await expect(cards).toHaveCount(3); // Gauchos, Baraza, Haute Dolci
-    await expect(cards.first()).toBeVisible();
-    await expect(cards.first()).toHaveAttribute('href', '/g');
+  await test.step('three uniform cards in homeOrder: Haute Dolci, Baraza, Gauchos', async () => {
+    const cards = page.locator('.menu-card');
+    await expect(cards).toHaveCount(3);
+    expect(await cards.evaluateAll((els) => els.map((e) => e.dataset.theme))).toEqual(['haute-dolci', 'baraza', 'gauchos']);
+    await expect(cards.nth(2).locator('.menu-card-more')).toHaveAttribute('href', '/g'); // Gauchos still links to /g
   });
 
   await test.step('the Baraza card shows its brand and links to /baraza', async () => {
-    const barazaItem = page.locator('.restaurant-row-item[data-theme="baraza"]');
-    const card = barazaItem.locator('.pilot-card');
-    await expect(card).toHaveAttribute('href', '/baraza');
-    await expect(card.locator('.pilot-logo-round')).toHaveAttribute('src', /baraza-logo\.webp/);
+    const card = page.locator('.menu-card[data-theme="baraza"]');
+    await expect(card.locator('.menu-card-more')).toHaveAttribute('href', '/baraza');
+    await expect(card.locator('.menu-card-logo--round')).toHaveAttribute('src', /baraza-logo\.webp/);
     await expect(card).toContainText('Baraza Coffee');
     await expect(card).toContainText('Gulberg III · Lahore');
-    await expect(card.locator('.pilot-tagline')).toHaveText("Pakistan's largest specialty coffee brew bar");
+    await expect(card.locator('.menu-card-quote')).toHaveText("Pakistan's largest specialty coffee brew bar");
   });
 
   // Baraza's 3D pipeline runs independently of this listing change: today it may have zero 3D
@@ -104,14 +103,14 @@ test('home page: Baraza is listed alongside Gauchos', async ({ page }) => {
   // Either way the strip, when present, must render exactly like Gauchos': a photo + name per dish,
   // linking into that dish on /baraza.
   await test.step('dish strip (if any 3D dishes have landed) renders like Gauchos\'', async () => {
-    const barazaItem = page.locator('.restaurant-row-item[data-theme="baraza"]');
-    const items = barazaItem.locator('.pilot-dishes li');
+    const bz = page.locator('.menu-card[data-theme="baraza"]');
+    const items = bz.locator('.menu-card-dishes li');
     const n = await items.count();
     for (let i = 0; i < n; i++) {
       const link = items.nth(i).locator('a');
       await expect(link).toHaveAttribute('href', /^\/baraza\?dish=/);
-      await expect(link.locator('.pilot-dish-photo img')).toBeVisible();
-      await expect(link.locator('.pilot-dish-name')).not.toBeEmpty();
+      await expect(link.locator('.menu-card-photo img')).toBeVisible();
+      await expect(link.locator('.menu-card-dish')).not.toBeEmpty();
     }
   });
 
@@ -121,7 +120,7 @@ test('home page: Baraza is listed alongside Gauchos', async ({ page }) => {
 
 test('clicking the Baraza home card opens /baraza with its own theme', async ({ page }) => {
   await page.goto('/');
-  await page.locator('.restaurant-row-item[data-theme="baraza"] .pilot-card').click();
+  await page.locator('.menu-card[data-theme="baraza"] .menu-card-more').click();
   await expect(page).toHaveURL(/\/baraza$/);
   expect(await page.evaluate(() => document.body.dataset.theme)).toBe('baraza');
 });

@@ -87,8 +87,13 @@ test('dish sheet: San Sebastián Cheesecake shows the real price and an honest, 
 test('home page: Haute Dolci is listed alongside Gauchos and Baraza', async ({ page }) => {
   const w = watch(page);
   await page.goto('/');
-  await expect(page.locator('.restaurant-row-item[data-theme="haute-dolci"]')).toHaveCount(1);
-  await expect(page.locator('.pilot-card')).toHaveCount(3); // Gauchos, Baraza, Haute Dolci
+  await expect(page.locator('.menu-card[data-theme="haute-dolci"]')).toHaveCount(1);
+  await expect(page.locator('.menu-card')).toHaveCount(3);
+  await expect(page.locator('.menu-card').first()).toHaveAttribute('data-theme', 'haute-dolci'); // Haute Dolci is first (homeOrder 1)
+  const card = page.locator('.menu-card[data-theme="haute-dolci"]');
+  await expect(card.locator('.menu-card-logo--wide')).toHaveAttribute('src', /haute-dolci-logo/);
+  await expect(card.locator('.menu-card-quote')).toHaveText("It's a must.");
+  await expect(card.locator('.menu-card-dishes li')).toHaveCount(3);
   expect(w.errors).toEqual([]);
   expect(w.external).toEqual([]);
 });

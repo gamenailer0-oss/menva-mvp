@@ -16,6 +16,7 @@
   const arIcon = '<svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round"><path d="M3 7V5a2 2 0 0 1 2-2h2M17 3h2a2 2 0 0 1 2 2v2M21 17v2a2 2 0 0 1-2 2h-2M7 21H5a2 2 0 0 1-2-2v-2"/><path d="M7 12h10M7 8h10M7 16h6"/></svg>';
 
   const unsureIcon = '<svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round"><circle cx="12" cy="12" r="9"/><path d="M9.6 9.4a2.4 2.4 0 1 1 3.4 2.2c-.7.4-1 .9-1 1.6M12 16.8h.01"/></svg>';
+  const downIcon = '<svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round"><path d="M12 4v15M6 13l6 6 6-6"/></svg>';
   const tickIcon = '<svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round"><path d="m5 12.5 4.5 4.5L19 7.5"/></svg>';
 
   const TABLE_KEY = 'menva.table';
@@ -55,13 +56,15 @@
   };
 
   // ─── Footer ──────────────────────────────────────────────────
-  const footer = `<footer><span>menva<span class="wordmark-dot">.</span></span><p>See it before you order it.</p><small>3D scans provided by restaurants</small></footer>`;
+  const footer = `<footer><span>menva<span class="wordmark-dot">.</span></span><p>See it before you order it.</p><a class="footer-link" href="/for-restaurants" data-link>For restaurants</a><small>3D scans provided by restaurants</small></footer>`;
 
   // ─── Header ──────────────────────────────────────────────────
-  // No directory to go back to: on a restaurant page the diner stays on that menu.
+  // No directory to go back to: on a restaurant page the diner stays on that menu. The "For restaurants"
+  // pill is on every page (css/home.css: accent outline on MENVA pages, neutral ink outline on a
+  // restaurant's own page so it never fights that restaurant's accent).
   function header() {
     const wordmark = `<a class="wordmark" href="/" data-link aria-label="MENVA home">menva<span class="wordmark-dot">.</span></a>`;
-    return `<header class="topbar">${wordmark}<nav><div class="theme-toggle-wrap"><button data-mode-toggle aria-label="Switch theme"><span class="toggle-icon"><svg class="icon-sun" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round"><circle cx="12" cy="12" r="4"/><path d="M12 2v2m0 16v2M2 12h2m16 0h2M5 5l1.5 1.5m11 11L19 19M5 19l1.5-1.5m11-11L19 5"/></svg><svg class="icon-moon" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round"><path d="M20.5 14A8.5 8.5 0 0 1 10 3.5 8.5 8.5 0 1 0 20.5 14Z"/></svg></span></button></div></nav></header>`;
+    return `<header class="topbar">${wordmark}<nav><a class="topbar-pill" href="/for-restaurants" data-link>For restaurants</a><div class="theme-toggle-wrap"><button data-mode-toggle aria-label="Switch theme"><span class="toggle-icon"><svg class="icon-sun" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round"><circle cx="12" cy="12" r="4"/><path d="M12 2v2m0 16v2M2 12h2m16 0h2M5 5l1.5 1.5m11 11L19 19M5 19l1.5-1.5m11-11L19 5"/></svg><svg class="icon-moon" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round"><path d="M20.5 14A8.5 8.5 0 0 1 10 3.5 8.5 8.5 0 1 0 20.5 14Z"/></svg></span></button></div></nav></header>`;
   }
 
   // ─── Cheffy cameo (only when the restaurant config enables it) ─
@@ -118,7 +121,7 @@
   // ─── Motion: scroll reveal ──────────────────────────────────────
   // Section/card arrival: fade + rise, staggered, once per element. Content is visible even if this
   // never runs (the opacity:0 start only applies under html.js-motion). Reduced motion: skip entirely.
-  const REVEAL_SELECTOR = '.dish-card, .dish-row, .home-pilot, .home-how, .menu-heading, .decide-beats, .hero-proof';
+  const REVEAL_SELECTOR = '.dish-card, .dish-row, .menu-heading, .decide-beats, .home-menus-head, .menu-card, .share-band';
   function initMotion(root) {
     const reduced = matchMedia('(prefers-reduced-motion: reduce)').matches;
     document.documentElement.classList.toggle('js-motion', !reduced);
@@ -165,7 +168,7 @@
   function initTilt(root) {
     const reduced = matchMedia('(prefers-reduced-motion: reduce)').matches;
     if (reduced || !matchMedia('(hover: hover) and (pointer: fine)').matches) return;
-    root.querySelectorAll('.dish-card .dish-photo, .pilot-dishes .pilot-dish-photo').forEach(el => {
+    root.querySelectorAll('.dish-card .dish-photo, .menu-card-dishes .menu-card-photo').forEach(el => {
       el.addEventListener('pointermove', (e) => {
         const r = el.getBoundingClientRect();
         const px = (e.clientX - r.left) / r.width - 0.5;
@@ -180,94 +183,120 @@
     });
   }
 
-  // A restaurant card for the home page's "Our restaurants" row: logo/name, up to 3 dish photos,
-  // and a link to its menu. Used for every restaurant with `listed: true` (pilot first). The whole
-  // row item is scoped with the restaurant's own `data-theme` so --accent etc. resolve to its own
-  // palette (Gauchos' card is unaffected — none of its rules read a themed variable). A restaurant
-  // with a `logoRound` (e.g. Baraza) gets the richer brand layout: round crop, name, tagline and a
-  // sage-band accent stripe; one without it keeps the original wide-logo card unchanged.
-  function restaurantRowItem(r) {
-    const rslug = esc(r.slug);
-    const rname = esc(r.displayName || r.name);
-    const rtheme = esc(r.theme || 'default');
-    const rdishes = (r.dishes || []).filter(d => d.has3d).slice(0, 3);
-    const hasBrand = !!r.logoRound;
-    // The brand layout has room for the full name (e.g. "Baraza Coffee"), unlike the compact
-    // wide-logo card, which already carries the name in its logo art.
-    const rfullname = esc(r.name || r.displayName);
-    const cardInner = hasBrand
-      ? `<img src="${esc(r.logoRound)}" alt="${rfullname}" width="56" height="56" class="pilot-logo-round">
-        <span class="pilot-copy">
-          <span class="pilot-name">${rfullname}</span>
-          ${r.tagline ? `<span class="pilot-tagline">${esc(r.tagline)}</span>` : ''}
-          <span class="pilot-where">${esc(r.area || 'Gulberg III')} · ${esc(r.location || 'Lahore')}</span>
-        </span>`
-      : `${r.logo ? `<img src="${esc(r.logo)}" alt="${rname}" width="200" height="80" class="pilot-logo">` : `<span class="pilot-name">${rname}</span>`}
-        <span class="pilot-where">${esc(r.area || 'Gulberg III')} · ${esc(r.location || 'Lahore')}</span>`;
-    return `<div class="restaurant-row-item" data-theme="${rtheme}">
-      <a class="pilot-card${hasBrand ? ' pilot-card--brand' : ''}" href="/${rslug}" data-link>${cardInner}</a>
-      ${rdishes.length ? `<ul class="pilot-dishes">${rdishes.map(d => `
-        <li><a href="/${rslug}?dish=${esc(d.id)}" data-link>
-          <span class="pilot-dish-photo" style="background-image:url('${d.assets.blur}')"><img src="${esc(d.assets.poster)}" alt="" width="1200" height="900" loading="lazy" decoding="async"></span>
-          <span class="pilot-dish-name">${esc(d.name)}</span>
+  // One restaurant card for the home page's "Explore the menus" section. The same design for every
+  // restaurant (logo, a line in their own words, area · city, up to 3 dish photos, "Explore menu");
+  // the card carries that restaurant's own `data-theme`, so its tokens (surface, ink, accent) tint it.
+  // The whole card is one tap target: the "Explore menu" link stretches over it (css/home.css), and
+  // each dish photo sits above that and opens that dish (/<slug>?dish=<id>).
+  // Three logo shapes: a round mark (Baraza) gets its name beside it; a wide lockup or wordmark
+  // (Gauchos, Haute Dolci) carries the name itself and is inverted to light in dark mode.
+  const LOGO_SIZE = { 'haute-dolci': [700, 43] };
+  function menuCard(r) {
+    const slug = esc(r.slug);
+    const name = esc(r.name || r.displayName);
+    const theme = esc(r.theme || 'default');
+    const dishes = (r.dishes || []).filter(d => d.has3d).slice(0, 3);
+    let brand;
+    if (r.logoRound) {
+      brand = `<img class="menu-card-logo menu-card-logo--round" src="${esc(r.logoRound)}" alt="" width="56" height="56"><span class="menu-card-name">${name}</span>`;
+    } else if (r.logo) {
+      const [w, h] = LOGO_SIZE[r.id] || [240, 100];
+      brand = `<img class="menu-card-logo menu-card-logo--wide menu-card-logo--${esc(r.id)}" src="${esc(r.logo)}" alt="${name}" width="${w}" height="${h}">`;
+    } else {
+      brand = `<span class="menu-card-name">${name}</span>`;
+    }
+    const where = [r.area, r.location].filter(Boolean).map(esc).join(' · ') || 'Lahore';
+    return `<article class="menu-card" data-theme="${theme}">
+      <div class="menu-card-brand">
+        <h3 class="menu-card-title">${brand}</h3>
+        ${r.tagline ? `<p class="menu-card-quote">${esc(r.tagline)}</p>` : ''}
+        <p class="menu-card-where">${where}</p>
+      </div>
+      ${dishes.length ? `<ul class="menu-card-dishes" aria-label="Dishes you can see in AR at ${name}">${dishes.map(d => `
+        <li><a href="/${slug}?dish=${esc(d.id)}" data-link>
+          <span class="menu-card-photo" style="background-image:url('${d.assets.blur}')"><img src="${esc(d.assets.poster)}" alt="" width="1200" height="900" loading="lazy" decoding="async"></span>
+          <span class="menu-card-dish">${esc(d.name)}</span>
         </a></li>`).join('')}
       </ul>` : ''}
-      <a class="pilot-more" href="/${rslug}" data-link>See the full menu ${arrow}</a>
-    </div>`;
+      <a class="menu-card-more" href="/${slug}" data-link>Explore menu ${arrow}<span class="sr-only"> at ${name}</span></a>
+    </article>`;
   }
 
-  // ─── Brand page (/) — no 3D ───────────────────────────────────
+  // "Then show it off.": a small, static Table Card (the shareable image a diner makes from a dish).
+  // js/sharecard.js draws the real one only when a diner taps "Share" on a dish and exposes no render
+  // function, so this is a CSS-built miniature in Haute Dolci's own look: its real headline line, its
+  // real cut-out of the dish, its own tokens. Nothing is fetched until the band scrolls near.
+  function shareBand(r, dish) {
+    if (!r || !dish) return '';
+    const line = (r.shareLines?.firstLook || [])[0];
+    const img = dish.assets?.card || dish.assets?.poster;
+    if (!img || !line) return '';
+    const lines = String(line).split('|').map(s => s.trim()).filter(Boolean);
+    const logo = r.logo ? `<img class="tc-logo" src="${esc(r.logo)}" alt="" width="700" height="43">` : '';
+    return `<section class="share-band" aria-labelledby="share-heading">
+      <div class="tc" data-theme="${esc(r.theme || 'default')}" role="img" aria-label="Example Table Card: ${esc(dish.name)} at ${esc(r.name)}">
+        <div class="tc-top">${logo}<span class="tc-pill">Live 3D · First look</span></div>
+        <p class="tc-line">${lines.map((l, i) => i === lines.length - 1 ? `<em>${esc(l)}</em>` : `${esc(l)}<br>`).join('')}</p>
+        <img class="tc-dish" src="${esc(img)}" alt="" width="1200" height="900" loading="lazy" decoding="async">
+        <p class="tc-name">${esc(dish.name)}</p>
+        <p class="tc-stub"><span>Table 12</span><span>${esc(r.area ? r.area.split(',')[0] : r.location || 'Lahore')}</span></p>
+      </div>
+      <div class="share-copy">
+        <p class="overline">Table Card</p>
+        <h2 id="share-heading">Then show it off.</h2>
+        <p>Make a Table Card of your dish, in the restaurant's own look, and share it.</p>
+      </div>
+    </section>`;
+  }
+
+  // ─── Brand page (/) — customers only: no 3D, no owner pitch (that lives at /for-restaurants) ─
   function brandPage() {
     document.title = '3D & AR restaurant menus in Lahore — MENVA';
     setTheme('default');
-    // The pilot's link never depends on the menu data loading: /g is the Gauchos menu.
-    const pilot = data?.restaurants.find(r => r.pilot);
-    const slug = esc(pilot?.slug || 'g');
-    const name = esc(pilot?.name || 'Gauchos');
-    const dishes = (pilot?.dishes || []).filter(d => d.has3d).slice(0, 3);
-    const hero = dishes[0];
-    const menuNames = (pilot?.dishes || []).slice(0, 4).map(d => d.name);
 
-    // A small row of partner restaurants (not a searchable directory, CLAUDE.md §9) — every
-    // `listed: true` restaurant, pilot first. Today only Gauchos is listed, so this renders exactly
-    // one card. If the menu data hasn't loaded, fall back to the pilot's known defaults.
-    const listed = (data?.restaurants || []).filter(r => r.listed).sort((a, b) => (a.pilot === b.pilot ? 0 : a.pilot ? -1 : 1));
-    const restaurantRows = listed.length
-      ? listed.map(restaurantRowItem).join('')
-      : restaurantRowItem({ slug: 'g', name: 'Gauchos', displayName: 'Gauchos', area: 'Gulberg III', location: 'Lahore' });
+    // Restaurants listed on the home page, in data order (scripts/build-data.mjs sorts by `homeOrder`).
+    // If the menu data hasn't loaded, fall back to a single Gauchos card so the diner can still reach /g.
+    const listed = (data?.restaurants || []).filter(r => r.listed);
+    const cards = listed.length
+      ? listed.map(menuCard).join('')
+      : menuCard({ slug: 'g', id: 'gauchos', name: 'Gauchos', theme: 'gauchos', logo: '/assets/restaurant/gauchos-logo.svg', area: 'Gulberg III', location: 'Lahore' });
+
+    // The hero dish is Haute Dolci's San Sebastián cheesecake; the phone's first beat lists that
+    // restaurant's own dish names. Without it (data down) arDemo falls back to its default dish.
+    const heroDish = (data?.restaurants || []).flatMap(r => r.dishes).find(d => d.id === 'hd-san-sebastian' && d.has3d);
+    const heroRestaurant = heroDish && data.restaurants.find(r => r.id === heroDish.restaurant);
+    const menuNames = (heroRestaurant?.dishes || []).slice(0, 4).map(d => d.name);
 
     app.innerHTML = header() + `<main class="home">
       <section class="home-hero">
         <div class="hero-copy">
-          <p class="overline">AR menus · Lahore</p>
+          <p class="overline">Don't order blind.</p>
           <h1>See it on your table. Then <em>decide.</em></h1>
-          <p>Scan the QR at your table and the real dish appears in 3D at true size. Judge the portion, the look and the value before you order.</p>
-          <a class="product-action" href="/${slug}" data-link>Open the ${name} menu ${arrow}</a>
-          <p class="hero-trust">Works in Safari and Chrome · No app to install</p>
+          <p>Scan the QR at your table. The real dish appears at true size, before you order.</p>
+          <a class="product-action" href="#menus" data-scroll>Explore menus ${downIcon}</a>
+          <p class="hero-trust">No app. Works in Safari and Chrome.</p>
         </div>
-        <div class="hero-stage">${arDemo(hero, menuNames)}</div>
+        <div class="hero-stage">${arDemo(heroDish, menuNames)}</div>
         ${decideBeats()}
-        <ul class="hero-proof" aria-label="What published studies found">
-          <li><strong>Up to 30%</strong> more sales for dishes once a photo is added <cite>Grubhub</cite></li>
-          <li><strong>25%</strong> more dessert sales when guests viewed desserts in AR <cite>Kabaq × Bareburger study</cite></li>
-          <li class="hero-proof-note">Published studies from abroad, not MENVA results.</li>
-        </ul>
       </section>
 
-      <section class="home-pilot" aria-labelledby="pilot-heading">
-        <p class="overline" id="pilot-heading">Our restaurants</p>
-        <div class="restaurant-row">${restaurantRows}</div>
+      <section class="home-menus" id="menus" aria-labelledby="menus-heading">
+        <div class="home-menus-head">
+          <p class="overline">Restaurants in Lahore</p>
+          <h2 id="menus-heading" tabindex="-1">Explore the menus</h2>
+        </div>
+        <div class="menu-grid">${cards}</div>
       </section>
-
-      <section class="home-how" aria-labelledby="how-heading">
-        <h2 id="how-heading">How it works</h2>
-        <ol>
-          <li><strong>Scan the code on your table.</strong> The menu opens on your phone — no app to install.</li>
-          <li><strong>Tap a dish.</strong> The real dish comes into focus; turn it around with a finger.</li>
-          <li><strong>See it on your table.</strong> Place it in front of you at its true size, then decide.</li>
-        </ol>
-      </section>
+      ${shareBand(heroRestaurant, heroDish)}
     </main>` + footer;
+
+    // "Explore menus" scrolls to the restaurants (no hash change: popstate would re-render the page).
+    app.querySelector('[data-scroll]')?.addEventListener('click', (e) => {
+      e.preventDefault();
+      const target = app.querySelector('#menus');
+      target?.scrollIntoView({ behavior: matchMedia('(prefers-reduced-motion: reduce)').matches ? 'auto' : 'smooth', block: 'start' });
+      target?.querySelector('h2')?.focus({ preventScroll: true });
+    });
     pauseDemoOffscreen();
     initMotion(app);
     initTilt(app);

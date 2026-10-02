@@ -7,5 +7,5 @@ test('wordmark on a restaurant page links back to MENVA home', async ({ page }) 
   await expect(wordmark).toHaveAttribute('href', '/');
   await wordmark.click();
   await expect(page).toHaveURL(/\/$/);
-  await expect(page.locator('.pilot-card').first()).toBeVisible(); // Gauchos card (pilot, listed first)
+  await expect(page.locator('.menu-card').first()).toBeVisible(); // Haute Dolci card (homeOrder 1)
 });

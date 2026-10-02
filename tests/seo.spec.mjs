@@ -195,7 +195,8 @@ test('/haute-dolci/12 serves the restaurant page with its own tags and canonical
 test('sitemap lists the home page and all three listed restaurants, each with a lastmod', async ({ request }) => {
   const text = await (await request.get('/sitemap.xml')).text();
   const urls = [...text.matchAll(/<url><loc>([^<]+)<\/loc><lastmod>(\d{4}-\d{2}-\d{2})<\/lastmod><\/url>/g)].map((m) => new URL(m[1]).pathname);
-  expect(urls).toEqual(['/', '/g', '/baraza', '/haute-dolci', '/for-restaurants']);
+  expect(urls[0]).toBe('/');
+  expect([...urls].sort()).toEqual(['/', '/baraza', '/for-restaurants', '/g', '/haute-dolci']); // restaurant order follows homeOrder, not asserted
 });
 
 // Crawlers that do not run JS still need real content: one h1, a description, links to every menu.
@@ -240,16 +241,14 @@ for (const route of ['/', '/g/12', '/baraza/12', '/haute-dolci/12']) {
   });
 }
 
-test('home hero: the three beats and the cited evidence are on the page', async ({ page }) => {
+test('home hero: the three beats are on the page (the cited studies live on /for-restaurants)', async ({ page }) => {
   await page.goto('/');
   await expect(page.locator('h1')).toHaveText('See it on your table. Then decide.');
   await expect(page.locator('.decide-beats .beat')).toHaveCount(3);
   await expect(page.locator('.decide-beats')).toContainText('Unsure what to order?');
   await expect(page.locator('.decide-beats')).toContainText('See it life-size on your table');
   await expect(page.locator('.decide-beats')).toContainText('Order with confidence');
-  const proof = page.locator('.hero-proof');
-  await expect(proof).toContainText('Grubhub');
-  await expect(proof).toContainText('Kabaq × Bareburger');
+  await expect(page.locator('.hero-proof')).toHaveCount(0); // the cited studies moved to /for-restaurants
 });
 
 test('home hero under reduced motion: nothing animates and all three beats are fully visible', async ({ page }) => {
