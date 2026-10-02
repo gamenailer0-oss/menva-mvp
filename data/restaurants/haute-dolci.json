@@ -7,6 +7,7 @@
   "theme": "haute-dolci",
   "pilot": false,
   "listed": true,
+  "loyalty": { "enabled": true, "visits": 8, "gift": null },
   "cuisine": "Desserts",
   "tagline": "It's a must.",
   "hours": "Daily, 9am–midnight (1am Fri–Sun)",

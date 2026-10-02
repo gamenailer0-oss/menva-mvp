@@ -342,6 +342,7 @@
 
     app.innerHTML = header() + bandHTML + `<main class="restaurant-page ${themeClass}">
       ${coverHTML}
+      <div class="loyalty-slot" data-loyalty></div>
       ${r.description ? `<p class="menu-intro">${esc(r.description)}</p>` : ''}
       ${catNav}
       <section class="menu-section">
@@ -412,8 +413,11 @@
   function initTray(r, table) {
     const pill = app.querySelector('#tray-pill');
     const waiterDialog = app.querySelector('#waiter-dialog');
+    const content = waiterDialog.querySelector('.waiter-content');
+    const dishById = new Map(r.dishes.map((d) => [d.id, d]));
     let clearArmed = false;
     let clearTimer = 0;
+    let lo = null; // the loyalty card / gift pass at the bottom of the screen (js/loyalty.js)
 
     function renderPill() {
       const n = MenvaTray.count(r.id, table);
@@ -421,55 +425,103 @@
       if (n > 0) pill.textContent = `Show the waiter · ${n}`;
     }
 
-    function renderWaiter() {
-      const items = MenvaTray.get(r.id, table);
-      const content = waiterDialog.querySelector('.waiter-content');
-      const tableLabel = table ? `Table ${esc(table)}` : 'Your order';
-      const rows = items.map((it) => {
-        const dish = r.dishes.find((d) => d.id === it.id);
-        if (!dish) return '';
-        const price = dish.price_pkr != null ? `<span class="waiter-item-price">${esc(formatPrice(dish.price_pkr))}</span>` : '';
-        return `<li class="waiter-item" data-item="${esc(it.id)}">
-            <div class="waiter-item-row">
-              <span class="waiter-item-qty">${it.qty} ×</span>
-              <span class="waiter-item-name">${esc(dish.name)}</span>
-              ${price}
-            </div>
-            ${it.note ? `<p class="waiter-item-note">${esc(it.note)}</p>` : ''}
-            <div class="waiter-item-edit">
-              <button type="button" class="waiter-edit-btn waiter-edit-minus" aria-label="Fewer ${esc(dish.name)}">−</button>
-              <button type="button" class="waiter-edit-btn waiter-edit-plus" aria-label="More ${esc(dish.name)}">+</button>
-              <button type="button" class="waiter-edit-btn waiter-edit-remove" aria-label="Remove ${esc(dish.name)}">Remove</button>
-            </div>
-          </li>`;
-      }).join('');
-      content.innerHTML = `
-        <button type="button" class="waiter-done">Done</button>
-        <h2 id="waiter-title">${esc(tableLabel)}</h2>
-        <p class="waiter-hint">Turn your screen toward your server.</p>
-        <ul class="waiter-list">${rows || '<li class="waiter-empty">Nothing on the table yet.</li>'}</ul>
-        ${items.length ? `<button type="button" class="waiter-clear">Clear the list</button>` : ''}
-      `;
+    // Small restaurant mark at the top. The screen is always dark, so wide logos are drawn in white.
+    function waiterBrand() {
+      const name = esc(r.displayName || r.name);
+      if (r.logoRound) return `<img class="waiter-brand-mark" src="${esc(r.logoRound)}" alt="" width="32" height="32"><span class="waiter-brand-name">${name}</span>`;
+      if (r.logo) return `<img class="waiter-brand-logo" src="${esc(r.logo)}" alt="${name}" height="26">`;
+      return `<span class="waiter-brand-name">${name}</span>`;
+    }
 
-      content.querySelector('.waiter-done').addEventListener('click', () => waiterDialog.close());
-      content.querySelectorAll('.waiter-item').forEach((li) => {
-        const id = li.dataset.item;
-        li.querySelector('.waiter-edit-minus').addEventListener('click', () => {
-          const item = MenvaTray.get(r.id, table).find((x) => x.id === id);
-          if (!item) return;
-          if (item.qty <= 1) MenvaTray.remove(r.id, table, id);
-          else MenvaTray.setQty(r.id, table, id, item.qty - 1);
-        });
-        li.querySelector('.waiter-edit-plus').addEventListener('click', () => {
-          const item = MenvaTray.get(r.id, table).find((x) => x.id === id);
-          if (item) MenvaTray.setQty(r.id, table, id, item.qty + 1);
-        });
-        li.querySelector('.waiter-edit-remove').addEventListener('click', () => {
-          MenvaTray.remove(r.id, table, id);
-        });
+    // The screen is built once per opening; after that only the parts that changed are touched, so a
+    // quantity tap never re-lays-out the list and the focused button keeps its focus.
+    function buildWaiter() {
+      content.innerHTML = `
+        <div class="waiter-top">
+          <div class="waiter-brand">${waiterBrand()}</div>
+          <button type="button" class="waiter-done">Done</button>
+        </div>
+        <h2 id="waiter-title"${table ? '' : ' class="is-order"'}>${table ? `Table ${esc(table)}` : 'Your order'}</h2>
+        <div class="waiter-main">
+          <ul class="waiter-list"></ul>
+          <p class="waiter-empty" hidden>Nothing on the table yet.</p>
+        </div>
+        <p class="waiter-hint">Turn your screen toward your server.</p>
+        <div class="waiter-loyalty"></div>
+        <button type="button" class="waiter-clear" hidden>Clear the list</button>
+        <p class="sr-only" id="waiter-status" role="status"></p>
+      `;
+      lo = window.MenvaLoyalty ? MenvaLoyalty.waiter(content.querySelector('.waiter-loyalty'), { restaurant: r, table }) : null;
+    }
+
+    function createItem(id, dish) {
+      const name = esc(dish.name);
+      const li = document.createElement('li');
+      li.className = 'waiter-item';
+      li.dataset.item = id;
+      li.innerHTML = `
+        <div class="waiter-item-row">
+          <span class="waiter-item-qty"></span>
+          <span class="waiter-item-name">${name}</span>
+        </div>
+        <p class="waiter-item-note" hidden></p>
+        <div class="waiter-item-edit">
+          <button type="button" class="waiter-edit-btn waiter-edit-minus" aria-label="Fewer ${name}">−</button>
+          <button type="button" class="waiter-edit-btn waiter-edit-plus" aria-label="More ${name}">+</button>
+          <button type="button" class="waiter-edit-btn waiter-edit-remove" aria-label="Remove ${name}">Remove</button>
+          ${dish.price_pkr != null ? `<span class="waiter-item-price">${esc(formatPrice(dish.price_pkr))}</span>` : ''}
+        </div>`;
+      return li;
+    }
+
+    function updateItem(li, it) {
+      const qtyEl = li.querySelector('.waiter-item-qty');
+      const qtyText = `${it.qty} ×`;
+      if (qtyEl.textContent !== qtyText) {
+        const first = qtyEl.textContent === '';
+        qtyEl.textContent = qtyText;
+        if (!first) { qtyEl.classList.remove('is-bump'); void qtyEl.offsetWidth; qtyEl.classList.add('is-bump'); } // a 160 ms transform nudge
+      }
+      const noteEl = li.querySelector('.waiter-item-note');
+      const note = it.note || '';
+      if (noteEl.textContent !== note) noteEl.textContent = note; // text, never markup
+      noteEl.hidden = !note;
+    }
+
+    function syncWaiter() {
+      const list = content.querySelector('.waiter-list');
+      if (!list) return;
+      const items = MenvaTray.get(r.id, table).filter((it) => dishById.has(it.id));
+      const existing = new Map([...list.children].map((li) => [li.dataset.item, li]));
+      const focusedIndex = list.contains(document.activeElement) ? [...list.children].indexOf(document.activeElement.closest('.waiter-item')) : -1;
+
+      items.forEach((it, i) => {
+        let li = existing.get(it.id);
+        if (li) existing.delete(it.id); else li = createItem(it.id, dishById.get(it.id));
+        updateItem(li, it);
+        if (list.children[i] !== li) list.insertBefore(li, list.children[i] || null); // only moves what must move
       });
-      content.querySelector('.waiter-clear')?.addEventListener('click', (e) => {
-        const btn = e.currentTarget;
+      existing.forEach((li) => li.remove());
+
+      // The row the guest was on is gone: keep focus in the list instead of dropping it to the page.
+      if (focusedIndex >= 0 && !list.contains(document.activeElement)) {
+        const next = list.children[Math.min(focusedIndex, list.children.length - 1)];
+        (next?.querySelector('.waiter-edit-plus') || content.querySelector('.waiter-done')).focus();
+      }
+
+      content.querySelector('.waiter-empty').hidden = items.length > 0;
+      const clearBtn = content.querySelector('.waiter-clear');
+      clearBtn.hidden = items.length === 0;
+      if (!items.length) { clearArmed = false; clearTimeout(clearTimer); clearBtn.textContent = 'Clear the list'; }
+    }
+
+    const say = (text) => { const el = content.querySelector('#waiter-status'); if (el) el.textContent = text; };
+
+    content.addEventListener('click', (e) => {
+      const btn = e.target.closest('button');
+      if (!btn) return;
+      if (btn.classList.contains('waiter-done')) return waiterDialog.close();
+      if (btn.classList.contains('waiter-clear')) {
         if (!clearArmed) {
           clearArmed = true;
           btn.textContent = 'Tap again to clear';
@@ -479,31 +531,58 @@
         clearTimeout(clearTimer);
         clearArmed = false;
         MenvaTray.clear(r.id, table);
-        waiterDialog.close();
-      });
-    }
+        return waiterDialog.close();
+      }
+      const li = btn.closest('.waiter-item');
+      if (!li) return; // the loyalty pass has its own controls (js/loyalty.js)
+      const id = li.dataset.item;
+      const item = MenvaTray.get(r.id, table).find((x) => x.id === id);
+      if (!item) return;
+      const name = dishById.get(id)?.name || '';
+      if (btn.classList.contains('waiter-edit-plus')) {
+        MenvaTray.setQty(r.id, table, id, item.qty + 1);
+        say(`${name}: ${Math.min(20, item.qty + 1)}`);
+      } else if (btn.classList.contains('waiter-edit-minus')) {
+        if (item.qty <= 1) { MenvaTray.remove(r.id, table, id); say(`${name} removed`); }
+        else { MenvaTray.setQty(r.id, table, id, item.qty - 1); say(`${name}: ${item.qty - 1}`); }
+      } else if (btn.classList.contains('waiter-edit-remove')) {
+        MenvaTray.remove(r.id, table, id);
+        say(`${name} removed`);
+      }
+    });
 
-    pill.addEventListener('click', () => {
-      lastWaiterTrigger = pill;
+    function openWaiter(trigger) {
+      lastWaiterTrigger = trigger;
       MenvaTrack('waiter_view');
-      renderWaiter();
+      buildWaiter();
+      syncWaiter();
+      // A visit is stamped when the guest came through a table QR and shows a real list (once a day).
+      lo?.visit(MenvaTray.get(r.id, table).filter((it) => dishById.has(it.id)).length);
       document.body.classList.add('modal-open');
       waiterDialog.showModal();
-    });
+    }
+
+    pill.addEventListener('click', () => openWaiter(pill));
     waiterDialog.addEventListener('close', () => {
       document.body.classList.remove('modal-open');
-      waiterDialog.querySelector('.waiter-content').innerHTML = '';
+      content.innerHTML = '';
+      lo = null;
       clearArmed = false;
       clearTimeout(clearTimer);
-      lastWaiterTrigger?.focus();
+      const back = lastWaiterTrigger?.isConnected ? lastWaiterTrigger : (app.querySelector('[data-loyalty-claim]') || pill);
+      back.focus();
     });
 
     trayUnsubscribe?.();
     trayUnsubscribe = MenvaTray.onChange(() => {
       renderPill();
-      if (waiterDialog.open) renderWaiter();
+      if (waiterDialog.open) syncWaiter();
     });
     renderPill();
+
+    // The quiet stamp card under the banner. On the gift visit it offers a way to the pass even
+    // when the list is empty.
+    window.MenvaLoyalty?.mountPage(app.querySelector('[data-loyalty]'), r, { onClaim: (btn) => openWaiter(btn) });
   }
 
   // ─── Dish facts (order fixed by CLAUDE.md, Phase 3) ────────────

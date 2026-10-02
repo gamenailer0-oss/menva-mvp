@@ -186,6 +186,18 @@ if (pilots.length !== 1) {
 }
 const pilot = pilots[0];
 
+// Loyalty stamp card (js/loyalty.js): { enabled, visits, gift }. Passed through as-is. `gift` is the
+// restaurant's own to name — null means the card says "a gift from the house"; we never invent one.
+for (const r of restaurants) {
+  const l = r.loyalty;
+  if (l === undefined) continue;
+  const bad = (msg) => errors.push(`data/restaurants/${r.id}.json, loyalty: ${msg}`);
+  if (l === null || typeof l !== 'object' || Array.isArray(l)) { bad('must be an object like { "enabled": true, "visits": 8, "gift": null }'); continue; }
+  if (typeof l.enabled !== 'boolean') bad('"enabled" must be true or false');
+  if (!Number.isInteger(l.visits) || l.visits < 2 || l.visits > 12) bad('"visits" must be a whole number from 2 to 12');
+  if (l.gift != null && (typeof l.gift !== 'string' || !l.gift.trim() || l.gift.length > 60)) bad('"gift" must be null or a short text naming the gift');
+}
+
 const seen = new Set();
 const dishes = [];
 for (const row of csvRows) {

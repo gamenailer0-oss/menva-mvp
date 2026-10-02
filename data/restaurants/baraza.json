@@ -8,6 +8,7 @@
   "theme": "baraza",
   "pilot": false,
   "listed": true,
+  "loyalty": { "enabled": true, "visits": 8, "gift": null },
   "cuisine": "Specialty coffee",
   "tagline": "Pakistan's largest specialty coffee brew bar",
   "hours": "Open 24/7",

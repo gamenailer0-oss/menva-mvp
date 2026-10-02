@@ -1,1 +1,394 @@
-/* MENVA — loyalty (owned by one helper in the "wave" build; see the plan) */
+/* ─────────────────────────────────────────────────────────────
+   MENVA — loyalty stamp card + "Show the waiter" refinement
+   Loaded after style.css, so the waiter rules here refine the base ones there.
+   Motion: transform and opacity only. Reduced motion gets the finished state.
+   ───────────────────────────────────────────────────────────── */
+
+/* ═══ The quiet card under the banner ═══ */
+.loyalty-slot {
+  /* The card reads the restaurant's own tokens; the waiter screen (always dark) sets its own below. */
+  --lo-fill: var(--accent);
+  --lo-off: color-mix(in srgb, var(--muted) 60%, var(--surface));
+  --lo-bg: var(--surface);
+  --lo-ink: var(--muted);
+  max-width: 560px;
+  margin: 14px auto 10px;
+}
+.loyalty-slot:empty { display: none; }
+
+.loyalty-card {
+  display: flex;
+  flex-wrap: wrap;
+  align-items: center;
+  justify-content: center;
+  gap: 8px 16px;
+  padding: 12px 16px;
+  background: var(--lo-bg);
+  border: 1px solid var(--line);
+  border-radius: 14px;
+  text-align: center;
+}
+.loyalty-card.is-ready { border-color: color-mix(in srgb, var(--lo-fill) 55%, var(--line)); }
+.loyalty-line {
+  margin: 0;
+  font-size: 0.8125rem;
+  line-height: 1.4;
+  color: var(--lo-ink);
+  font-variant-numeric: tabular-nums;
+}
+.loyalty-note {
+  flex-basis: 100%;
+  margin: 0;
+  font-size: 0.8125rem;
+  font-weight: 600;
+  color: var(--lo-fill);
+  animation: lo-fade 300ms var(--ease-out) both;
+}
+.loyalty-claim {
+  min-height: 44px;
+  padding: 0 8px;
+  color: var(--lo-fill);
+  font-size: 0.8125rem;
+  font-weight: 600;
+  text-decoration: underline;
+  text-underline-offset: 3px;
+}
+.loyalty-claim:focus-visible, .lo-confirm:focus-visible, .lo-hold:focus-visible {
+  outline: 2px solid currentColor;
+  outline-offset: 3px;
+}
+
+/* ── The marks: one cell per visit; the shape is the restaurant's own ── */
+.loyalty-marks {
+  display: flex;
+  gap: 4px;
+  margin: 0;
+  padding: 0;
+  list-style: none;
+}
+.lm {
+  width: 18px;
+  height: 18px;
+  display: grid;
+  place-items: center;
+}
+.lm i {
+  position: relative;
+  display: block;
+  width: 10px;
+  height: 10px;
+  border-radius: 50%;
+  box-shadow: inset 0 0 0 1.5px var(--lo-off);
+  transform: rotate(var(--lm-rot, 0deg));
+}
+.lm.is-on i { background: var(--lo-fill); box-shadow: none; }
+
+/* Haute Dolci — soft round dots: a blush bloom when waiting, plum when stamped */
+[data-theme="haute-dolci"] .lm i {
+  background: color-mix(in srgb, var(--brand-band) 55%, transparent);
+  box-shadow: inset 0 0 0 1px color-mix(in srgb, var(--lo-fill) 40%, transparent);
+}
+[data-theme="haute-dolci"] .lm.is-on i { background: var(--lo-fill); box-shadow: none; }
+
+/* Baraza — coffee beans: an olive oval with its centre crease */
+[data-theme="baraza"] .lm { --lm-rot: -28deg; }
+[data-theme="baraza"] .lm i { width: 9px; height: 13px; }
+[data-theme="baraza"] .lm i::after {
+  content: '';
+  position: absolute;
+  left: 50%;
+  top: 14%;
+  bottom: 14%;
+  width: 1.5px;
+  margin-left: -0.75px;
+  border-radius: 2px;
+  background: var(--lo-off);
+  transform: rotate(10deg);
+}
+[data-theme="baraza"] .lm.is-on i::after { background: var(--lo-bg); }
+
+/* Gauchos — a small notched frame, echoing the corners of their brand mark */
+[data-theme="gauchos"] .lm i {
+  --notch: polygon(3px 0, calc(100% - 3px) 0, 100% 3px, 100% calc(100% - 3px), calc(100% - 3px) 100%, 3px 100%, 0 calc(100% - 3px), 0 3px);
+  width: 14px;
+  height: 11px;
+  border-radius: 0;
+  box-shadow: none;
+  background: var(--lo-off);
+  clip-path: var(--notch);
+}
+[data-theme="gauchos"] .lm i::after {
+  content: '';
+  position: absolute;
+  inset: 1.5px;
+  background: var(--lo-bg);
+  clip-path: var(--notch);
+}
+[data-theme="gauchos"] .lm.is-on i { background: var(--lo-fill); }
+[data-theme="gauchos"] .lm.is-on i::after { opacity: 0; }
+
+/* The last mark is a small gift */
+.lm-gift svg { width: 16px; height: 16px; overflow: visible; }
+.lm-gift svg path { fill: none; stroke: var(--lo-off); stroke-width: 1.1; stroke-linejoin: round; stroke-linecap: round; }
+.lm-gift.is-on svg path { fill: var(--lo-fill); stroke: var(--lo-fill); }
+.lm-gift.is-on svg .g-rib { stroke: var(--lo-bg); }
+.lm-gift.is-on svg .g-lid { stroke: var(--lo-bg); stroke-width: 0.6; }
+
+/* A new stamp lands: scale + opacity, 300 ms */
+.lm.is-new > i, .lm.is-new > svg { animation: lo-stamp 300ms var(--ease-out) both; }
+@keyframes lo-stamp {
+  from { opacity: 0; transform: rotate(var(--lm-rot, 0deg)) scale(0.4); }
+  to { opacity: 1; transform: rotate(var(--lm-rot, 0deg)) scale(1); }
+}
+@keyframes lo-fade { from { opacity: 0; } to { opacity: 1; } }
+
+/* ═══ "Show the waiter" — always dark, always high-contrast ═══ */
+.waiter-dialog {
+  /* The loyalty card on this screen: on-dark versions of each restaurant's accent */
+  --lo-fill: #E2896D;
+  --lo-off: #7A6F62;
+  --lo-bg: #181513;
+  --lo-ink: #B8AE9E;
+}
+[data-theme="haute-dolci"] .waiter-dialog { --lo-fill: #E58AA8; }
+[data-theme="baraza"] .waiter-dialog { --lo-fill: #A9B07A; }
+.waiter-dialog .loyalty-card { border-color: #2C2721; }
+
+.waiter-content {
+  width: 100%;
+  max-width: 640px;
+  margin: 0 auto;
+  padding: max(14px, env(safe-area-inset-top)) 22px max(22px, env(safe-area-inset-bottom));
+  display: flex;
+  flex-direction: column;
+}
+
+/* 1. Small restaurant mark and Done */
+.waiter-top {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  gap: 12px;
+  min-height: 44px;
+}
+.waiter-brand { display: flex; align-items: center; gap: 10px; min-width: 0; }
+.waiter-brand-mark { width: 32px; height: 32px; border-radius: 50%; object-fit: cover; flex: none; }
+.waiter-brand-logo { height: 26px; width: auto; max-width: 160px; filter: brightness(0) invert(1); opacity: 0.92; }
+.waiter-brand-name {
+  font-size: 0.75rem;
+  font-weight: 600;
+  letter-spacing: 0.14em;
+  text-transform: uppercase;
+  color: #C9BFAE;
+  white-space: nowrap;
+  overflow: hidden;
+  text-overflow: ellipsis;
+}
+.waiter-done {
+  flex: none;
+  align-self: auto;
+  min-width: 72px;
+  border-color: #4A443C;
+}
+.waiter-done:focus-visible, .waiter-edit-btn:focus-visible, .waiter-clear:focus-visible {
+  outline: 2px solid #FFFFFF;
+  outline-offset: 2px;
+}
+
+/* 2. The table number — the first thing a server reads */
+.waiter-dialog h2#waiter-title {
+  margin: 26px 0 22px;
+  font-family: var(--font-display);
+  font-weight: 400;
+  font-size: clamp(3.25rem, 18vw, 6rem);
+  line-height: 1;
+  letter-spacing: -0.01em;
+  color: #FFFFFF;
+}
+.waiter-dialog h2#waiter-title.is-order { font-size: clamp(2.75rem, 13vw, 4.5rem); }
+
+/* 3. The list: qty × name large, the note on its own line, guest controls quiet */
+.waiter-main { flex: 1; }
+.waiter-list {
+  display: block;
+  margin: 0;
+  padding: 0;
+  list-style: none;
+  flex: none;
+}
+.waiter-item {
+  display: grid;
+  grid-template-columns: 3.6ch 1fr;
+  column-gap: 14px;
+  align-items: baseline;
+  padding: 18px 0 16px;
+  border-top: 1px solid #2C2721;
+  border-bottom: 0;
+  font-size: clamp(1.5rem, 1.15rem + 1.6vw, 2rem);
+  line-height: 1.2;
+}
+.waiter-item:last-child { border-bottom: 1px solid #2C2721; }
+.waiter-item-row { display: contents; font-size: inherit; }
+.waiter-item-qty {
+  grid-column: 1;
+  font-weight: 600;
+  color: #FFFFFF;
+  font-variant-numeric: tabular-nums;
+  transform-origin: left center;
+}
+.waiter-item-qty.is-bump { animation: wq-bump 160ms var(--ease-out); }
+@keyframes wq-bump { from { transform: scale(1.14); } to { transform: scale(1); } }
+.waiter-item-name { grid-column: 2; font-weight: 500; color: #FFFFFF; overflow-wrap: anywhere; }
+.waiter-item-note {
+  grid-column: 2;
+  margin: 6px 0 0;
+  font-size: 1.125rem;
+  line-height: 1.35;
+  font-style: normal;
+  color: #D9D0C0;
+  overflow-wrap: anywhere;
+}
+.waiter-item-edit {
+  grid-column: 2;
+  display: flex;
+  align-items: center;
+  gap: 8px;
+  margin-top: 12px;
+  opacity: 1;
+  font-size: 1rem;
+}
+.waiter-edit-btn {
+  min-width: 48px;
+  min-height: 44px;
+  padding: 0 14px;
+  border: 1px solid #3A352E;
+  border-radius: var(--radius-pill);
+  background: transparent;
+  color: #B8AE9E;
+  font-size: 1.25rem;
+  line-height: 1;
+  opacity: 1;
+  transition: background var(--ease-fast), color var(--ease-fast);
+}
+.waiter-edit-remove { font-size: 0.875rem; padding: 0 16px; border-color: transparent; text-decoration: underline; text-underline-offset: 3px; }
+.waiter-edit-btn:hover, .waiter-edit-btn:active { background: #1F1B17; color: #FFFFFF; opacity: 1; }
+.waiter-item-price {
+  margin-left: auto;
+  white-space: nowrap;
+  font-size: 0.875rem;
+  color: #A89E8E;
+  font-variant-numeric: tabular-nums;
+}
+.waiter-empty { padding: 8px 0; font-size: var(--text-lg); color: #C9BFAE; }
+
+/* 4. The hint, then the loyalty card at the bottom */
+.waiter-hint {
+  margin: 8px 0 16px;
+  text-align: center;
+  font-size: var(--text-base);
+  color: #B8AE9E;
+}
+.waiter-loyalty:empty { display: none; }
+.waiter-loyalty { margin-bottom: 6px; }
+.waiter-clear { margin-top: 8px; }
+
+/* ═══ The gift pass (the Nth visit) ═══ */
+.loyalty-pass {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  gap: 10px;
+  padding: 24px 20px 18px;
+  border: 1px solid color-mix(in srgb, var(--lo-fill) 45%, #2C2721);
+  border-radius: 20px;
+  background: #1A1613;
+  text-align: center;
+}
+.lo-pass-eyebrow {
+  margin: 0;
+  font-size: 0.6875rem;
+  font-weight: 600;
+  letter-spacing: 0.14em;
+  text-transform: uppercase;
+  color: var(--lo-fill);
+}
+.loyalty-pass h3 {
+  margin: 0;
+  font-family: var(--font-display);
+  font-weight: 400;
+  font-size: clamp(1.875rem, 1.4rem + 2vw, 2.5rem);
+  line-height: 1.1;
+  color: #FFFFFF;
+}
+.lo-pass-gift { margin: 0; font-size: 1.125rem; color: #F5EFE4; }
+.lo-pass-help { margin: 0; font-size: 0.875rem; color: #B8AE9E; }
+.loyalty-card--pass { padding: 4px 0 0; border: 0; background: none; }
+
+/* Press and hold for 1.2 s. The ring fills with two half-rings turned by transform — nothing else moves. */
+.lo-hold {
+  position: relative;
+  width: 100%;
+  min-height: 68px;
+  margin-top: 6px;
+  padding: 12px 20px;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  gap: 14px;
+  border-radius: var(--radius-pill);
+  background: var(--lo-fill);
+  color: #111111;
+  font-size: 1.0625rem;
+  font-weight: 600;
+  touch-action: none;
+  user-select: none;
+  -webkit-user-select: none;
+  -webkit-touch-callout: none;
+  transition: transform 140ms var(--ease-out);
+}
+.lo-hold.is-holding { transform: scale(0.985); }
+.lo-ring {
+  position: relative;
+  flex: none;
+  width: 36px;
+  height: 36px;
+  border-radius: 50%;
+  box-shadow: inset 0 0 0 3px rgba(17, 17, 17, 0.28);
+}
+.lo-half { position: absolute; top: 0; width: 50%; height: 100%; overflow: hidden; }
+.lo-half--r { left: 50%; }
+.lo-half--l { left: 0; }
+.lo-half i {
+  position: absolute;
+  top: 0;
+  width: 200%;
+  height: 100%;
+  box-sizing: border-box;
+  border: 3px solid transparent;
+  border-top-color: #111111;
+  border-right-color: #111111;
+  border-radius: 50%;
+}
+.lo-half--r i { left: -100%; transform: rotate(-135deg); }
+.lo-half--l i { left: 0; transform: rotate(45deg); }
+.lo-hold.is-holding .lo-half--r i { animation: lo-ring-r 600ms linear forwards; }
+.lo-hold.is-holding .lo-half--l i { animation: lo-ring-l 600ms linear 600ms forwards; }
+@keyframes lo-ring-r { to { transform: rotate(45deg); } }
+@keyframes lo-ring-l { to { transform: rotate(225deg); } }
+
+.lo-confirm {
+  min-height: 44px;
+  padding: 0 16px;
+  color: #B8AE9E;
+  font-size: 0.875rem;
+  text-decoration: underline;
+  text-underline-offset: 3px;
+}
+.lo-confirm:focus-visible { outline-color: #FFFFFF; }
+
+@media (prefers-reduced-motion: reduce) {
+  .lm.is-new > i, .lm.is-new > svg, .waiter-item-qty.is-bump, .loyalty-note { animation: none; }
+  .lo-hold, .lo-hold.is-holding { transition: none; transform: none; }
+  .lo-hold.is-holding .lo-half i { animation: none; }
+  .lo-hold.is-holding { background: color-mix(in srgb, var(--lo-fill) 78%, #111111); }
+}

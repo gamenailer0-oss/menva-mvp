@@ -253,3 +253,15 @@ test('Table Card events: share_card_open / share_card_shared are kept, bad mood 
   assert.equal(sum.days[0].cards_shared, 2);
   assert.equal(sum.dishes[0].cards_shared, 2);
 });
+
+test('Loyalty events: loyalty_stamp / loyalty_redeem are kept (no props, no dish), counted per day as stamps given / gifts redeemed', () => {
+  const out = clean(batch([
+    { e: 'loyalty_stamp', d: '<b>', ip: '1.2.3.4' },
+    { e: 'loyalty_stamp' },
+    { e: 'loyalty_redeem', extra: 'x' },
+  ]));
+  assert.deepEqual(out.events, [{ e: 'loyalty_stamp' }, { e: 'loyalty_stamp' }, { e: 'loyalty_redeem' }]);
+  const sum = summarise([{ day: '2026-10-02', restaurant: 'haute-dolci', table: '12', session: 's1', events: out.events }]);
+  assert.equal(sum.days[0].stamps_given, 2);
+  assert.equal(sum.days[0].gifts_redeemed, 1);
+});

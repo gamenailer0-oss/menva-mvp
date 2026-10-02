@@ -29,6 +29,9 @@ export const EVENTS = {
   ar_failed: {},
   tray_add: {},
   waiter_view: {},
+  // Loyalty stamp card (js/loyalty.js): a visit was stamped / a gift was redeemed. Restaurant id only.
+  loyalty_stamp: {},
+  loyalty_redeem: {},
   // Table Card (js/sharecard.js): the sheet was opened / the card was shared or saved. `mood` is which card.
   share_card_open: {},
   share_card_shared: {
@@ -81,7 +84,7 @@ export function summarise(batches, restaurant) {
   const scoped = restaurant == null ? batches : batches.filter((b) => b.restaurant === restaurant);
   const byDay = new Map();
   const byDish = new Map();
-  const day = (d) => byDay.get(d) ?? byDay.set(d, { day: d, sessions: new Set(), scans: 0, dish_opens: 0, loads: [], failures: 0, tiers: {}, ar_launches: 0, placed: [], tray_adds: 0, waiter_views: 0, cards_opened: 0, cards_shared: 0 }).get(d);
+  const day = (d) => byDay.get(d) ?? byDay.set(d, { day: d, sessions: new Set(), scans: 0, dish_opens: 0, loads: [], failures: 0, tiers: {}, ar_launches: 0, placed: [], tray_adds: 0, waiter_views: 0, cards_opened: 0, cards_shared: 0, stamps_given: 0, gifts_redeemed: 0 }).get(d);
   const dish = (id) => byDish.get(id) ?? byDish.set(id, { dish: id, opens: 0, loads: [], failures: 0, tiers: {}, ar_launches: 0, placed: [], tray_adds: 0, cards_opened: 0, cards_shared: 0 }).get(id);
 
   // A dish can report more than one tier in one opening (360° at 12 s, then 3D when it lands):
@@ -103,6 +106,8 @@ export function summarise(batches, restaurant) {
         case 'ar_object_placed': if (ev.ms != null) { D.placed.push(ev.ms); X?.placed.push(ev.ms); } break;
         case 'tray_add': D.tray_adds++; if (X) X.tray_adds++; break;
         case 'waiter_view': D.waiter_views++; break;
+        case 'loyalty_stamp': D.stamps_given++; break;
+        case 'loyalty_redeem': D.gifts_redeemed++; break;
         case 'share_card_open': D.cards_opened++; if (X) X.cards_opened++; break;
         case 'share_card_shared': D.cards_shared++; if (X) X.cards_shared++; break;
       }
