@@ -120,8 +120,8 @@
    scales as a single picture from a 360 px phone to a wide desktop column. Geometry key (frame = 100 × 125):
    QR card top right · hand + phone bottom right · dish bottom left · chips top left. */
 .ar-demo {
-  --ar-ink: #2B211A;
-  --ar-skin: #EBD3BE;
+  --ar-ink: #4A3D33;       /* softer line so the hand reads as a quiet drawing, not a cartoon */
+  --ar-skin: #F1E7D8;      /* neutral paper tone, no skin colour */
   --ar-room-a: #6E5A47;
   --ar-room-b: #46382C;
   --ar-bokeh: rgba(255, 213, 150, 0.34);
@@ -137,7 +137,7 @@
   container-type: inline-size;
 }
 html[data-mode="dark"] .ar-demo {
-  --ar-skin: #B08A6D;
+  --ar-skin: #CBBBA6;
   --ar-room-a: #2A211A;
   --ar-room-b: #16110D;
   --ar-bokeh: rgba(255, 190, 110, 0.2);

@@ -107,7 +107,7 @@
     const size = cm ? `${cm} cm · true size` : 'True size';
     const img = (cls, extra) => `<img class="${cls}${card ? '' : ' ar-photo'}" src="${esc(src)}" alt="" width="${w}" height="${h}" decoding="async" ${extra}>`;
     const ink = 'fill="none" stroke="var(--ar-ink)" stroke-width="2.2" stroke-linejoin="round" stroke-linecap="round"';
-    const skin = `fill="var(--ar-skin)" stroke="var(--ar-ink)" stroke-width="2.2" stroke-linejoin="round" stroke-linecap="round"`;
+    const skin = `fill="var(--ar-skin)" stroke="var(--ar-ink)" stroke-width="1.5" stroke-linejoin="round" stroke-linecap="round"`;
     const corners = (x0, y0, x1, y1, L) => `M${x0} ${y0 + L}V${y0}H${x0 + L}M${x1 - L} ${y0}H${x1}V${y0 + L}M${x1} ${y1 - L}V${y1}H${x1 - L}M${x0 + L} ${y1}H${x0}V${y1 - L}`;
     return `<figure class="ar-demo" role="img" aria-label="A hand holds a phone to the QR on a restaurant table. The ${esc(name)} opens on the screen, then lifts out and sits on the real table at its true size.">
       <div class="ar-scene" aria-hidden="true">
