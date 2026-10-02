@@ -1,6 +1,6 @@
 {
   "version": 1,
-  "about": "Brand films. The intro (social/reels/intro/, made by make.mjs from intro.html + score.py) opens launch day at 11 am, before the day's memes. It explains the product, so it must never move before 5 Oct.",
+  "about": "Brand films. The intro (social/reels/intro/) opens launch day at 11 am; then one style film a day at 11 am (social/reels/films/<id>.html, rendered by social/reels/films/engine.mjs). They explain the product, so none may move before 5 Oct.",
   "defaultStart": "2026-10-05",
   "handle": "@eatmenva",
   "posts": [
@@ -15,10 +15,376 @@
       "format": "reel",
       "video": "social/reels/out/brand-intro.mp4",
       "caption": "Har menu pe ek chhoti si line hoti hai: \"picture for illustration purposes only.\"\n\nMENVA pe illustration nahi hoti. Restaurant ki asli plate ka 3D scan, asli size mein, aapki apni table pe. Koi app nahi, bas table ka QR scan karo.\n\nSee it before you order it. Order se pehle dekh lo.\n\nUs dost ko bhejo jo har dafa menu photo pe bharosa karta hai.",
-      "hashtags": ["#menva", "#lahorefood", "#lahore", "#foodtech"],
+      "hashtags": [
+        "#menva",
+        "#lahorefood",
+        "#lahore",
+        "#foodtech"
+      ],
       "alt": "Animated brand film. A menu card's fine print reads picture for illustration purposes only, and its cartoon photo peels away. A phone scans a QR card on a wooden table, and a real 3D scan of a pizza rises out of the phone and lands on the table at true size. It turns slowly, then shrinks into the dot of the menva wordmark: see it before you order it.",
       "slides": [
-        { "layout": "cover", "img": "social/reels/out/brand-intro-cover.jpg", "h": "See it before you order it." }
+        {
+          "layout": "cover",
+          "img": "social/reels/out/brand-intro-cover.jpg",
+          "h": "See it before you order it."
+        }
+      ]
+    },
+    {
+      "n": 2,
+      "day": 2,
+      "time": "11:00",
+      "id": "film-dessert",
+      "series": "Brand films",
+      "pillar": "see-it-first",
+      "audience": "diners",
+      "format": "reel",
+      "video": "social/reels/out/film-dessert.mp4",
+      "caption": "Menu pe cake jumbo tha. Plate pe aaya to sharma gaya.\n\nMENVA pe jaisa dikha, waisa aaya. Partner restaurants pe table ka QR scan karo aur dish order se pehle apni table pe dekho.\n\nUs dost ko bhejo jo dessert ki photo dekh ke order karta hai.",
+      "hashtags": [
+        "#menva",
+        "#lahorefood",
+        "#dessert",
+        "#foodmemes"
+      ],
+      "alt": "A toon-style 3D animation: a perfect cake on a menu card, a tiny sweating cake on the plate, then a phone scans a QR and a big cartoon cake lands on the table.",
+      "slides": [
+        {
+          "layout": "cover",
+          "img": "social/reels/out/film-dessert-cover.jpg",
+          "h": "Toon 3D"
+        }
+      ]
+    },
+    {
+      "n": 3,
+      "day": 3,
+      "time": "11:00",
+      "id": "film-pixel",
+      "series": "Brand films",
+      "pillar": "see-it-first",
+      "audience": "diners",
+      "format": "reel",
+      "video": "social/reels/out/film-pixel.mp4",
+      "caption": "LEVEL 1: THE MENU. Boss: JUMBO PHOTO.\n\nPower-up: table ka QR. Boss shrinks to its true size. High score: no regrets.\n\nTag karo apne gamer dost ko.",
+      "hashtags": [
+        "#menva",
+        "#pixelart",
+        "#lahorefood",
+        "#gamers"
+      ],
+      "alt": "An 8-bit pixel game: a hero meets a giant burger poster boss, grabs a QR power-up and the poster shrinks to the burger's true size. Stage clear.",
+      "slides": [
+        {
+          "layout": "cover",
+          "img": "social/reels/out/film-pixel-cover.jpg",
+          "h": "8-bit"
+        }
+      ]
+    },
+    {
+      "n": 4,
+      "day": 4,
+      "time": "11:00",
+      "id": "film-anime",
+      "series": "Brand films",
+      "pillar": "see-it-first",
+      "audience": "diners",
+      "format": "reel",
+      "video": "social/reels/out/film-anime.mp4",
+      "caption": "EPISODE 1: THE ORDER.\n\nMenu photo sach hai ya jhooth? Scan. Asli dish, asli size.\n\nEpisode 2 kab? Comment karo.",
+      "hashtags": [
+        "#menva",
+        "#anime",
+        "#lahorefood",
+        "#foodmemes"
+      ],
+      "alt": "An anime-style opening: wide eyes at a menu photo, a phone powering up with a QR, and an impact-frame reveal of a real pizza scan.",
+      "slides": [
+        {
+          "layout": "cover",
+          "img": "social/reels/out/film-anime-cover.jpg",
+          "h": "Anime"
+        }
+      ]
+    },
+    {
+      "n": 5,
+      "day": 5,
+      "time": "11:00",
+      "id": "film-truckart",
+      "series": "Brand films",
+      "pillar": "see-it-first",
+      "audience": "diners",
+      "format": "reel",
+      "video": "social/reels/out/film-truckart.mp4",
+      "caption": "Dekh magar scan se.\n\nPhoto pe na jao, plate pe aao. Partner restaurants pe table ka QR, dish order se pehle table pe.\n\nApne us dost ko bhejo jiske paas har truck ki shayari yaad hai.",
+      "hashtags": [
+        "#menva",
+        "#truckart",
+        "#lahore",
+        "#pakistan"
+      ],
+      "alt": "Animated Pakistani truck art: mirror-tape borders, painted eyes and flowers, bells swinging, a QR made of mirror tiles, and the line Dekh magar scan se.",
+      "slides": [
+        {
+          "layout": "cover",
+          "img": "social/reels/out/film-truckart-cover.jpg",
+          "h": "Truck art"
+        }
+      ]
+    },
+    {
+      "n": 6,
+      "day": 6,
+      "time": "11:00",
+      "id": "film-doodle",
+      "series": "Brand films",
+      "pillar": "see-it-first",
+      "audience": "diners",
+      "format": "reel",
+      "video": "social/reels/out/film-doodle.mp4",
+      "caption": "MENVA, 3 steps mein:\n1. Table ka QR scan karo\n2. Dish apni table pe asli size mein dekho\n3. Waiter ko dikhao\n\nNo app. No login. Save karo, kaam aayega.",
+      "hashtags": [
+        "#menva",
+        "#howitworks",
+        "#lahorefood"
+      ],
+      "alt": "A hand-drawn notebook explainer in three steps: scan the table QR, see the dish on your table at true size, show the waiter.",
+      "slides": [
+        {
+          "layout": "cover",
+          "img": "social/reels/out/film-doodle-cover.jpg",
+          "h": "Doodle explainer"
+        }
+      ]
+    },
+    {
+      "n": 7,
+      "day": 7,
+      "time": "11:00",
+      "id": "film-clay",
+      "series": "Brand films",
+      "pillar": "see-it-first",
+      "audience": "diners",
+      "format": "reel",
+      "video": "social/reels/out/film-clay.mp4",
+      "caption": "Waiter abhi bhi boss hai.\n\nScan karo, dish table pe dekho, list banao (note ke saath), aur phone waiter ki taraf ghuma do. Bas.\n\nKoi online order nahi, koi payment nahi.",
+      "hashtags": [
+        "#menva",
+        "#claymation",
+        "#lahorefood"
+      ],
+      "alt": "A claymation short: a clay diner scans a QR, a dessert bowl pops onto the table, the diner adds it to a list with a note and shows the phone to a clay waiter who gives a thumbs up.",
+      "slides": [
+        {
+          "layout": "cover",
+          "img": "social/reels/out/film-clay-cover.jpg",
+          "h": "Claymation"
+        }
+      ]
+    },
+    {
+      "n": 8,
+      "day": 8,
+      "time": "11:00",
+      "id": "film-vhs",
+      "series": "Brand films",
+      "pillar": "see-it-first",
+      "audience": "diners",
+      "format": "reel",
+      "video": "social/reels/out/film-vhs.mp4",
+      "caption": "NAYA! NAYA! Menu dekhne ka naya tareeqa.\n\nPurana tareeqa: photo pe bharosa. Naya tareeqa: table ka QR, asli dish table pe.\n\nAmmi abbu ko bhejo, unhe yeh ad yaad aayega.",
+      "hashtags": [
+        "#menva",
+        "#90s",
+        "#lahorefood",
+        "#nostalgia"
+      ],
+      "alt": "A 90s VHS-style TV commercial with a NAYA NAYA starburst, a rewind on the photo burger, and a ticker reading koi app nahi, koi login nahi.",
+      "slides": [
+        {
+          "layout": "cover",
+          "img": "social/reels/out/film-vhs-cover.jpg",
+          "h": "VHS ad"
+        }
+      ]
+    },
+    {
+      "n": 9,
+      "day": 9,
+      "time": "11:00",
+      "id": "film-neon",
+      "series": "Brand films",
+      "pillar": "see-it-first",
+      "audience": "diners",
+      "format": "reel",
+      "video": "social/reels/out/film-neon.mp4",
+      "caption": "Raat 2 baje. Bhook?\n\nDekh ke order karo: asli scan, asli size.\n\nUs dost ko tag karo jo raat ko hi order karta hai.",
+      "hashtags": [
+        "#menva",
+        "#synthwave",
+        "#lahorefood",
+        "#latenight"
+      ],
+      "alt": "A synthwave night drive toward a neon skyline; a neon QR flickers on and a wireframe dish turns into a real pizza scan as a scan line passes.",
+      "slides": [
+        {
+          "layout": "cover",
+          "img": "social/reels/out/film-neon-cover.jpg",
+          "h": "Synthwave"
+        }
+      ]
+    },
+    {
+      "n": 10,
+      "day": 10,
+      "time": "11:00",
+      "id": "film-kinetic",
+      "series": "Brand films",
+      "pillar": "see-it-first",
+      "audience": "diners",
+      "format": "reel",
+      "video": "social/reels/out/film-kinetic.mp4",
+      "caption": "Menu photo is not the plate.\nNo app. No login. No download.\nBas scan.\n\nOrder se pehle dekh lo.",
+      "hashtags": [
+        "#menva",
+        "#typography",
+        "#lahorefood"
+      ],
+      "alt": "Bold kinetic typography on beat: menu photo is not the plate, no app, no login, no download, bas scan, then a real pizza scan with a measure line.",
+      "slides": [
+        {
+          "layout": "cover",
+          "img": "social/reels/out/film-kinetic-cover.jpg",
+          "h": "Kinetic type"
+        }
+      ]
+    },
+    {
+      "n": 11,
+      "day": 11,
+      "time": "11:00",
+      "id": "film-paper",
+      "series": "Brand films",
+      "pillar": "see-it-first",
+      "audience": "diners",
+      "format": "reel",
+      "video": "social/reels/out/film-paper.mp4",
+      "caption": "Poori family, ek table, sab ko pata kya aayega.\n\nEk scan, phone ghoomta hai, har sawal ka jawab.\n\nFamily group mein bhejo.",
+      "hashtags": [
+        "#menva",
+        "#familydinner",
+        "#lahorefood"
+      ],
+      "alt": "A paper cut-out animation: a family of four with question marks over their heads, a phone passed around the table, and ticks appearing as a paper dish slides in.",
+      "slides": [
+        {
+          "layout": "cover",
+          "img": "social/reels/out/film-paper-cover.jpg",
+          "h": "Paper cut-out"
+        }
+      ]
+    },
+    {
+      "n": 12,
+      "day": 12,
+      "time": "11:00",
+      "id": "film-iso",
+      "series": "Brand films",
+      "pillar": "see-it-first",
+      "audience": "diners",
+      "format": "reel",
+      "video": "social/reels/out/film-iso.mp4",
+      "caption": "Lahore, ek food street, ek shaam.\n\nEk scan. Dish table pe, asli size mein.\n\nApni favourite food street comment karo.",
+      "hashtags": [
+        "#menva",
+        "#lahore",
+        "#foodstreet",
+        "#lahorefood"
+      ],
+      "alt": "An isometric low-poly food street at dusk with string lights; the camera glides in to one table where a real pizza scan appears at true size.",
+      "slides": [
+        {
+          "layout": "cover",
+          "img": "social/reels/out/film-iso-cover.jpg",
+          "h": "Isometric diorama"
+        }
+      ]
+    },
+    {
+      "n": 13,
+      "day": 13,
+      "time": "11:00",
+      "id": "film-silent",
+      "series": "Brand films",
+      "pillar": "see-it-first",
+      "audience": "diners",
+      "format": "reel",
+      "video": "social/reels/out/film-silent.mp4",
+      "caption": "The tragedy of the tiny burger. Act II: a hero arrives, the QR code.\n\nAnd they ordered happily ever after.\n\nDadi nani ko bhejo.",
+      "hashtags": [
+        "#menva",
+        "#silentfilm",
+        "#lahorefood"
+      ],
+      "alt": "A black-and-white silent film: a gentleman faints at a tiny burger under a cloche, then scans a QR and a real dish appears; intertitles end with and they ordered happily ever after.",
+      "slides": [
+        {
+          "layout": "cover",
+          "img": "social/reels/out/film-silent-cover.jpg",
+          "h": "Silent film"
+        }
+      ]
+    },
+    {
+      "n": 14,
+      "day": 14,
+      "time": "11:00",
+      "id": "film-miniature",
+      "series": "Brand films",
+      "pillar": "see-it-first",
+      "audience": "diners",
+      "format": "reel",
+      "video": "social/reels/out/film-miniature.mp4",
+      "caption": "In the court of good food, the royal taster checked it first.\n\nJo dikha, wohi aaya.\n\nHistory walon ko tag karo.",
+      "hashtags": [
+        "#menva",
+        "#miniatureart",
+        "#lahore"
+      ],
+      "alt": "An animated miniature painting: an emperor frowns at a menu scroll, a taster scans a QR on a gold tablet, and the true dish appears on the dastarkhwan.",
+      "slides": [
+        {
+          "layout": "cover",
+          "img": "social/reels/out/film-miniature-cover.jpg",
+          "h": "Miniature painting"
+        }
+      ]
+    },
+    {
+      "n": 15,
+      "day": 15,
+      "time": "11:00",
+      "id": "film-y2k",
+      "series": "Brand films",
+      "pillar": "see-it-first",
+      "audience": "diners",
+      "format": "reel",
+      "video": "social/reels/out/film-y2k.mp4",
+      "caption": "Warning: picture for illustration purposes only. Ab nahi.\n\nSee it on your table. Asli size.\n\nTag karo jo abhi bhi 2004 mein jee raha hai.",
+      "hashtags": [
+        "#menva",
+        "#y2k",
+        "#lahorefood"
+      ],
+      "alt": "A Y2K desktop animation: a glossy window, a warning pop-up that gets clicked away, an aqua button, a loading bar and a real pizza scan.",
+      "slides": [
+        {
+          "layout": "cover",
+          "img": "social/reels/out/film-y2k-cover.jpg",
+          "h": "Y2K"
+        }
       ]
     }
   ]
