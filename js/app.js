@@ -72,30 +72,95 @@
     return `<div class="cheffy-cameo"><img src="/assets/cheffy/${pose}.webp" alt="Cheffy" width="42" height="52"><p><span>Cheffy</span>${text}</p></div>`;
   }
 
-  // ─── Home hero: the AR story in a phone (css/hero.css) ────────
-  // The pilot's first 3D dish drops onto a table and is measured at its real size. Pure CSS
-  // animation; the loop pauses when the hero is scrolled out of view.
-  function arDemo(dish, menuNames = []) {
-    const src = dish?.assets?.poster || '/assets/dishes/steak-main/poster.webp';
-    const d = dish?.dimensions_cm;
-    const size = d ? `True size · ${Math.round(Math.max(d.width, d.depth))} cm` : 'True size';
-    // Beat 1 on the phone: a menu that is only words — the real dish names, no pictures.
-    const rows = (menuNames.length ? menuNames : ['', '', '']).slice(0, 4).map(n =>
-      `<li>${n ? `<span class="ar-menu-name">${esc(n)}</span>` : '<span class="ar-menu-bar ar-menu-bar--name"></span>'}<span class="ar-menu-bar"></span><span class="ar-menu-bar ar-menu-bar--short"></span></li>`).join('');
-    return `<figure class="ar-demo" role="img" aria-label="A phone camera pointed at a table: the ${esc(dish?.name || 'dish')} appears on it at its true size.">
-      <div class="ar-phone" aria-hidden="true">
-        <div class="ar-screen">
-          <div class="ar-table"></div>
-          <div class="ar-dots"></div>
-          <div class="ar-reticle"></div>
-          <div class="ar-shadow"></div>
-          <img class="ar-dish" src="${esc(src)}" alt="" width="1200" height="900" decoding="async">
-          <div class="ar-measure"><span class="ar-tick"></span><span class="ar-tick"></span><span class="ar-rule"></span></div>
-          <span class="ar-label">${esc(size)}</span>
-          <span class="ar-hint ar-hint-scan">Move your phone slowly over the table</span>
-          <span class="ar-hint ar-hint-placed">Placed on your table</span>
-          <span class="ar-hint ar-hint-order">${tickIcon}Show the waiter</span>
-          <div class="ar-menu"><p class="ar-menu-title">Menu</p><ul>${rows}</ul></div>
+  // ─── Home hero: scan → appears → on your table (css/hero.css) ──
+  // A hand holds a phone to the table QR, the dish opens on the screen, then lifts out and sits on the
+  // real table at true size. Inline SVG + CSS only (transform/opacity), one 9 s loop. The markup IS the
+  // key frame (dish on the table beside the phone), so it paints at once and reduced motion keeps it;
+  // the loop then starts part-way through (negative delay in css/hero.css) and never hides the first paint.
+  // A seeded 21×21 QR-like pattern, drawn once: three finder squares plus a fixed scatter of modules.
+  function qrPattern() {
+    const N = 21, on = Array.from({ length: N }, () => Array(N).fill(false));
+    const finder = (x, y) => { for (let j = 0; j < 7; j++) for (let i = 0; i < 7; i++) on[y + j][x + i] = i === 0 || j === 0 || i === 6 || j === 6 || (i > 1 && i < 5 && j > 1 && j < 5); };
+    finder(0, 0); finder(14, 0); finder(0, 14);
+    let s = 7;
+    for (let y = 0; y < N; y++) for (let x = 0; x < N; x++) {
+      const inFinder = (x < 8 && y < 8) || (x > 12 && y < 8) || (x < 8 && y > 12);
+      s = (s * 48271) % 2147483647;
+      if (!inFinder) on[y][x] = s % 100 < 47;
+    }
+    let d = '';
+    for (let y = 0; y < N; y++) for (let x = 0; x < N; x++) {
+      if (!on[y][x]) continue;
+      let n = 1; while (x + n < N && on[y][x + n]) n++;
+      d += `M${x} ${y}h${n}v1h-${n}z`; x += n - 1;
+    }
+    return d;
+  }
+
+  function arDemo(dish, menuNames = []) { // menuNames: unused since the scene no longer shows a words-only menu
+    const FALLBACK = '/assets/dishes/steak-main/card.webp';
+    const card = dish?.assets?.card;
+    const src = card || dish?.assets?.poster || FALLBACK;
+    const [w, h] = card || !dish?.assets?.poster ? [944, 569] : [1200, 900];
+    const name = dish?.name || 'The dish';
+    const cm = dish?.dimensions_cm?.width ? Math.round(dish.dimensions_cm.width) : null;
+    const size = cm ? `${cm} cm · true size` : 'True size';
+    const img = (cls, extra) => `<img class="${cls}${card ? '' : ' ar-photo'}" src="${esc(src)}" alt="" width="${w}" height="${h}" decoding="async" ${extra}>`;
+    const ink = 'fill="none" stroke="var(--ar-ink)" stroke-width="2.2" stroke-linejoin="round" stroke-linecap="round"';
+    const skin = `fill="var(--ar-skin)" stroke="var(--ar-ink)" stroke-width="2.2" stroke-linejoin="round" stroke-linecap="round"`;
+    const corners = (x0, y0, x1, y1, L) => `M${x0} ${y0 + L}V${y0}H${x0 + L}M${x1 - L} ${y0}H${x1}V${y0 + L}M${x1} ${y1 - L}V${y1}H${x1 - L}M${x0 + L} ${y1}H${x0}V${y1 - L}`;
+    return `<figure class="ar-demo" role="img" aria-label="A hand holds a phone to the QR on a restaurant table. The ${esc(name)} opens on the screen, then lifts out and sits on the real table at its true size.">
+      <div class="ar-scene" aria-hidden="true">
+        <svg class="ar-defs" width="0" height="0" focusable="false"><defs><symbol id="ar-qr" viewBox="0 0 21 21"><path d="${qrPattern()}" fill="currentColor" shape-rendering="crispEdges"/></symbol></defs></svg>
+        <div class="ar-room"></div>
+        <div class="ar-cloth"></div>
+        <div class="ar-card">
+          <svg viewBox="0 0 100 128" focusable="false">
+            <ellipse cx="50" cy="124" rx="44" ry="4.5" fill="rgba(30,18,8,.28)"/>
+            <rect x="5" y="3" width="90" height="116" rx="6" fill="#F6F0E4" stroke="#CBBFA8" stroke-width="1.2"/>
+            <rect x="5" y="112" width="90" height="7" rx="3" fill="#E6DAC4"/>
+            <svg x="19" y="14" width="62" height="62" viewBox="0 0 21 21" color="#1A1714"><use href="#ar-qr"/></svg>
+            <text x="50" y="94" text-anchor="middle" font-size="12" font-weight="600" fill="#1A1714" letter-spacing="-.2">Table 12</text>
+            <text x="50" y="105" text-anchor="middle" font-size="5.6" fill="#5C5349">Scan to see the menu</text>
+          </svg>
+          <div class="ar-scan"><svg viewBox="0 0 100 100" preserveAspectRatio="none" focusable="false"><path d="${corners(2, 2, 98, 98, 20)}" fill="none" stroke="#B5371F" stroke-width="2.6" stroke-linecap="round" stroke-linejoin="round" vector-effect="non-scaling-stroke"/></svg><i class="ar-scan-line"></i><span class="ar-scan-tick">${tickIcon}</span></div>
+        </div>
+        <div class="ar-shadow"></div><div class="ar-ring"></div>
+        <div class="ar-hand">
+          <svg class="ar-hand-back" viewBox="0 0 200 420" focusable="false">
+            <path d="M50 250C44 276 52 300 66 320C76 334 80 350 86 372L94 420H172C166 392 160 372 158 350C156 330 160 310 160 290V250Z" ${skin}/>
+            <path d="M158 126C178 128 188 158 188 190C188 232 184 262 166 290L158 292Z" ${skin}/>
+            <rect x="38" y="8" width="126" height="262" rx="24" fill="#1B1612" stroke="var(--ar-ink)" stroke-width="2.2"/>
+            <path d="M36 62v26M36 98v26" ${ink} stroke-width="3"/>
+          </svg>
+          <div class="ar-screen">
+            <div class="ar-cam"><div class="ar-cam-qr"><svg viewBox="0 0 21 21" color="#1A1714" focusable="false"><use href="#ar-qr"/></svg></div><svg class="ar-cam-frame" viewBox="0 0 100 100" preserveAspectRatio="none" focusable="false"><path d="${corners(6, 6, 94, 94, 16)}" fill="none" stroke="#fff" stroke-width="2.4" stroke-linecap="round" stroke-linejoin="round" vector-effect="non-scaling-stroke"/></svg></div>
+            <div class="ar-page">
+              <span class="ar-island"></span>
+              <p class="ar-page-name">${esc(name)}</p>
+              <div class="ar-tile"><span class="ar-tile-ico">${arIcon}</span>${img('ar-dish-s', 'fetchpriority="low"')}</div>
+              <span class="ar-pill ar-pill-see">See it on your table</span>
+              <span class="ar-pill ar-pill-on">${tickIcon}On your table</span>
+            </div>
+          </div>
+          <svg class="ar-hand-front" viewBox="0 0 200 420" focusable="false">
+            <path d="M50 322C32 298 24 262 30 238C33 224 48 220 55 232C63 248 56 276 72 304C66 318 58 326 50 322Z" ${skin}/>
+            <path d="M36 239C38 233 46 232 50 237" ${ink} stroke-width="1.6"/>
+            <rect x="146" y="128" width="44" height="24" rx="12" ${skin}/>
+            <rect x="148" y="153" width="42" height="24" rx="12" ${skin}/>
+            <rect x="152" y="178" width="38" height="24" rx="12" ${skin}/>
+            <rect x="158" y="203" width="32" height="23" rx="11.5" ${skin}/>
+          </svg>
+        </div>
+        ${img('ar-dish', 'fetchpriority="high"')}
+        <svg class="ar-brackets" viewBox="0 0 100 100" preserveAspectRatio="none" focusable="false"><path d="${corners(3, 3, 97, 97, 11)}" fill="none" stroke="rgba(20,12,6,.38)" stroke-width="4.4" stroke-linecap="round" stroke-linejoin="round" vector-effect="non-scaling-stroke"/><path d="${corners(3, 3, 97, 97, 11)}" fill="none" stroke="#fff" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" vector-effect="non-scaling-stroke"/></svg>
+        <div class="ar-measure"><span class="ar-tick"></span><span class="ar-tick"></span><span class="ar-rule"></span></div>
+        <span class="ar-label">${esc(size)}</span>
+        <div class="ar-chips">
+          <span class="ar-chip ar-chip-scan"><i class="ar-dot"></i>Scanning table 12</span>
+          <span class="ar-chip ar-chip-open">${arIcon}Opens on your phone</span>
+          <span class="ar-chip ar-chip-placed">${tickIcon}Placed on your table</span>
+          <span class="ar-chip ar-chip-waiter">${tickIcon}Show the waiter</span>
         </div>
       </div>
     </figure>`;
@@ -111,11 +176,21 @@
     </ol>`;
   }
 
+  // One class on the whole hero pauses the scene and the three beats together, so they stay in step:
+  // while the hero is scrolled out of view, or while the tab is hidden.
+  let stopDemoWatch = null;
   function pauseDemoOffscreen() {
-    // One class on the whole hero, so the phone and the three beats pause together and stay in step.
+    stopDemoWatch?.();
+    stopDemoWatch = null;
     const hero = app.querySelector('.home-hero');
-    if (!hero || !('IntersectionObserver' in window)) return;
-    new IntersectionObserver(([e]) => hero.classList.toggle('is-offscreen', !e.isIntersecting)).observe(hero);
+    if (!hero) return;
+    let inView = true;
+    const apply = () => hero.classList.toggle('is-offscreen', !inView || document.hidden);
+    const io = 'IntersectionObserver' in window ? new IntersectionObserver(([e]) => { inView = e.isIntersecting; apply(); }) : null;
+    io?.observe(hero);
+    document.addEventListener('visibilitychange', apply);
+    stopDemoWatch = () => { io?.disconnect(); document.removeEventListener('visibilitychange', apply); };
+    apply();
   }
 
   // ─── Motion: scroll reveal ──────────────────────────────────────
