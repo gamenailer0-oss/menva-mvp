@@ -250,11 +250,11 @@ for (const r of restaurants) {
   if (r.website) restaurantLd.sameAs = [r.website];
 
   const head = renderHead({
-    title: `${r.name} — menu in 3D · MENVA`,
+    title: `${r.name} — AR menu · MENVA`,
     description,
     canonical,
     image,
-    imageAlt: `${r.name} — see the menu in 3D on your table.`,
+    imageAlt: `${r.name} — the AR menu: see the dishes on your table.`,
     themeColor: THEME_PAPER[r.theme] || THEME_PAPER.default,
     noindex: r.listed !== true,
     jsonLd: [restaurantLd],
@@ -266,7 +266,7 @@ for (const r of restaurants) {
     `<p class="overline">${escAttr(r.area || '')}${r.area && r.location ? ' · ' : ''}${escAttr(r.location || '')}</p>` +
     `<h1>${escAttr(r.displayName || r.name)}</h1>` +
     `<p>${escAttr(restLede)} See every dish on your table in 3D and AR before you order.</p>` +
-    '<p><a href="/">MENVA — 3D &amp; AR restaurant menus in Lahore</a></p>')));
+    '<p><a href="/">MENVA — AR restaurant menus in Lahore</a></p>')));
 }
 
 // Drag-and-drop deploys ignore netlify.toml, so mirror its headers/redirects as _headers/_redirects.

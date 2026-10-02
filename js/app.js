@@ -329,7 +329,7 @@
 
   // ─── Brand page (/) — customers only: no 3D, no owner pitch (that lives at /for-restaurants) ─
   function brandPage() {
-    document.title = '3D & AR restaurant menus in Lahore — MENVA';
+    document.title = 'See restaurant dishes on your table in AR — Lahore | MENVA';
     setTheme('default');
 
     // Restaurants listed on the home page, in data order (scripts/build-data.mjs sorts by `homeOrder`).

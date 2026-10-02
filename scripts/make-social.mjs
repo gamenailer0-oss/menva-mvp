@@ -93,6 +93,21 @@ const PLATE_CSS = `
     .plate::after { content:''; position:absolute; left:8%; right:8%; bottom:-5%; height:16%; border-radius:50%;
       background:radial-gradient(ellipse at center, rgba(26,23,20,.32), rgba(26,23,20,0) 70%); }`;
 
+// What makes a restaurant card read as an AR menu, the same way the home hero does: camera-style
+// corner brackets around the dish, and one chip in the restaurant's own colours.
+const AR_ICON = '<svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.7" stroke-linecap="round" stroke-linejoin="round"><path d="M3 7V5a2 2 0 0 1 2-2h2M17 3h2a2 2 0 0 1 2 2v2M21 17v2a2 2 0 0 1-2 2h-2M7 21H5a2 2 0 0 1-2-2v-2"/><path d="M7 12h10M7 8h10M7 16h6"/></svg>';
+const AR_CSS = `
+    .ar-chip { position:absolute; z-index:3; display:flex; align-items:center; gap:10px; height:46px; padding:0 22px 0 16px; border-radius:23px; font-family:'DM Sans'; font-weight:600; font-size:20px; white-space:nowrap; box-shadow:0 6px 16px rgba(26,23,20,.16); }
+    .ar-chip svg { width:24px; height:24px; flex:none; }
+    .ar-frame { position:absolute; z-index:2; pointer-events:none; }
+    .ar-frame i { position:absolute; width:34px; height:34px; border:0 solid rgba(26,23,20,.34); }
+    .ar-frame i:nth-child(1) { left:0; top:0; border-left-width:3px; border-top-width:3px; border-top-left-radius:8px; }
+    .ar-frame i:nth-child(2) { right:0; top:0; border-right-width:3px; border-top-width:3px; border-top-right-radius:8px; }
+    .ar-frame i:nth-child(3) { right:0; bottom:0; border-right-width:3px; border-bottom-width:3px; border-bottom-right-radius:8px; }
+    .ar-frame i:nth-child(4) { left:0; bottom:0; border-left-width:3px; border-bottom-width:3px; border-bottom-left-radius:8px; }`;
+const arChip = (bg, fg, style) => `<div class="ar-chip" style="background:${bg};color:${fg};${style}">${AR_ICON}AR menu &middot; see it on your table</div>`;
+const arFrame = (style) => `<div class="ar-frame" style="${style}"><i></i><i></i><i></i><i></i></div>`;
+
 function page(bg, body) {
   return `<!DOCTYPE html><html><head><meta charset="utf-8"><style>
     * { margin:0; padding:0; box-sizing:border-box; }
@@ -162,14 +177,17 @@ function ogGauchosHtml() {
     .credit { position:absolute; left:72px; bottom:44px; font-family:'Instrument Serif'; font-size:23px; color:${MUTED}; }
     .stage { position:absolute; right:72px; top:64px; width:400px; height:502px; border-radius:24px; background:${GAUCHOS_STAGE}; display:flex; align-items:center; justify-content:center; }
     ${PLATE_CSS}
+    ${AR_CSS}
   </style>
   <img class="logo" src="${fileUrl('assets/restaurant/gauchos-logo.svg')}">
   <div class="name">Gauchos Steakhouse</div>
   <div class="loc">Gulberg III, Lahore</div>
-  <div class="tagline">See the dishes on your table — the menu in 3D</div>
+  <div class="tagline">See the dishes on your table, before you order</div>
   <div class="credit">menva.</div>
   <div class="stage">
-    <div class="plate" style="width:92%"><img src="${dishUrl('steak-main')}"></div>
+    ${arFrame('left:22px;right:22px;top:24px;bottom:96px')}
+    <div class="plate" style="width:84%;margin-top:-56px"><img src="${dishUrl('steak-main')}"></div>
+    ${arChip(GAUCHOS_ACCENT, '#FBF6EE', 'left:50%;transform:translateX(-50%);bottom:26px')}
   </div>`);
 }
 
@@ -186,6 +204,7 @@ function ogBarazaHtml() {
     .credit { position:absolute; left:0; width:360px; bottom:34px; text-align:center; font-family:'Instrument Serif'; font-size:23px; color:${BARAZA_ESPRESSO}; opacity:.7; }
     .stage { position:absolute; left:416px; top:266px; width:728px; height:318px; border-radius:24px; background:${BARAZA_STAGE}; display:flex; align-items:center; justify-content:center; }
     ${PLATE_CSS}
+    ${AR_CSS}
   </style>
   <div class="band">
     <img class="round-logo" src="${fileUrl('assets/restaurant/baraza-logo.webp')}">
@@ -195,14 +214,14 @@ function ogBarazaHtml() {
   <div class="hours">Open 24/7 · Gulberg III, Lahore</div>
   <div class="credit">menva.</div>
   <div class="stage">
-    <div class="plate" style="width:70%;margin-top:-18px"><img src="${dishUrl('bz-chicken-pizza')}"></div>
-  </div>`);
+    ${arFrame('left:22px;right:22px;top:20px;bottom:20px')}
+    <div class="plate" style="width:62%;margin-top:-18px"><img src="${dishUrl('bz-chicken-pizza')}"></div>
+  </div>
+  ${arChip(BARAZA_OLIVE, '#FAF5EC', 'right:56px;top:198px')}`);
 }
 
 // ─── OG image 4: Haute Dolci ────────────────────────────────────────────────
-// No dish photography exists yet (the 3D pipeline hasn't run for its three signatures), so this
-// card is typographic only — their real logo, their own words, no placeholder dish art of any
-// kind. Blush band on the left (their "lavish pink and black" palette); their tagline set in
+// Blush band on the left (their "lavish pink and black" palette); their tagline set in
 // tracked-caps Jost (the OFL stand-in for their FuturaPT-Light brand type) on the right.
 function ogHauteDolciHtml() {
   // Blush band with their black wordmark (the menu banner's light look); the San Sebastián scan on the right.
@@ -215,6 +234,7 @@ function ogHauteDolciHtml() {
     .stage { position:absolute; left:416px; top:214px; width:728px; height:370px; border-radius:24px; background:#F2E7E0; display:flex; align-items:center; justify-content:center; }
     .dish-name { position:absolute; left:26px; top:20px; font-family:'Jost'; font-weight:500; font-size:20px; color:${HD_INK}; z-index:2; }
     ${PLATE_CSS}
+    ${AR_CSS}
     .credit { position:absolute; left:0; width:360px; bottom:34px; text-align:center; font-family:'Instrument Serif'; font-size:23px; color:${HD_INK}; opacity:.7; }
   </style>
   <div class="band">
@@ -225,8 +245,10 @@ function ogHauteDolciHtml() {
   <div class="sub">Indulge, Capture, Share, Repeat.</div>
   <div class="stage">
     <div class="dish-name">San Sebasti&aacute;n cheesecake</div>
-    <div class="plate" style="width:62%;margin-top:26px"><img src="${dishUrl('hd-san-sebastian')}"></div>
+    ${arFrame('left:22px;right:22px;top:58px;bottom:20px')}
+    <div class="plate" style="width:50%;margin-top:22px"><img src="${dishUrl('hd-san-sebastian')}"></div>
   </div>
+  ${arChip(HD_ACCENT, '#FAF3F2', 'right:56px;top:74px')}
   <div class="credit">menva.</div>`);
 }
 

@@ -19,8 +19,8 @@ function jsonLdBlocks(html) {
 const PAGES = [
   { path: '/', canonicalPath: '/', title: 'See restaurant dishes on your table in AR — Lahore | MENVA', ogImageName: 'og-menva.jpg', ldTypes: ['Organization', 'WebSite'] },
   { path: '/for-restaurants', canonicalPath: '/for-restaurants/', title: 'AR menus for restaurants in Lahore — MENVA', ogImageName: 'og-menva.jpg', ldTypes: ['Service'] },
-  { path: '/g/12', canonicalPath: '/g/', title: 'Gauchos — menu in 3D · MENVA', ogImageName: 'og-gauchos.jpg', ldTypes: ['Restaurant'] },
-  { path: '/baraza/12', canonicalPath: '/baraza/', title: 'Baraza Coffee — menu in 3D · MENVA', ogImageName: 'og-baraza.jpg', ldTypes: ['Restaurant'] },
+  { path: '/g/12', canonicalPath: '/g/', title: 'Gauchos — AR menu · MENVA', ogImageName: 'og-gauchos.jpg', ldTypes: ['Restaurant'] },
+  { path: '/baraza/12', canonicalPath: '/baraza/', title: 'Baraza Coffee — AR menu · MENVA', ogImageName: 'og-baraza.jpg', ldTypes: ['Restaurant'] },
 ];
 
 for (const p of PAGES) {
@@ -187,7 +187,7 @@ test('/haute-dolci/12 serves the restaurant page with its own tags and canonical
   const res = await request.get('/haute-dolci/12');
   expect(res.status()).toBe(200);
   const html = await res.text();
-  expect(tagContent(html, /<title>([^<]*)<\/title>/)).toBe('Haute Dolci — menu in 3D · MENVA');
+  expect(tagContent(html, /<title>([^<]*)<\/title>/)).toBe('Haute Dolci — AR menu · MENVA');
   expect(tagContent(html, /<link rel="canonical" href="([^"]*)">/)).toMatch(/\/haute-dolci\/$/);
   expect(jsonLdBlocks(html).map((b) => b['@type'])).toEqual(['Restaurant']);
 });
