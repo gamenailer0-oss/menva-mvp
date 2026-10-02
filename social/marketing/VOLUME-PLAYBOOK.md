@@ -50,3 +50,28 @@ Every post also goes to Stories automatically.
 
 ## Watch out
 - In July 2025 Crumble lost its page to three copyright reports. Everything we post is original, and every post lives in this repository as a backup.
+
+## Brand films (11 am slot)
+One short film a day, each in a different, instantly recognisable style. Only the logo lockup (lowercase italic "menva" in Instrument Serif with the ember dot) and the end card stay the same.
+
+| Day | Film | Style |
+|---|---|---|
+| 5 Oct | brand-intro | real 3D scan, motion design |
+| 6 Oct | film-dessert | toon 3D |
+| 7 Oct | film-pixel | 8-bit arcade |
+| 8 Oct | film-anime | anime opening |
+| 9 Oct | film-truckart | Pakistani truck art |
+| 10 Oct | film-doodle | marker explainer (3 steps) |
+| 11 Oct | film-clay | claymation (waiter stays in charge) |
+| 12 Oct | film-vhs | 90s TV ad |
+| 13 Oct | film-neon | synthwave |
+| 14 Oct | film-kinetic | Swiss kinetic type |
+| 15 Oct | film-paper | paper cut-out (family) |
+| 16 Oct | film-iso | isometric diorama |
+| 17 Oct | film-silent | silent film |
+| 18 Oct | film-miniature | Mughal miniature |
+| 19 Oct | film-y2k | Y2K desktop |
+
+How to make another: copy a page in `social/reels/films/`, keep `window.seek(t)` a pure function of time, end on `endCard()` from `common.js`, pick a preset in `score.py`, then
+`CHROMIUM_PATH=/opt/pw-browsers/chromium node social/reels/films/engine.mjs <id> --stills 1,4,8` to review and `node social/reels/films/engine.mjs <id>` to render.
+Food rules: real food appears only as a real scan (`assets/dishes/`); every other dish is an obvious illustration. When a dessert is scanned, give `film-dessert` a closing shot with it.

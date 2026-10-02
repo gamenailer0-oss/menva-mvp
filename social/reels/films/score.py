@@ -518,6 +518,15 @@ def arrange(preset, length, bpm, ev):
             place(mus, sfx('bubble', {}), end_t + k * 0.09, 0.3)
         place(mus, base.bell(hz(88), 2.5), end_t + 0.4, 0.12)
 
+    # under every end card: a soft pad in the film's key, so the logo never sits in silence
+    KEY = {'toon': (60, 1), 'chip': (57, 0), 'clay': (53, 1), 'anime': (62, 0), 'vhs': (60, 1), 'house': (57, 0), 'synth': (57, 0),
+           'uke': (55, 1), 'paper': (57, 0), 'rag': (60, 1), 'lofi': (50, 1), 'dhol': (57, 1), 'sitar': (50, 1), 'bubble': (64, 1)}
+    root, major = KEY.get(preset, (60, 1))
+    tail = length - end_t
+    if tail > 0.5:
+        notes = [root - 12, root, root + (4 if major else 3), root + 7, root + 11 if major else root + 10]
+        place(mus, base.pad(notes, tail + 0.2, att=0.9) * 4.5, end_t - 0.1, 1.0)
+        place(mus, base.chord(notes[1:], 1.6, 0.55, 0.6), end_t + 1.0, 1.3)
     if preset == 'vhs':
         mus = wobble(mus, 0.004, 0.6)
         n = mus.shape[1]
