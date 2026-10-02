@@ -20,6 +20,7 @@
   "menuSubtitle": "Prices in PKR",
   "showCheffy": false,
   "roast": true,
+  "selfieCard": true,
   "shareLinesApproved": false,
   "shareLines": {
     "firstLook": [
@@ -66,6 +67,10 @@
       "Small joys,|big slices.",
       "Sweet people.|Sweeter plates.",
       "Happy table.|Happy heart."
+    ],
+    "selfie": [
+      "Open wide.|Cake incoming.",
+      "Say cheesecake."
     ],
     "roastSticker": "Dessert > ghar ka khana"
   },

@@ -18,6 +18,7 @@
   "menuSubtitle": "Prices in PKR",
   "showCheffy": false,
   "roast": true,
+  "selfieCard": true,
   "shareLinesApproved": false,
   "shareLines": {
     "firstLook": [
@@ -63,6 +64,10 @@
       "Full table.|Full hearts.",
       "Great food.|Greater company.",
       "Small joys,|big cuts."
+    ],
+    "selfie": [
+      "Hands off.|Steak first.",
+      "Touch the steak|before the steak."
     ],
     "roastSticker": "Sizzle > ghar ka khana"
   },

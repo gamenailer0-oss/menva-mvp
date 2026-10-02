@@ -21,6 +21,7 @@
   "menuSubtitle": "Prices in PKR",
   "showCheffy": false,
   "roast": true,
+  "selfieCard": true,
   "shareLinesApproved": false,
   "shareLines": {
     "firstLook": [
@@ -66,6 +67,10 @@
       "Slow sips,|big smiles.",
       "Warm cup.|Warm people.",
       "Fresh brew,|fresh start."
+    ],
+    "selfie": [
+      "Strike a pose|for the pizza.",
+      "Coffee face,|please."
     ],
     "roastSticker": "Fine. Chai can wait."
   },

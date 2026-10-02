@@ -253,3 +253,8 @@ test('Table Card events: share_card_open / share_card_shared are kept, bad mood 
   assert.equal(sum.days[0].cards_shared, 2);
   assert.equal(sum.dishes[0].cards_shared, 2);
 });
+
+test('Table Card events: the selfie mood is accepted (no image data ever travels with it)', () => {
+  const out = clean(batch([{ e: 'share_card_shared', d: 'hd-matilda-cake', mood: 'selfie', target: 'save', image: 'data:image/jpeg;base64,AAAA' }]));
+  assert.deepEqual(out.events, [{ e: 'share_card_shared', d: 'hd-matilda-cake', mood: 'selfie', target: 'save' }]);
+});

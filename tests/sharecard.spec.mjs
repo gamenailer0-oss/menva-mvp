@@ -59,7 +59,7 @@ test('Haute Dolci: pill → a 1080×1920 card with real content, moods change th
   await test.step('mood chips switch the badge', async () => {
     const chips = page.locator('.share-chip');
     // first open of this dish on a fresh phone: First look, My fav, Tried something new, Roast, Sarcastic, Good vibes (no streak yet)
-    await expect(chips).toHaveText(['First look', 'My fav', 'Tried something new', 'Roast', 'Sarcastic', 'Good vibes']);
+    await expect(chips).toHaveText(['First look', 'Selfie', 'My fav', 'Tried something new', 'Roast', 'Sarcastic', 'Good vibes']);
     for (const [label, badge] of [['Good vibes', 'Live 3D · Good vibes'], ['Sarcastic', 'Live 3D · Sarcastic'], ['Roast', 'Live 3D · Roast mode'], ['My fav', 'My fav'], ['Tried something new', 'New on my list']]) {
       await page.locator('.share-chip', { hasText: new RegExp(`^${label}$`) }).click();
       await expect(img(page)).toHaveAttribute('data-badge', badge);

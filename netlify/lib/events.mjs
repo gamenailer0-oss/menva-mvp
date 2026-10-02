@@ -32,7 +32,7 @@ export const EVENTS = {
   // Table Card (js/sharecard.js): the sheet was opened / the card was shared or saved. `mood` is which card.
   share_card_open: {},
   share_card_shared: {
-    mood: (v) => (['firstLook', 'fav', 'new', 'streak', 'roast', 'sarcastic', 'goodVibes'].includes(v) ? v : undefined),
+    mood: (v) => (['firstLook', 'fav', 'new', 'streak', 'roast', 'sarcastic', 'goodVibes', 'selfie'].includes(v) ? v : undefined),
     target: (v) => (['share', 'save'].includes(v) ? v : undefined),
   },
 };

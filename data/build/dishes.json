@@ -1,5 +1,5 @@
 {
-  "generated": "2026-09-30T18:01:52.002Z",
+  "generated": "2026-10-02T08:15:48.826Z",
   "restaurants": [
     {
       "id": "gauchos",
@@ -21,6 +21,7 @@
       "menuSubtitle": "Prices in PKR",
       "showCheffy": false,
       "roast": true,
+      "selfieCard": true,
       "shareLinesApproved": false,
       "shareLines": {
         "firstLook": [
@@ -66,6 +67,10 @@
           "Full table.|Full hearts.",
           "Great food.|Greater company.",
           "Small joys,|big cuts."
+        ],
+        "selfie": [
+          "Hands off.|Steak first.",
+          "Touch the steak|before the steak."
         ],
         "roastSticker": "Sizzle > ghar ka khana"
       },
@@ -306,6 +311,7 @@
       "menuSubtitle": "Prices in PKR",
       "showCheffy": false,
       "roast": true,
+      "selfieCard": true,
       "shareLinesApproved": false,
       "shareLines": {
         "firstLook": [
@@ -351,6 +357,10 @@
           "Slow sips,|big smiles.",
           "Warm cup.|Warm people.",
           "Fresh brew,|fresh start."
+        ],
+        "selfie": [
+          "Strike a pose|for the pizza.",
+          "Coffee face,|please."
         ],
         "roastSticker": "Fine. Chai can wait."
       },
@@ -924,6 +934,7 @@
       "menuSubtitle": "Prices in PKR",
       "showCheffy": false,
       "roast": true,
+      "selfieCard": true,
       "shareLinesApproved": false,
       "shareLines": {
         "firstLook": [
@@ -970,6 +981,10 @@
           "Small joys,|big slices.",
           "Sweet people.|Sweeter plates.",
           "Happy table.|Happy heart."
+        ],
+        "selfie": [
+          "Open wide.|Cake incoming.",
+          "Say cheesecake."
         ],
         "roastSticker": "Dessert > ghar ka khana"
       },
