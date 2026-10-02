@@ -167,7 +167,7 @@ const homeHead = renderHead({
   description: 'Scan the QR at your table and see the real dish in 3D and AR, at true size, before you order. Restaurant menus in Lahore. No app to install.',
   canonical: `${origin}/`,
   image: homeImage,
-  imageAlt: 'MENVA — see real dishes in 3D and AR on your table.',
+  imageAlt: 'MENVA — scan the QR at your table and the real dish appears on it at true size.',
   themeColor: THEME_PAPER.default,
   noindex: false,
   jsonLd: [

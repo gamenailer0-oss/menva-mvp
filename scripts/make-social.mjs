@@ -2,12 +2,14 @@
 // Uses Playwright (real Chrome) so the real self-hosted fonts and real logos/dish renders are
 // used — the same fonts and images the live site uses, not system substitutes.
 //
-// Usage: npm run social   (outputs are committed to assets/social/)
+// Usage: npm run build && npm run social   (outputs are committed to assets/social/)
+// The home card shows the live hero scene, captured from dist/ — so build first.
 
 import fs from 'node:fs';
 import path from 'node:path';
 import os from 'node:os';
 import { fileURLToPath } from 'node:url';
+import { spawn } from 'node:child_process';
 import { chromium } from 'playwright';
 import sharp from 'sharp';
 
@@ -101,24 +103,53 @@ function page(bg, body) {
 }
 
 // ─── OG image 1: home ───────────────────────────────────────────────────────
-function ogMenvaHtml() {
+// The hero scene itself (js/app.js arDemo + css/hero.css) at its final "placed on your table"
+// frame, captured from the built site — the share image can't drift from the page it previews.
+async function captureHeroScene(browser) {
+  if (!fs.existsSync(path.join(ROOT, 'dist', 'index.html'))) throw new Error('dist/ is missing — run `npm run build` before `npm run social`.');
+  const port = 8137;
+  const server = spawn(process.execPath, [path.join(ROOT, 'scripts', 'serve.mjs')], { env: { ...process.env, PORT: String(port) }, stdio: 'ignore' });
+  try {
+    const base = `http://localhost:${port}`;
+    for (let i = 0; ; i++) {
+      try { await fetch(base); break; } catch (err) {
+        if (i > 50) throw new Error('local server did not start: ' + err.message);
+        await new Promise((r) => setTimeout(r, 100));
+      }
+    }
+    const pg = await browser.newPage({ viewport: { width: 1440, height: 1000 }, deviceScaleFactor: 2, reducedMotion: 'reduce', colorScheme: 'light', serviceWorkers: 'block' });
+    await pg.goto(base + '/', { waitUntil: 'networkidle' });
+    await pg.evaluate(() => document.fonts.ready);
+    const out = path.join(TMP, 'hero-scene.png');
+    await pg.locator('.ar-scene').screenshot({ path: out });
+    await pg.close();
+    return 'file:///' + out.split(path.sep).join('/');
+  } finally {
+    server.kill();
+  }
+}
+
+function ogMenvaHtml(sceneUrl) {
   return page(PAPER, `<style>
-    .left { position:absolute; left:76px; top:100px; width:560px; }
-    .wordmark { font-family:'Instrument Serif'; font-size:34px; color:${INK}; margin-bottom:60px; letter-spacing:-0.01em; }
-    .headline { font-family:'Instrument Serif'; font-weight:400; font-size:82px; line-height:1.06; color:${INK}; margin-bottom:30px; }
+    .left { position:absolute; left:72px; top:58px; width:620px; }
+    .wordmark { font-family:'Instrument Serif'; font-size:34px; color:${INK}; letter-spacing:-0.01em; }
+    .wordmark span { color:${MENVA_ACCENT}; }
+    .overline { margin-top:74px; font-family:'DM Sans'; font-weight:600; font-size:19px; letter-spacing:0.14em; text-transform:uppercase; color:${MENVA_ACCENT}; }
+    .headline { margin-top:18px; font-family:'Instrument Serif'; font-weight:400; font-size:80px; line-height:1.04; letter-spacing:-0.01em; color:${INK}; }
     .headline em { font-style:italic; color:${MENVA_ACCENT}; }
-    .sub { font-family:'DM Sans'; font-weight:500; font-size:28px; line-height:1.5; color:${MUTED}; max-width:460px; }
-    .stage { position:absolute; right:72px; top:64px; width:400px; height:502px; border-radius:24px; background:${STAGE}; display:flex; align-items:center; justify-content:center; }
-    ${PLATE_CSS}
+    .sub { margin-top:28px; font-family:'DM Sans'; font-weight:500; font-size:26px; line-height:1.45; color:${MUTED}; max-width:540px; }
+    .note { position:absolute; left:72px; bottom:54px; font-family:'DM Sans'; font-weight:500; font-size:20px; color:${MUTED}; }
+    .scene { position:absolute; right:64px; top:45px; height:540px; border-radius:26px; overflow:hidden; box-shadow:0 22px 48px rgba(26,23,20,.20), 0 0 0 1px rgba(26,23,20,.08); }
+    .scene img { display:block; height:100%; width:auto; }
   </style>
   <div class="left">
-    <div class="wordmark">menva.</div>
-    <div class="headline">See it on your<br><em>table.</em></div>
-    <p class="sub">Real dishes in 3D and AR — scan the QR on your table.</p>
+    <div class="wordmark">menva<span>.</span></div>
+    <div class="overline">Don&rsquo;t order blind.</div>
+    <div class="headline">See it on your<br>table. Then <em>decide.</em></div>
+    <p class="sub">Scan the QR at your table. The real dish appears at true size, before you order.</p>
   </div>
-  <div class="stage">
-    <div class="plate" style="width:92%"><img src="${dishUrl('steak-main')}"></div>
-  </div>`);
+  <div class="note">No app. Works in Safari and Chrome.</div>
+  <div class="scene"><img src="${sceneUrl}"></div>`);
 }
 
 // ─── OG image 2: Gauchos ────────────────────────────────────────────────────
@@ -254,7 +285,7 @@ const browser = await chromium.launch({ channel: 'chrome' });
 
 console.log('Rendering Open Graph images...');
 const ogJobs = [
-  { file: 'og-menva.jpg', html: ogMenvaHtml(), bg: PAPER },
+  { file: 'og-menva.jpg', html: ogMenvaHtml(await captureHeroScene(browser)), bg: PAPER },
   { file: 'og-gauchos.jpg', html: ogGauchosHtml(), bg: GAUCHOS_PAPER },
   { file: 'og-baraza.jpg', html: ogBarazaHtml(), bg: BARAZA_PAPER },
   { file: 'og-haute-dolci.jpg', html: ogHauteDolciHtml(), bg: HD_PAPER },
