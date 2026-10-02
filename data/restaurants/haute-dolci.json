@@ -6,6 +6,7 @@
   "logo": "/assets/restaurant/haute-dolci-logo-black.png",
   "theme": "haute-dolci",
   "pilot": false,
+  "homeOrder": 1,
   "listed": true,
   "cuisine": "Desserts",
   "tagline": "It's a must.",

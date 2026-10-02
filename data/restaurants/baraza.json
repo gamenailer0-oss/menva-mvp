@@ -7,6 +7,7 @@
   "logoRound": "/assets/restaurant/baraza-logo.webp",
   "theme": "baraza",
   "pilot": false,
+  "homeOrder": 2,
   "listed": true,
   "cuisine": "Specialty coffee",
   "tagline": "Pakistan's largest specialty coffee brew bar",

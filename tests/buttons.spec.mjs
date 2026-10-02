@@ -7,13 +7,23 @@ test('home page: every button and link', async ({ page }) => {
   const w = watch(page);
   await page.goto('/');
 
-  const gauchosItem = page.locator('.restaurant-row-item[data-theme="gauchos"]');
+  const card = (theme) => page.locator(`.menu-card[data-theme="${theme}"]`);
+  const restaurants = [
+    { theme: 'haute-dolci', path: '/haute-dolci' },
+    { theme: 'baraza', path: '/baraza' },
+    { theme: 'gauchos', path: '/g' },
+  ];
 
-  await test.step('shows the hero, the Gauchos section and "How it works"', async () => {
+  await test.step('shows the hero, the three restaurant cards (Haute Dolci first) and the share band', async () => {
     await expect(page.locator('h1')).toContainText('See it on your table.');
-    await expect(page.locator('.pilot-card').first()).toBeVisible(); // Gauchos card (pilot, listed first)
-    await expect(gauchosItem.locator('.pilot-dishes li')).toHaveCount(3);
-    await expect(page.locator('.home-how li')).toHaveCount(3);
+    await expect(page.locator('.home-hero .overline')).toHaveText("Don't order blind.");
+    await expect(page.locator('.menu-card')).toHaveCount(3);
+    expect(await page.locator('.menu-card').evaluateAll((els) => els.map((e) => e.dataset.theme))).toEqual(restaurants.map((r) => r.theme));
+    await expect(card('haute-dolci').locator('.menu-card-dishes li')).toHaveCount(3);
+    await expect(card('gauchos').locator('.menu-card-dishes li')).toHaveCount(3);
+    await expect(page.locator('.share-band')).toContainText('Then show it off.');
+    // owner-facing content lives on /for-restaurants now
+    await expect(page.locator('.home-how, .hero-proof')).toHaveCount(0);
   });
 
   await test.step('theme toggle switches dark and back to light', async () => {
@@ -25,33 +35,52 @@ test('home page: every button and link', async ({ page }) => {
     expect(await mode()).toBe('light');
   });
 
-  await test.step('"Open the Gauchos menu" opens the menu', async () => {
-    await page.getByRole('link', { name: /Open the Gauchos menu/ }).click();
-    await expect(page).toHaveURL(/\/g$/);
-    await expect(page.locator('.dish-card').first()).toBeVisible();
-    await page.goBack();
+  await test.step('"Explore menus" scrolls to the restaurants without leaving the page', async () => {
+    await page.getByRole('link', { name: 'Explore menus' }).click();
+    await expect(page.locator('#menus h2')).toBeInViewport();
+    await expect(page).toHaveURL(/\/$/);
+    await expect(page.locator('.menu-card')).toHaveCount(3); // not re-rendered
   });
 
-  await test.step('Gauchos card opens the menu', async () => {
-    await page.locator('.pilot-card').first().click();
-    await expect(page).toHaveURL(/\/g$/);
+  await test.step('header "For restaurants" pill goes to /for-restaurants', async () => {
+    await page.locator('.topbar-pill').click();
+    await expect(page).toHaveURL(/\/for-restaurants$/);
     await page.goBack();
+    await expect(page.locator('.menu-card').first()).toBeVisible();
   });
 
-  await test.step('"See the full menu" opens the menu', async () => {
-    await page.locator('.pilot-more').first().click();
-    await expect(page).toHaveURL(/\/g$/);
+  await test.step('footer "For restaurants" link goes to /for-restaurants', async () => {
+    await page.locator('footer .footer-link').click();
+    await expect(page).toHaveURL(/\/for-restaurants$/);
     await page.goBack();
+    await expect(page.locator('.menu-card').first()).toBeVisible();
   });
 
-  const names = await gauchosItem.locator('.pilot-dish-name').allTextContents();
-  for (const [i, name] of names.entries()) {
-    await test.step(`dish photo "${name}" opens that dish`, async () => {
-      await gauchosItem.locator('.pilot-dishes a').nth(i).click();
-      await expect(page.locator('dialog[open] #dish-title')).toHaveText(name);
-      await expect(page).toHaveURL(/\/g$/); // ?dish= removed so a reload shows the menu
-      await page.goto('/');
+  for (const r of restaurants) {
+    await test.step(`"Explore menu" on the ${r.theme} card opens its menu`, async () => {
+      await card(r.theme).locator('.menu-card-more').click();
+      await expect(page).toHaveURL(new RegExp(`${r.path}$`));
+      await expect(page.locator('.dish-card').first()).toBeVisible();
+      await page.goBack();
     });
+  }
+
+  await test.step('the whole card is a tap target (tapping its logo area opens the menu)', async () => {
+    await card('gauchos').locator('.menu-card-title').click({ force: true }); // lands on the card's stretched link
+    await expect(page).toHaveURL(/\/g$/);
+    await page.goBack();
+  });
+
+  for (const r of restaurants) {
+    const names = await card(r.theme).locator('.menu-card-dish').allTextContents();
+    for (const [i, name] of names.entries()) {
+      await test.step(`${r.theme} dish photo "${name.trim()}" opens that dish`, async () => {
+        await card(r.theme).locator('.menu-card-dishes a').nth(i).click();
+        await expect(page.locator('dialog[open] #dish-title')).toHaveText(name.trim());
+        await expect(page).toHaveURL(new RegExp(`${r.path}$`)); // ?dish= removed so a reload shows the menu
+        await page.goto('/');
+      });
+    }
   }
 
   expect(w.errors).toEqual([]);
@@ -186,7 +215,7 @@ test('error screens: every button', async ({ page }) => {
     await page.goto('/nowhere/4');
     await page.getByRole('link', { name: /Go to MENVA/ }).click();
     await expect(page).toHaveURL(/\/$/);
-    await expect(page.locator('.pilot-card').first()).toBeVisible();
+    await expect(page.locator('.menu-card').first()).toBeVisible();
   });
 
   await test.step('"Try again" after the menu failed to load', async () => {
@@ -201,6 +230,6 @@ test('error screens: every button', async ({ page }) => {
   await test.step('home page still links to Gauchos when the menu data is down', async () => {
     await page.route('**/data/menu.json', (r) => r.fulfill({ status: 500, body: '' }));
     await page.goto('/');
-    await expect(page.getByRole('link', { name: /Open the Gauchos menu/ })).toHaveAttribute('href', '/g');
+    await expect(page.getByRole('link', { name: 'Explore menu at Gauchos' })).toHaveAttribute('href', '/g');
   });
 });

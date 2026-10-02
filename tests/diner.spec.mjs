@@ -89,7 +89,7 @@ test('bad and old links still land somewhere useful', async ({ page }) => {
   await expect(page.locator('h1')).toHaveText("This page isn't on the menu.");
 
   await page.goto('/');
-  await page.getByRole('link', { name: /Open the Gauchos menu/ }).click();
+  await page.locator('.menu-card[data-theme="gauchos"] .menu-card-more').click();
   await expect(page).toHaveURL(/\/g$/);
 });
 
