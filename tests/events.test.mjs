@@ -265,3 +265,8 @@ test('Loyalty events: loyalty_stamp / loyalty_redeem are kept (no props, no dish
   assert.equal(sum.days[0].stamps_given, 2);
   assert.equal(sum.days[0].gifts_redeemed, 1);
 });
+
+test('Table Card events: the selfie mood is accepted (no image data ever travels with it)', () => {
+  const out = clean(batch([{ e: 'share_card_shared', d: 'hd-matilda-cake', mood: 'selfie', target: 'save', image: 'data:image/jpeg;base64,AAAA' }]));
+  assert.deepEqual(out.events, [{ e: 'share_card_shared', d: 'hd-matilda-cake', mood: 'selfie', target: 'save' }]);
+});

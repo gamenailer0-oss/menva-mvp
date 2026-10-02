@@ -1,1 +1,101 @@
-/* MENVA — selfie (owned by one helper in the "wave" build; see the plan) */
+/* MENVA — Selfie table card (js/sharecard.js): the camera stage that lives inside the card's 9:16 frame.
+   Only transform and opacity ever change while the guest moves the dish sticker. */
+
+/* the two quiet buttons added to the share sheet's action row */
+.share-actions button[hidden] { display: none; }
+.share-actions .selfie-snap { background: var(--accent); color: var(--accent-ink); border-color: var(--accent); }
+.share-dialog[data-selfie="camera"] .selfie-snap,
+.share-dialog[data-selfie="camera"] .share-another,
+.share-dialog[data-selfie="result"] .share-go,
+.share-dialog[data-selfie="result"] .share-save { grid-column: 1 / -1; }
+.share-dialog[data-selfie="camera"] .selfie-snap { order: -1; }
+
+.selfie-privacy { margin: 0; font-size: var(--text-xs); color: var(--muted); text-align: center; }
+
+/* ── the stage ── */
+.share-preview[data-state="stage"] .share-loading { display: none; }
+.selfie-stage {
+  position: absolute; inset: 0; overflow: hidden;
+  container-type: size;
+  background: #14110f;
+  touch-action: none;
+  user-select: none; -webkit-user-select: none;
+}
+.selfie-stage[hidden] { display: none; }
+.selfie-stage[data-view="panel"],
+.selfie-stage[data-view="starting"],
+.selfie-stage[data-view="idle"] { background: var(--surface-2); touch-action: auto; }
+
+.selfie-video, .selfie-photo {
+  position: absolute; inset: 0; width: 100%; height: 100%;
+  object-fit: cover; display: none; pointer-events: none;
+}
+.selfie-video { transform: scaleX(-1); } /* a mirror, the way people frame themselves */
+.selfie-stage[data-view="live"] .selfie-video { display: block; }
+.selfie-stage[data-view="photo"] .selfie-photo { display: block; }
+
+/* the same soft scrims the finished card has, so the line stays readable */
+.selfie-stage[data-view="live"]::before, .selfie-stage[data-view="photo"]::before,
+.selfie-stage[data-view="live"]::after, .selfie-stage[data-view="photo"]::after {
+  content: ''; position: absolute; left: 0; right: 0; pointer-events: none;
+}
+.selfie-stage[data-view="live"]::before, .selfie-stage[data-view="photo"]::before {
+  top: 0; height: 40%; background: linear-gradient(rgba(8, 8, 8, 0.55), rgba(8, 8, 8, 0));
+}
+.selfie-stage[data-view="live"]::after, .selfie-stage[data-view="photo"]::after {
+  bottom: 0; height: 48%; background: linear-gradient(rgba(8, 8, 8, 0), rgba(8, 8, 8, 0.78));
+}
+
+/* where the ticket stub will sit, so the dish isn't parked under it by accident */
+.selfie-stub-guide {
+  position: absolute; left: 5.56%; top: 73.96%; width: 88.89%; height: 14.58%;
+  display: none; align-items: flex-end; justify-content: flex-end; padding: 0 5cqw 3cqw 0;
+  border: 1px dashed rgba(255, 255, 255, 0.5); border-radius: 3.4cqw;
+  color: rgba(255, 255, 255, 0.75); font: 400 7cqw/1 var(--font-brand);
+  pointer-events: none;
+}
+.selfie-stage[data-view="live"] .selfie-stub-guide, .selfie-stage[data-view="photo"] .selfie-stub-guide { display: flex; }
+
+/* sized like the line on the finished card, so what the guest frames is what they get */
+.selfie-prompt {
+  position: absolute; left: 5.56%; right: 5.56%; top: 13.6%; margin: 0;
+  display: none; pointer-events: none;
+  font-family: var(--font-display); font-weight: 400; font-size: 14cqw; line-height: 0.98; letter-spacing: -0.018em;
+  color: #fff; text-shadow: 0 0.4cqw 2.4cqw rgba(0, 0, 0, 0.45);
+}
+.selfie-stage[data-view="live"] .selfie-prompt, .selfie-stage[data-view="photo"] .selfie-prompt { display: block; }
+[data-theme="haute-dolci"] .selfie-prompt { font-weight: 300; font-size: 14.4cqw; letter-spacing: -0.025em; }
+[data-theme="baraza"] .selfie-prompt {
+  font-family: var(--font-condensed); font-weight: 600; text-transform: uppercase; font-size: 18.5cqw; line-height: 0.84; letter-spacing: -0.005em;
+}
+
+/* the dish: positioned with transform only (see applySticker) */
+.selfie-sticker {
+  position: absolute; left: 0; top: 0; height: auto; max-width: none;
+  display: none; transform-origin: 50% 50%; will-change: transform;
+  touch-action: none; cursor: grab; user-select: none; -webkit-user-drag: none;
+  filter: drop-shadow(0 2.2cqw 1.85cqw rgba(0, 0, 0, 0.42));
+}
+.selfie-sticker:active { cursor: grabbing; }
+.selfie-sticker:focus-visible { outline: 2px solid #fff; outline-offset: 4px; border-radius: 6px; }
+.selfie-stage[data-view="live"] .selfie-sticker, .selfie-stage[data-view="photo"] .selfie-sticker { display: block; }
+
+/* camera not started, off, or missing: a calm panel with one clear way forward */
+.selfie-panel {
+  position: absolute; inset: 0; display: none;
+  place-content: center; justify-items: center; gap: 12px; padding: 20px; text-align: center;
+}
+.selfie-stage[data-view="panel"] .selfie-panel,
+.selfie-stage[data-view="starting"] .selfie-panel,
+.selfie-stage[data-view="idle"] .selfie-panel { display: grid; }
+.selfie-msg { margin: 0 0 4px; max-width: 24ch; font-size: var(--text-sm); color: var(--ink); line-height: 1.4; }
+.selfie-on, .selfie-take {
+  display: inline-flex; align-items: center; justify-content: center; gap: 8px;
+  min-height: 48px; padding: 0 20px; border-radius: var(--radius-pill);
+  font-size: var(--text-sm); font-weight: 600; border: 1.5px solid var(--accent);
+}
+.selfie-on[hidden] { display: none; }
+.selfie-on { background: transparent; color: var(--accent); }
+.selfie-take { background: var(--accent); color: var(--accent-ink); }
+.selfie-on svg, .selfie-take svg { width: 18px; height: 18px; flex: none; }
+.selfie-stage[data-view="starting"] .selfie-take { background: transparent; color: var(--accent); }

@@ -20,6 +20,7 @@
   // ─── Moods ──────────────────────────────────────────────────────
   const MOODS = [
     { id: 'firstLook', label: 'First look' },
+    { id: 'selfie', label: 'Selfie' }, // only when the restaurant has selfieCard: true
     { id: 'fav', label: 'My fav' },
     { id: 'new', label: 'Tried something new' },
     { id: 'streak', label: 'Streak' },
@@ -38,6 +39,7 @@
     roast: ['Sized it up.|It sized me up back.'],
     sarcastic: ['Calories don\'t|count in 3D.'],
     goodVibes: ['Good company.|Better food.'],
+    selfie: ['Say|cheese.', 'Food first.|Face second.'],
   };
 
   const badgeText = (mood, streak) => ({
@@ -48,6 +50,7 @@
     roast: 'Live 3D · Roast mode',
     sarcastic: 'Live 3D · Sarcastic',
     goodVibes: 'Live 3D · Good vibes',
+    selfie: 'Selfie · Live AR',
   }[mood]);
 
   const subText = (mood, streak) => ({
@@ -58,10 +61,11 @@
     roast: '',
     sarcastic: 'Seen in 3D. Ordered anyway.',
     goodVibes: 'Seen in 3D. Shared with good company.',
+    selfie: '',
   }[mood]);
 
   // mood → colour scheme (see BRANDS[*].sch)
-  const SCHEME_OF = { firstLook: 'base', fav: 'deep', new: 'paper', streak: 'dark', roast: 'base', sarcastic: 'paper', goodVibes: 'warm' };
+  const SCHEME_OF = { firstLook: 'base', fav: 'deep', new: 'paper', streak: 'dark', roast: 'base', sarcastic: 'paper', goodVibes: 'warm', selfie: 'dark' };
 
   // ─── Brands ─────────────────────────────────────────────────────
   // The approved Table Card directions (one per restaurant). hl = [headline colour, last-line
@@ -540,7 +544,7 @@
     g.fillText(fitText(g, `${info.date} · ${info.time}`.toUpperCase(), maxTextW), tx, 110);
     g.fillStyle = s.ink; g.globalAlpha = 0.75;
     setFont(g, { family: 'DM Sans', weight: 500, size: 22 }); setSpacing(g, 3.1);
-    g.fillText('LIVE 3D · FIRST LOOK', tx, 150);
+    g.fillText(info.tag || 'LIVE 3D · FIRST LOOK', tx, 150);
     g.globalAlpha = 1;
     // perforation
     g.save();
@@ -566,7 +570,88 @@
     return `${t.trimEnd()}…`;
   }
 
+  // ─── Selfie card ────────────────────────────────────────────────
+  // The guest's photo full-bleed (cover-cropped like the stage's object-fit: cover; a live-camera frame is
+  // drawn mirrored to match the preview they framed, all text stays the right way round), the dish sticker
+  // exactly where they put it, soft scrims, the line big at the top, the same logo, badge and ticket stub.
+  function drawCover(ctx, src, mirror) {
+    const sw = src.videoWidth || src.naturalWidth || src.width, sh = src.videoHeight || src.naturalHeight || src.height;
+    if (!sw || !sh) return;
+    const k = Math.max(W / sw, H / sh);
+    const dw = sw * k, dh = sh * k, dx = (W - dw) / 2, dy = (H - dh) / 2;
+    ctx.save();
+    if (mirror) { ctx.translate(W, 0); ctx.scale(-1, 1); }
+    ctx.drawImage(src, dx, dy, dw, dh);
+    ctx.restore();
+  }
+
+  function scrim(ctx, y0, y1, a0, a1) {
+    const g = ctx.createLinearGradient(0, y0, 0, y1);
+    g.addColorStop(0, `rgba(8,8,8,${a0})`);
+    g.addColorStop(1, `rgba(8,8,8,${a1})`);
+    ctx.fillStyle = g;
+    ctx.fillRect(0, Math.min(y0, y1), W, Math.abs(y1 - y0));
+  }
+
+  function drawSelfieSticker(ctx, img, st) {
+    if (!img) return;
+    const w = st.w * W, h = w * img.naturalHeight / img.naturalWidth;
+    ctx.save();
+    ctx.translate(st.x * W, st.y * H);
+    ctx.rotate(st.rot * Math.PI / 180);
+    ctx.shadowColor = 'rgba(0,0,0,.42)'; ctx.shadowBlur = 40; ctx.shadowOffsetY = 24;
+    ctx.drawImage(img, -w / 2, -h / 2, w, h);
+    ctx.restore();
+  }
+
+  async function renderSelfieCard(state) {
+    const { restaurant: r, dish, line, selfie } = state;
+    const brand = brandFor(r);
+    const sc = brand.sch.dark; // light ink + white logo over the photo
+    const [, logoImg, roundImg, dishImg] = await Promise.all([
+      loadFonts(),
+      r.logo ? loadImage(r.logo) : null,
+      r.logoRound ? loadImage(r.logoRound) : null,
+      loadImage(dish.assets.card || dish.assets.poster),
+    ]);
+    const canvas = document.createElement('canvas');
+    canvas.width = W; canvas.height = H;
+    const ctx = canvas.getContext('2d');
+    ctx.textBaseline = 'alphabetic';
+    ctx.fillStyle = '#121211'; ctx.fillRect(0, 0, W, H);
+    drawCover(ctx, selfie.photo, selfie.mirror);
+    scrim(ctx, 0, 760, 0.55, 0);
+    scrim(ctx, 1000, H, 0, 0.78);
+
+    drawLogo(ctx, brand, sc, r, { logo: logoImg, logoRound: roundImg });
+    drawPill(ctx, brand, sc, badgeText('selfie'), 'dot');
+    ctx.save();
+    ctx.shadowColor = 'rgba(0,0,0,.4)'; ctx.shadowBlur = 26; ctx.shadowOffsetY = 4;
+    drawHeadline(ctx, brand, sc, 'selfie', line);
+    ctx.restore();
+
+    const nf = brand.nameFont;
+    const nameText = nf.upper ? dish.name.toUpperCase() : dish.name;
+    const nsize = fitSize(ctx, nf, nameText, 960, nf.size);
+    setFont(ctx, { ...nf, size: nsize });
+    setSpacing(ctx, nf.ls * nsize);
+    ctx.fillStyle = sc.ink;
+    ctx.save();
+    ctx.shadowColor = 'rgba(0,0,0,.45)'; ctx.shadowBlur = 20; ctx.shadowOffsetY = 3;
+    ctx.fillText(nameText, 60, 1296 + nsize * 0.82);
+    ctx.restore();
+    setSpacing(ctx, 0);
+
+    drawStub(ctx, brand, sc, {
+      table: state.table, place: [state.place, r.location].filter(Boolean).join(' · '),
+      date: state.date, time: state.time, link: state.link, tag: 'SELFIE · LIVE AR',
+    });
+    drawSelfieSticker(ctx, dishImg, selfie.sticker); // the guest's own placement, on top of everything
+    return canvas;
+  }
+
   async function renderCard(state) {
+    if (state.mood === 'selfie') return renderSelfieCard(state);
     const { restaurant: r, dish, mood, line } = state;
     const brand = brandFor(r);
     const sc = brand.sch[SCHEME_OF[mood]];
@@ -693,10 +778,302 @@
   const refreshIcon = '<svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.6" stroke-linecap="round" stroke-linejoin="round"><path d="M4 10a8 8 0 0 1 14-3.5M20 4v4h-4M20 14a8 8 0 0 1-14 3.5M4 20v-4h4"/></svg>';
   const shareIcon = '<svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.6" stroke-linecap="round" stroke-linejoin="round"><path d="M12 15V3M8 7l4-4 4 4M5 12v7a2 2 0 0 0 2 2h10a2 2 0 0 0 2-2v-7"/></svg>';
   const saveIcon = '<svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.6" stroke-linecap="round" stroke-linejoin="round"><path d="M12 3v12M7 11l5 5 5-5M5 20h14"/></svg>';
+  const cameraIcon = '<svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.6" stroke-linecap="round" stroke-linejoin="round"><path d="M4 8h3l1.6-2.4h6.8L17 8h3a1 1 0 0 1 1 1v9a1 1 0 0 1-1 1H4a1 1 0 0 1-1-1V9a1 1 0 0 1 1-1Z"/><circle cx="12" cy="13.2" r="3.4"/></svg>';
+  const retakeIcon = '<svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.6" stroke-linecap="round" stroke-linejoin="round"><path d="M3 12a9 9 0 1 0 3-6.7M3 4v4.5h4.5"/></svg>';
   const esc = (s) => String(s).replace(/[&<>"']/g, (c) => ({ '&': '&amp;', '<': '&lt;', '>': '&gt;', '"': '&quot;', "'": '&#39;' }[c]));
 
   let dialog = null;
   let session = null; // the open sheet's state
+
+  // ─── Selfie: camera stage, dish sticker, Snap ──────────────────
+  // Nothing here uploads or stores anything: the camera stream, the frozen frame and the chosen file live
+  // in memory for as long as the sheet is open. The camera is asked for only when the guest taps Selfie,
+  // and is switched off when they leave Selfie, close the sheet, or hide the tab.
+  // Dragging / pinching the sticker only changes a CSS transform; the card is composed once, on Snap.
+  const STICKER_BASE = 0.55; // sticker width at scale 1, as a share of the frame
+  const STICKER_MIN = 0.45, STICKER_MAX = 1.7;
+  const hasCamera = () => !!(navigator.mediaDevices && typeof navigator.mediaDevices.getUserMedia === 'function');
+
+  const newSelfie = () => ({
+    phase: 'camera', // 'camera' → 'result' (after Snap)
+    view: 'idle', // idle | starting | live | photo | panel
+    gen: 0, stream: null, denied: false,
+    photo: null, photoUrl: '', // a photo picked with the phone's own camera
+    frozen: null, frozenMirror: false, // the snapped frame
+    sticker: { x: 0.5, y: 0.55, s: 1, rot: -6 }, // centre as a share of the frame, scale, tilt in degrees
+  });
+
+  const sel = (q) => dialog.querySelector(q);
+  const geo = { fw: 0, fh: 0, bw: 0, bh: 0 };
+
+  function syncActions() {
+    const s = session;
+    if (!s || !dialog) return;
+    const st = s.selfie, isSelfie = s.mood === 'selfie';
+    const cam = isSelfie && st.phase === 'camera';
+    sel('.share-go').hidden = cam || !s.canShare;
+    sel('.share-save').hidden = cam;
+    sel('.share-save').classList.toggle('is-primary', !s.canShare);
+    sel('.selfie-snap').hidden = !(cam && (st.view === 'live' || st.view === 'photo'));
+    sel('.selfie-retake').hidden = !(isSelfie && st.phase === 'result');
+    dialog.dataset.selfie = isSelfie ? st.phase : '';
+  }
+
+  function setView(view, msg) {
+    const st = session.selfie;
+    st.view = view;
+    sel('.selfie-stage').dataset.view = view;
+    if (msg !== undefined) sel('.selfie-msg').textContent = msg;
+    if (view === 'starting') sel('.selfie-msg').textContent = 'Starting the camera…';
+    sel('.selfie-on').hidden = !(view === 'panel' && hasCamera() && !st.denied);
+    syncActions();
+  }
+
+  function stopCamera() {
+    const st = session?.selfie;
+    if (!st || !dialog) return;
+    st.gen++; // a camera request still waiting gets switched off when it arrives
+    if (st.stream) st.stream.getTracks().forEach((t) => t.stop());
+    st.stream = null;
+    const v = sel('.selfie-video');
+    try { v.pause(); } catch {}
+    v.srcObject = null;
+  }
+
+  function clearPhoto() {
+    const st = session?.selfie;
+    if (!st) return;
+    if (st.photoUrl) URL.revokeObjectURL(st.photoUrl);
+    st.photo = null; st.photoUrl = '';
+    sel('.selfie-photo').removeAttribute('src');
+  }
+
+  function resetSelfie() {
+    if (!dialog) return;
+    stopCamera();
+    clearPhoto();
+    if (session) session.selfie = newSelfie();
+    const stage = sel('.selfie-stage');
+    stage.hidden = true;
+    stage.dataset.view = 'idle';
+    sel('.selfie-sticker').removeAttribute('src');
+    sel('.selfie-privacy').hidden = true;
+    sel('.share-note').hidden = false;
+    dialog.dataset.selfie = '';
+  }
+
+  function leaveSelfieStage() {
+    const st = session.selfie;
+    stopCamera();
+    sel('.selfie-stage').hidden = true;
+    if (st.view !== 'photo') st.view = 'idle';
+    syncActions();
+  }
+
+  const promptText = () => {
+    const s = session, pool = s.pools.selfie;
+    return pool[s.idx.selfie % pool.length];
+  };
+
+  function showSelfieStage() {
+    const s = session, st = s.selfie;
+    s.token++; // a card still being composed for the previous mood is dropped
+    sel('.share-preview').dataset.state = 'stage';
+    sel('.share-img').hidden = true;
+    sel('.selfie-stage').hidden = false;
+    const stickerSrc = s.dish.assets.card || s.dish.assets.poster;
+    const sticker = sel('.selfie-sticker');
+    if (sticker.getAttribute('src') !== stickerSrc) sticker.src = stickerSrc;
+    sticker.alt = `${s.dish.name} sticker. Drag to move it, pinch or scroll to resize.`;
+    const p = sel('.selfie-prompt');
+    p.textContent = '';
+    promptText().split(/\s*\|\s*/).forEach((part, i) => { if (i) p.append(document.createElement('br')); p.append(part); });
+    sel('.share-another').disabled = s.pools.selfie.length < 2;
+    sel('.share-status').textContent = '';
+    if (st.view === 'photo' && st.photoUrl) setView('photo');
+    else if (st.view === 'idle') {
+      if (!hasCamera()) setView('panel', 'Live camera isn’t available here. You can still take a selfie.');
+      else if (st.denied) setView('panel', 'The camera is off. You can still take a selfie.');
+      else startCamera();
+    } else setView(st.view);
+    layoutSticker();
+  }
+
+  async function startCamera() {
+    const s = session, st = s.selfie;
+    if (!hasCamera()) { setView('panel', 'Live camera isn’t available here. You can still take a selfie.'); return; }
+    st.denied = false;
+    setView('starting');
+    const gen = ++st.gen;
+    let stream;
+    try {
+      stream = await navigator.mediaDevices.getUserMedia({ video: { facingMode: 'user', width: { ideal: 1080 }, height: { ideal: 1920 } }, audio: false });
+    } catch (e) {
+      if (gen !== st.gen || session !== s) return;
+      st.denied = !!e && (e.name === 'NotAllowedError' || e.name === 'SecurityError');
+      setView('panel', st.denied ? 'The camera is off. You can still take a selfie.' : 'Live camera isn’t available here. You can still take a selfie.');
+      return;
+    }
+    if (gen !== st.gen || session !== s || s.mood !== 'selfie' || st.phase !== 'camera') { stream.getTracks().forEach((t) => t.stop()); return; }
+    if (document.hidden) { stream.getTracks().forEach((t) => t.stop()); setView('panel', 'The camera is paused.'); return; }
+    st.stream = stream;
+    stream.getVideoTracks().forEach((t) => t.addEventListener('ended', () => {
+      if (session === s && st.stream === stream) { stopCamera(); setView('panel', 'The camera stopped. Turn it on again or take a selfie.'); }
+    }));
+    const v = sel('.selfie-video');
+    v.srcObject = stream;
+    try { await v.play(); } catch {}
+    if (gen !== st.gen || session !== s) return;
+    setView('live');
+  }
+
+  function loadPhoto(file) {
+    const s = session, st = s.selfie;
+    if (!file || (file.type && !/^image\//.test(file.type))) { setView('panel', 'That file isn’t a photo. Try again.'); return; }
+    const url = URL.createObjectURL(file);
+    const im = new Image();
+    im.onload = () => {
+      if (session !== s || s.mood !== 'selfie' || st.phase !== 'camera') { URL.revokeObjectURL(url); return; }
+      clearPhoto();
+      stopCamera();
+      st.photo = im; st.photoUrl = url;
+      sel('.selfie-photo').src = url;
+      setView('photo');
+      layoutSticker();
+    };
+    im.onerror = () => { URL.revokeObjectURL(url); if (session === s) setView('panel', 'That photo couldn’t be opened. Try another.'); };
+    im.src = url;
+  }
+
+  function snap() {
+    const s = session, st = s?.selfie;
+    if (!s || s.mood !== 'selfie' || st.phase !== 'camera') return;
+    if (st.view === 'live') {
+      const v = sel('.selfie-video');
+      if (!v.videoWidth) return;
+      const c = document.createElement('canvas');
+      c.width = v.videoWidth; c.height = v.videoHeight;
+      c.getContext('2d').drawImage(v, 0, 0);
+      st.frozen = c; st.frozenMirror = true; // the card matches the mirror-view the guest framed
+      stopCamera();
+    } else if (st.view === 'photo' && st.photo) {
+      st.frozen = st.photo; st.frozenMirror = false;
+    } else return;
+    st.phase = 'result';
+    syncActions();
+    draw();
+  }
+
+  function retake() {
+    const s = session, st = s?.selfie;
+    if (!s || st.phase !== 'result') return;
+    st.phase = 'camera'; st.frozen = null; st.view = 'idle';
+    clearPhoto();
+    s.file = null;
+    sel('.share-status').textContent = '';
+    draw();
+  }
+
+  // — sticker: transform-only positioning —
+  let raf = 0;
+  function layoutSticker() {
+    if (!session || !dialog) return;
+    const stage = sel('.selfie-stage'), sticker = sel('.selfie-sticker');
+    if (stage.hidden) return;
+    geo.fw = stage.clientWidth; geo.fh = stage.clientHeight;
+    if (!geo.fw) return;
+    geo.bw = geo.fw * STICKER_BASE;
+    const ratio = sticker.naturalWidth ? sticker.naturalHeight / sticker.naturalWidth : 0.75;
+    geo.bh = geo.bw * ratio;
+    sticker.style.width = `${geo.bw}px`;
+    applySticker();
+  }
+
+  function clampSticker() {
+    const k = session.selfie.sticker;
+    k.s = Math.min(STICKER_MAX, Math.max(STICKER_MIN, k.s));
+    const hw = geo.bw * k.s / 2, hh = geo.bh * k.s / 2;
+    const cx = Math.min(geo.fw - hw, Math.max(hw, k.x * geo.fw));
+    const cy = Math.min(geo.fh - hh, Math.max(hh, k.y * geo.fh));
+    k.x = 2 * hw >= geo.fw ? 0.5 : cx / geo.fw;
+    k.y = 2 * hh >= geo.fh ? 0.5 : cy / geo.fh;
+  }
+
+  function applySticker() {
+    if (!session || !geo.fw) return;
+    clampSticker();
+    const k = session.selfie.sticker;
+    const x = k.x * geo.fw - geo.bw / 2, y = k.y * geo.fh - geo.bh / 2;
+    sel('.selfie-sticker').style.transform = `translate3d(${x.toFixed(1)}px, ${y.toFixed(1)}px, 0) rotate(${k.rot}deg) scale(${k.s.toFixed(3)})`;
+  }
+  const scheduleSticker = () => { if (!raf) raf = requestAnimationFrame(() => { raf = 0; applySticker(); }); };
+
+  function wireSelfie() {
+    const stage = sel('.selfie-stage'), sticker = sel('.selfie-sticker'), file = sel('.selfie-file');
+    const active = () => session && session.mood === 'selfie' && session.selfie.phase === 'camera' && (session.selfie.view === 'live' || session.selfie.view === 'photo');
+    sticker.addEventListener('load', layoutSticker);
+    if ('ResizeObserver' in window) new ResizeObserver(layoutSticker).observe(stage);
+    else window.addEventListener('resize', layoutSticker);
+
+    // pointer gestures: one finger drags, two pinch (listeners on the frame so a second finger can land anywhere)
+    const ptrs = new Map();
+    let g = null;
+    const pts = () => [...ptrs.values()];
+    const dist = () => { const [a, b] = pts(); return Math.hypot(a.x - b.x, a.y - b.y) || 1; };
+    const begin = () => {
+      const k = session.selfie.sticker;
+      if (ptrs.size === 1) { const [p] = pts(); g = { mode: 'drag', px: p.x, py: p.y, ox: k.x, oy: k.y }; }
+      else if (ptrs.size >= 2) g = { mode: 'pinch', d0: dist(), s0: k.s };
+      else g = null;
+    };
+    stage.addEventListener('pointerdown', (e) => {
+      if (!active() || (ptrs.size === 0 && e.target !== sticker)) return;
+      e.preventDefault();
+      ptrs.set(e.pointerId, { x: e.clientX, y: e.clientY });
+      try { stage.setPointerCapture(e.pointerId); } catch {}
+      begin();
+    });
+    stage.addEventListener('pointermove', (e) => {
+      if (!ptrs.has(e.pointerId) || !g || !session) return;
+      ptrs.set(e.pointerId, { x: e.clientX, y: e.clientY });
+      const k = session.selfie.sticker;
+      if (g.mode === 'drag') {
+        const p = ptrs.get(e.pointerId);
+        k.x = g.ox + (p.x - g.px) / geo.fw; k.y = g.oy + (p.y - g.py) / geo.fh;
+      } else k.s = g.s0 * dist() / g.d0;
+      scheduleSticker();
+    });
+    const up = (e) => { if (ptrs.delete(e.pointerId) && session) begin(); };
+    stage.addEventListener('pointerup', up);
+    stage.addEventListener('pointercancel', up);
+    stage.addEventListener('wheel', (e) => {
+      if (!active()) return;
+      e.preventDefault();
+      session.selfie.sticker.s *= Math.exp(-e.deltaY * 0.0015);
+      scheduleSticker();
+    }, { passive: false });
+    sticker.addEventListener('keydown', (e) => {
+      if (!active()) return;
+      const k = session.selfie.sticker, step = e.shiftKey ? 0.05 : 0.02;
+      const move = { ArrowLeft: [-step, 0], ArrowRight: [step, 0], ArrowUp: [0, -step], ArrowDown: [0, step] }[e.key];
+      if (move) { k.x += move[0]; k.y += move[1]; } else if (e.key === '+' || e.key === '=') k.s *= 1.08; else if (e.key === '-') k.s /= 1.08; else return;
+      e.preventDefault();
+      scheduleSticker();
+    });
+
+    sel('.selfie-take').addEventListener('click', () => file.click());
+    file.addEventListener('change', () => { const f = file.files && file.files[0]; file.value = ''; if (f && session) loadPhoto(f); });
+    sel('.selfie-on').addEventListener('click', () => { if (session && session.selfie.phase === 'camera') startCamera(); });
+    sel('.selfie-snap').addEventListener('click', snap);
+    sel('.selfie-retake').addEventListener('click', retake);
+
+    // The camera never keeps running in the background.
+    document.addEventListener('visibilitychange', () => {
+      const st = session?.selfie;
+      if (document.hidden && st && (st.stream || st.view === 'starting')) { stopCamera(); setView('panel', 'The camera is paused.'); }
+    });
+    window.addEventListener('pagehide', () => stopCamera());
+  }
 
   function ensureDialog() {
     if (dialog) return dialog;
@@ -711,10 +1088,26 @@
         <div class="share-preview" data-state="loading">
           <img class="share-img" alt="" width="1080" height="1920" hidden>
           <p class="share-loading" role="status">Making your card…</p>
+          <div class="selfie-stage" data-view="idle" hidden>
+            <video class="selfie-video" playsinline muted autoplay></video>
+            <img class="selfie-photo" alt="" draggable="false">
+            <div class="selfie-stub-guide" aria-hidden="true"><span>menva.</span></div>
+            <p class="selfie-prompt" aria-live="polite"></p>
+            <img class="selfie-sticker" alt="" draggable="false" tabindex="0">
+            <div class="selfie-panel">
+              <p class="selfie-msg" role="status"></p>
+              <button type="button" class="selfie-on">${cameraIcon}<span>Turn camera on</span></button>
+              <button type="button" class="selfie-take">${cameraIcon}<span>Take a selfie</span></button>
+              <input type="file" class="selfie-file" accept="image/*" capture="user" hidden>
+            </div>
+          </div>
         </div>
+        <p class="selfie-privacy" hidden>Your photo stays on your phone. Nothing is uploaded.</p>
         <div class="share-chips" role="group" aria-label="Card mood"></div>
         <div class="share-actions">
+          <button type="button" class="selfie-snap" hidden>${cameraIcon}<span>Snap</span></button>
           <button type="button" class="share-another">${refreshIcon}<span>Another line</span></button>
+          <button type="button" class="selfie-retake" hidden>${retakeIcon}<span>Retake</span></button>
           <button type="button" class="share-go" hidden>${shareIcon}<span>Share</span></button>
           <button type="button" class="share-save">${saveIcon}<span>Save image</span></button>
         </div>
@@ -725,6 +1118,7 @@
     dialog.querySelector('.share-close').addEventListener('click', () => dialog.close());
     dialog.addEventListener('click', (e) => { if (e.target === dialog) dialog.close(); });
     dialog.addEventListener('close', () => {
+      resetSelfie(); // stops the camera, forgets the photo
       const img = dialog.querySelector('.share-img');
       if (img.src.startsWith('blob:')) URL.revokeObjectURL(img.src);
       img.removeAttribute('src');
@@ -737,6 +1131,7 @@
       session.idx[session.mood] = (session.idx[session.mood] + 1) % pool.length;
       draw();
     });
+    wireSelfie();
     dialog.querySelector('.share-go').addEventListener('click', () => deliver('share'));
     dialog.querySelector('.share-save').addEventListener('click', () => deliver('save'));
     return dialog;
@@ -753,6 +1148,7 @@
 
   function chipList(s) {
     return MOODS.filter((m) => {
+      if (m.id === 'selfie') return s.restaurant.selfieCard === true;
       if (m.id === 'new') return s.isNew;
       if (m.id === 'streak') return s.streakDays >= 2;
       if (m.id === 'roast') return s.restaurant.roast !== false;
@@ -781,7 +1177,13 @@
     const token = ++s.token;
     const preview = dialog.querySelector('.share-preview');
     const img = dialog.querySelector('.share-img');
-    const buttons = dialog.querySelectorAll('.share-go, .share-save, .share-another');
+    const buttons = dialog.querySelectorAll('.share-go, .share-save, .share-another, .selfie-retake');
+    const isSelfie = s.mood === 'selfie';
+    dialog.querySelector('.selfie-privacy').hidden = !isSelfie;
+    dialog.querySelector('.share-note').hidden = isSelfie;
+    if (!isSelfie) leaveSelfieStage();
+    else if (s.selfie.phase !== 'result') { showSelfieStage(); return; } // the camera stage: nothing is composed until Snap
+    else dialog.querySelector('.selfie-stage').hidden = true;
     preview.dataset.state = 'loading';
     buttons.forEach((b) => { b.disabled = true; });
     dialog.querySelector('.share-status').textContent = '';
@@ -792,6 +1194,7 @@
       restaurant: s.restaurant, dish: s.dish, mood: s.mood, line: raw, streak: s.streakDays,
       table: s.table, place: s.place, date: s.date, time: s.time, link: s.link,
       sticker: s.restaurant.shareLines?.roastSticker || '',
+      selfie: isSelfie ? { photo: s.selfie.frozen, mirror: s.selfie.frozenMirror, sticker: { x: s.selfie.sticker.x, y: s.selfie.sticker.y, w: STICKER_BASE * s.selfie.sticker.s, rot: s.selfie.sticker.rot } } : null,
     };
     let blob;
     try {
@@ -805,7 +1208,7 @@
       return;
     }
     if (img.src.startsWith('blob:')) URL.revokeObjectURL(img.src);
-    s.file = new File([blob], `menva-${s.restaurant.id}-${s.dish.id}.jpg`, { type: 'image/jpeg' });
+    s.file = new File([blob], `menva-${s.restaurant.id}-${s.dish.id}${isSelfie ? '-selfie' : ''}.jpg`, { type: 'image/jpeg' });
     img.src = URL.createObjectURL(blob);
     img.hidden = false;
     img.alt = `${badgeText(s.mood, s.streakDays)}. ${plain(raw)} ${s.dish.name}, ${s.restaurant.name}.`;
@@ -815,6 +1218,7 @@
     preview.dataset.state = 'ready';
     buttons.forEach((b) => { b.disabled = false; });
     dialog.querySelector('.share-another').disabled = pool.length < 2;
+    syncActions();
   }
 
   function deliver(target) {
@@ -822,7 +1226,7 @@
     if (!s?.file) return;
     const status = dialog.querySelector('.share-status');
     const line = plain(s.pools[s.mood][s.idx[s.mood] % s.pools[s.mood].length]);
-    const text = `${line} ${s.dish.name} at ${s.restaurant.name}, seen in 3D first.`;
+    const text = `${line} ${s.dish.name} at ${s.restaurant.name}, seen in ${s.mood === 'selfie' ? 'AR' : '3D'} first.`;
     const url = `${location.origin}/${s.restaurant.slug}`;
     const done = (how) => { window.MenvaTrack?.('share_card_shared', { dish: s.dish.id, mood: s.mood, target: how }); };
     if (target === 'share') {
@@ -861,6 +1265,7 @@
       restaurant, dish, table: table ? String(table) : '', isNew: !!isNew, trigger, token: 0, file: null,
       streakDays, pools,
       idx: Object.fromEntries(MOOD_IDS.map((m) => [m, shuffleStart(pools[m].length)])),
+      selfie: newSelfie(),
       mood: favourite ? 'fav' : 'firstLook',
       place: String(restaurant.area || restaurant.location || '').split(',')[0].trim(),
       date: now.toLocaleDateString('en-GB', { day: 'numeric', month: 'short', year: 'numeric' }),
@@ -869,12 +1274,12 @@
     };
     d.dataset.theme = restaurant.theme || 'default';
     d.querySelector('.share-title').textContent = 'Your table card';
-    const canShare = canShareFiles();
-    d.querySelector('.share-go').hidden = !canShare;
-    d.querySelector('.share-save').classList.toggle('is-primary', !canShare);
+    session.canShare = canShareFiles();
+    resetSelfie();
     d.querySelector('.share-img').hidden = true;
     d.querySelector('.share-loading').textContent = 'Making your card…';
     renderChips();
+    syncActions();
     window.MenvaTrack?.('share_card_open', { dish: dish.id });
     d.showModal();
     draw();

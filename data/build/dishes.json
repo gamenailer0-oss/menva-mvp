@@ -1,5 +1,5 @@
 {
-  "generated": "2026-10-02T07:59:13.002Z",
+  "generated": "2026-10-02T08:24:07.106Z",
   "restaurants": [
     {
       "id": "gauchos",
@@ -10,6 +10,11 @@
       "theme": "gauchos",
       "pilot": true,
       "listed": true,
+      "loyalty": {
+        "enabled": true,
+        "visits": 8,
+        "gift": null
+      },
       "cuisine": "Steakhouse",
       "tagline": "Argentine-inspired · Oakwood-smoked",
       "area": "Gulberg III",
@@ -21,6 +26,7 @@
       "menuSubtitle": "Prices in PKR",
       "showCheffy": false,
       "roast": true,
+      "selfieCard": true,
       "shareLinesApproved": false,
       "shareLines": {
         "firstLook": [
@@ -66,6 +72,10 @@
           "Full table.|Full hearts.",
           "Great food.|Greater company.",
           "Small joys,|big cuts."
+        ],
+        "selfie": [
+          "Hands off.|Steak first.",
+          "Touch the steak|before the steak."
         ],
         "roastSticker": "Sizzle > ghar ka khana"
       },
@@ -293,6 +303,11 @@
       "theme": "baraza",
       "pilot": false,
       "listed": true,
+      "loyalty": {
+        "enabled": true,
+        "visits": 8,
+        "gift": null
+      },
       "cuisine": "Specialty coffee",
       "tagline": "Pakistan's largest specialty coffee brew bar",
       "hours": "Open 24/7",
@@ -306,6 +321,7 @@
       "menuSubtitle": "Prices in PKR",
       "showCheffy": false,
       "roast": true,
+      "selfieCard": true,
       "shareLinesApproved": false,
       "shareLines": {
         "firstLook": [
@@ -351,6 +367,10 @@
           "Slow sips,|big smiles.",
           "Warm cup.|Warm people.",
           "Fresh brew,|fresh start."
+        ],
+        "selfie": [
+          "Strike a pose|for the pizza.",
+          "Coffee face,|please."
         ],
         "roastSticker": "Fine. Chai can wait."
       },
@@ -911,6 +931,11 @@
       "theme": "haute-dolci",
       "pilot": false,
       "listed": true,
+      "loyalty": {
+        "enabled": true,
+        "visits": 8,
+        "gift": null
+      },
       "cuisine": "Desserts",
       "tagline": "It's a must.",
       "hours": "Daily, 9am–midnight (1am Fri–Sun)",
@@ -924,6 +949,7 @@
       "menuSubtitle": "Prices in PKR",
       "showCheffy": false,
       "roast": true,
+      "selfieCard": true,
       "shareLinesApproved": false,
       "shareLines": {
         "firstLook": [
@@ -970,6 +996,10 @@
           "Small joys,|big slices.",
           "Sweet people.|Sweeter plates.",
           "Happy table.|Happy heart."
+        ],
+        "selfie": [
+          "Open wide.|Cake incoming.",
+          "Say cheesecake."
         ],
         "roastSticker": "Dessert > ghar ka khana"
       },
