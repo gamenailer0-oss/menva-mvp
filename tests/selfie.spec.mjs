@@ -432,7 +432,8 @@ test('the sticker can be moved and resized from the keyboard', async ({ page }) 
   await expect(stage(page)).toHaveAttribute('data-view', 'live', { timeout: 15_000 });
   await expect.poll(async () => (await rects(page)).sticker.w).toBeGreaterThan(50);
   const r0 = await rects(page);
-  await sticker(page).focus();
+  // The stage can re-settle once as the camera stream arrives; make sure the sticker really holds focus.
+  await expect(async () => { await sticker(page).focus(); await expect(sticker(page)).toBeFocused({ timeout: 1000 }); }).toPass({ timeout: 10_000 });
   await page.keyboard.press('ArrowLeft');
   await page.keyboard.press('ArrowLeft');
   await page.keyboard.press('Shift+ArrowUp');
