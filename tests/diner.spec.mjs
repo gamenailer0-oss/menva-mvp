@@ -32,6 +32,9 @@ test('opens a dish: photo at once, details in order, then the 3D takes over', as
   const w = watch(page);
   await page.goto('/g/12');
 
+  // Let the menu finish settling first (reveals, lazy images): the budget below is for the tap itself,
+  // not for whatever the page was still doing when it loaded. Measured: ~50–80 ms on both live and preview.
+  await page.evaluate(() => new Promise((r) => requestIdleCallback(r, { timeout: 3000 })));
   // Time from the tap to the first frame that paints the sheet with the dish image in it.
   const ms = await page.evaluate(async () => {
     const t0 = performance.now();

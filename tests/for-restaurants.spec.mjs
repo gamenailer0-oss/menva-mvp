@@ -116,7 +116,7 @@ test('static SEO: title, description, canonical, OG image, Service JSON-LD witho
 
 test('sitemap lists /for-restaurants; the home page raw HTML carries no owner statistics', async ({ request }) => {
   const sitemap = await (await request.get('/sitemap.xml')).text();
-  expect(sitemap).toMatch(/<loc>[^<]*\/for-restaurants<\/loc>/);
+  expect(sitemap).toMatch(/<loc>[^<]*\/for-restaurants\/<\/loc>/);
   const home = await (await request.get('/')).text();
   for (const s of ['Grubhub', 'Kabaq', 'Bareburger', '30%', '25%']) expect(home).not.toContain(s);
 });

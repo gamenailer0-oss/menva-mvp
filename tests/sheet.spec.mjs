@@ -89,7 +89,8 @@ test('tier 2: AR slot is reserved from the first frame — nothing moves when th
   // Offsets inside the sheet (not page positions): the sheet's own slide-in may still be settling.
   const measure = () => page.evaluate(() => {
     const top = (s) => document.querySelector(s).getBoundingClientRect().top;
-    return { slot: document.querySelector('.ar-slot').getBoundingClientRect().height, slotToTray: top('.tray-add') - top('.ar-slot'), priceToSlot: top('.ar-slot') - top('.detail-price') };
+    const px = Math.round; // whole pixels: sub-pixel float noise isn't movement
+    return { slot: px(document.querySelector('.ar-slot').getBoundingClientRect().height), slotToTray: px(top('.tray-add') - top('.ar-slot')), priceToSlot: px(top('.ar-slot') - top('.detail-price')) };
   });
   const before = await measure();
   await live(page);
