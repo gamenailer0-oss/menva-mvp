@@ -108,7 +108,7 @@ test('SEO tags: title, canonical, robots meta and OG image are all present on th
   const html = await res.text();
   expect(html).toContain('<title>Haute Dolci — menu in 3D · MENVA</title>');
   expect(html).not.toContain('content="noindex');
-  expect(html).toMatch(/<link rel="canonical" href="[^"]*\/haute-dolci">/);
+  expect(html).toMatch(/<link rel="canonical" href="[^"]*\/haute-dolci\/">/);
   expect(html).toMatch(/og-haute-dolci\.jpg/);
 });
 

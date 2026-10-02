@@ -104,7 +104,7 @@ test('static SEO: title, description, canonical, OG image, Service JSON-LD witho
   expect(html.match(/<title>([^<]*)<\/title>/)[1]).toBe('AR menus for restaurants in Lahore — MENVA');
   const description = html.match(/<meta name="description" content="([^"]*)">/)[1];
   expect(description.length).toBeLessThanOrEqual(160);
-  expect(html.match(/<link rel="canonical" href="([^"]*)">/)[1]).toMatch(/\/for-restaurants$/);
+  expect(html.match(/<link rel="canonical" href="([^"]*)">/)[1]).toMatch(/\/for-restaurants\/$/);
   expect(html).toMatch(/<meta property="og:image" content="[^"]*\/assets\/social\/og-menva\.jpg\?v=/);
   expect(html).not.toContain('name="robots"');
   const ld = [...html.matchAll(/<script type="application\/ld\+json">([\s\S]*?)<\/script>/g)].map((m) => JSON.parse(m[1]));

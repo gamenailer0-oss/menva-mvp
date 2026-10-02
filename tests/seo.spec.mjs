@@ -18,9 +18,9 @@ function jsonLdBlocks(html) {
 
 const PAGES = [
   { path: '/', canonicalPath: '/', title: 'See restaurant dishes on your table in AR — Lahore | MENVA', ogImageName: 'og-menva.jpg', ldTypes: ['Organization', 'WebSite'] },
-  { path: '/for-restaurants', canonicalPath: '/for-restaurants', title: 'AR menus for restaurants in Lahore — MENVA', ogImageName: 'og-menva.jpg', ldTypes: ['Service'] },
-  { path: '/g/12', canonicalPath: '/g', title: 'Gauchos — menu in 3D · MENVA', ogImageName: 'og-gauchos.jpg', ldTypes: ['Restaurant'] },
-  { path: '/baraza/12', canonicalPath: '/baraza', title: 'Baraza Coffee — menu in 3D · MENVA', ogImageName: 'og-baraza.jpg', ldTypes: ['Restaurant'] },
+  { path: '/for-restaurants', canonicalPath: '/for-restaurants/', title: 'AR menus for restaurants in Lahore — MENVA', ogImageName: 'og-menva.jpg', ldTypes: ['Service'] },
+  { path: '/g/12', canonicalPath: '/g/', title: 'Gauchos — menu in 3D · MENVA', ogImageName: 'og-gauchos.jpg', ldTypes: ['Restaurant'] },
+  { path: '/baraza/12', canonicalPath: '/baraza/', title: 'Baraza Coffee — menu in 3D · MENVA', ogImageName: 'og-baraza.jpg', ldTypes: ['Restaurant'] },
 ];
 
 for (const p of PAGES) {
@@ -110,8 +110,8 @@ test('/sitemap.xml: home + every listed restaurant', async ({ request }) => {
   const text = await res.text();
   expect(text).toContain('<urlset');
   expect(text).toMatch(/<loc>[^<]*\/<\/loc>/);
-  expect(text).toMatch(/<loc>[^<]*\/g<\/loc>/);
-  expect(text).toMatch(/<loc>[^<]*\/baraza<\/loc>/);
+  expect(text).toMatch(/<loc>[^<]*\/g\/<\/loc>/); // trailing slash: the bare URL 308-redirects on the host
+  expect(text).toMatch(/<loc>[^<]*\/baraza\/<\/loc>/);
   expect(text).toMatch(/<lastmod>\d{4}-\d{2}-\d{2}<\/lastmod>/);
 });
 
@@ -188,7 +188,7 @@ test('/haute-dolci/12 serves the restaurant page with its own tags and canonical
   expect(res.status()).toBe(200);
   const html = await res.text();
   expect(tagContent(html, /<title>([^<]*)<\/title>/)).toBe('Haute Dolci — menu in 3D · MENVA');
-  expect(tagContent(html, /<link rel="canonical" href="([^"]*)">/)).toMatch(/\/haute-dolci$/);
+  expect(tagContent(html, /<link rel="canonical" href="([^"]*)">/)).toMatch(/\/haute-dolci\/$/);
   expect(jsonLdBlocks(html).map((b) => b['@type'])).toEqual(['Restaurant']);
 });
 
@@ -196,7 +196,7 @@ test('sitemap lists the home page and all three listed restaurants, each with a 
   const text = await (await request.get('/sitemap.xml')).text();
   const urls = [...text.matchAll(/<url><loc>([^<]+)<\/loc><lastmod>(\d{4}-\d{2}-\d{2})<\/lastmod><\/url>/g)].map((m) => new URL(m[1]).pathname);
   expect(urls[0]).toBe('/');
-  expect([...urls].sort()).toEqual(['/', '/baraza', '/for-restaurants', '/g', '/haute-dolci']); // restaurant order follows homeOrder, not asserted
+  expect([...urls].sort()).toEqual(['/', '/baraza/', '/for-restaurants/', '/g/', '/haute-dolci/']); // restaurant order follows homeOrder, not asserted
 });
 
 // Crawlers that do not run JS still need real content: one h1, a description, links to every menu.

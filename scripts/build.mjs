@@ -192,7 +192,7 @@ fs.writeFileSync(path.join(DIST, 'index.html'), withHead(baseHtml, homeHead, nos
 
 // ── For restaurants ── (dist/for-restaurants/index.html; the page is drawn by js/for-restaurants.js)
 const FR_WHATSAPP = `https://wa.me/923327270188?text=${encodeURIComponent("Hi MENVA — I'd like a free pilot for my restaurant.")}`;
-const frCanonical = `${origin}/for-restaurants`;
+const frCanonical = `${origin}/for-restaurants/`;
 const frTitle = 'AR menus for restaurants in Lahore — MENVA';
 const frDescription = 'MENVA is an AR menu: guests scan the QR on the table and see your real dishes at true size, on their own table. Free pilot for Lahore restaurants.';
 const frHead = renderHead({
@@ -238,7 +238,7 @@ for (const r of restaurants) {
   const lede = (r.tagline || r.description || '').trim();
   let description = lede ? `${lede.replace(/\.?$/, '.')} See every dish on your table before you order.` : 'See every dish on your table before you order.';
   if (description.length > 160) description = description.slice(0, 157).trimEnd() + '…';
-  const canonical = `${origin}/${r.slug}`;
+  const canonical = `${origin}/${r.slug}/`; // trailing slash: the host serves the folder index there; the bare URL 308-redirects
 
   const address = { '@type': 'PostalAddress', addressCountry: 'PK' };
   if (r.address) address.streetAddress = r.address;
@@ -371,7 +371,7 @@ fs.writeFileSync(path.join(DIST, 'robots.txt'),
   `Sitemap: ${origin}/sitemap.xml\n`);
 
 const lastmod = new Date().toISOString().slice(0, 10);
-const sitemapUrls = [origin + '/', ...restaurants.filter((r) => r.listed === true).map((r) => `${origin}/${r.slug}`), frCanonical];
+const sitemapUrls = [origin + '/', ...restaurants.filter((r) => r.listed === true).map((r) => `${origin}/${r.slug}/`), frCanonical];
 fs.writeFileSync(path.join(DIST, 'sitemap.xml'),
   '<?xml version="1.0" encoding="UTF-8"?>\n' +
   '<urlset xmlns="http://www.sitemaps.org/schemas/sitemap/0.9">\n' +
