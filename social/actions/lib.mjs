@@ -113,6 +113,27 @@ export function repoFileUrl(rel) {
   return `https://cdn.jsdelivr.net/gh/${repo}@${sha}/${rel}`;
 }
 
+// Instagram fetches media itself, so a URL only counts once it really serves the file.
+// jsDelivr can lag a few seconds to minutes behind a fresh commit; raw.githubusercontent.com is the backup.
+export function rawUrl(sha, rel) {
+  const repo = env('GITHUB_REPOSITORY', 'gamenailer0-oss/menva-mvp');
+  return `https://raw.githubusercontent.com/${repo}/${sha}/${rel}`;
+}
+export async function firstServed(urls, want = 'image/', tries = 18, delay = 5000) {
+  if (isTrue(env('MENVA_NO_PUSH')) || env('MEDIA_BASE')) return urls[0];
+  for (let i = 0; i < tries; i++) {
+    for (const u of urls) {
+      try {
+        const r = await fetch(u, { method: 'HEAD' });
+        if (r.ok && (r.headers.get('content-type') || '').startsWith(want)) return u;
+      } catch (e) { /* try the next one */ }
+    }
+    await sleep(delay);
+  }
+  console.log('no host served it in time, using the first:', urls[0]);
+  return urls[0];
+}
+
 // ── Phone alerts (ntfy) ──
 export async function notify(title, message, click, extra = {}) {
   const topic = env('NTFY_TOPIC');

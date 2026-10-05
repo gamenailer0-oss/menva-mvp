@@ -9,7 +9,7 @@ import path from 'node:path';
 import http from 'node:http';
 import {
   ROOT, DATA, env, isTrue, dryRun, MAX_ATTEMPTS, sleep, pkNow, addDays, readCalendars, readState, writeState, STATE_PROBLEM,
-  logLine, commitData, mediaUrl, repoFileUrl, notify, controlTopic, graphClient,
+  logLine, commitData, mediaUrl, rawUrl, firstServed, repoFileUrl, notify, controlTopic, graphClient,
 } from './lib.mjs';
 
 const CHECK = process.argv.includes('--check');
@@ -94,6 +94,13 @@ const live = !dryRun();
 const stamp = now.iso.replace(/[-:T]/g, '').slice(0, 14);
 const base = `${String(job.n).padStart(3, '0')}-${job.id}`;
 
+// Any crash from here on is written to the posting log, so the reason is readable without the Actions log.
+process.on('uncaughtException', (e) => {
+  try { logLine([job.n, job.id, 'failed', String(e.message || e).slice(0, 600)]); writeState(state); commitData(`autopost: ${job.id} failed`); } catch (e2) { /* the alert below still fires */ }
+  console.error(e);
+  process.exit(1);
+});
+
 // 4. Count the attempt first, so a post that keeps crashing stops after 3 tries today.
 state.attempts = state.attempts || {};
 state.attempts[job.id + '@' + now.date] = attemptsOf(job.id) + 1;
@@ -144,9 +151,10 @@ try {
 state.lock = { id: job.id, at: now.iso };
 writeState(state);
 const sha = commitData(`autopost: images for ${job.id}`);
-const images = files.map((f) => mediaUrl(sha, 'media/' + f));
-const storyUrl = storyFile ? mediaUrl(sha, 'media/' + storyFile) : null;
-if (!isTrue(env('MENVA_NO_PUSH'))) await sleep(5000); // let the CDN see the new commit
+// Instagram fetches these itself: wait until a host really serves each file (jsDelivr first, GitHub raw as the backup).
+const served = (f) => firstServed([mediaUrl(sha, 'media/' + f), rawUrl(sha, 'media/' + f)]);
+const images = await Promise.all(files.map(served));
+const storyUrl = storyFile ? await served(storyFile) : null;
 
 function finish(msg) { delete state.lock; writeState(state); commitData(msg); }
 
@@ -206,9 +214,13 @@ async function waitReady(id, tries = 24, delay = 5000) {
   }
   throw new Error('Instagram took too long to process it; it will be retried in 15 minutes.');
 }
+const videoUrl = async () => {
+  const u = repoFileUrl(job.video);
+  return firstServed([u, u.replace(/^https:\/\/cdn\.jsdelivr\.net\/gh\/([^@]+)@([^/]+)\//, 'https://raw.githubusercontent.com/$1/$2/')], 'video/');
+};
 let creationId;
 if (job.format === 'reel') {
-  const c = await graph('POST', `/${userId}/media`, { media_type: 'REELS', video_url: repoFileUrl(job.video), cover_url: images[0], caption: job.caption, share_to_feed: 'true' });
+  const c = await graph('POST', `/${userId}/media`, { media_type: 'REELS', video_url: await videoUrl(), cover_url: images[0], caption: job.caption, share_to_feed: 'true' });
   creationId = c.id; await waitReady(creationId, 60, 10000);
 } else if (images.length === 1) {
   let c;
