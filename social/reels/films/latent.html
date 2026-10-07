@@ -107,7 +107,7 @@ const qrTex = canvasTex(256, 320, (g) => { g.fillStyle = '#F4EFE6'; g.fillRect(0
 const qrCard = new THREE.Mesh(new THREE.BoxGeometry(0.13, 0.16, 0.012), [clay(0xF4EFE6), clay(0xF4EFE6), clay(0xF4EFE6), clay(0xF4EFE6), new THREE.MeshStandardMaterial({ map: qrTex, roughness: 0.7 }), clay(0xF4EFE6)]);
 qrCard.position.set(-0.12, 0.91, 0.12); qrCard.rotation.set(-0.25, 0.25, 0); qrCard.castShadow = true; side.add(qrCard);
 // the tiny burger (a clay cartoon) on a big plate
-const plate = add(cyl(0.2, 0.17, 0.025, clay(0xCFC6B6, { lump: 0.003 })), 0.06, 0.84, -0.02, side);
+const plate = add(cyl(0.2, 0.17, 0.025, clay(0x9C9286, { lump: 0.003, sheen: 0 })), 0.06, 0.84, -0.02, side);
 const burger = new THREE.Group(); burger.position.set(0.06, 0.86, -0.02); side.add(burger);
 { const bun = clay(0xD98A3D), s = 0.028;
   const top = sph(s, bun, 16, 8); top.scale.set(1, 0.7, 1); top.position.y = s * 1.2; burger.add(top);
@@ -185,7 +185,7 @@ const mehwish = puppet({ skin: 0xC48660, top: 0x1F8A8A, headR: 0.24, bodyR: 0.18
 mehwish.g.position.set(0, 0.3, 0.12); scene.add(mehwish.g);
 { hair(mehwish, 0x17110E, { sx: 1.02, sy: 0.75, sz: 1.04, z: -0.03, groove: 60 });
   const bun = sph(0.11, clay(0x17110E)); bun.position.set(0, 0.2, -0.17); mehwish.head.add(bun);
-  shell(mehwish, 0x1F8A8A, { grow: 1.06, top: 1.35, bottom: -0.1 }); shell(mehwish, 0xF2C14E, { grow: 1.12, top: 0.22, bottom: 0.2 }); }
+  shell(mehwish, 0x1F8A8A, { grow: 1.06, top: 1.35, bottom: -0.1 }); shell(mehwish, 0xF2C14E, { grow: 1.08, top: 0.12, bottom: 0.24 }); }
 const mPhone = new THREE.Group(); mehwish.arms[1].hand.add(mPhone); mPhone.position.set(0, -0.12, 0.05);
 add(box(0.085, 0.16, 0.014, clay(0x1A1A1E)), 0, 0, 0, mPhone);
 // the phone screen shows the REAL dish scan (render target from a little viewer scene)
@@ -372,7 +372,7 @@ shot(L.camera.t1 + 0.2, BOARD);                                                 
 shot(L.pappu.t0 + 0.9, (k) => ({ p: V(lerp(1.4, 0.5, eIO(k)), lerp(3.6, 2.2, eIO(k)), lerp(7.4, 5.4, eIO(k))), l: V(0, 1.2, 0.2), fov: 38 }));   // crane over the crowd
 shot(L.talent1.t0, (k) => ({ p: V(0.75, 1.0, 2.7 - k * 0.25), l: at(pappu, V(0, -0.2, 0)), fov: 38 }));        // low angle, proud
 shot(L.salute.t0, (k) => frontOf(pappu, lerp(1.25, 1.1, k), 0.02, 0.12, 30));                                  // the salute
-shot(EV('burger').t - 0.1, (k) => ({ p: V(0.95, 1.36, 0.15 + lerp(0.5, 0.42, k)), l: V(0.91, 1.16, 0.13), fov: 30, focus: 0.5 })); // macro: tiny burger
+shot(EV('burger').t - 0.1, (k) => ({ p: V(1.0, 1.42, 0.15 + lerp(0.62, 0.52, k)), l: V(0.91, 1.15, 0.13), fov: 32 })); // macro: tiny burger
 shot(L.trailer.t0, () => ({ p: V(1.05, 1.8, 1.25), l: V(-2.3, 1.3, 0.95), fov: 34 }));                          // over Pappu's shoulder to Fazi
 shot(L.trailer.t1 + 0.1, (k) => frontOf(pappu, lerp(1.1, 0.9, k), 0.0, -0.1, 24));                             // silence: sweat
 shot(EV('chachaLaugh').t, () => frontOf(chacha, 0.95, 0.06, 0.15, 28));

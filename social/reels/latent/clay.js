@@ -140,8 +140,9 @@ export function shell(P, color, { grow = 1.06, top = 1, bottom = 0, o = {} } = {
 }
 // a hair cap that sits on the skull with sculpted strands
 export function hair(P, color, { sx = 1.0, sy = 0.62, sz = 1.04, y = 0.1, z = -0.02, groove = 46 } = {}) {
-  const r = P.hr * 1.04, m = new THREE.Mesh(new THREE.SphereGeometry(r, 32, 16, 0, Math.PI * 2, 0, Math.PI * 0.62), clay(color, { groove, tex: 3, rough: 0.7 }));
-  m.scale.set(sx, sy * 1.6, sz); m.position.set(0, y * 0.4, z); m.castShadow = true; P.head.add(m); return m;
+  // a cap of the skull, tilted back so the hairline sits above the brows at the front and lower at the back
+  const r = P.hr * 1.045, m = new THREE.Mesh(new THREE.SphereGeometry(r, 32, 16, 0, Math.PI * 2, 0, Math.PI * 0.5 * (0.7 + sy * 0.5)), clay(color, { groove, tex: 3, rough: 0.7 }));
+  m.scale.set(sx, 1.04, sz); m.rotation.x = -0.45; m.position.set(0, P.hr * 0.06, z); m.castShadow = true; P.head.add(m); return m;
 }
 
 // ---------- puppet builder ----------
