@@ -1,332 +1,400 @@
 {
-  "title": "Bhook's Got Latent",
-  "note": "Original parody of a roast talent show format. All characters are invented; no real show name, people or voices. Each line has Roman Urdu (subtitles), Devanagari (Hindi TTS) and Urdu script (Urdu TTS). 'after' is the pause in seconds after the line; 'events' fire relative to the end of the line.",
-  "cast": {
-    "fazi": {
-      "role": "host, deadpan, monotone, slow, sips chai",
-      "kokoro": [
-        "hm_psi",
-        0.96
-      ],
-      "parler": "Fazi speaks in a low, flat, deadpan monotone, slowly and unimpressed, very close to the microphone, in a quiet studio."
-    },
-    "aunty": {
-      "role": "judge, big dupatta, says theek hai",
-      "kokoro": [
-        "hf_alpha",
-        1.0
-      ],
-      "parler": "A middle-aged woman speaks in a bored, slightly nasal, unimpressed tone at a moderate pace, close recording."
-    },
-    "vlog": {
-      "role": "judge, films everything",
-      "kokoro": [
-        "hm_omega",
-        1.2
-      ],
-      "parler": "A young man speaks fast and over-excited, with a high pitch, like a vlogger talking to his phone, close recording."
-    },
-    "pappu": {
-      "role": "contestant 1, hopeful, round",
-      "kokoro": [
-        "hm_omega",
-        1.12
-      ],
-      "parler": "A chubby young man speaks eagerly and proudly, slightly high-pitched and a bit nervous, close recording."
-    },
-    "mehwish": {
-      "role": "contestant 2, calm, confident",
-      "kokoro": [
-        "hf_beta",
-        1.04
-      ],
-      "parler": "A young woman speaks calmly and confidently with a warm, clear voice and a slight smile, close recording."
-    }
+ "title": "Bhook's Got Latent",
+ "note": "Original parody of a roast talent show format. All characters are invented; no real show name, people or voices. Each line has Roman Urdu (subtitles), Devanagari (Hindi TTS) and Urdu script (Urdu TTS). 'after' is the pause in seconds after the line; 'events' fire relative to the end of the line. ' | ' splits a line into phrases joined by 'gap' seconds; 'sp' scales speed; 'vol' is a dB offset.",
+ "cast": {
+  "fazi": {
+   "role": "host, deadpan, monotone, sips chai",
+   "kokoro": [
+    "hm_psi",
+    1.1
+   ],
+   "pitch": -1,
+   "parler": "Fazi speaks in a low, flat, deadpan monotone, slowly and unimpressed, very close to the microphone, in a quiet studio."
   },
-  "lines": [
+  "aunty": {
+   "role": "judge, strict, clipped",
+   "kokoro": [
+    "hf_alpha+hf_beta",
+    1.15
+   ],
+   "pitch": -1,
+   "parler": "A middle-aged woman speaks in a firm, clipped, unimpressed tone, slightly nasal, close recording."
+  },
+  "chacha": {
+   "role": "judge, old, asleep",
+   "kokoro": [
+    "hm_psi",
+    0.95
+   ],
+   "pitch": -3,
+   "parler": "An old man speaks slowly in a sleepy, husky, low voice, close recording."
+  },
+  "vlog": {
+   "role": "judge, films everything",
+   "kokoro": [
+    "hm_omega",
+    1.32
+   ],
+   "pitch": 3,
+   "parler": "A young man speaks fast and over-excited, with a high pitch, like a vlogger talking to his phone, close recording."
+  },
+  "pappu": {
+   "role": "contestant 1, hopeful",
+   "kokoro": [
+    "hm_omega",
+    1.2
+   ],
+   "pitch": 2,
+   "parler": "A chubby young man speaks eagerly and proudly, slightly high-pitched and a bit nervous, close recording."
+  },
+  "mehwish": {
+   "role": "contestant 2, calm",
+   "kokoro": [
+    "hf_beta",
+    1.12
+   ],
+   "pitch": 0,
+   "parler": "A young woman speaks calmly and confidently with a warm, clear voice and a slight smile, close recording."
+  }
+ },
+ "lines": [
+  {
+   "id": "welcome",
+   "who": "fazi",
+   "ro": "Welcome to Bhook's Got Latent.",
+   "hi": "वेलकम टू भूक्स गॉट लेटेंट।",
+   "ur": "ویلکم ٹو بھوکس گاٹ لیٹنٹ۔",
+   "after": 0.35
+  },
+  {
+   "id": "welcome2",
+   "who": "fazi",
+   "ro": "Yahan talent kam hai... aur bill zyada.",
+   "hi": "यहाँ टैलेंट कम है... | और बिल ज़्यादा।",
+   "ur": "یہاں ٹیلنٹ کم ہے... | اور بل زیادہ۔",
+   "after": 2.2,
+   "gap": 0.45,
+   "events": [
     {
-      "id": "welcome",
-      "who": "fazi",
-      "ro": "Welcome to Bhook's Got Latent.",
-      "hi": "वेलकम टू भूक्स गॉट लेटेंट।",
-      "ur": "ویلکم ٹو بھوکس گاٹ لیٹنٹ۔",
-      "after": 0.35
+     "at": 0.45,
+     "type": "cough"
     },
     {
-      "id": "welcome2",
-      "who": "fazi",
-      "ro": "Jahan talent kam hai... aur bhook zyada.",
-      "hi": "जहाँ टैलेंट कम है... और भूख ज़्यादा।",
-      "ur": "جہاں ٹیلنٹ کم ہے... اور بھوک زیادہ۔",
-      "after": 2.4,
-      "events": [
-        {
-          "at": 0.45,
-          "type": "cough"
-        },
-        {
-          "at": 0.75,
-          "type": "haso",
-          "len": 1.55
-        }
-      ],
-      "fakeLaugh": 1.55
-    },
-    {
-      "id": "judges",
-      "who": "fazi",
-      "ro": "Judges. Nusrat Aunty, jinhein sab theek lagta hai.",
-      "hi": "जजेस। नुसरत आंटी, जिन्हें सब ठीक लगता है।",
-      "ur": "ججز۔ نصرت آنٹی، جنہیں سب ٹھیک لگتا ہے۔",
-      "after": 0.25
-    },
-    {
-      "id": "theek",
-      "who": "aunty",
-      "ro": "Theek hai.",
-      "hi": "ठीक है।",
-      "ur": "ٹھیک ہے۔",
-      "after": 0.45
-    },
-    {
-      "id": "chacha",
-      "who": "fazi",
-      "ro": "Chacha... jo so rahe hain.",
-      "hi": "चाचा... जो सो रहे हैं।",
-      "ur": "چاچا... جو سو رہے ہیں۔",
-      "after": 0.6,
-      "events": [
-        {
-          "at": 0.05,
-          "type": "snore"
-        }
-      ]
-    },
-    {
-      "id": "vlogger",
-      "who": "fazi",
-      "ro": "Aur Vlogger Bhai, jo yeh bhi record kar rahe hain.",
-      "hi": "और व्लॉगर भाई, जो ये भी रिकॉर्ड कर रहे हैं।",
-      "ur": "اور ولاگر بھائی، جو یہ بھی ریکارڈ کر رہے ہیں۔",
-      "after": 0.2
-    },
-    {
-      "id": "higuys",
-      "who": "vlog",
-      "ro": "Hi guys!",
-      "hi": "हाय गाइज़!",
-      "ur": "ہائے گائز!",
-      "after": 0.7,
-      "events": [
-        {
-          "at": 0.4,
-          "type": "creak"
-        }
-      ]
-    },
-    {
-      "id": "rule",
-      "who": "fazi",
-      "ro": "Pehle khud ko rate karo. Judges match karein, to jeet.",
-      "hi": "पहले खुद को रेट करो। जजेस मैच करें, तो जीत।",
-      "ur": "پہلے خود کو ریٹ کرو۔ ججز میچ کریں، تو جیت۔",
-      "after": 0.5
-    },
-    {
-      "id": "pappu",
-      "who": "fazi",
-      "ro": "Pehla contestant, Pappu. Talent?",
-      "hi": "पहला कंटेस्टेंट, पप्पू। टैलेंट?",
-      "ur": "پہلا کنٹیسٹنٹ، پپو۔ ٹیلنٹ؟",
-      "after": 0.3
-    },
-    {
-      "id": "talent1",
-      "who": "pappu",
-      "ro": "Main menu ki photo dekh ke order karta hoon!",
-      "hi": "मैं मेन्यू की फ़ोटो देख के ऑर्डर करता हूँ!",
-      "ur": "میں مینیو کی فوٹو دیکھ کے آرڈر کرتا ہوں!",
-      "after": 0.5
-    },
-    {
-      "id": "aurphir",
-      "who": "fazi",
-      "ro": "Aur phir?",
-      "hi": "और फिर?",
-      "ur": "اور پھر؟",
-      "after": 0.4
-    },
-    {
-      "id": "rota",
-      "who": "pappu",
-      "ro": "Phir rota hoon.",
-      "hi": "फिर रोता हूँ।",
-      "ur": "پھر روتا ہوں۔",
-      "after": 1.6,
-      "events": [
-        {
-          "at": 0.2,
-          "type": "cricket",
-          "len": 1.2
-        },
-        {
-          "at": 0.9,
-          "type": "burger"
-        }
-      ]
-    },
-    {
-      "id": "trailer",
-      "who": "fazi",
-      "ro": "Yeh burger hai... ya burger ka trailer?",
-      "hi": "ये बर्गर है... या बर्गर का ट्रेलर?",
-      "ur": "یہ برگر ہے... یا برگر کا ٹریلر؟",
-      "after": 3.2,
-      "events": [
-        {
-          "at": 0.5,
-          "type": "creak"
-        },
-        {
-          "at": 0.9,
-          "type": "cough"
-        },
-        {
-          "at": 1.15,
-          "type": "chachaLaugh"
-        },
-        {
-          "at": 1.95,
-          "type": "haso",
-          "len": 1.2
-        }
-      ],
-      "fakeLaugh": 1.2
-    },
-    {
-      "id": "score1",
-      "who": "fazi",
-      "ro": "Judges?",
-      "hi": "जजेस?",
-      "ur": "ججز؟",
-      "after": 1.8,
-      "events": [
-        {
-          "at": 0.3,
-          "type": "score",
-          "v": [
-            2,
-            3,
-            1
-          ],
-          "self": 9
-        },
-        {
-          "at": 1.3,
-          "type": "buzzer"
-        }
-      ]
-    },
-    {
-      "id": "mehwish",
-      "who": "fazi",
-      "ro": "Agla contestant. Mehwish.",
-      "hi": "अगला कंटेस्टेंट। महविश।",
-      "ur": "اگلا کنٹیسٹنٹ۔ مہوش۔",
-      "after": 0.3
-    },
-    {
-      "id": "talent2",
-      "who": "mehwish",
-      "ro": "Main order se pehle dekh leti hoon, kya aayega.",
-      "hi": "मैं ऑर्डर से पहले देख लेती हूँ, क्या आएगा।",
-      "ur": "میں آرڈر سے پہلے دیکھ لیتی ہوں، کیا آئے گا۔",
-      "after": 0.4
-    },
-    {
-      "id": "jadoo",
-      "who": "fazi",
-      "ro": "Jadoo?",
-      "hi": "जादू?",
-      "ur": "جادو؟",
-      "after": 0.35
-    },
-    {
-      "id": "menu",
-      "who": "mehwish",
-      "ro": "Nahi. Menu.",
-      "hi": "नहीं। मेन्यू।",
-      "ur": "نہیں۔ مینیو۔",
-      "after": 2.6,
-      "events": [
-        {
-          "at": 0.3,
-          "type": "scan"
-        },
-        {
-          "at": 0.7,
-          "type": "dish",
-          "len": 2.6
-        },
-        {
-          "at": 1.0,
-          "type": "gasp"
-        }
-      ]
-    },
-    {
-      "id": "wahi",
-      "who": "aunty",
-      "ro": "Yeh to... bilkul wahi hai.",
-      "hi": "ये तो... बिल्कुल वही है।",
-      "ur": "یہ تو... بالکل وہی ہے۔",
-      "after": 0.2
-    },
-    {
-      "id": "real",
-      "who": "vlog",
-      "ro": "Guys... yeh to real hai.",
-      "hi": "गाइज़... ये तो रियल है।",
-      "ur": "گائز... یہ تو رئیل ہے۔",
-      "after": 3.1,
-      "events": [
-        {
-          "at": 0.3,
-          "type": "score",
-          "v": [
-            10,
-            10,
-            10
-          ],
-          "self": 10
-        },
-        {
-          "at": 1.2,
-          "type": "ding"
-        },
-        {
-          "at": 1.3,
-          "type": "realLaugh",
-          "len": 3.6
-        }
-      ]
-    },
-    {
-      "id": "pehlibaar",
-      "who": "fazi",
-      "ro": "Pehli baar... log khud hase.",
-      "hi": "पहली बार... लोग खुद हँसे।",
-      "ur": "پہلی بار... لوگ خود ہنسے۔",
-      "after": 1.2,
-      "events": [
-        {
-          "at": 0.4,
-          "type": "sip"
-        }
-      ]
+     "at": 0.75,
+     "type": "haso",
+     "len": 1.55
     }
-  ],
-  "end": 4.5,
-  "headline": "Yahan har joke marta hai",
-  "cta": "Send karo us dost ko jo menu photo pe bharosa karta hai."
+   ]
+  },
+  {
+   "id": "judges",
+   "who": "fazi",
+   "ro": "Nusrat Aunty. Rishta sirf is liye reject kiya... ke biryani mein aloo tha.",
+   "hi": "नुसरत आंटी। | रिश्ता सिर्फ़ इस लिए रिजेक्ट किया... | के बिरयानी में आलू था।",
+   "ur": "نصرت آنٹی۔ | رشتہ صرف اس لیے ریجیکٹ کیا... | کہ بریانی میں آلو تھا۔",
+   "after": 0.3,
+   "gap": 0.3
+  },
+  {
+   "id": "aloo",
+   "who": "aunty",
+   "ro": "Aloo tha. Baat khatam.",
+   "hi": "आलू था। | बात ख़त्म।",
+   "ur": "آلو تھا۔ | بات ختم۔",
+   "after": 0.7,
+   "gap": 0.25,
+   "events": [
+    {
+     "at": 0.25,
+     "type": "giggle"
+    }
+   ]
+  },
+  {
+   "id": "chacha",
+   "who": "fazi",
+   "ro": "Chacha. 1998 se dessert ka wait kar rahe hain.",
+   "hi": "चाचा। | उन्नीस सौ अट्ठानवे से डेज़र्ट का वेट कर रहे हैं।",
+   "ur": "چاچا۔ | انیس سو اٹھانوے سے ڈیزرٹ کا ویٹ کر رہے ہیں۔",
+   "after": 0.5,
+   "gap": 0.4,
+   "events": [
+    {
+     "at": 0.05,
+     "type": "snore"
+    }
+   ]
+  },
+  {
+   "id": "vlogger",
+   "who": "fazi",
+   "ro": "Aur Vlogger Bhai. Inke ghar pehle camera khaata hai.",
+   "hi": "और व्लॉगर भाई। | इनके घर पहले कैमरा खाता है।",
+   "ur": "اور ولاگر بھائی۔ | ان کے گھر پہلے کیمرا کھاتا ہے۔",
+   "after": 0.15,
+   "gap": 0.35
+  },
+  {
+   "id": "camera",
+   "who": "vlog",
+   "ro": "Pehle camera khayega, guys!",
+   "hi": "पहले कैमरा खाएगा, गाइज़!",
+   "ur": "پہلے کیمرا کھائے گا، گائز!",
+   "after": 0.8,
+   "events": [
+    {
+     "at": 0.35,
+     "type": "creak"
+    }
+   ]
+  },
+  {
+   "id": "pappu",
+   "who": "fazi",
+   "ro": "Pappu. Talent?",
+   "hi": "पप्पू। | टैलेंट?",
+   "ur": "پپو۔ | ٹیلنٹ؟",
+   "after": 0.3,
+   "gap": 0.25
+  },
+  {
+   "id": "talent1",
+   "who": "pappu",
+   "ro": "Main menu ki photo dekh ke order karta hoon!",
+   "hi": "मैं मेन्यू की फ़ोटो देख के ऑर्डर करता हूँ!",
+   "ur": "میں مینیو کی فوٹو دیکھ کے آرڈر کرتا ہوں!",
+   "after": 0.3
+  },
+  {
+   "id": "salute",
+   "who": "pappu",
+   "ro": "Photo mein burger itna bara tha... waiter ne bhi salute kiya!",
+   "hi": "फ़ोटो में बर्गर इतना बड़ा था... | वेटर ने भी सैल्यूट किया!",
+   "ur": "فوٹو میں برگر اتنا بڑا تھا... | ویٹر نے بھی سلیوٹ کیا!",
+   "after": 1.3,
+   "gap": 0.25,
+   "events": [
+    {
+     "at": 0.25,
+     "type": "cricket",
+     "len": 1.1
+    },
+    {
+     "at": 0.7,
+     "type": "burger"
+    }
+   ]
+  },
+  {
+   "id": "trailer",
+   "who": "fazi",
+   "ro": "Bhai. Yeh burger hai... ya burger ka trailer?",
+   "hi": "भाई। | ये बर्गर है... | या बर्गर का ट्रेलर?",
+   "ur": "بھائی۔ | یہ برگر ہے... | یا برگر کا ٹریلر؟",
+   "after": 2.9,
+   "gap": 0.45,
+   "events": [
+    {
+     "at": 0.5,
+     "type": "creak"
+    },
+    {
+     "at": 0.9,
+     "type": "cough"
+    },
+    {
+     "at": 1.05,
+     "type": "chachaLaugh"
+    },
+    {
+     "at": 1.75,
+     "type": "haso",
+     "len": 1.1
+    }
+   ]
+  },
+  {
+   "id": "frame",
+   "who": "pappu",
+   "ro": "Isko khaun... ya frame karwaun?",
+   "hi": "इसको खाऊँ... | या फ़्रेम करवाऊँ?",
+   "ur": "اس کو کھاؤں... | یا فریم کرواؤں؟",
+   "after": 0.6,
+   "gap": 0.35,
+   "sp": 0.9,
+   "vol": -4,
+   "events": [
+    {
+     "at": 0.2,
+     "type": "giggle"
+    }
+   ]
+  },
+  {
+   "id": "score1",
+   "who": "fazi",
+   "ro": "Judges?",
+   "hi": "जजेस?",
+   "ur": "ججز؟",
+   "after": 1.5,
+   "events": [
+    {
+     "at": 0.3,
+     "type": "score",
+     "v": [
+      2,
+      3,
+      1
+     ],
+     "self": 9
+    },
+    {
+     "at": 1.3,
+     "type": "buzzer"
+    }
+   ]
+  },
+  {
+   "id": "acha",
+   "who": "aunty",
+   "ro": "Ek number sirf is liye, ke banda acha hai.",
+   "hi": "एक नंबर सिर्फ़ इस लिए, | के बंदा अच्छा है।",
+   "ur": "ایک نمبر صرف اس لیے، | کہ بندہ اچھا ہے۔",
+   "after": 0.45,
+   "gap": 0.25
+  },
+  {
+   "id": "mehwish",
+   "who": "fazi",
+   "ro": "Agli. Mehwish.",
+   "hi": "अगली। | महविश।",
+   "ur": "اگلی۔ | مہوش۔",
+   "after": 0.3,
+   "gap": 0.25
+  },
+  {
+   "id": "talent2",
+   "who": "mehwish",
+   "ro": "Main order se pehle dekh leti hoon, kya aayega.",
+   "hi": "मैं ऑर्डर से पहले देख लेती हूँ, क्या आएगा।",
+   "ur": "میں آرڈر سے پہلے دیکھ لیتی ہوں، کیا آئے گا۔",
+   "after": 0.4
+  },
+  {
+   "id": "jadoo",
+   "who": "fazi",
+   "ro": "Jadoo?",
+   "hi": "जादू?",
+   "ur": "جادو؟",
+   "after": 0.35
+  },
+  {
+   "id": "menu",
+   "who": "mehwish",
+   "ro": "Nahi. Menu.",
+   "hi": "नहीं। | मेन्यू।",
+   "ur": "نہیں۔ | مینیو۔",
+   "after": 2.4,
+   "gap": 0.25,
+   "events": [
+    {
+     "at": 0.3,
+     "type": "scan"
+    },
+    {
+     "at": 0.7,
+     "type": "dish",
+     "len": 2.6
+    },
+    {
+     "at": 1.0,
+     "type": "gasp"
+    }
+   ]
+  },
+  {
+   "id": "wahi",
+   "who": "aunty",
+   "ro": "Yeh to bilkul wahi hai... aur aloo bhi nahi!",
+   "hi": "ये तो बिल्कुल वही है... | और आलू भी नहीं!",
+   "ur": "یہ تو بالکل وہی ہے... | اور آلو بھی نہیں!",
+   "after": 0.25,
+   "gap": 0.25
+  },
+  {
+   "id": "khaunga",
+   "who": "vlog",
+   "ro": "Guys... aaj camera nahi, main khaunga.",
+   "hi": "गाइज़... | आज कैमरा नहीं, मैं खाऊँगा।",
+   "ur": "گائز... | آج کیمرا نہیں، میں کھاؤں گا۔",
+   "after": 0.25,
+   "gap": 0.25
+  },
+  {
+   "id": "dessert",
+   "who": "chacha",
+   "ro": "Dessert aa gaya?",
+   "hi": "डेज़र्ट आ गया?",
+   "ur": "ڈیزرٹ آ گیا؟",
+   "after": 3.1,
+   "events": [
+    {
+     "at": 0.3,
+     "type": "score",
+     "v": [
+      10,
+      10,
+      10
+     ],
+     "self": 10
+    },
+    {
+     "at": 1.2,
+     "type": "ding"
+    },
+    {
+     "at": 0.25,
+     "type": "realLaugh",
+     "len": 4.2
+    }
+   ]
+  },
+  {
+   "id": "pehlibaar",
+   "who": "fazi",
+   "ro": "Pehli baar... log khud hase.",
+   "hi": "पहली बार... | लोग खुद हँसे।",
+   "ur": "پہلی بار... | لوگ خود ہنسے۔",
+   "after": 0.9,
+   "gap": 0.4,
+   "events": [
+    {
+     "at": 0.3,
+     "type": "sip"
+    }
+   ]
+  },
+  {
+   "id": "bill",
+   "who": "fazi",
+   "ro": "Ab bill kaun dega?",
+   "hi": "अब बिल कौन देगा?",
+   "ur": "اب بل کون دے گا؟",
+   "after": 1.4,
+   "events": [
+    {
+     "at": 0.2,
+     "type": "lookPappu"
+    },
+    {
+     "at": 0.5,
+     "type": "cricket",
+     "len": 0.9
+    }
+   ]
+  }
+ ],
+ "end": 4.5,
+ "headline": "Yahan har joke marta hai",
+ "cta": "Us dost ko bhejo jo biryani mein aloo dhoondta hai."
 }

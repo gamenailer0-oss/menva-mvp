@@ -28,12 +28,31 @@ def save(l, k, a, sr):
 
 if engine == 'kokoro':
     from kokoro_onnx import Kokoro
+    from scipy.signal import resample_poly
     tts = pathlib.Path(arg('--models', str(work.parent / 'tts')))
     K = Kokoro(str(tts / 'kokoro-v1.0.onnx'), str(tts / 'voices-v1.0.bin'))
+    def squeeze(a, sr, keep=0.22):   # Kokoro pauses long at '...' and full stops; our pauses come from 'gap'
+        fr = int(0.01 * sr); n = len(a) // fr; loud = np.array([np.abs(a[i * fr:(i + 1) * fr]).max() > 0.012 for i in range(n)])
+        out, run = [], 0
+        for i in range(n):
+            run = 0 if loud[i] else run + 1
+            if run * 0.01 <= keep: out.append(a[i * fr:(i + 1) * fr])
+        return np.concatenate(out) if out else a
+    def style(v):   # "a+b" blends two stock voices into a new one
+        parts = v.split('+'); return sum(K.get_voice_style(x) for x in parts) / len(parts) if len(parts) > 1 else v
     for l in lines:
-        v, speed = S['cast'][l['who']]['kokoro']
+        c = S['cast'][l['who']]; v, speed = c['kokoro']; semi = c.get('pitch', 0)
+        f = 2 ** (semi / 12)     # pitch shift by resampling; speak 1/f faster first so the length stays the same
         for k in range(takes):
-            a, sr = K.create(l['hi'], voice=v, speed=speed * (1 + 0.04 * (k - takes // 2)), lang='hi')
+            sp = speed * l.get('sp', 1) * (1 + 0.04 * (k - takes // 2))
+            out = []
+            for i, ph in enumerate(x.strip() for x in l['hi'].split('|')):
+                a, sr = K.create(ph, voice=style(v), speed=min(4.0, sp / f) if semi else sp, lang='hi')
+                if semi: a = resample_poly(a, 1000, int(round(1000 * f)))
+                a = squeeze(a, sr)
+                if i: out.append(np.zeros(int(l.get('gap', 0.35) * sr)))
+                out.append(a)
+            a = np.concatenate(out) * 10 ** (l.get('vol', 0) / 20)
             save(l, k, a, sr)
 
 elif engine == 'parler':   # ai4bharat/indic-parler-tts, Apache 2.0, Urdu script in, voice from a description
@@ -48,7 +67,7 @@ elif engine == 'parler':   # ai4bharat/indic-parler-tts, Apache 2.0, Urdu script
         desc = S['cast'][l['who']]['parler']
         for k in range(takes):
             torch.manual_seed(1000 + k)
-            d, p = dtok(desc, return_tensors='pt'), tok(l.get(arg('--script', 'ur'), l['ur']), return_tensors='pt')
+            d, p = dtok(desc, return_tensors='pt'), tok(l.get(arg('--script', 'ur'), l['ur']).replace(' | ', ' '), return_tensors='pt')
             with torch.no_grad():
                 a = model.generate(input_ids=d.input_ids, attention_mask=d.attention_mask, prompt_input_ids=p.input_ids,
                                    prompt_attention_mask=p.attention_mask, do_sample=True, temperature=0.9)
@@ -64,7 +83,7 @@ elif engine == 'chatterbox':   # Resemble AI Chatterbox Multilingual, MIT; refer
         ref = refs / f"{l['who']}.wav"
         for k in range(takes):
             torch.manual_seed(2000 + k)
-            a = m.generate(l['hi'], language_id='hi', audio_prompt_path=str(ref) if ref.exists() else None,
+            a = m.generate(l['hi'].replace(' | ', ' '), language_id='hi', audio_prompt_path=str(ref) if ref.exists() else None,
                            exaggeration=0.35 if l['who'] == 'fazi' else 0.6, cfg_weight=0.4)
             save(l, k, a.cpu().numpy(), m.sr)
 else:

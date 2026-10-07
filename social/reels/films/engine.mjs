@@ -92,7 +92,7 @@ try {
     const vf = SUB > 1 ? `tmix=frames=${SUB},fps=${FPS},format=yuv420p` : 'format=yuv420p';
     execFileSync(ff, ['-y', '-loglevel', 'error', '-framerate', String(rate), '-i', path.join(work, 'f%05d.jpg'), '-i', path.join(work, 'score.wav'),
       '-vf', vf, '-c:v', 'libx264', '-preset', 'slow', '-crf', '20', '-maxrate', FILM.maxrate || '4.8M', '-bufsize', FILM.bufsize || '9.6M', '-profile:v', 'high', // under jsDelivr's 20 MB file limit
-      '-c:a', 'aac', '-b:a', '192k', '-shortest', '-movflags', '+faststart', path.join(OUT, `film-${id}.mp4`)], { stdio: 'inherit' });
+      '-c:a', 'aac', '-b:a', FILM.abr || '192k', '-shortest', '-movflags', '+faststart', path.join(OUT, `film-${id}.mp4`)], { stdio: 'inherit' });
     fs.rmSync(work, { recursive: true, force: true });
     console.log(`Wrote social/reels/out/film-${id}.mp4 in ${((Date.now() - t0) / 60000).toFixed(1)} min`);
   }

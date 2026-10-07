@@ -5,33 +5,26 @@ import { rng } from '../films/common.js';
 
 export const BOIL = { uSeed: { value: 0 } };
 
-// ---------- fingerprint + thumb-smear normal map (made once, procedurally) ----------
-function fingerprintNormal() {
+// ---------- fingerprint + thumb-smear HEIGHT map (made once, procedurally; sampled triplanar in the shader) ----------
+function fingerprintHeight() {
   const N = 512, c = document.createElement('canvas'); c.width = c.height = N;
   const g = c.getContext('2d'), R = rng(77);
   g.fillStyle = '#808080'; g.fillRect(0, 0, N, N);
-  g.lineWidth = 1.4;
-  for (let k = 0; k < 34; k++) {                       // whorls of thumb prints
-    const cx = R() * N, cy = R() * N, rot = R() * 3.14, sq = 0.55 + R() * 0.4, rings = 6 + (R() * 8 | 0);
-    for (let i = 1; i < rings; i++) {
-      g.strokeStyle = `rgba(${R() > 0.5 ? 255 : 0},${R() > 0.5 ? 255 : 0},${R() > 0.5 ? 255 : 0},0.10)`;
-      g.beginPath(); g.ellipse(cx, cy, i * 3.6, i * 3.6 * sq, rot, R() * 2, R() * 2 + 4.2); g.stroke();
-    }
+  const wrap = (fn) => { for (const dx of [-N, 0, N]) for (const dy of [-N, 0, N]) { g.save(); g.translate(dx, dy); fn(); g.restore(); } };   // tileable
+  for (let k = 0; k < 30; k++) {                        // whorls of thumb prints
+    const cx = R() * N, cy = R() * N, rot = R() * 3.14, sq = 0.55 + R() * 0.4, rings = 6 + (R() * 8 | 0), v = R() > 0.5 ? 255 : 0;
+    wrap(() => { g.lineWidth = 1.3; g.strokeStyle = `rgba(${v},${v},${v},0.16)`;
+      for (let i = 1; i < rings; i++) { g.beginPath(); g.ellipse(cx, cy, i * 3.4, i * 3.4 * sq, rot, R() * 2, R() * 2 + 4.2); g.stroke(); } });
   }
-  for (let k = 0; k < 60; k++) {                       // smears where a thumb pressed the clay flat
-    const x = R() * N, y = R() * N, gr = g.createRadialGradient(x, y, 0, x, y, 20 + R() * 40);
-    const v = R() > 0.5 ? 255 : 0; gr.addColorStop(0, `rgba(${v},${v},${v},0.10)`); gr.addColorStop(1, 'rgba(128,128,128,0)');
-    g.fillStyle = gr; g.fillRect(x - 60, y - 60, 120, 120);
+  for (let k = 0; k < 70; k++) {                        // smears where a thumb pressed the clay flat
+    const x = R() * N, y = R() * N, rr = 18 + R() * 46, v = R() > 0.5 ? 255 : 0;
+    wrap(() => { const gr = g.createRadialGradient(x, y, 0, x, y, rr); gr.addColorStop(0, `rgba(${v},${v},${v},0.14)`); gr.addColorStop(1, 'rgba(128,128,128,0)'); g.fillStyle = gr; g.fillRect(x - rr, y - rr, rr * 2, rr * 2); });
   }
-  const src = g.getImageData(0, 0, N, N).data, out = g.createImageData(N, N), d = out.data;
-  const hgt = (x, y) => src[(((y + N) % N) * N + ((x + N) % N)) * 4] / 255;
-  for (let y = 0; y < N; y++) for (let x = 0; x < N; x++) {
-    const dx = (hgt(x + 1, y) - hgt(x - 1, y)) * 6, dy = (hgt(x, y + 1) - hgt(x, y - 1)) * 6;
-    const l = Math.hypot(dx, dy, 1), i = (y * N + x) * 4;
-    d[i] = (-dx / l * 0.5 + 0.5) * 255; d[i + 1] = (-dy / l * 0.5 + 0.5) * 255; d[i + 2] = (1 / l * 0.5 + 0.5) * 255; d[i + 3] = 255;
+  for (let k = 0; k < 26; k++) {                        // modelling-tool drags
+    const x = R() * N, y = R() * N, a = R() * 6.28, l = 30 + R() * 70;
+    wrap(() => { g.strokeStyle = 'rgba(0,0,0,0.12)'; g.lineWidth = 2 + R() * 2; g.beginPath(); g.moveTo(x, y); g.quadraticCurveTo(x + Math.cos(a) * l * 0.5 + 8, y + Math.sin(a) * l * 0.5, x + Math.cos(a) * l, y + Math.sin(a) * l); g.stroke(); });
   }
-  g.putImageData(out, 0, 0);
-  const t = new THREE.CanvasTexture(c); t.wrapS = t.wrapT = THREE.RepeatWrapping; t.repeat.set(2, 2);
+  const t = new THREE.CanvasTexture(c); t.wrapS = t.wrapT = THREE.RepeatWrapping; t.colorSpace = THREE.NoColorSpace;
   return t;
 }
 let FP = null;
@@ -41,21 +34,48 @@ float vn(vec3 x){ vec3 i = floor(x), f = fract(x); f = f * f * (3.0 - 2.0 * f);
   return mix(mix(mix(h3(i), h3(i + vec3(1,0,0)), f.x), mix(h3(i + vec3(0,1,0)), h3(i + vec3(1,1,0)), f.x), f.y),
              mix(mix(h3(i + vec3(0,0,1)), h3(i + vec3(1,0,1)), f.x), mix(h3(i + vec3(0,1,1)), h3(i + vec3(1,1,1)), f.x), f.y), f.z) * 2.0 - 1.0; }
 `;
-// Plasticine: soft roughness, a hint of sheen, fingerprints, lumpy silhouette (static) + boil (changes every drawing).
-export function clay(color, { rough = 0.62, lump = 0.012, boil = 0.0035, freq = 9, emissive = 0, ei = 0, fp = 0.45 } = {}) {
-  FP = FP || fingerprintNormal();
-  const m = new THREE.MeshStandardMaterial({ color, roughness: rough, metalness: 0, normalMap: FP, normalScale: new THREE.Vector2(fp, fp),
+const BUMP = `
+uniform sampler2D bumpMap; uniform float bumpScale; uniform float uTex, uGroove, uDimple;
+varying vec3 vObjPos; varying vec3 vObjN;
+float triH() {
+  vec3 w = pow(abs(normalize(vObjN)), vec3(4.0)); w /= (w.x + w.y + w.z + 1e-5);
+  vec3 p = vObjPos * uTex;
+  float h = texture2D(bumpMap, p.yz).x * w.x + texture2D(bumpMap, p.xz + 0.37).x * w.y + texture2D(bumpMap, p.xy + 0.71).x * w.z;
+  if (uGroove > 0.0) h += 0.22 * sin(atan(vObjPos.z, vObjPos.x) * uGroove + vObjPos.y * 9.0 + vn(vObjPos * 6.0) * 2.0);   // sculpted hair strands
+  if (uDimple > 0.0) { vec3 q = fract(vObjPos * uDimple) - 0.5; h -= 0.25 * smoothstep(0.12, 0.0, length(q)); }          // upholstery buttons
+  return h;
+}
+vec2 dHdxy_fwd() { float H = bumpScale * triH(); return vec2(dFdx(H), dFdy(H)); }
+vec3 perturbNormalArb( vec3 surf_pos, vec3 surf_norm, vec2 dHdxy, float faceDirection ) {
+  vec3 vSigmaX = normalize( dFdx( surf_pos.xyz ) ); vec3 vSigmaY = normalize( dFdy( surf_pos.xyz ) ); vec3 vN = surf_norm;
+  vec3 R1 = cross( vSigmaY, vN ); vec3 R2 = cross( vN, vSigmaX ); float fDet = dot( vSigmaX, R1 ) * faceDirection;
+  vec3 vGrad = sign( fDet ) * ( dHdxy.x * R1 + dHdxy.y * R2 ); return normalize( abs( fDet ) * surf_norm - vGrad );
+}
+`;
+// Plasticine: triplanar fingerprints and tool marks that stick to the object, colour mottling, a soft sheen,
+// a lumpy silhouette (static) and the boil (changes every drawing, like re-handled clay in stop-motion).
+export function clay(color, { rough = 0.6, lump = 0.012, boil = 0.0035, freq = 9, emissive = 0, ei = 0, fp = 1.0, tex = 2.4, groove = 0, dimple = 0, mottle = 0.05, map = null, sheen = 0.35, clearcoat = 0 } = {}) {
+  FP = FP || fingerprintHeight();
+  const m = new THREE.MeshPhysicalMaterial({ color, roughness: rough, metalness: 0, bumpMap: FP, bumpScale: fp * 0.9, map,
+    sheen, sheenRoughness: 0.75, sheenColor: new THREE.Color(color).lerp(new THREE.Color(0xffffff), 0.45), clearcoat, clearcoatRoughness: 0.25,
     emissive: emissive || 0x000000, emissiveIntensity: ei });
-  const U = { uLump: { value: lump }, uBoil: { value: boil }, uFreq: { value: freq } };
+  const U = { uLump: { value: lump }, uBoil: { value: boil }, uFreq: { value: freq }, uTex: { value: tex }, uGroove: { value: groove }, uDimple: { value: dimple }, uMottle: { value: mottle } };
   m.onBeforeCompile = (sh) => {
     Object.assign(sh.uniforms, U, BOIL);
-    sh.vertexShader = 'uniform float uSeed, uLump, uBoil, uFreq;\n' + NOISE + sh.vertexShader.replace('#include <begin_vertex>', `#include <begin_vertex>
+    sh.vertexShader = 'uniform float uSeed, uLump, uBoil, uFreq;\nvarying vec3 vObjPos; varying vec3 vObjN;\n' + NOISE + sh.vertexShader.replace('#include <begin_vertex>', `#include <begin_vertex>
+      vObjPos = position; vObjN = objectNormal;
       vec3 wp = position * uFreq;
       float n = vn(wp) * uLump + vn(wp * 2.7 + 11.0) * uLump * 0.45;
       float b = vn(wp * 1.6 + vec3(uSeed * 7.31, uSeed * 3.17, uSeed * 5.53)) * uBoil;
       transformed += objectNormal * (n + b);`);
+    sh.fragmentShader = 'uniform float uMottle;\n' + NOISE + sh.fragmentShader
+      .replace('#include <bumpmap_pars_fragment>', BUMP)
+      .replace('#include <color_fragment>', `#include <color_fragment>
+        float mo = vn(vObjPos * 3.0) * 0.6 + vn(vObjPos * 11.0) * 0.4;
+        diffuseColor.rgb *= 1.0 + uMottle * mo;
+        diffuseColor.rgb = mix(diffuseColor.rgb, diffuseColor.rgb * vec3(1.04, 0.98, 0.95), uMottle * 4.0 * clamp(vn(vObjPos * 1.7 + 5.0), 0.0, 1.0));`);
   };
-  m.customProgramCacheKey = () => 'clay';
+  m.customProgramCacheKey = () => 'clay2' + (map ? 'm' : '') + (clearcoat ? 'c' : '');
   return m;
 }
 
@@ -106,12 +126,30 @@ function mouthTex() {
 // a patch of sphere surface (front of a head), UVs 0..1 across it
 const patch = (r, w, h, thetaC) => new THREE.SphereGeometry(r, 18, 10, Math.PI / 2 - w / 2, w, thetaC - h / 2, h);
 
+// stripes for a shirt, wrapped by the capsule's UVs
+export function stripes(base, line, n = 7) {
+  const c = document.createElement('canvas'); c.width = 64; c.height = 256; const g = c.getContext('2d');
+  g.fillStyle = base; g.fillRect(0, 0, 64, 256); g.fillStyle = line; for (let i = 0; i < n; i++) g.fillRect(0, (i + 0.5) * 256 / n - 9, 64, 18);
+  const t = new THREE.CanvasTexture(c); t.colorSpace = THREE.SRGBColorSpace; return t;
+}
+// a garment that follows the body: the same capsule, a little bigger (so arms and limbs never cut through it)
+export function shell(P, color, { grow = 1.06, top = 1, bottom = 0, o = {} } = {}) {
+  const b = P.body, g = b.geometry.parameters;
+  const m = new THREE.Mesh(new THREE.CapsuleGeometry(g.radius * grow, g.height * top, 8, 18), clay(color, { tex: 2.0, fp: 0.8, ...o }));
+  m.scale.copy(b.scale); m.position.copy(b.position); m.position.y += bottom; m.castShadow = m.receiveShadow = true; P.torso.add(m); return m;
+}
+// a hair cap that sits on the skull with sculpted strands
+export function hair(P, color, { sx = 1.0, sy = 0.62, sz = 1.04, y = 0.1, z = -0.02, groove = 46 } = {}) {
+  const r = P.hr * 1.04, m = new THREE.Mesh(new THREE.SphereGeometry(r, 32, 16, 0, Math.PI * 2, 0, Math.PI * 0.62), clay(color, { groove, tex: 3, rough: 0.7 }));
+  m.scale.set(sx, sy * 1.6, sz); m.position.set(0, y * 0.4, z); m.castShadow = true; P.head.add(m); return m;
+}
+
 // ---------- puppet builder ----------
 // o: { skin, top, pants, headR, bodyR, bodyL, seat (seated height or 0 standing), eye: white size, lidRest 0 wide .. 1 closed }
 export function puppet(o) {
   const g = new THREE.Group(), P = { g };
-  const skin = clay(o.skin), top = clay(o.top), pants = clay(o.pants || 0x2B2A33);
-  const sit = !!o.seat, hr = o.headR || 0.24, br = o.bodyR || 0.2, bl = o.bodyL || 0.3;
+  const skin = clay(o.skin, { tex: 3.0, mottle: 0.06 }), top = o.topMat || clay(o.top, { tex: 2.0, fp: 0.8 }), pants = clay(o.pants || 0x2B2A33, { tex: 2.0, fp: 0.8 });
+  const sit = !!o.seat, hr = o.headR || 0.24, br = o.bodyR || 0.2, bl = o.bodyL || 0.3; P.hr = hr; P.br = br;
   const hip = sit ? o.seat : 0.62;
   // legs
   for (const s of [-1, 1]) {
@@ -137,7 +175,7 @@ export function puppet(o) {
     const elbow = new THREE.Group(); elbow.position.y = -0.28; sh.add(elbow);
     const fore = new THREE.Mesh(new THREE.CapsuleGeometry(br * 0.27, 0.18, 6, 10), top); fore.position.y = -0.12; elbow.add(fore);
     const hand = new THREE.Mesh(new THREE.SphereGeometry(br * 0.34, 14, 10), skin); hand.position.y = -0.27; hand.scale.set(1, 1.1, 0.8); elbow.add(hand);
-    sh.rotation.z = s * 0.18; P.arms.push({ sh, elbow, hand });
+    sh.rotation.z = s * 0.28; P.arms.push({ sh, elbow, hand, s });
   }
   // head pivots at the neck
   const neck = new THREE.Group(); neck.position.y = neckY; torso.add(neck); P.neck = neck;
@@ -148,14 +186,16 @@ export function puppet(o) {
   for (const s of [-1, 1]) { const ear = new THREE.Mesh(new THREE.SphereGeometry(hr * 0.2, 12, 8), skin); ear.scale.set(0.5, 1, 0.8); ear.position.set(s * hr * (o.headW || 1) * 0.97, 0, 0); head.add(ear); }
   // eyes: white ball, pupil, lid (top hemisphere that rotates down over the ball)
   P.eyes = [];
-  const er = hr * (o.eye || 0.2), white = clay(0xE6DED0, { lump: 0.002, boil: 0.001 }), pup = new THREE.MeshStandardMaterial({ color: 0x15100E, roughness: 0.3 });
+  const er = hr * (o.eye || 0.2), white = clay(0xEAE3D6, { lump: 0.001, boil: 0.0006, rough: 0.35, clearcoat: 1, fp: 0.15, sheen: 0 }), pup = new THREE.MeshPhysicalMaterial({ color: 0x0E0A09, roughness: 0.2, clearcoat: 1 }), iris = new THREE.MeshPhysicalMaterial({ color: o.iris || 0x4A2C1A, roughness: 0.3, clearcoat: 1 });
   for (const s of [-1, 1]) {
     const e = new THREE.Group(); e.position.set(s * hr * 0.36, hr * 0.17, hr * 0.86); head.add(e);
     const ball = new THREE.Mesh(new THREE.SphereGeometry(er, 18, 14), white); ball.scale.z = 0.7; e.add(ball);
-    const p = new THREE.Mesh(new THREE.SphereGeometry(er * 0.45, 12, 10), pup); p.position.z = er * 0.62; p.scale.z = 0.5; e.add(p);
-    const glint = new THREE.Mesh(new THREE.SphereGeometry(er * 0.12, 8, 6), new THREE.MeshBasicMaterial({ color: 0xffffff })); glint.position.set(er * 0.15, er * 0.18, er * 0.86); e.add(glint);
+    const p = new THREE.Group(); p.position.z = er * 0.6; e.add(p);
+    const ir = new THREE.Mesh(new THREE.SphereGeometry(er * 0.5, 16, 12), iris); ir.scale.z = 0.35; p.add(ir);
+    const pu = new THREE.Mesh(new THREE.SphereGeometry(er * 0.27, 12, 10), pup); pu.scale.z = 0.35; pu.position.z = er * 0.06; p.add(pu);
+    const glint = new THREE.Mesh(new THREE.SphereGeometry(er * 0.12, 8, 6), new THREE.MeshBasicMaterial({ color: 0xffffff })); glint.position.set(er * 0.17, er * 0.2, er * 0.8); e.add(glint);
     const lid = new THREE.Mesh(new THREE.SphereGeometry(er * 1.12, 18, 10, 0, Math.PI * 2, 0, Math.PI / 2), skin); lid.scale.z = 0.75; e.add(lid);
-    const brow = new THREE.Mesh(new THREE.CapsuleGeometry(er * 0.22, er * 1.3, 4, 8), clay(o.brow || 0x2A1A14)); brow.rotation.z = Math.PI / 2; brow.position.set(0, er * 1.55, er * 0.35); e.add(brow);
+    const brow = new THREE.Mesh(new THREE.CapsuleGeometry(er * 0.22, er * 1.3, 4, 8), clay(o.brow || 0x2A1A14)); brow.rotation.z = Math.PI / 2; brow.position.set(0, er * 1.6, er * 0.62); e.add(brow);
     P.eyes.push({ e, p, lid, brow, s });
   }
   // replacement mouth on a patch of the face
@@ -171,7 +211,7 @@ export function puppet(o) {
     for (const E of P.eyes) {
       E.lid.rotation.x = -1.35 + lid * 2.75;
       E.p.position.x = (q.look ? q.look[0] : 0) * er * 0.32; E.p.position.y = (q.look ? q.look[1] : 0) * er * 0.28;
-      const br2 = q.brow ? q.brow[E.s < 0 ? 0 : 1] : 0; E.brow.position.y = er * (1.55 + br2 * 0.45); E.brow.rotation.z = Math.PI / 2 + E.s * (q.browTilt || 0);
+      const br2 = q.brow ? q.brow[E.s < 0 ? 0 : 1] : 0; E.brow.position.y = er * (1.6 + br2 * 0.45); E.brow.rotation.z = Math.PI / 2 + E.s * (q.browTilt || 0);
     }
     head.rotation.set(q.nod || 0, q.turn || 0, q.tilt || 0);
     torso.rotation.x = q.lean || 0; torso.rotation.y = q.twist || 0;

@@ -24,7 +24,7 @@ import { UnrealBloomPass } from 'three/addons/postprocessing/UnrealBloomPass.js'
 import { BokehPass } from 'three/addons/postprocessing/BokehPass.js';
 import { OutputPass } from 'three/addons/postprocessing/OutputPass.js';
 import { W, H, PAPER, clamp, lerp, inv, eO, eIO, spring, SPRING, hash, rng, loadFonts, T, drawQR, endCard } from './common.js';
-import { clay, puppet, BOIL } from '../latent/clay.js';
+import { clay, puppet, BOIL, shell, hair, stripes } from '../latent/clay.js';
 await loadFonts('neon', 'bebas', 'sansM');
 const TL = await (await fetch('/social/reels/latent/timeline.json')).json();
 const L = Object.fromEntries(TL.lines.map((l) => [l.id, l]));
@@ -48,8 +48,14 @@ const glow = (c, i = 2) => new THREE.MeshStandardMaterial({ color: c, emissive: 
 function canvasTex(w, h, draw) { const c = document.createElement('canvas'); c.width = w; c.height = h; const g = c.getContext('2d'); const t = new THREE.CanvasTexture(c); t.colorSpace = THREE.SRGBColorSpace; t.redraw = (...a) => { draw(g, ...a); t.needsUpdate = true; }; t.redraw(); return t; }
 
 // ---------- the studio ----------
-add(new THREE.Mesh(new THREE.PlaneGeometry(30, 30, 40, 40), clay(0x2A2130, { lump: 0.004, freq: 2 })).rotateX(-Math.PI / 2));
-const stage = add(cyl(1.55, 1.62, 0.3, clay(0x6E1F2C, { lump: 0.006 }), 48), 0, 0.15, 0);
+const planks = canvasTex(1024, 1024, (g) => { const R2 = rng(12); for (let i = 0; i < 16; i++) { const v = 52 + R2() * 18; g.fillStyle = `rgb(${v + 14},${v - 2},${v - 14})`; g.fillRect(0, i * 64, 1024, 64);
+  for (let k = 0; k < 40; k++) { g.strokeStyle = `rgba(20,10,5,${0.05 + R2() * 0.08})`; g.lineWidth = 1 + R2() * 2; const y = i * 64 + R2() * 64; g.beginPath(); g.moveTo(0, y); g.bezierCurveTo(340, y + R2() * 8 - 4, 680, y + R2() * 8 - 4, 1024, y); g.stroke(); }
+  g.fillStyle = 'rgba(10,5,3,.7)'; g.fillRect(0, i * 64, 1024, 3); const cut = R2() * 1024; g.fillRect(cut, i * 64, 3, 64); } });
+planks.wrapS = planks.wrapT = THREE.RepeatWrapping; planks.repeat.set(5, 5);
+add(new THREE.Mesh(new THREE.PlaneGeometry(30, 30, 40, 40), clay(0x8A7A70, { lump: 0.003, freq: 2, map: planks, tex: 1.2, fp: 0.6, mottle: 0.03 })).rotateX(-Math.PI / 2));
+const ply = canvasTex(512, 512, (g) => { const R2 = rng(14); g.fillStyle = '#7A2433'; g.fillRect(0, 0, 512, 512);
+  for (let k = 0; k < 220; k++) { g.fillStyle = `rgba(${R2() > 0.5 ? '255,220,200' : '30,5,10'},${0.03 + R2() * 0.05})`; g.fillRect(R2() * 512, R2() * 512, 2 + R2() * 60, 1 + R2() * 3); } });
+const stage = add(cyl(1.55, 1.62, 0.3, clay(0xffffff, { lump: 0.006, map: ply, fp: 0.7 }), 48), 0, 0.15, 0);
 add(new THREE.Mesh(new THREE.TorusGeometry(1.6, 0.035, 8, 64), glow(0xFFB36B, 1.6)).rotateX(Math.PI / 2), 0, 0.29, 0);
 // curved back wall with light strips
 const wallMat = clay(0x24183D, { lump: 0.01, freq: 1.5 });
@@ -122,7 +128,7 @@ add(cyl(0.04, 0.04, 0.005, clay(0xB0753F), 16), 0, 0.085, 0, chai);
 const stool = add(cyl(0.2, 0.18, 0.06, clay(0xC23B2E)), -2.3, 0.6, 0.95); add(cyl(0.03, 0.05, 0.6, clay(0x2E2B33), 10), -2.3, 0.3, 0.95);
 // judges couch
 const couch = new THREE.Group(); couch.position.set(2.45, 0, 1.05); couch.rotation.y = -1.05; scene.add(couch);
-const cm = clay(0x2F6B6B, { lump: 0.01 });
+const cm = clay(0x2F6B6B, { lump: 0.01, dimple: 7, fp: 0.6 });
 add(box(2.3, 0.42, 0.75, cm), 0, 0.21, 0, couch); add(box(2.3, 0.7, 0.2, cm), 0, 0.6, -0.33, couch);
 for (const s of [-1, 1]) add(box(0.22, 0.55, 0.75, cm), s * 1.2, 0.35, 0, couch);
 for (const x of [-0.72, 0, 0.72]) add(box(0.66, 0.1, 0.62, clay(0x3A8080)), x, 0.46, 0.03, couch);
@@ -147,43 +153,40 @@ for (let row = 0; row < 4; row++) {
 // ---------- the cast (all invented) ----------
 const fazi = puppet({ skin: 0xB07A55, top: 0x8A7A3A, pants: 0x2A2A30, headR: 0.25, bodyR: 0.17, bodyL: 0.42, seat: 0.63, headH: 1.12, headW: 0.92, lidRest: 0.52, nose: 0.22, mouthW: 0.62, brow: 0x1B120E });
 fazi.g.position.set(-2.3, 0, 0.95); fazi.g.rotation.y = 1.05; scene.add(fazi.g);
-{ const hair = sph(0.255, clay(0x17110E), 24, 12); hair.scale.set(0.95, 0.55, 1.0); hair.position.set(0, 0.13, -0.03); fazi.head.add(hair);
+{ hair(fazi, 0x17110E, { sx: 0.93, sy: 0.6, sz: 1.0, groove: 52 });
   const tash = new THREE.Mesh(new THREE.CapsuleGeometry(0.018, 0.09, 4, 8), clay(0x17110E)); tash.rotation.z = Math.PI / 2; tash.position.set(0, -0.085, 0.235); fazi.head.add(tash);
   for (const s of [-1, 1]) { const lap = box(0.07, 0.3, 0.02, clay(0x6E6030)); lap.position.set(s * 0.07, 0.62, 0.135); lap.rotation.z = s * 0.25; fazi.torso.add(lap); }
   const shirt = box(0.08, 0.28, 0.02, clay(0xEDE6D8)); shirt.position.set(0, 0.62, 0.128); fazi.torso.add(shirt); }
-fazi.arms[1].hand.add(chai); chai.position.set(0, -0.02, 0.05); chai.scale.setScalar(1.4);
+fazi.arms[1].hand.add(chai); chai.position.set(0, -0.075, 0.035); chai.scale.setScalar(1.2);
 
 const aunty = puppet({ skin: 0xD49A70, top: 0x8E2A62, headR: 0.25, bodyR: 0.23, bodyL: 0.28, bodyW: 1.15, seat: 0.5, lidRest: 0.32, mouthW: 0.7 });
 const chacha = puppet({ skin: 0xA9714D, top: 0xE8E2D2, headR: 0.24, bodyR: 0.21, bodyL: 0.3, bodyW: 1.1, seat: 0.5, lidRest: 1, nose: 0.24, brow: 0xEDEDED });
 const vlog = puppet({ skin: 0xC98B62, top: 0x2E86C1, headR: 0.24, bodyR: 0.19, bodyL: 0.32, seat: 0.5, lidRest: 0.05, eye: 0.23 });
 [[aunty, -0.72], [chacha, 0], [vlog, 0.72]].forEach(([p, x]) => { p.g.position.set(x, 0, 0.05); couch.add(p.g); p.g.position.y = -0.04; });
 { const d = sph(0.29, clay(0xD94A8C), 24, 14); d.scale.set(1.05, 1.0, 0.82); d.position.set(0, 0.1, -0.13); aunty.head.add(d);
-  const shawl = new THREE.Mesh(new THREE.TorusGeometry(0.25, 0.07, 10, 24), clay(0xD94A8C)); shawl.rotation.x = Math.PI / 2; shawl.position.y = 0.66; aunty.torso.add(shawl);
+  shell(aunty, 0xD94A8C, { grow: 1.09, top: 0.25, bottom: 0.17 });
   for (const s of [-1, 1]) { const ring = new THREE.Mesh(new THREE.TorusGeometry(0.03, 0.008, 6, 12), glow(0xF2C14E, 0.4)); ring.position.set(s * 0.245, -0.09, 0.02); ring.rotation.y = Math.PI / 2; aunty.head.add(ring); } }
 { const cap = cyl(0.2, 0.21, 0.12, clay(0xF4F1EA), 24); cap.position.y = 0.2; chacha.head.add(cap);
   const beard = sph(0.2, clay(0xEDEDED), 18, 12); beard.scale.set(1.0, 0.6, 0.6); beard.position.set(0, -0.2, 0.12); chacha.head.add(beard);
-  const vest = new THREE.Mesh(new THREE.CapsuleGeometry(0.215, 0.24, 6, 14), clay(0x5B4636)); vest.scale.set(1.12, 0.92, 0.85); vest.position.y = 0.37; chacha.torso.add(vest); }
+  shell(chacha, 0x5B4636, { grow: 1.07, top: 0.8, bottom: 0.0 }); }
 { const cap = sph(0.25, clay(0xF2C14E), 24, 10); cap.scale.set(1, 0.55, 1); cap.position.set(0, 0.12, -0.02); vlog.head.add(cap);
   const brim = cyl(0.17, 0.17, 0.02, clay(0xF2C14E), 20); brim.scale.z = 0.55; brim.position.set(0, 0.11, -0.25); vlog.head.add(brim); }
-const vPhone = new THREE.Group(); vlog.arms[1].hand.add(vPhone); vPhone.position.set(0, -0.06, 0.06);
+const vPhone = new THREE.Group(); vlog.arms[1].hand.add(vPhone); vPhone.position.set(0, -0.1, 0.05);
 add(box(0.075, 0.14, 0.012, clay(0x1A1A1E)), 0, 0, 0, vPhone);
 const ringLight = new THREE.Mesh(new THREE.TorusGeometry(0.07, 0.012, 8, 24), glow(0xFFF4E0, 3)); ringLight.position.z = 0.03; vPhone.add(ringLight);
 
-const pappu = puppet({ skin: 0xC98B62, top: 0xF2994A, headR: 0.27, bodyR: 0.27, bodyL: 0.2, bodyW: 1.15, bodyD: 0.95, lidRest: 0.02, eye: 0.24, mouthW: 0.72 });
+const pappu = puppet({ skin: 0xC98B62, top: 0xF2994A, topMat: clay(0xffffff, { map: stripes('#F2994A', '#FFE3B8'), tex: 2, fp: 0.7 }), headR: 0.27, bodyR: 0.27, bodyL: 0.2, bodyW: 1.15, bodyD: 0.95, lidRest: 0.02, eye: 0.24, mouthW: 0.72 });
 pappu.g.position.set(0, 0.3, 0.12); scene.add(pappu.g);
-{ const bowl = sph(0.28, clay(0x17110E), 24, 12); bowl.scale.set(1.02, 0.62, 1.02); bowl.position.set(0, 0.11, -0.01); pappu.head.add(bowl);
-  for (let i = 0; i < 3; i++) { const st = new THREE.Mesh(new THREE.TorusGeometry(0.28, 0.018, 6, 30), clay(0xFFE3B8)); st.rotation.x = Math.PI / 2; st.scale.set(1.15, 0.95, 1); st.position.y = 0.32 + i * 0.12; pappu.torso.add(st); } }
+hair(pappu, 0x17110E, { sx: 1.0, sy: 0.72, sz: 1.03, groove: 34 });
 const card = add(box(0.16, 0.12, 0.01, new THREE.MeshStandardMaterial({ map: canvasTex(200, 150, (g, n = '9') => { g.fillStyle = '#F4EFE6'; g.fillRect(0, 0, 200, 150); g.fillStyle = '#1A1714'; g.font = '400 120px Bebas'; g.textAlign = 'center'; g.fillText(n, 100, 125); }) })), 0, -0.08, 0.06, pappu.arms[0].hand);
 const sweat = add(sph(0.02, new THREE.MeshStandardMaterial({ color: 0xBFE6FF, roughness: 0.05, transparent: true, opacity: 0.85 }), 10, 8), 0.2, 0.14, 0.15, pappu.head); sweat.scale.set(0.8, 1.3, 0.8);
 
 const mehwish = puppet({ skin: 0xC48660, top: 0x1F8A8A, headR: 0.24, bodyR: 0.18, bodyL: 0.42, lidRest: 0.18, mouthW: 0.6 });
 mehwish.g.position.set(0, 0.3, 0.12); scene.add(mehwish.g);
-{ const hair = sph(0.25, clay(0x17110E), 24, 14); hair.scale.set(1.02, 0.95, 1.02); hair.position.set(0, 0.04, -0.06); mehwish.head.add(hair);
+{ hair(mehwish, 0x17110E, { sx: 1.02, sy: 0.75, sz: 1.04, z: -0.03, groove: 60 });
   const bun = sph(0.11, clay(0x17110E)); bun.position.set(0, 0.2, -0.17); mehwish.head.add(bun);
-  const fringe = sph(0.2, clay(0x17110E), 18, 10); fringe.scale.set(1.15, 0.35, 0.6); fringe.position.set(0, 0.16, 0.12); mehwish.head.add(fringe);
-  const kurta = new THREE.Mesh(new THREE.CylinderGeometry(0.2, 0.3, 0.45, 20), clay(0x1F8A8A)); kurta.position.y = 0.12; mehwish.torso.add(kurta);
-  const dup = new THREE.Mesh(new THREE.TorusGeometry(0.2, 0.05, 8, 20), clay(0xF2C14E)); dup.rotation.x = Math.PI / 2; dup.position.y = 0.72; mehwish.torso.add(dup); }
-const mPhone = new THREE.Group(); mehwish.arms[1].hand.add(mPhone); mPhone.position.set(0, -0.09, 0.07);
+  shell(mehwish, 0x1F8A8A, { grow: 1.06, top: 1.35, bottom: -0.1 }); shell(mehwish, 0xF2C14E, { grow: 1.12, top: 0.22, bottom: 0.2 }); }
+const mPhone = new THREE.Group(); mehwish.arms[1].hand.add(mPhone); mPhone.position.set(0, -0.12, 0.05);
 add(box(0.085, 0.16, 0.014, clay(0x1A1A1E)), 0, 0, 0, mPhone);
 // the phone screen shows the REAL dish scan (render target from a little viewer scene)
 const RT = new THREE.WebGLRenderTarget(540, 1040, { samples: 4 }); RT.texture.colorSpace = THREE.SRGBColorSpace;
@@ -259,84 +262,90 @@ const P = { fazi, aunty, chacha, vlog, pappu, mehwish };
 let FR = 0;
 
 function act(t) {
-  const who = talkerAt(t), contestant = t < L.mehwish.t0 - 0.2 ? pappu : mehwish;
-  pappu.g.visible = (t >= L.pappu.t0 - 0.2 && t < L.mehwish.t0 - 0.2) || t >= L.pehlibaar.t0 - 0.3;
-  mehwish.g.visible = t >= L.mehwish.t0 - 0.2 && t < L.pehlibaar.t0 - 0.3 || t >= L.pehlibaar.t0 - 0.3;
-  const spk = who ? headPos(P[who]) : headPos(contestant);
+  const who = talkerAt(t), epi = t >= L.pehlibaar.t0 - 0.3, contestant = epi ? pappu : t < L.mehwish.t0 - 0.2 ? pappu : mehwish;
+  const billLook = t >= EV('lookPappu').t - 0.1;
+  pappu.g.visible = (t >= L.pappu.t0 - 0.2 && t < L.mehwish.t0 - 0.2) || epi;
+  mehwish.g.visible = t >= L.mehwish.t0 - 0.2;
+  const spk = billLook ? headPos(pappu) : who ? headPos(P[who]) : headPos(contestant);
   const micro = (s) => (hash(s * 31 + Math.floor(t * 1.3)) - 0.5) * 0.06;     // small held head shifts, like an animator's nudges
-  const deadAfter = (id, len) => t > L[id].t1 && t < L[id].t1 + len;
-  const scoreN = t >= EV('score', 1).t ? 1 : 0, sc = EV('score', scoreN);
+  const scoreN = t >= EV('score', 1).t - 0.6 ? 1 : 0, sc = EV('score', scoreN);
+  const dishT = EV('dish').t;
 
-  // FAZI: half-lidded, flat. One brow up on "Jadoo?". Sips after the dead jokes.
-  { const l = speaking('fazi', t), lk = lookYaw(fazi, who && who !== 'fazi' ? spk : headPos(contestant));
-    const sipT = [L.welcome2.t1 + 0.15, EV('sip').t].find((s) => t >= s && t < s + 1.1);
+  // FAZI: half-lidded, flat. One brow up on "Jadoo?". Sips after the dead jokes; turns to Pappu for the bill.
+  { const l = speaking('fazi', t), lk = lookYaw(fazi, who && who !== 'fazi' ? spk : billLook ? headPos(pappu) : headPos(contestant));
+    const sipT = [L.welcome2.t1 + 0.15, EV('sip').t].find((x) => t >= x && t < x + 1.1);
     const sip = sipT ? Math.sin(clamp((t - sipT) / 1.1) * Math.PI) : 0;
-    fazi.arms[1].sh.rotation.x = -0.9 - sip * 1.1; fazi.arms[1].elbow.rotation.x = -1.4 + sip * 0.2; fazi.arms[1].sh.rotation.z = 0.35 + sip * 0.25;
+    fazi.arms[1].sh.rotation.x = -0.9 - sip * 1.1; fazi.arms[1].elbow.rotation.x = -1.4 + sip * 0.2; fazi.arms[1].sh.rotation.z = 0.4 + sip * 0.2;
     const press = [EV('haso', 0).t, EV('haso', 1).t].some((h) => t > h - 0.45 && t < h + 0.05);
-    fazi.arms[0].sh.rotation.x = press ? -0.75 : -0.35; fazi.arms[0].elbow.rotation.x = press ? -0.55 : -0.9; fazi.arms[0].sh.rotation.z = press ? 0.15 : -0.35;
-    fazi.pose({ mouth: l ? mouthAt(l, t) : 'X', lid: blink(1, t) ? 1 : (sip > 0.3 ? 0.85 : fazi.lidRest), turn: lk.turn * 0.8 + micro(1), nod: lk.nod + sip * -0.25,
+    fazi.arms[0].sh.rotation.x = press ? -0.75 : -0.35; fazi.arms[0].elbow.rotation.x = press ? -0.55 : -0.9; fazi.arms[0].sh.rotation.z = press ? -0.05 : -0.42;
+    fazi.pose({ mouth: l ? mouthAt(l, t) : 'X', lid: blink(1, t) ? 1 : (sip > 0.3 ? 0.85 : fazi.lidRest), turn: lk.turn * 0.85 + micro(1), nod: lk.nod + sip * -0.25,
       brow: t >= L.jadoo.t0 - 0.1 && t < L.menu.t0 ? [0, 1] : [0, 0], lean: 0.08 }); }
-  // AUNTY: bored "theek hai"; leans in, eyes wide at the real dish.
-  { const l = speaking('aunty', t), wow = t >= EV('dish').t + 0.3 && t < L.real.t1 + 1, lk = lookYaw(aunty, spk);
-    aunty.pose({ mouth: l ? mouthAt(l, t) : (wow ? 'E' : 'X'), lid: blink(2, t) ? 1 : (wow ? 0 : aunty.lidRest), turn: lk.turn + micro(2), nod: lk.nod,
-      lean: wow ? 0.32 * eO(inv(EV('dish').t + 0.3, EV('dish').t + 1, t)) : 0.02, brow: wow ? [0.8, 0.8] : [-0.2, -0.2] }); }
-  // CHACHA: asleep; one late "ha ha"; wakes for the dish.
-  { const laugh = t >= EV('chachaLaugh').t && t < EV('chachaLaugh').t + 0.9, wake = t >= EV('gasp').t, snore = Math.sin(t * 2.2) * 0.012;
-    const lk = lookYaw(chacha, headPos(contestant));
-    chacha.pose({ mouth: laugh ? (Math.floor(t * 8) % 2 ? 'D' : 'C') : (wake ? 'F' : 'B'), lid: wake ? (blink(3, t) ? 1 : 0.05) : (laugh ? 0.55 : 1),
+  // AUNTY: stern about aloo; the "ek number" verdict; leans in, eyes wide at the real dish.
+  { const l = speaking('aunty', t), wow = t >= dishT + 0.3 && t < L.dessert.t1 + 1, lk = lookYaw(aunty, spk), stern = !!l && !wow;
+    aunty.pose({ mouth: l ? mouthAt(l, t) : (wow ? 'E' : 'X'), lid: blink(2, t) ? 1 : (wow ? 0 : stern ? 0.4 : aunty.lidRest), turn: lk.turn + micro(2), nod: lk.nod,
+      lean: wow ? 0.3 * eO(inv(dishT + 0.3, dishT + 1, t)) : 0.02, brow: wow ? [0.8, 0.8] : stern ? [-0.5, -0.5] : [-0.2, -0.2], browTilt: stern ? 0.25 : 0 }); }
+  // CHACHA: asleep since 1998; one late "ha ha"; wakes for the dish and asks about dessert.
+  { const laugh = t >= EV('chachaLaugh').t && t < EV('chachaLaugh').t + 0.9, wake = t >= EV('gasp').t, l = speaking('chacha', t), snore = Math.sin(t * 2.2) * 0.012;
+    const lk = lookYaw(chacha, wake ? spk : headPos(contestant));
+    chacha.pose({ mouth: l ? mouthAt(l, t) : laugh ? (Math.floor(t * 8) % 2 ? 'D' : 'C') : (wake ? 'F' : 'B'), lid: wake ? (blink(3, t) ? 1 : 0.05) : (laugh ? 0.55 : 1),
       tilt: wake ? 0 : 0.28, nod: wake ? lk.nod : 0.18, turn: wake ? lk.turn : -0.15, bob: wake ? 0 : snore, brow: wake ? [1, 1] : [0, 0], lean: wake ? 0.2 : -0.08 }); }
-  // VLOGGER: phone always up; selfie for "Hi guys" and "it's real".
-  { const l = speaking('vlog', t), selfie = !!l || (t > L.higuys.t0 - 0.3 && t < L.higuys.t1 + 0.4) || (t > L.real.t0 - 0.3 && t < L.real.t1 + 0.4);
+  // VLOGGER: phone always up; selfie for "pehle camera khayega"; puts the phone DOWN after "main khaunga".
+  { const l = speaking('vlog', t), selfie = selfieAt(t), down = t >= L.khaunga.t1 - 0.2;
     const lk = lookYaw(vlog, selfie ? headPos(vlog).add(facing(vlog)) : spk);
-    vlog.arms[1].sh.rotation.x = -1.35; vlog.arms[1].elbow.rotation.x = selfie ? -0.9 : -0.2; vPhone.rotation.y = selfie ? Math.PI : 0;
-    vlog.pose({ mouth: l ? mouthAt(l, t) : (t > EV('dish').t ? 'E' : 'X'), lid: blink(4, t) ? 1 : 0.05, turn: selfie ? 0.1 : lk.turn + micro(4), nod: lk.nod,
-      brow: t > EV('dish').t ? [1, 1] : [0.3, 0.3], lean: t > EV('dish').t + 0.3 ? 0.25 : 0 }); }
-  // PAPPU: hopeful; sad at "rota hoon"; sweats in the silence; slumps at the buzzer.
-  { const l = speaking('pappu', t), sad = t >= L.rota.t0 && t < L.mehwish.t0, slump = t >= EV('buzzer').t ? eO(inv(EV('buzzer').t, EV('buzzer').t + 0.6, t)) : 0;
-    const lk = lookYaw(pappu, l ? cam.position : headPos(fazi)), epi = t >= L.pehlibaar.t0 - 0.3;
-    const cardUp = t >= L.talent1.t0 + 0.3 && t < EV('buzzer').t;
+    vlog.arms[1].sh.rotation.x = down ? -0.35 : -1.35; vlog.arms[1].elbow.rotation.x = down ? -0.4 : selfie ? -0.9 : -0.2;
+    vlog.pose({ mouth: l ? mouthAt(l, t) : (t > dishT ? 'E' : 'X'), lid: blink(4, t) ? 1 : 0.05, turn: selfie ? 0.1 : lk.turn + micro(4), nod: lk.nod,
+      brow: t > dishT ? [1, 1] : [0.3, 0.3], lean: t > dishT + 0.3 ? 0.25 : 0 }); }
+  // PAPPU: proud; salutes; quiet "frame karwaun"; sweats; slumps at the buzzer; frozen with the bill at the end.
+  { const l = speaking('pappu', t), sad = t >= L.trailer.t1 && t < L.mehwish.t0, slump = t >= EV('buzzer').t && !epi ? eO(inv(EV('buzzer').t, EV('buzzer').t + 0.6, t)) : 0;
+    const lk = lookYaw(pappu, l ? cam.position : headPos(fazi));
+    const salute = t >= L.salute.t0 + 0.9 && t < L.salute.t1 + 0.2 ? eO(inv(L.salute.t0 + 0.9, L.salute.t0 + 1.2, t)) : 0;
+    const cardUp = t >= L.talent1.t0 + 0.3 && t < EV('buzzer').t && !salute;
     pappu.arms[0].sh.rotation.x = cardUp ? -1.25 : -0.1; pappu.arms[0].elbow.rotation.x = cardUp ? -0.6 : -0.2;
-    pappu.arms[1].sh.rotation.x = epi ? -1.1 : -0.1; pappu.arms[1].elbow.rotation.x = epi ? -1.1 : -0.2; pappuPhone.visible = epi; card.visible = !epi;
-    sweat.visible = t > L.trailer.t1 && t < EV('buzzer').t + 1.2; sweat.position.y = 0.14 - clamp((t - L.trailer.t1) * 0.03, 0, 0.12);
-    pappu.pose({ mouth: l ? mouthAt(l, t) : (epi ? 'M' : sad ? 'S' : 'M'), lid: blink(5, t) ? 1 : (sad ? 0.35 : 0.02), turn: epi ? 0.4 : lk.turn + micro(5), nod: epi ? 0.35 : lk.nod + slump * 0.3,
-      brow: sad ? [-0.4, -0.4] : [0.6, 0.6], browTilt: sad ? -0.3 : 0, lean: slump * 0.22, bob: Math.sin(t * 3) * 0.004 });
-    if (epi) { pappu.g.position.set(-4.5, 0, 0.35); pappu.g.rotation.y = 1.0; } else { pappu.g.position.set(0, 0.3, 0.12); pappu.g.rotation.y = 0; } }
+    pappu.arms[1].sh.rotation.x = epi ? -1.1 : -0.1 - salute * 2.3; pappu.arms[1].elbow.rotation.x = epi ? -1.1 : -0.2 - salute * 1.9; pappu.arms[1].sh.rotation.z = 0.28 + salute * 0.5;
+    pappuPhone.visible = epi; card.visible = !epi;
+    sweat.visible = (t > L.trailer.t1 && t < EV('buzzer').t + 1.2) || billLook; sweat.position.y = 0.14 - clamp((t - (billLook ? EV('lookPappu').t : L.trailer.t1)) * 0.03, 0, 0.12);
+    pappu.pose({ mouth: l ? mouthAt(l, t) : billLook ? 'F' : (epi ? 'M' : sad ? 'S' : 'M'), lid: blink(5, t) ? 1 : billLook ? 0 : (sad ? 0.35 : 0.02),
+      turn: billLook ? 0 : epi ? 0.35 : lk.turn + micro(5), nod: billLook ? -0.1 : epi ? 0.35 : lk.nod + slump * 0.3,
+      brow: billLook ? [1, 1] : sad ? [-0.4, -0.4] : [0.6, 0.6], browTilt: sad && !billLook ? -0.3 : 0, lean: slump * 0.22, bob: Math.sin(t * 3) * 0.004 });
+    if (epi) { pappu.g.position.set(-0.95, 0.3, 0.75); pappu.g.rotation.y = 0.55; } else { pappu.g.position.set(0, 0.3, 0.12); pappu.g.rotation.y = 0; } }
   // MEHWISH: calm half-smile; raises the phone for the scan.
-  { const l = speaking('mehwish', t), up = t >= EV('scan').t - 0.2 ? eO(inv(EV('scan').t - 0.2, EV('scan').t + 0.3, t)) : 0, epi = t >= L.pehlibaar.t0 - 0.3;
-    const lk = lookYaw(mehwish, l ? cam.position : headPos(fazi));
-    mehwish.arms[1].sh.rotation.x = -0.2 - up * 1.2; mehwish.arms[1].elbow.rotation.x = -0.3 - up * 0.6;
-    mehwish.pose({ mouth: l ? mouthAt(l, t) : 'M', lid: blink(6, t) ? 1 : mehwish.lidRest, turn: up ? -0.15 : lk.turn + micro(6), nod: up ? 0.25 : lk.nod, brow: [0.2, 0.2] });
-    if (epi) { mehwish.g.position.set(0.55, 0.3, 0.05); } }
-  // AUDIENCE: bob together only while the HASO light is on; real laugh = everyone different, bigger.
+  { const l = speaking('mehwish', t), up = t >= EV('scan').t - 0.2 ? eO(inv(EV('scan').t - 0.2, EV('scan').t + 0.3, t)) : 0;
+    const lk = lookYaw(mehwish, l ? cam.position : billLook ? headPos(pappu) : headPos(fazi));
+    const hold = up * (epi ? 0.3 : 1);
+    mehwish.arms[1].sh.rotation.x = -0.2 - hold * 1.2; mehwish.arms[1].elbow.rotation.x = -0.3 - hold * 0.6;
+    mehwish.pose({ mouth: l ? mouthAt(l, t) : 'M', lid: blink(6, t) ? 1 : mehwish.lidRest, turn: up && !epi ? -0.15 : lk.turn + micro(6), nod: up && !epi ? 0.25 : lk.nod, brow: [0.2, 0.2] });
+    if (epi) mehwish.g.position.set(0.55, 0.3, 0.05); }
+  // AUDIENCE: bob together only while the HASO light is on; real laugh = everyone different, bigger; heads to Pappu at the bill.
   const fake = evOn('haso', t), real = evOn('realLaugh', t);
   crowd.forEach((c, i) => { const k = fake ? Math.abs(Math.sin(t * 9)) * 0.05 : real ? Math.abs(Math.sin(t * (6 + c.amp * 3) + c.ph)) * 0.07 * c.amp : 0;
     c.g.position.y = c.g.userData.y0 ?? (c.g.userData.y0 = c.g.position.y); c.g.position.y = c.g.userData.y0 + k;
-    c.head.rotation.x = fake ? -0.25 : real ? -0.35 * c.amp * Math.abs(Math.sin(t * 5 + c.ph)) : (hash(i + Math.floor(t / 3)) - 0.5) * 0.1; });
+    c.head.rotation.x = fake ? -0.25 : real ? -0.35 * c.amp * Math.abs(Math.sin(t * 5 + c.ph)) : (hash(i + Math.floor(t / 3)) - 0.5) * 0.1;
+    c.head.rotation.y = billLook ? clamp((c.g.position.x + 0.95) * -0.25, -0.6, 0.6) : 0; });
   hasoTex.redraw(fake ? 1 : 0); hasoLight.intensity = fake ? 9 : 0;
   btnCap.position.y = fake && [EV('haso', 0).t, EV('haso', 1).t].some((h) => t < h + 0.2) ? 0.035 : 0.06;
   btnCap.material.emissiveIntensity = fake ? 2.2 : 0.25;
-  // burger arrives (slides in on the plate), card number, scoreboard
-  const bArr = EV('burger').t; side.visible = t >= bArr - 0.2 || t >= L.mehwish.t0 - 0.2;
+  // burger arrives (slides in on the plate), QR card for Mehwish, scoreboard
+  const bArr = EV('burger').t; side.visible = t >= bArr - 0.2;
   burger.visible = plate.visible = t >= bArr - 0.2 && t < L.mehwish.t0 - 0.2; qrCard.visible = t >= L.mehwish.t0 - 0.2;
   side.position.x = t < L.mehwish.t0 - 0.2 ? lerp(2.2, 0.85, eO(inv(bArr - 0.2, bArr + 0.4, t))) : 0.85;
   let bs;
-  if (t >= L.rule.t0 - 0.2 && t < L.pappu.t0 + 1) bs = { mode: 'rule' };
-  else if (t >= EV('score', 0).t - 0.6 && t < L.mehwish.t0 || t >= EV('score', 1).t - 0.6) {
+  if (t >= L.camera.t1 && t < L.talent1.t0) bs = { mode: 'rule' };
+  else if ((t >= EV('score', 0).t - 0.6 && t < L.mehwish.t0) || t >= EV('score', 1).t - 0.6) {
     const k = Math.floor(clamp((t - sc.t) / 0.32, 0, 3.99)); const match = scoreN === 1;
     bs = { mode: 'score', name: scoreN ? 'MEHWISH' : 'PAPPU', self: sc.self, v: sc.v, k, verdict: t >= sc.t + 1.05, match };
   } else bs = {};
   const key2 = JSON.stringify(bs); if (key2 !== boardState) { boardTex.redraw(bs); boardState = key2; }
   return { contestant };
 }
+const selfieAt = (t) => (t > L.camera.t0 - 0.3 && t < L.camera.t1 + 0.4) || (t > L.khaunga.t0 - 0.3 && t < L.khaunga.t1 - 0.2);
 
 // handheld props face where they should, whatever the arm pose (Object3D.lookAt points +z at the target)
 function aim(t) {
-  const selfie = (t > L.higuys.t0 - 0.3 && t < L.higuys.t1 + 0.4) || (t > L.real.t0 - 0.3 && t < L.real.t1 + 0.4);
-  vPhone.lookAt(selfie ? headPos(vlog) : V(0, 1.5, 0.2));
+  const down = t >= L.khaunga.t1 - 0.2;
+  vPhone.lookAt(down ? vPhone.getWorldPosition(new THREE.Vector3()).add(V(0, -3, 0.3)) : selfieAt(t) ? headPos(vlog) : V(0, 1.5, 0.2));
   mPhone.lookAt(headPos(mehwish).add(V(0, -0.15, 3)));
   pappuPhone.lookAt(headPos(pappu));
   card.lookAt(card.getWorldPosition(new THREE.Vector3()).add(V(0, 0, 3)));
-  chai.rotation.set(0, 0, 0);
 }
 
 // ---------- shots ----------
@@ -347,43 +356,48 @@ function frontOf(P2, dist, dy = 0, sideAng = 0, fov = 28) {   // camera in front
 }
 const SH = [];
 const shot = (t0, fn) => SH.push({ t0, fn });
-const H0 = EV('haso', 0), H1 = EV('haso', 1);
-shot(0, (k) => ({ ...frontOf(fazi, lerp(1.25, 1.0, eIO(k)), 0.04, -0.35, 26) }));                                  // cold open on Fazi
-shot(L.welcome2.t1 + 0.1, () => ({ p: V(-0.5, 1.65, -0.6), l: V(0, 1.4, 4.6), fov: 46 }));                          // reverse: the dead room
-shot(H0.t - 0.4, () => ({ p: V(-1.5, 1.3, 2.25), l: V(-1.83, 0.82, 1.6), fov: 36 }));                            // the HASO button
-shot(H0.t + 0.15, (k) => ({ p: V(-0.5, 1.65, lerp(-0.6, -0.3, k)), l: V(0, 1.6, 4.6), fov: 46 }));                    // fake laugh
+const H0 = EV('haso', 0), H1 = EV('haso', 1), S2 = EV('score', 1);
+const BUTTON = () => ({ p: V(-1.5, 1.3, 2.25), l: V(-1.83, 0.82, 1.6), fov: 36 });
+const REVERSE = (x = -0.5, z = -0.6) => (k) => ({ p: V(x, 1.7, z + k * 0.25), l: V(0.1, 1.45, 4.6), fov: 48 });
+const BOARD = () => ({ p: V(0, 2.3, 0.6), l: V(0, 2.2, -2.4), fov: 46 });
+shot(0, (k) => frontOf(fazi, lerp(1.25, 1.0, eIO(k)), 0.04, -0.35, 26));                                      // cold open on Fazi
+shot(L.welcome2.t1 + 0.1, REVERSE());                                                                          // the dead room
+shot(H0.t - 0.4, BUTTON);                                                                                      // he presses HASO
+shot(H0.t + 0.15, REVERSE());                                                                                  // fake laugh
 shot(L.judges.t0, (k) => { const a = lerp(-0.9, 0.3, eIO(k)); return { p: V(2.45 + Math.sin(-1.05 + a) * 3.8, 1.4, 1.05 + Math.cos(-1.05 + a) * 3.8), l: V(2.45, 1.0, 1.05), fov: 46 }; });
-shot(L.theek.t0 - 0.05, () => frontOf(aunty, 1.05, 0.02, 0.25, 28));
+shot(L.aloo.t0 - 0.6, (k) => frontOf(aunty, lerp(1.1, 0.95, k), 0.02, 0.25, 28));                              // "Aloo tha. Baat khatam."
 shot(L.chacha.t0, (k) => frontOf(chacha, lerp(1.1, 0.9, k), 0.08, -0.2, 28));
 shot(L.vlogger.t0, (k) => frontOf(vlog, 1.15, -0.05, 0.3 - k * 0.2, 30));
-shot(L.rule.t0, (k) => ({ p: V(0, 2.3, lerp(0.9, 0.6, k)), l: V(0, 2.2, -2.4), fov: 46 }));                       // the board
-shot(L.pappu.t0, (k) => ({ p: V(lerp(1.4, 0.5, eIO(k)), lerp(3.6, 2.2, eIO(k)), lerp(7.4, 5.4, eIO(k))), l: V(0, 1.2, 0.2), fov: 38 }));   // master crane over the crowd
-shot(L.talent1.t0, (k) => ({ p: V(0.75, 1.0, 2.7 - k * 0.25), l: at(pappu, V(0, -0.2, 0)), fov: 38 }));          // low angle, proud
-shot(L.aurphir.t0, () => frontOf(fazi, 1.0, 0.02, 0.35, 26));
-shot(L.rota.t0, (k) => frontOf(pappu, lerp(1.1, 0.75, eIO(k)), 0.02, 0.05, 26));
+shot(L.camera.t1 + 0.2, BOARD);                                                                                // the rule on the board
+shot(L.pappu.t0 + 0.9, (k) => ({ p: V(lerp(1.4, 0.5, eIO(k)), lerp(3.6, 2.2, eIO(k)), lerp(7.4, 5.4, eIO(k))), l: V(0, 1.2, 0.2), fov: 38 }));   // crane over the crowd
+shot(L.talent1.t0, (k) => ({ p: V(0.75, 1.0, 2.7 - k * 0.25), l: at(pappu, V(0, -0.2, 0)), fov: 38 }));        // low angle, proud
+shot(L.salute.t0, (k) => frontOf(pappu, lerp(1.25, 1.1, k), 0.02, 0.12, 30));                                  // the salute
 shot(EV('burger').t - 0.1, (k) => ({ p: V(0.95, 1.36, 0.15 + lerp(0.5, 0.42, k)), l: V(0.91, 1.16, 0.13), fov: 30, focus: 0.5 })); // macro: tiny burger
-shot(L.trailer.t0, () => ({ p: V(1.05, 1.8, 1.25), l: V(-2.3, 1.3, 0.95), fov: 34 }));                              // over Pappu's shoulder to Fazi                              // two-shot, host and contestant
-shot(L.trailer.t1 + 0.1, (k) => frontOf(pappu, lerp(1.1, 0.9, k), 0.0, -0.1, 24));                               // silence: sweat
+shot(L.trailer.t0, () => ({ p: V(1.05, 1.8, 1.25), l: V(-2.3, 1.3, 0.95), fov: 34 }));                          // over Pappu's shoulder to Fazi
+shot(L.trailer.t1 + 0.1, (k) => frontOf(pappu, lerp(1.1, 0.9, k), 0.0, -0.1, 24));                             // silence: sweat
 shot(EV('chachaLaugh').t, () => frontOf(chacha, 0.95, 0.06, 0.15, 28));
-shot(H1.t - 0.25, () => ({ p: V(-1.5, 1.3, 2.25), l: V(-1.83, 0.82, 1.6), fov: 36 }));
-shot(H1.t + 0.1, () => ({ p: V(-1.05, 1.75, -0.45), l: V(0.2, 1.45, 4.6), fov: 50 }));
+shot(H1.t - 0.25, BUTTON);
+shot(H1.t + 0.1, REVERSE(-1.05, -0.45));
+shot(L.frame.t0 - 0.1, (k) => frontOf(pappu, lerp(0.85, 0.75, k), 0.0, 0.2, 26));                              // "isko khaun... ya frame karwaun?"
 shot(L.score1.t0, () => frontOf(fazi, 1.1, 0.02, -0.2, 28));
-shot(EV('score', 0).t - 0.15, () => ({ p: V(0, 2.3, 0.6), l: V(0, 2.2, -2.4), fov: 46 }));
-shot(EV('buzzer').t + 0.1, (k) => ({ p: V(1.1, 1.5, 3.2), l: at(pappu, V(0, -0.3, 0)), fov: 40 }));
+shot(EV('score', 0).t - 0.15, BOARD);
+shot(EV('buzzer').t + 0.1, () => ({ p: V(1.1, 1.5, 3.2), l: at(pappu, V(0, -0.3, 0)), fov: 40 }));
+shot(L.acha.t0 - 0.05, () => frontOf(aunty, 1.0, 0.02, 0.15, 28));                                              // "ek number sirf is liye..."
 shot(L.mehwish.t0, (k) => ({ p: V(lerp(-1.6, -0.6, eIO(k)), 1.6, 4.4), l: V(0.1, 1.2, 0.2), fov: 36 }));
 shot(L.talent2.t0, (k) => ({ p: V(-0.7, 1.0, 2.7 - k * 0.25), l: at(mehwish, V(0, -0.2, 0)), fov: 38 }));
 shot(L.jadoo.t0, () => frontOf(fazi, 0.9, 0.02, 0.2, 26));
 shot(L.menu.t0, () => frontOf(mehwish, 0.95, 0.0, -0.25, 28));
-shot(EV('scan').t + 0.15, (k) => { const ph = mPhone.getWorldPosition(new THREE.Vector3()); const n = V(0, 0, 1).applyQuaternion(mPhone.getWorldQuaternion(new THREE.Quaternion()));
-  const up = V(0, 1, 0).applyQuaternion(mPhone.getWorldQuaternion(new THREE.Quaternion()));
-  return { p: ph.clone().add(n.multiplyScalar(lerp(0.36, 0.3, k))), l: ph, up, fov: 30, focus: 0.33 }; });   // phone POV: the real dish
-shot(L.wahi.t0 - 0.7, (k) => { const kk = eIO(k), d = lerp(2.6, 4.6, kk); const c = V(2.45, 1.15, 1.05), f = V(Math.sin(-1.05), 0, Math.cos(-1.05));
-  return { p: c.clone().add(f.multiplyScalar(d)).add(V(0, 0.1, 0)), l: c, fov: lerp(58, 34, kk) }; });                 // dolly zoom on the judges
-shot(L.real.t0, () => frontOf(vlog, 0.85, 0.0, -0.15, 28));
-shot(EV('score', 1).t - 0.15, () => ({ p: V(0, 2.3, 0.6), l: V(0, 2.2, -2.4), fov: 46 }));
-shot(EV('realLaugh').t + 0.5, (k) => ({ p: V(-1.05, 1.8, lerp(-0.4, -0.65, k)), l: V(0.1, 1.4, 4.6), fov: 48 }));        // the room laughs for real
-shot(Math.min(EV('realLaugh').t + 1.7, L.pehlibaar.t0 - 0.7), () => ({ p: V(-1.5, 1.3, 2.25), l: V(-1.83, 0.82, 1.6), fov: 36 }));                 // ...and nobody pressed it
-shot(L.pehlibaar.t0, (k) => ({ ...frontOf(fazi, lerp(1.25, 1.1, k), 0.04, 0.22, 26), focus: 1 }));                 // Fazi; Pappu soft behind, scanning                            // Fazi, Pappu scanning behind
+shot(EV('scan').t + 0.15, (k) => { const q = mPhone.getWorldQuaternion(new THREE.Quaternion()), ph = mPhone.getWorldPosition(new THREE.Vector3());
+  return { p: ph.clone().add(V(0, 0, 1).applyQuaternion(q).multiplyScalar(lerp(0.36, 0.3, k))), l: ph, up: V(0, 1, 0).applyQuaternion(q), fov: 30, focus: 0.33 }; });   // the real dish
+shot(L.wahi.t0 - 0.5, (k) => { const kk = eIO(k), d = lerp(2.6, 4.6, kk); const c = V(2.45, 1.15, 1.05), f = V(Math.sin(-1.05), 0, Math.cos(-1.05));
+  return { p: c.clone().add(f.multiplyScalar(d)).add(V(0, 0.1, 0)), l: c, fov: lerp(58, 34, kk) }; });          // dolly zoom on the judges
+shot(L.khaunga.t0, () => frontOf(vlog, 0.9, 0.0, -0.15, 28));                                                   // phone goes down
+shot(L.dessert.t0 - 0.1, (k) => frontOf(chacha, lerp(1.0, 0.85, k), 0.04, 0.1, 28));                             // Chacha wakes up
+shot(L.dessert.t1 + 0.1, REVERSE(-1.05, -0.5));                                                                 // the room laughs for real
+shot(S2.t + 0.55, BOARD);                                                                                       // 10 10 10, match
+shot(EV('ding').t + 0.7, BUTTON);                                                                                // ...nobody pressed it
+shot(L.pehlibaar.t0, (k) => ({ ...frontOf(fazi, lerp(1.25, 1.1, k), 0.04, 0.22, 26), focus: 1 }));               // Fazi
+shot(EV('lookPappu').t, (k) => frontOf(pappu, lerp(1.0, 0.8, eO(k)), 0.0, 0.0, 28));                             // everyone looks at Pappu
 shot(TL.end, () => null);
 SH.sort((a, b) => a.t0 - b.t0);
 function camera(t) {
@@ -410,37 +424,52 @@ function overlay(t) {
     endCard(ui, t, TL.end, { ink: PAPER, sub: '#C7BDE0', line: 'Dekh ke order karo.', line2: 'Asli dish, order se pehle.' });
     const lt = t - TL.end - 1.6;
     T(ui, 'Us dost ko bhejo jo', W / 2, 1520, { z: 46, f: 'D', w: 600, c: '#FFD38A', al: 'center', a: clamp(lt * 3) });
-    T(ui, 'menu photo pe bharosa karta hai.', W / 2, 1584, { z: 46, f: 'D', w: 600, c: '#FFD38A', al: 'center', a: clamp(lt * 3) });
+    T(ui, 'biryani mein aloo dhoondta hai.', W / 2, 1584, { z: 46, f: 'D', w: 600, c: '#FFD38A', al: 'center', a: clamp(lt * 3) });
     return;
   }
-  // cold-open headline
   const hk = clamp(t * 4) - clamp((t - L.welcome2.t1 + 0.2) * 4);
   if (hk > 0) { ui.save(); ui.globalAlpha = hk; ui.translate(0, (1 - spring(t, ...SPRING.snappy)) * 30);
     T(ui, 'YAHAN HAR JOKE', W / 2, 470, { z: 120, f: 'Bebas', c: '#FFF4E6', al: 'center' }); T(ui, 'MARTA HAI', W / 2, 590, { z: 120, f: 'Bebas', c: '#FF6FAE', al: 'center' }); ui.restore(); }
-  // subtitles
   const l = TL.lines.find((x) => t >= x.t0 - 0.05 && t < x.t1 + 0.35);
   if (l) pill(l.ro, 1450, { z: 50, a: clamp((t - l.t0 + 0.05) * 8) * clamp((l.t1 + 0.35 - t) * 8) });
-  // sound captions
   const tag = (s, c = '#B9A8D9') => pill(s, 1300, { z: 40, bg: 'rgba(16,11,22,.6)', c, w: 500 });
   if (!l) {
     if (evOn('haso', t)) tag('(fake hasi)', '#FF8A8A');
     else if (evOn('realLaugh', t)) tag('(asli hasi)', '#7DFFB0');
     else if (evOn('cricket', t)) tag('(jheengur)');
+    else if (evOn('giggle', t)) tag('(ek banda hasa)');
     else if (t > L.trailer.t1 + 0.2 && t < EV('chachaLaugh').t) tag('(khamoshi)');
     else if (t > L.welcome2.t1 + 0.2 && t < H0.t) tag('(khamoshi)');
     else if (t >= EV('chachaLaugh').t && t < EV('chachaLaugh').t + 0.5) tag('Chacha: ha... ha.');
   }
 }
 
+// collision check for the render QA (social/reels/latent/collide.mjs): parts that must never pass through each other
+window.__collide = () => {
+  const out = [], wp = (o) => o.getWorldPosition(new THREE.Vector3());
+  for (const [n, Q] of Object.entries(P)) {
+    if (!Q.g.visible) continue;
+    const inv = new THREE.Matrix4().copy(Q.body.matrixWorld).invert(), g = Q.body.geometry.parameters;
+    for (const A of Q.arms) {   // hand centre inside the torso capsule?
+      const h = wp(A.hand).applyMatrix4(inv), half = g.height / 2;
+      const d = Math.hypot(h.x, Math.max(0, Math.abs(h.y) - half), h.z);
+      if (d < g.radius * 0.9) out.push(`${n}: hand in body (${d.toFixed(3)})`);
+    }
+  }
+  const head = (Q) => wp(Q.head), near = (a, b, r) => a.distanceTo(b) < r;
+  const props = [['mic', micHead, pappu.g.visible ? pappu : mehwish], ['mPhone', mPhone, mehwish], ['vPhone', vPhone, vlog], ['chai', chai, fazi], ['pPhone', pappuPhone, pappu]];
+  for (const [n, o, Q] of props) if (o.visible !== false && Q.g.visible && near(wp(o), head(Q), Q.hr * 1.05)) out.push(`${n} in ${Q === pappu ? 'pappu' : Q === mehwish ? 'mehwish' : Q === vlog ? 'vlog' : 'fazi'} head`);
+  return out;
+};
 window.DUR = TL.dur;
-window.FILM = { fps: 12, maxrate: '2.6M', bufsize: '5.2M', cover: L.menu.t1 + 1.2 };
+window.FILM = { fps: 12, maxrate: '1.75M', bufsize: '3.5M', abr: '128k', cover: L.menu.t1 + 1.2 };
 window.CUES = [];
 window.seek = (t) => {
   FR = Math.floor(t * 12 + 1e-6); BOIL.uSeed.value = FR % 89; grade.uniforms.seed.value = FR % 61;
   if (t < TL.end) {
     act(t); scene.updateMatrixWorld(true); aim(t); scene.updateMatrixWorld(true);
     if (camera(t)) {
-      const showDish = t >= EV('dish').t && t < L.real.t1 + 1;
+      const showDish = t >= EV('dish').t && t < L.dessert.t1 + 1;
       phoneFrame(Math.max(0, t - EV('dish').t), showDish);
       composer.render();
     }

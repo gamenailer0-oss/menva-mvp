@@ -59,6 +59,7 @@ MIC = {  # (highpass, presence gain, lowpass, reverb wet, pan, level dB)
     'vlog':    (140, 0.08, 9000, 0.17, 0.38, -2.5),
     'pappu':   (100, 0.12, 10500, 0.14, 0.05, -1.5),
     'mehwish': (100, 0.12, 10500, 0.14, 0.05, -1.5),
+    'chacha':  (110, 0.04, 8000, 0.18, 0.22, -2.0),
 }
 def load(path):
     a, sr = sf.read(path); a = a if a.ndim == 1 else a.mean(1)
@@ -69,8 +70,12 @@ def voice(a, who):
     pk = np.max(np.abs(a)) + 1e-9; a = np.tanh(a / pk * 1.6) / np.tanh(1.6) * pk     # gentle mic-pre saturation
     a = a / (np.sqrt(np.mean(a ** 2)) + 1e-9) * 0.075
     return verb(a, wet), pan, db(lev)
+def breath(r):
+    n = int(r.uniform(0.18, 0.3) * SR); return bp(r.standard_normal(n), 500, 3500) * np.sin(np.linspace(0, np.pi, n)) ** 2 * 0.012
+br_r = np.random.default_rng(4)
 for l in TL['lines']:
     a, pan, g = voice(load(l['wav']), l['who']); put(a, l['t0'], pan, g)
+    if l['who'] != 'fazi' and br_r.random() < 0.8: put(verb(breath(br_r), 0.1), l['t0'] - 0.32, pan, g)
 
 # ---------- one voice laughing: glottal pulses -> /a/ formants + breath ----------
 FORM = [(800, 80, 1.0), (1200, 90, 0.5), (2500, 120, 0.25), (3500, 200, 0.1)]
@@ -225,6 +230,9 @@ for e in EV:
         pk = max(np.max(np.abs(L2)), np.max(np.abs(R2))) + 1e-9
         put2((L2 / pk, R2 / pk), t, 0.25); put2((A[0] * dec, A[1] * dec), t + 0.35, 0.14)
     elif ty == 'sip': put(sip(), t, -0.22, 0.6)
+    elif ty == 'giggle':   # one real person in the crowd can't help it
+        rr = np.random.default_rng(int(t * 100)); y = laugher(rr, rr.uniform(200, 280), 1.1, n_syll=3, rate=6.0, energy=0.8, chuckle=True)
+        put(verb(lp(y, 5000), 0.3, IR_BIG), t, rr.uniform(-0.5, 0.5), 0.07)
 put(pad(TL['dur'] - endT), endT, 0, 0.9)
 put(ding(), endT + 1.0, 0, 0.35)
 
