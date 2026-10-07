@@ -1,12 +1,14 @@
 // MENVA film pack renderer. Every film is social/reels/films/<id>.html exposing:
 //   window.seek(t)   draw the frame at t seconds (a pure function of t)
 //   window.DUR       length in seconds          window.CUES  [{t, type, ...}] for the score
-//   window.FILM      { preset, bpm, fps?, cover }  fps 12 gives a stepped stop-motion look
+//   window.FILM      { preset, bpm, fps?, cover, audio?, maxrate? }  fps 12 gives a stepped stop-motion look;
+//                    audio = a pre-mixed WAV (repo path) used instead of score.py; maxrate caps the bitrate for long films
 //   window.__ready   true once fonts, models and textures are loaded
 //
 //   node social/reels/films/engine.mjs <id>                  -> social/reels/out/film-<id>.mp4 + -cover.jpg
 //   node social/reels/films/engine.mjs <id> --stills 1,4.5   -> JPEG stills in $STILLS (default /tmp)
 //   node social/reels/films/engine.mjs <id> --score x.wav    -> just the soundtrack
+//   node social/reels/films/engine.mjs <id> --audio mix.wav  -> render with a pre-mixed soundtrack instead of score.py
 // Set CHROMIUM_PATH=/opt/pw-browsers/chromium in this container.
 import fs from 'node:fs';
 import path from 'node:path';
@@ -42,6 +44,7 @@ const browser = await chromium.launch({
 const page = await browser.newPage({ viewport: { width: 1080, height: 1920 } });
 page.on('pageerror', (e) => console.error('page error:', e.message));
 page.on('console', (m) => { if (m.type() === 'error') console.error('console:', m.text()); });
+page.on('response', (q) => { if (q.status() >= 400) console.error('missing:', q.url()); });
 await page.addInitScript((q) => { window.QR = q; }, QR);
 await page.goto(`http://127.0.0.1:${server.address().port}/social/reels/films/${id}.html`);
 await page.waitForFunction(() => window.__ready === true, null, { timeout: 180000 });
@@ -50,6 +53,8 @@ const FPS = 30;
 const step = FILM.fps && FILM.fps < 30 ? FILM.fps : null;   // stop-motion films hold each drawing for 30/fps frames
 
 async function score(wav) {
+  const ext = args.includes('--audio') ? args[args.indexOf('--audio') + 1] : FILM.audio && path.join(ROOT, FILM.audio);
+  if (ext) { fs.copyFileSync(ext, wav); return; }
   const cueFile = path.join(process.env.TMPDIR || '/tmp', `menva-film-${id}-cues.json`);
   fs.writeFileSync(cueFile, JSON.stringify({ len: DUR, preset: FILM.preset, bpm: FILM.bpm, events: await page.evaluate(() => window.CUES) }));
   execFileSync('python3', [path.join(HERE, 'score.py'), cueFile, wav], { stdio: 'inherit' });
@@ -86,7 +91,7 @@ try {
     const ff = execFileSync('python3', ['-c', 'import imageio_ffmpeg;print(imageio_ffmpeg.get_ffmpeg_exe())']).toString().trim();
     const vf = SUB > 1 ? `tmix=frames=${SUB},fps=${FPS},format=yuv420p` : 'format=yuv420p';
     execFileSync(ff, ['-y', '-loglevel', 'error', '-framerate', String(rate), '-i', path.join(work, 'f%05d.jpg'), '-i', path.join(work, 'score.wav'),
-      '-vf', vf, '-c:v', 'libx264', '-preset', 'slow', '-crf', '20', '-maxrate', '4.8M', '-bufsize', '9.6M', '-profile:v', 'high', // under jsDelivr's 20 MB file limit
+      '-vf', vf, '-c:v', 'libx264', '-preset', 'slow', '-crf', '20', '-maxrate', FILM.maxrate || '4.8M', '-bufsize', FILM.bufsize || '9.6M', '-profile:v', 'high', // under jsDelivr's 20 MB file limit
       '-c:a', 'aac', '-b:a', '192k', '-shortest', '-movflags', '+faststart', path.join(OUT, `film-${id}.mp4`)], { stdio: 'inherit' });
     fs.rmSync(work, { recursive: true, force: true });
     console.log(`Wrote social/reels/out/film-${id}.mp4 in ${((Date.now() - t0) / 60000).toFixed(1)} min`);
