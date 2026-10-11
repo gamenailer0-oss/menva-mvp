@@ -67,3 +67,4 @@ time,n,id,status,detail
 "2026-10-10T17:50:58.514Z","20","meme-10-naan-shayari","posted","https://www.instagram.com/p/DeUqR7JmqLh/"
 "2026-10-10T17:51:02.843Z","20","meme-10-naan-shayari","story-failed","Instagram POST /17841480439266793/media_publish failed (400): The requested resource does not exist The media with 17,893,078,803,681,309 cannot be found."
 "2026-10-11T13:41:05.563Z","7","film-clay","posted","https://www.instagram.com/reel/DeWyajVmzeb/"
+"2026-10-11T13:41:10.933Z","7","film-clay","story-failed","Instagram POST /17841480439266793/media_publish failed (400): Media ID is not available The media is not ready for publishing, please wait for a moment"
