@@ -105,3 +105,4 @@ time,n,id,status,detail
 "2026-10-20T17:25:31.274Z","12","the-safe-order","story-posted","18080777342443599"
 "2026-10-21T17:40:51.055Z","1","saga-01-pilot-episode","posted","https://www.instagram.com/p/Dew93Z2CXMx/"
 "2026-10-21T17:41:01.545Z","1","saga-01-pilot-episode","story-failed","Instagram POST /17841480439266793/media failed (400): Only photo or video can be accepted as media type. The media could not be fetched from this URI: https://cdn.jsdelivr.net/gh/gamenailer0-oss/menva-mvp@c27232aa8a08e56a90b5dea182d56522cf08e766/media/001-saga-01-pilot-episode-1-20261021173945-story.jpg.Please check the limitations section in our development document for more information: https://developers.facebook.com/docs/instagram-platform/instagram-graph-api/reference/ig-user/media#creating"
+"2026-10-22T17:38:26.872Z","13","turn-it-around","posted","https://www.instagram.com/p/DeziYcOG9Jt/"
